@@ -45,9 +45,9 @@
     <Compile Include="Atributo.cs" />
     <Compile Include="AtributoCombo.cs" />
     <Compile Include="AtributoSimple.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="EjecutivoDeCuenta.cs" />
+    <Compile Include="EmpresaDistribuidora.cs" />
     <Compile Include="Foto.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
