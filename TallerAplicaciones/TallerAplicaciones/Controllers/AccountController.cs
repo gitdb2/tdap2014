@@ -107,8 +107,7 @@ namespace TallerAplicaciones.Controllers
             nuevoPerfilUsuario.Apellido = model.Apellido;
             nuevoPerfilUsuario.Email = model.Email;
             IPerfilUsuario iPerfil = ManejadorUsuario.GetInstance();
-            Usuario usuario = iPerfil.BuscarUsuario(WebSecurity.CurrentUserId);
-            nuevoPerfilUsuario.Usuario = usuario;
+            nuevoPerfilUsuario.Login = model.UserName;
             iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario);
         }
 
@@ -276,54 +275,6 @@ namespace TallerAplicaciones.Controllers
                 ViewBag.ReturnUrl = returnUrl;
                 return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
             }
-        }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
-        {
-            string provider = null;
-            string providerUserId = null;
-
-            if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
-            {
-                return RedirectToAction("Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Insert a new user into the database
-                using (Persistencia db = new Persistencia())
-                {
-                    //UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                    Usuario user = db.Usuarios.FirstOrDefault(u => u.Login.ToLower() == model.UserName.ToLower());
-
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.Usuarios.Add(new Usuario { Login = model.UserName });
-                        db.SaveChanges();
-
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("Login", "User name already exists. Please enter a different user name.");
-                    }
-                }
-            }
-
-            ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
         }
 
         //

@@ -7,6 +7,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 {
     public class ValorPredefinido
     {
+        public int ValorPredefinidoID { get; set; }
 
         public string Valor { get; set; }
 

@@ -11,8 +11,6 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
          void AltaPerfilUsuario(PerfilUsuario perfil);
          void ModificarPerfilUsuario(PerfilUsuario perfil);
          void BajaPerfilUsuario(PerfilUsuario perfil);
-
          List<PerfilUsuario> ListarUsuarios();
-         Usuario BuscarUsuario(int usuarioId);
     }
 }

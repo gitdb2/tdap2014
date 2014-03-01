@@ -16,9 +16,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
-        
         public DbSet<PerfilUsuario> PerfilesUsuario { get; set; }
+
+        public void InitializeDatabase(Persistencia context)
+        {
+            if (context.Database.Exists() && !context.Database.CompatibleWithModel(false))
+            {
+                context.Database.Delete();
+            }
+
+            if (!context.Database.Exists())
+            {
+                context.Database.Create();
+                context.Database.ExecuteSqlCommand("ALTER TABLE \"Usuario\" ADD CONSTRAINT UniqueLogin UNIQUE (login)");
+            }
+        }
+
 
     }
 }

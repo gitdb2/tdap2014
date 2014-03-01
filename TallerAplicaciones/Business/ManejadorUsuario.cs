@@ -44,13 +44,5 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             throw new NotImplementedException();
         }
 
-        public Usuario BuscarUsuario(int usuarioId)
-        {
-            using (Persistencia db = new Persistencia())
-            {
-                return db.Usuarios.Find(usuarioId);
-            }
-        }
-
     }
 }
