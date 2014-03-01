@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administrador.cs" />
+    <Compile Include="Archivo.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="EjecutivoDeCuenta.cs" />
