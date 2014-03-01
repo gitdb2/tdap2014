@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using TallerAplicaciones.Models;
+using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Filters
 {
@@ -25,11 +26,11 @@ namespace TallerAplicaciones.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<Persistencia>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new Persistencia())
                     {
                         if (!context.Database.Exists())
                         {
@@ -38,7 +39,7 @@ namespace TallerAplicaciones.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuario", "UsuarioID", "Login", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {
