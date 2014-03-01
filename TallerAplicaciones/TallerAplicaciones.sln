@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TallerAplicaciones", "TallerAplicaciones\TallerAplicaciones.csproj", "{46B21D77-9709-48E9-BCEB-1DC8419A4115}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistribuidoresApp", "DistribuidoresApp\DistribuidoresApp.csproj", "{4551D364-633F-4B63-B80D-24D7DB27EDE5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{46B21D77-9709-48E9-BCEB-1DC8419A4115} = {46B21D77-9709-48E9-BCEB-1DC8419A4115}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +18,10 @@ Global
 		{46B21D77-9709-48E9-BCEB-1DC8419A4115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46B21D77-9709-48E9-BCEB-1DC8419A4115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46B21D77-9709-48E9-BCEB-1DC8419A4115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4551D364-633F-4B63-B80D-24D7DB27EDE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4551D364-633F-4B63-B80D-24D7DB27EDE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4551D364-633F-4B63-B80D-24D7DB27EDE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4551D364-633F-4B63-B80D-24D7DB27EDE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
