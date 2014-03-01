@@ -42,10 +42,12 @@
   <ItemGroup>
     <Compile Include="Administrador.cs" />
     <Compile Include="Archivo.cs" />
+    <Compile Include="CantidadProductoPedido.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="EjecutivoDeCuenta.cs" />
     <Compile Include="EmpresaDistribuidora.cs" />
     <Compile Include="Foto.cs" />
+    <Compile Include="Pedido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Video.cs" />
