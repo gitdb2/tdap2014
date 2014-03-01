@@ -85,7 +85,7 @@ namespace TallerAplicaciones.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
                     WebSecurity.Login(model.UserName, model.Password);
                     this.AltaUsuario(model);
                     return RedirectToAction("Index", "Home");
@@ -107,8 +107,7 @@ namespace TallerAplicaciones.Controllers
             nuevoPerfilUsuario.Apellido = model.Apellido;
             nuevoPerfilUsuario.Email = model.Email;
             IPerfilUsuario iPerfil = ManejadorUsuario.GetInstance();
-            nuevoPerfilUsuario.Login = model.UserName;
-            iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario);
+            iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario, model.UserName);
         }
 
         private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int idRol)

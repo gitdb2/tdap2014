@@ -13,7 +13,8 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Email { get; set; }
-        public string Login { get; set; }
+        
+        public Usuario Usuario { get; set; }
 
         public bool Activo { get; set; }
         

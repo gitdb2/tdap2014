@@ -56,6 +56,8 @@ namespace TallerAplicaciones.Models
 
     public class RegisterModel
     {
+        public bool Activo = true;
+
         [Required]
         [Display(Name = "Login")]
         public string UserName { get; set; }
@@ -87,6 +89,7 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Confirmar password")]
         [Compare("Password", ErrorMessage = "El password y la confirmacion no coinciden")]
         public string ConfirmPassword { get; set; }
+
     }
 
     public class ExternalLogin

@@ -20,10 +20,12 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-        public void AltaPerfilUsuario(PerfilUsuario perfil)
+        public void AltaPerfilUsuario(PerfilUsuario perfil, string loginUsuario)
         {
             using (Persistencia db = new Persistencia())
             {
+                Usuario usuario = db.Usuarios.SingleOrDefault(u => u.Login == loginUsuario);
+                perfil.Usuario = usuario;
                 db.PerfilesUsuario.Add(perfil);
                 db.SaveChanges();
             }
