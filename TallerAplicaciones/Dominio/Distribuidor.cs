@@ -5,7 +5,7 @@ using System.Text;
 
 namespace uy.edu.ort.taller.aplicaciones.dominio
 {
-    public class Distribuidor : Usuario
+    public class Distribuidor : PerfilUsuario
     {
 
         public Distribuidor()
@@ -13,6 +13,9 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         {
 
         }
+
+        public EmpresaDistribuidora Empresa { get; set; }
+        public List<Pedido> Pedidos { get; set; }
 
     }
 }

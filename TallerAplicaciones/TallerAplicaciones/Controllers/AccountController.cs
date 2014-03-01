@@ -65,6 +65,9 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            // TODO
+            // este metodo tiene que obtener la lista de roles y agregarselos
+            // al modelo
             return View();
         }
 
@@ -82,6 +85,9 @@ namespace TallerAplicaciones.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    //TODO
+                    //crear profile y asociarlo
+                    //
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }

@@ -51,6 +51,7 @@
     <Compile Include="EjecutivoDeCuenta.cs" />
     <Compile Include="EmpresaDistribuidora.cs" />
     <Compile Include="Foto.cs" />
+    <Compile Include="PerfilUsuario.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

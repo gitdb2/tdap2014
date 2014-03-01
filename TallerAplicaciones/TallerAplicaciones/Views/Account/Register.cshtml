@@ -20,6 +20,28 @@
                 @Html.TextBoxFor(m => m.UserName)
             </li>
             <li>
+                @Html.LabelFor(m => m.Rol)
+                @Html.DropDownList("Rol", new List<SelectListItem>
+                {
+                  new SelectListItem{ Text = "Administrador", Value = "0" },
+                  new SelectListItem{ Text = "Ejecutivo de Cuentas", Value = "1" },
+                  new SelectListItem{ Text = "Distribuidor", Value = "2" } 
+                })
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Nombre)
+                @Html.TextBoxFor(m => m.Nombre)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Apellido)
+                @Html.TextBoxFor(m => m.Apellido)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </li>
+            <li>
                 @Html.LabelFor(m => m.Password)
                 @Html.PasswordFor(m => m.Password)
             </li>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace uy.edu.ort.taller.aplicaciones.dominio
 {
-    public class Administrador : Usuario
+    public class Administrador : PerfilUsuario
     {
 
         public Administrador()

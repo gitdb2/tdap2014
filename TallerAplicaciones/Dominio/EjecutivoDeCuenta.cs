@@ -5,7 +5,7 @@ using System.Text;
 
 namespace uy.edu.ort.taller.aplicaciones.dominio
 {
-    public class EjecutivoDeCuenta : Usuario
+    public class EjecutivoDeCuenta : PerfilUsuario
     {
 
         public EjecutivoDeCuenta()
@@ -13,6 +13,9 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         {
 
         }
+
+        public List<EmpresaDistribuidora> Empresas { get; set; }
+        public List<Pedido> Pedidos { get; set; }
         
     }
 }
