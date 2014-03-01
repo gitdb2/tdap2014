@@ -10,6 +10,8 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
+using Business;
+using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace TallerAplicaciones.Controllers
 {
@@ -263,14 +265,16 @@ namespace TallerAplicaciones.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (Persistencia db = new Persistencia())
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    //UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                    Usuario user = db.Usuarios.FirstOrDefault(u => u.Login.ToLower() == model.UserName.ToLower());
+
                     // Check if user already exists
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.Usuarios.Add(new Usuario { Login = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
@@ -280,7 +284,7 @@ namespace TallerAplicaciones.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
+                        ModelState.AddModelError("Login", "User name already exists. Please enter a different user name.");
                     }
                 }
             }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace uy.edu.ort.taller.aplicaciones.dominio
 {
-    public abstract class Usuario
+    public class Usuario
     {
         public int UsuarioID { get; set; }
 
