@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>ebd0d02b-f9b8-45cb-970a-a59ace4ddbc7</ProjectGuid>
+    <ProjectGuid>{724D61E3-1370-4B40-923F-222A119C23AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Utiles</RootNamespace>

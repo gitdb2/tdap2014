@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>239e55fa-9f1f-47c4-aacb-16cc6efe0ebc</ProjectGuid>
+    <ProjectGuid>{BFD1CE2A-CDA7-4C3A-B21D-ED8CDD7A6456}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dominio</RootNamespace>
