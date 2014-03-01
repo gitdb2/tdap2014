@@ -20,6 +20,28 @@ namespace TallerAplicaciones.Controllers
             return View();
         }
 
+
+        // GET: /Empresa/List
+        public ActionResult List()
+        {
+
+            EmpresaListModel model = null;
+            try
+            {
+                IEmpresaDistribuidora iEmpresa = ManejadorEmpresaDistribuidora.GetInstance();
+
+                model = new EmpresaListModel() { Empresas = iEmpresa.ListarEmpresasDistribuidoras() };
+
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
+            return View(model);
+
+          
+        }
+
         //
         // GET: /Empresa/Details/5
 
@@ -47,10 +69,7 @@ namespace TallerAplicaciones.Controllers
               
                 try
                 {
-
                     IEmpresaDistribuidora iEmpresa = ManejadorEmpresaDistribuidora.GetInstance();
-
-
                     iEmpresa.AltaEmpresa(new EmpresaDistribuidora() { Nombre = model.Nombre});
 
                     return RedirectToAction("Create");
