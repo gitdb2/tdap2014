@@ -13,5 +13,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public List<Distribuidor> Usuarios { get; set; }
         public EjecutivoDeCuenta Ejecutivo { get; set; }
 
+        public bool Activo { get; set; }
+
     }
 }

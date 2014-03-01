@@ -12,8 +12,11 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public DateTime Fecha { get; set; }
         public string Descripcion { get; set; }
         public bool Aprobado { get; set; }
+        
         public List<CantidadProductoPedido> CantidadProductoPedidoList { get; set; }
         public Distribuidor Distribuidor { get; set; }
         public EjecutivoDeCuenta Ejecutivo { get; set; }
+        
+        public bool Activo { get; set; }
     }
 }

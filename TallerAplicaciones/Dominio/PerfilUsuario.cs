@@ -14,6 +14,8 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public string Apellido { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
+
+        public bool Activo { get; set; }
         
     }
 }
