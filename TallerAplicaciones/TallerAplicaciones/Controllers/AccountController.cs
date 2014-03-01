@@ -10,8 +10,9 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
-using Business;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.interfaces;
+using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
 {
@@ -85,10 +86,8 @@ namespace TallerAplicaciones.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    //TODO
-                    //crear profile y asociarlo
-                    //
                     WebSecurity.Login(model.UserName, model.Password);
+                    this.AltaUsuario(model);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -99,6 +98,33 @@ namespace TallerAplicaciones.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void AltaUsuario(RegisterModel model)
+        {
+            PerfilUsuario nuevoPerfilUsuario = ObtenerPerfilUsuarioSegunRol(model.Rol);
+            nuevoPerfilUsuario.Nombre = model.Nombre;
+            nuevoPerfilUsuario.Apellido = model.Apellido;
+            nuevoPerfilUsuario.Email = model.Email;
+            IPerfilUsuario iPerfil = ManejadorUsuario.GetInstance();
+            Usuario usuario = iPerfil.BuscarUsuario(WebSecurity.CurrentUserId);
+            nuevoPerfilUsuario.Usuario = usuario;
+            iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario);
+        }
+
+        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int idRol)
+        {
+            switch (idRol)
+            {
+                case 0:
+                    return new Administrador();
+                case 1:
+                    return new EjecutivoDeCuenta();
+                case 2:
+                    return new Distribuidor();
+                default:
+                    throw new ArgumentException("Tipo de usuario invalido");
+            }
         }
 
         //

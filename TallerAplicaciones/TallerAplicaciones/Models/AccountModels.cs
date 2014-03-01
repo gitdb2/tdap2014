@@ -82,7 +82,7 @@ namespace TallerAplicaciones.Models
 
         [Required]
         [Display(Name = "Rol")]
-        public string Rol { get; set; }
+        public int Rol { get; set; }
 
         [Required]
         [Display(Name = "Nombre")]

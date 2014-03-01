@@ -5,7 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using TallerAplicaciones.Models;
-using Business;
+using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Filters
 {

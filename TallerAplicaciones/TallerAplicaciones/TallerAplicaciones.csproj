@@ -300,6 +300,10 @@
       <Project>{BFD1CE2A-CDA7-4C3A-B21D-ED8CDD7A6456}</Project>
       <Name>Dominio</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{0DF6BD7D-09D6-494D-B025-9FBD03968488}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

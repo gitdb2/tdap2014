@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.Entity;
 using uy.edu.ort.taller.aplicaciones.dominio;
 
-namespace Business
+namespace uy.edu.ort.taller.aplicaciones.negocio
 {
     public class Persistencia : DbContext
     {
@@ -17,6 +17,8 @@ namespace Business
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        
+        public DbSet<PerfilUsuario> PerfilesUsuario { get; set; }
 
     }
 }
