@@ -43,6 +43,8 @@
     <Compile Include="Administrador.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Distribuidor.cs" />
+    <Compile Include="EjecutivoDeCuenta.cs" />
+    <Compile Include="EmpresaDistribuidora.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
