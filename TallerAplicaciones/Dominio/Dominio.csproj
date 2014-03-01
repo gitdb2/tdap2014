@@ -42,12 +42,20 @@
   <ItemGroup>
     <Compile Include="Administrador.cs" />
     <Compile Include="Archivo.cs" />
+    <Compile Include="Atributo.cs" />
+    <Compile Include="AtributoCombo.cs" />
+    <Compile Include="AtributoSimple.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="EjecutivoDeCuenta.cs" />
     <Compile Include="Foto.cs" />
+    <Compile Include="Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="ValorAtributo.cs" />
+    <Compile Include="ValorAtributoCombo.cs" />
+    <Compile Include="ValorAtributoSimple.cs" />
+    <Compile Include="ValorPredefinido.cs" />
     <Compile Include="Video.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
