@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManejadorEmpresaDistribuidora.cs" />
     <Compile Include="ManejadorUsuario.cs" />
     <Compile Include="Persistencia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +56,9 @@
       <Project>{0DF6BD7D-09D6-494D-B025-9FBD03968488}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Visitor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
