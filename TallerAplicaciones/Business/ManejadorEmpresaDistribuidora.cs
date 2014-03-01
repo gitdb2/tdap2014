@@ -7,7 +7,7 @@ using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
-    class ManejadorEmpresaDistribuidora :IEmpresaDistribuidora
+    public class ManejadorEmpresaDistribuidora :IEmpresaDistribuidora
     {
         
         #region singleton
