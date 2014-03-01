@@ -7,7 +7,8 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 {
     public class Pedido
     {
-        public int PedidoId { get; set; }
+        public int PedidoID { get; set; }
+
         public DateTime Fecha { get; set; }
         public string Descripcion { get; set; }
         public bool Aprobado { get; set; }

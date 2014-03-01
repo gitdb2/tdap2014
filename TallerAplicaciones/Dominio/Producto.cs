@@ -14,8 +14,8 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
 
-        List<ValorAtributo> ValoresSeleccionados;
-        List<Archivo> Archivos;
+        public List<ValorAtributo> ValoresSeleccionados { get; set; }
+        public List<Archivo> Archivos { get; set; }
 
     }
 }
