@@ -30,9 +30,19 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public void ModificarPerfilUsuario(PerfilUsuario perfil)
+        public void ModificarPerfilUsuario(PerfilUsuario perfilModificado)
         {
-            throw new NotImplementedException();
+            using (var db = new Persistencia())
+            {
+                var perfilActual = db.PerfilesUsuario.Include("Usuario").SingleOrDefault(u => u.PerfilUsuarioID == perfilModificado.PerfilUsuarioID);
+                if (perfilActual != null)
+                {
+                    perfilActual.Nombre = perfilModificado.Nombre;
+                    perfilActual.Apellido = perfilModificado.Apellido;
+                    perfilActual.Email = perfilModificado.Email;
+                }
+                db.SaveChanges();
+            }
         }
 
         public void BajaPerfilUsuario(int idPerfil)
@@ -69,6 +79,14 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
                 return db.PerfilesUsuario.Include("Usuario").SingleOrDefault(u => u.PerfilUsuarioID == idPerfil);
+            }
+        }
+
+        public Usuario ObtenerUsuario(int usuarioId)
+        {
+            using (var db = new Persistencia())
+            {
+                return db.Usuarios.SingleOrDefault(u => u.UsuarioID == usuarioId);
             }
         }
     }
