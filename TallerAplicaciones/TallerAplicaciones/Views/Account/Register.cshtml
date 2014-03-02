@@ -1,4 +1,5 @@
-﻿@model TallerAplicaciones.Models.RegisterModel
+﻿@using System.Data.SqlClient
+@model TallerAplicaciones.Models.RegisterModel
 @{
     ViewBag.Title = "Register";
 }
@@ -20,13 +21,31 @@
                 @Html.TextBoxFor(m => m.UserName)
             </li>
             <li>
-                @Html.LabelFor(m => m.Rol)
-                @Html.DropDownList("Rol", new List<SelectListItem>
-                {
-                  new SelectListItem{ Text = "Administrador", Value = "0" },
-                  new SelectListItem{ Text = "Ejecutivo de Cuentas", Value = "1" },
-                  new SelectListItem{ Text = "Distribuidor", Value = "2" } 
-                })
+                <table style="border:none">
+                    <tr>
+                        <td>
+                                @Html.LabelFor(m => m.Rol)
+                                @Html.DropDownList("Rol", new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text = "Administrador", Value = "0" },
+                                    new SelectListItem{ Text = "Ejecutivo de Cuentas", Value = "1" },
+                                    new SelectListItem{ Text = "Distribuidor", Value = "2" } 
+                                },new { @onchange="changeRol();" } ) 
+                        </td>
+                        <td>
+                            <div class="notRolAdmin notRolEjec rolDist" style="display:none">
+                                dist
+                            </div>
+                             <div class="notRolAdmin notRolDist rolEjec" style="display:none">
+                                ejec
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+          
+
+
             </li>
             <li>
                 @Html.LabelFor(m => m.Nombre)
@@ -55,5 +74,27 @@
 }
 
 @section Scripts {
+    <script>
+        function  changeRol() {
+
+            switch ($("#Rol").val()) {
+                case "0":
+                    $(".rolAdmin").show();
+                    $(".notRolAdmin").hide();
+                break;
+            case "1":
+                $(".rolEjec").show();
+                $(".notRolEjec").hide();
+                    break;
+                case "2":
+                    $(".rolDist").show();
+                    $(".notRolDist").hide();
+                    break;
+                default:
+                 alert("La opcion seleccioanda no es correcta");
+            }
+           
+        }
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
