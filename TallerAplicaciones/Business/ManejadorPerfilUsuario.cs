@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using System.Transactions;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
@@ -87,8 +88,39 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
                 return db.Usuarios.SingleOrDefault(u => u.UsuarioID == usuarioId);
+			}
+		}
+
+ 		public void AltaPerfilUsuario(EjecutivoDeCuenta perfil, string login, List<int> idEmpresas)
+        {  
+            using (var db = new Persistencia())
+            {
+                using (var scope = new TransactionScope())
+                {
+                    Usuario usuario = db.Usuarios.SingleOrDefault(u => u.Login == login);
+
+                    perfil.Usuario = usuario;
+                    db.PerfilesUsuario.Add(perfil);
+
+                    if (idEmpresas.Count > 0)
+                    {
+                        List<EmpresaDistribuidora> empresasList = 
+                                    (from x in db.Empresas where idEmpresas.Contains(x.EmpresaDistribuidoraID)
+                                      select x).ToList();
+
+                        foreach (var empresaDistribuidora in empresasList)
+                        {
+                            empresaDistribuidora.Ejecutivo = perfil;
+                        }
+
+                    }
+
+                    db.SaveChanges();
+                    scope.Complete();
+                }          
             }
         }
+
     }
 }
 

@@ -62,10 +62,9 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            // TODO
-            // este metodo tiene que obtener la lista de roles y agregarselos
-            // al modelo
-            return View();
+            var model = new RegisterModel();
+            model.EmpresasDistribuidoras = ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras();
+            return View(model);
         }
 
         //
@@ -83,7 +82,9 @@ namespace TallerAplicaciones.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
                     WebSecurity.Login(model.UserName, model.Password);
-                    this.AltaUsuario(model);
+
+                    AltaUsuario(model);
+
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -98,31 +99,48 @@ namespace TallerAplicaciones.Controllers
 
         private void AltaUsuario(RegisterModel model)
         {
-            PerfilUsuario nuevoPerfilUsuario = ObtenerPerfilUsuarioSegunRol(model.Rol);
-            nuevoPerfilUsuario.Nombre = model.Nombre;
-            nuevoPerfilUsuario.Apellido = model.Apellido;
-            nuevoPerfilUsuario.Email = model.Email;
-            nuevoPerfilUsuario.Activo = true;
-            IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
-            iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario, model.UserName);
-        }
-
-        // TODO
-        // esto esta muy mal hecho
-        // hay que arreglarlo
-        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int idRol)
-        {
-            switch (idRol)
+             IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
+           
+            PerfilUsuario perfil = null;
+            switch (model.Rol)
             {
                 case 0:
-                    return new Administrador();
+                    perfil= new Administrador()
+                    {
+                        Nombre = model.Nombre,
+                        Apellido = model.Apellido,
+                        Activo = true,
+                        Email = model.Email
+                    };
+                    iPerfil.AltaPerfilUsuario(perfil, model.UserName);
+                    break;
                 case 1:
-                    return new EjecutivoDeCuenta();
+                    perfil = new EjecutivoDeCuenta()
+                    {
+                        Nombre = model.Nombre,
+                        Apellido = model.Apellido,
+                        Activo = true,
+                        Email = model.Email,
+                     };
+                    iPerfil.AltaPerfilUsuario((EjecutivoDeCuenta) perfil, model.UserName, model.EmpresasSeleccionadas);
+//                    ManejadorPerfilUsuario.GetInstance()
+//                        .AsignarEmpresas((EjecutivoDeCuenta) perfil, model.EmpresasSeleccionadas);
+                    break;
                 case 2:
-                    return new Distribuidor();
+                    perfil = new Distribuidor()
+                    {
+                        Nombre = model.Nombre,
+                        Apellido = model.Apellido,
+                        Activo = true,
+                        Email = model.Email,
+                        Empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor)
+                    };
+                    iPerfil.AltaPerfilUsuario(perfil, model.UserName);
+                    break;
                 default:
                     throw new ArgumentException("Tipo de usuario invalido");
             }
+           
         }
 
         // TODO

@@ -1,4 +1,6 @@
-﻿@model TallerAplicaciones.Models.RegisterModel
+﻿@using System.Data.SqlClient
+@using System.Globalization
+@model TallerAplicaciones.Models.RegisterModel
 @{
     ViewBag.Title = "Register";
 }
@@ -20,13 +22,59 @@
                 @Html.TextBoxFor(m => m.UserName)
             </li>
             <li>
-                @Html.LabelFor(m => m.Rol)
-                @Html.DropDownList("Rol", new List<SelectListItem>
-                {
-                  new SelectListItem{ Text = "Administrador", Value = "0" },
-                  new SelectListItem{ Text = "Ejecutivo de Cuentas", Value = "1" },
-                  new SelectListItem{ Text = "Distribuidor", Value = "2" } 
-                })
+                <table style="border:none">
+                    <tr>
+                        <td>
+                                @Html.LabelFor(m => m.Rol)
+                                @Html.DropDownList("Rol", new List<SelectListItem>
+                                {
+                                    new SelectListItem{ Text = "Administrador", Value = "0" },
+                                    new SelectListItem{ Text = "Ejecutivo de Cuentas", Value = "1" },
+                                    new SelectListItem{ Text = "Distribuidor", Value = "2" } 
+                                },new { @onchange="changeRol();" } ) 
+                        </td>
+                        <td>
+                            <div class="notRolAdmin notRolEjec rolDist" style="display:none">
+                                @Html.LabelFor(m=> m.EmpresaDelDistribuidor)
+                                @if (Model.EmpresasDistribuidoras.Count() > 0)
+                                {
+                                    @Html.DropDownListFor(m => m.EmpresaDelDistribuidor,
+                                       Model.EmpresasDistribuidoras.Select(item => new SelectListItem
+                                    {
+                                        Value = item.EmpresaDistribuidoraID.ToString(),
+                                        Text = item.Nombre.ToString(),
+                                        Selected = Model.EmpresaDelDistribuidor == item.EmpresaDistribuidoraID ? true : false
+                                    }))
+                                }else
+                                {
+                                    @("No hay empresas en el sistema.")
+                                }
+                        
+                            </div>
+                             <div class="notRolAdmin notRolDist rolEjec" style="display:none">
+                                @Html.LabelFor(m=> m.EmpresasSeleccionadas)
+                                @if (Model.EmpresasDistribuidoras.Count(item => item.Ejecutivo == null) > 0)
+                                {
+                                    @Html.ListBoxFor(m => m.EmpresasSeleccionadas,
+                                            Model.EmpresasDistribuidoras.Where(item => item.Ejecutivo == null).Select(item => new SelectListItem
+                                       {
+                                           Value = item.EmpresaDistribuidoraID.ToString(),
+                                           Text = item.Nombre.ToString(),
+                                           Selected = Model.EmpresasSeleccionadas.Contains(item.EmpresaDistribuidoraID) ? true : false
+                                       }))
+                                }
+                                else
+                                {
+                                      @("No hay empresas en el sistema.")
+                                }
+                             </div>
+                        </td>
+
+                    </tr>
+                </table>
+          
+
+
             </li>
             <li>
                 @Html.LabelFor(m => m.Nombre)
@@ -55,5 +103,27 @@
 }
 
 @section Scripts {
+    <script>
+        function  changeRol() {
+
+            switch ($("#Rol").val()) {
+                case "0":
+                    $(".rolAdmin").show();
+                    $(".notRolAdmin").hide();
+                break;
+            case "1":
+                $(".rolEjec").show();
+                $(".notRolEjec").hide();
+                    break;
+                case "2":
+                    $(".rolDist").show();
+                    $(".notRolDist").hide();
+                    break;
+                default:
+                 alert("La opcion seleccioanda no es correcta");
+            }
+           
+        }
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
