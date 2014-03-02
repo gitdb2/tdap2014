@@ -7,6 +7,7 @@
 <h2>Lista de Empresas</h2>
 
  @Html.ListBoxFor(model => model.Empresas, new MultiSelectList(Model.Empresas, "EmpresaDistribuidoraID", "Nombre"), new { @id = "EmpresaDistribuidoraID" })
+ 
  <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

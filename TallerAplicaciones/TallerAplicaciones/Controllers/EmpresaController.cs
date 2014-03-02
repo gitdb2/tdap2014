@@ -72,7 +72,7 @@ namespace TallerAplicaciones.Controllers
                     IEmpresaDistribuidora iEmpresa = ManejadorEmpresaDistribuidora.GetInstance();
                     iEmpresa.AltaEmpresa(new EmpresaDistribuidora() { Nombre = model.Nombre});
 
-                    return RedirectToAction("Create");
+                    return RedirectToAction("List");
                   
                 }
                 catch (Exception e)
