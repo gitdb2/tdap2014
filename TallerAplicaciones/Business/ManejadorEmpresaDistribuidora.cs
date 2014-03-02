@@ -52,7 +52,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
                 else
                 {
-                    ret = db.Empresas.ToList(); 
+
+                    ret = db.Empresas.Include("Ejecutivo").Where(e => e.Activo == true).ToList(); 
                 }
                
                 

@@ -36,7 +36,7 @@
                         <td>
                             <div class="notRolAdmin notRolEjec rolDist" style="display:none">
                                 @Html.LabelFor(m=> m.EmpresaDelDistribuidor)
-                                @if (Model.EmpresasDistribuidoras.Count > 0)
+                                @if (Model.EmpresasDistribuidoras.Count() > 0)
                                 {
                                     @Html.DropDownListFor(m => m.EmpresaDelDistribuidor,
                                        Model.EmpresasDistribuidoras.Select(item => new SelectListItem
@@ -53,10 +53,10 @@
                             </div>
                              <div class="notRolAdmin notRolDist rolEjec" style="display:none">
                                 @Html.LabelFor(m=> m.EmpresasSeleccionadas)
-                                @if (Model.EmpresasDistribuidoras.Count > 0)
+                                @if (Model.EmpresasDistribuidoras.Count(item => item.Ejecutivo == null) > 0)
                                 {
                                     @Html.ListBoxFor(m => m.EmpresasSeleccionadas,
-                                       Model.EmpresasDistribuidoras.Select(item => new SelectListItem
+                                            Model.EmpresasDistribuidoras.Where(item => item.Ejecutivo == null).Select(item => new SelectListItem
                                        {
                                            Value = item.EmpresaDistribuidoraID.ToString(),
                                            Text = item.Nombre.ToString(),
