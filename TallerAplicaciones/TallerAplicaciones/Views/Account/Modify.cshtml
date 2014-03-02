@@ -15,6 +15,12 @@
         <legend>Datos</legend>
         <ol>
             <li>
+                @Html.HiddenFor(m => m.PerfilUsuarioID)
+            </li>
+            <li>
+                @Html.HiddenFor(m => m.Rol)
+            </li>
+            <li>
                 @Html.LabelFor(m => m.UserName)
                 @Html.TextBoxFor(m => m.UserName, new { @readonly="readonly" })
             </li>
