@@ -107,6 +107,9 @@ namespace TallerAplicaciones.Controllers
             iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario, model.UserName);
         }
 
+        // TODO
+        // esto esta muy mal hecho
+        // hay que arreglarlo
         private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int idRol)
         {
             switch (idRol)
@@ -119,6 +122,29 @@ namespace TallerAplicaciones.Controllers
                     return new Distribuidor();
                 default:
                     throw new ArgumentException("Tipo de usuario invalido");
+            }
+        }
+
+        // TODO
+        // esto esta muy mal hecho
+        // hay que arreglarlo
+        private int ObtenerRolSegunPerfilUsuario(PerfilUsuario perfil)
+        {
+            if (perfil is Administrador)
+            {
+                return 0;
+            } 
+            else if (perfil is EjecutivoDeCuenta)
+            {
+                return 1;
+            }
+            else if (perfil is Distribuidor)
+            {
+                return 2;
+            }
+            else
+            {
+                throw new ArgumentException("Tipo de usuario invalido");
             }
         }
 
@@ -279,6 +305,7 @@ namespace TallerAplicaciones.Controllers
                 PerfilUsuario perfil = iPerfilUsuario.ObtenerPerfil(idPerfilUsuario);
                 model = new ModificarUsuarioModel() { 
                     PerfilUsuarioID = idPerfilUsuario,
+                    Rol = ObtenerRolSegunPerfilUsuario(perfil),
                     Nombre = perfil.Nombre,
                     Apellido = perfil.Apellido,
                     Email = perfil.Email,
