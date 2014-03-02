@@ -9,13 +9,15 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
     public interface IPerfilUsuario
     {
 
-         void AltaPerfilUsuario(PerfilUsuario perfil, string loginUsuario);
+        void AltaPerfilUsuario(PerfilUsuario perfil, string loginUsuario);
 
-         void ModificarPerfilUsuario(PerfilUsuario perfil);
+        void ModificarPerfilUsuario(PerfilUsuario perfil);
         
-         void BajaPerfilUsuario(int idPerfil);
+        void BajaPerfilUsuario(int idPerfil);
 
-         List<PerfilUsuario> ListarUsuarios(bool incluirInactivos);
+        PerfilUsuario ObtenerPerfil(int idPerfil);
+
+        List<PerfilUsuario> ListarUsuarios(bool incluirInactivos);
 
     }
 }

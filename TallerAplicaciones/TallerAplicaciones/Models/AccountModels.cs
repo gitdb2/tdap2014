@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Globalization;
@@ -81,13 +82,39 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Confirmar password")]
         [Compare("Password", ErrorMessage = "El password y la confirmacion no coinciden")]
         public string ConfirmPassword { get; set; }
-
     }
 
     public class UsuarioListModel
     {
         [Display(Name = "Usuarios")]
         public List<PerfilUsuario> PerfilesDeUsuario { get; set; }
+    }
+
+    public class ModificarUsuarioModel
+    {
+        public int PerfilUsuarioID { get; set; }
+
+        [Required]
+        [Display(Name = "Login")]
+        public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "Rol")]
+        public int Rol { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre")]
+        public string Nombre { get; set; }
+
+        [Required]
+        [Display(Name = "Apellido")]
+        public string Apellido { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Ingrese una direccion de email valida")]
+        public string Email { get; set; }
+
     }
 
 }

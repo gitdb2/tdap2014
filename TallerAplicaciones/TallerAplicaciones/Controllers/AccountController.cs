@@ -266,6 +266,32 @@ namespace TallerAplicaciones.Controllers
             return RedirectToAction("List");
         }
 
+        //
+        // GET: /Account/Modify
+
+        [AllowAnonymous]
+        public ActionResult Modify(int idPerfilUsuario)
+        {
+            ModificarUsuarioModel model = null;
+            try
+            {
+                IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
+                PerfilUsuario perfil = iPerfilUsuario.ObtenerPerfil(idPerfilUsuario);
+                model = new ModificarUsuarioModel() { 
+                    //PerfilUsuarioID = idPerfilUsuario, 
+                    Nombre = perfil.Nombre,
+                    Apellido = perfil.Apellido,
+                    Email = perfil.Email,
+                    UserName = perfil.Usuario.Login
+                };
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
+            return View(model);
+        }
+
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {

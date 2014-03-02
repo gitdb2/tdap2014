@@ -64,6 +64,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+        public PerfilUsuario ObtenerPerfil(int idPerfil)
+        {
+            using (var db = new Persistencia())
+            {
+                return db.PerfilesUsuario.Include("Usuario").SingleOrDefault(u => u.PerfilUsuarioID == idPerfil);
+            }
+        }
     }
 }
 
