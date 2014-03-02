@@ -35,7 +35,7 @@
                         </td>
                         <td>
                             <div class="notRolAdmin notRolEjec rolDist" style="display:none">
-                                @Html.Label("Empresa Distribuidora")
+                                @Html.LabelFor(m=> m.EmpresaDelDistribuidor)
                                 @if (Model.EmpresasDistribuidoras.Count > 0)
                                 {
                                     @Html.DropDownListFor(m => m.EmpresaDelDistribuidor,
@@ -45,10 +45,6 @@
                                         Text = item.Nombre.ToString(),
                                         Selected = Model.EmpresaDelDistribuidor == item.EmpresaDistribuidoraID ? true : false
                                     }))
-
-
-//                                    EmpresaDelDistribuidor
-//                                    @Html.ListBoxFor(model => model.EmpresasSeleccionadas, new SelectList(Model.EmpresasDistribuidoras, "EmpresaDistribuidoraID", "Nombre"), new { @id = "EmpresaDistribuidoraID" })
                                 }else
                                 {
                                     @("No hay empresas en el sistema.")
@@ -56,8 +52,22 @@
                         
                             </div>
                              <div class="notRolAdmin notRolDist rolEjec" style="display:none">
-                                ejec
-                            </div>
+                                @Html.LabelFor(m=> m.EmpresasSeleccionadas)
+                                @if (Model.EmpresasDistribuidoras.Count > 0)
+                                {
+                                    @Html.ListBoxFor(m => m.EmpresasSeleccionadas,
+                                       Model.EmpresasDistribuidoras.Select(item => new SelectListItem
+                                       {
+                                           Value = item.EmpresaDistribuidoraID.ToString(),
+                                           Text = item.Nombre.ToString(),
+                                           Selected = Model.EmpresasSeleccionadas.Contains(item.EmpresaDistribuidoraID) ? true : false
+                                       }))
+                                }
+                                else
+                                {
+                                      @("No hay empresas en el sistema.")
+                                }
+                             </div>
                         </td>
 
                     </tr>

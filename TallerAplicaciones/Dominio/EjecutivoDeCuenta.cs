@@ -14,8 +14,13 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         }
 
-        public List<EmpresaDistribuidora> Empresas { get; set; }
+//        public List<EmpresaDistribuidora> Empresas { get; set; }
         public List<Pedido> Pedidos { get; set; }
-        
+
+
+        public void AsignarEmpresas(List<EmpresaDistribuidora> empresas)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

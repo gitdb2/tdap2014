@@ -48,6 +48,11 @@ namespace TallerAplicaciones.Models
 
     public class RegisterModel
     {
+        public RegisterModel ()
+        {
+            EmpresasSeleccionadas = new List<int>();
+            EmpresasDistribuidoras =  new List<EmpresaDistribuidora>();
+        }
         public bool Activo = true;
 
         [Required]

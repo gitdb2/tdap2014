@@ -106,40 +106,35 @@ namespace TallerAplicaciones.Controllers
 
         private void AltaUsuario(RegisterModel model)
         {
-            PerfilUsuario nuevoPerfilUsuario = ObtenerPerfilUsuarioSegunRol(model);
-            nuevoPerfilUsuario.Nombre = model.Nombre;
-            nuevoPerfilUsuario.Apellido = model.Apellido;
-            nuevoPerfilUsuario.Email = model.Email;
-            nuevoPerfilUsuario.Activo = true;
-            IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
-            iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario, model.UserName);
-        }
-
-        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(RegisterModel model)
-        {
-            PerfilUsuario ret = null;
+             IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
+           
+            PerfilUsuario perfil = null;
             switch (model.Rol)
             {
                 case 0:
-                    ret= new Administrador()
+                    perfil= new Administrador()
                     {
                         Nombre = model.Nombre,
                         Apellido = model.Apellido,
                         Activo = true,
                         Email = model.Email
                     };
+                    iPerfil.AltaPerfilUsuario(perfil, model.UserName);
                     break;
                 case 1:
-                    ret = new EjecutivoDeCuenta()
+                    perfil = new EjecutivoDeCuenta()
                     {
                         Nombre = model.Nombre,
                         Apellido = model.Apellido,
                         Activo = true,
-                        Email = model.Email
-                    };
+                        Email = model.Email,
+                     };
+                    iPerfil.AltaPerfilUsuario((EjecutivoDeCuenta) perfil, model.UserName, model.EmpresasSeleccionadas);
+//                    ManejadorPerfilUsuario.GetInstance()
+//                        .AsignarEmpresas((EjecutivoDeCuenta) perfil, model.EmpresasSeleccionadas);
                     break;
                 case 2:
-                    ret = new Distribuidor()
+                    perfil = new Distribuidor()
                     {
                         Nombre = model.Nombre,
                         Apellido = model.Apellido,
@@ -147,11 +142,12 @@ namespace TallerAplicaciones.Controllers
                         Email = model.Email,
                         Empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor)
                     };
+                    iPerfil.AltaPerfilUsuario(perfil, model.UserName);
                     break;
                 default:
                     throw new ArgumentException("Tipo de usuario invalido");
             }
-            return ret;
+           
         }
 
         //
