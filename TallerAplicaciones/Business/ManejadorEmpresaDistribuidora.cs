@@ -24,19 +24,38 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public void AltaEmpresa(EmpresaDistribuidora empresa)
         {
-            using (Persistencia db = new Persistencia())
+            using (var db = new Persistencia())
             {
                 db.Empresas.Add(empresa);
                 db.SaveChanges();
             }
         }
 
+        public EmpresaDistribuidora GetEmpresaDistribuidora(int id)
+        {
+            EmpresaDistribuidora ret = null;
+            using (var db = new Persistencia())
+            {
+                ret = db.Empresas.First(e => e.EmpresaDistribuidoraID == id);
+            }
+            return ret;
+        }
+
         public List<EmpresaDistribuidora> ListarEmpresasDistribuidoras()
         {
             List<EmpresaDistribuidora> ret = null;
-            using (Persistencia db = new Persistencia())
+            using (var db = new Persistencia())
             {
-                ret = db.Empresas.ToList();
+                if (db.Empresas.Count() == 0)
+                {
+                    ret = new List<EmpresaDistribuidora>();
+                }
+                else
+                {
+
+                    ret = db.Empresas.Include("Ejecutivo").Where(e => e.Activo == true).ToList(); 
+                }
+               
                 
             }
             return ret;

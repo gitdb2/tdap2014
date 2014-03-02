@@ -19,5 +19,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         List<PerfilUsuario> ListarUsuarios(bool incluirInactivos);
 
+
+         void AltaPerfilUsuario(EjecutivoDeCuenta ejecutivoDeCuenta, string login, List<int> empresas);
     }
 }
