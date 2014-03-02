@@ -28,7 +28,8 @@
             <td>@item.Apellido</td>
             <td>@item.Email</td>
             <td>@item.Activo</td>
-            <td><a href="">Modificar</a> | <a href="">Eliminar</a></td>
+            <td>@Html.ActionLink("Eliminar", "Delete", "AccountController", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)
+                | @Html.ActionLink("Modificar", "Modify", "AccountController", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)</td>
         </tr>
     }   
     </tbody>

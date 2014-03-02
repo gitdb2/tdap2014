@@ -13,7 +13,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
          void ModificarPerfilUsuario(PerfilUsuario perfil);
         
-         void BajaPerfilUsuario(PerfilUsuario perfil);
+         void BajaPerfilUsuario(int idPerfil);
 
          List<PerfilUsuario> ListarUsuarios(bool incluirInactivos);
 

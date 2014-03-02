@@ -35,9 +35,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             throw new NotImplementedException();
         }
 
-        public void BajaPerfilUsuario(PerfilUsuario perfil)
+        public void BajaPerfilUsuario(int idPerfil)
         {
-            throw new NotImplementedException();
+
         }
 
         public List<PerfilUsuario> ListarUsuarios(bool incluirInactivos)
