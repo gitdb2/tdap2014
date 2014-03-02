@@ -7,15 +7,19 @@
 
 <h2>Lista de Usuarios</h2>
 
-<table>
-    <tr>
-        <td>Login</td>
-        <td>Nombre</td>
-        <td>Apellido</td>
-        <td>Email</td>
-        <td>Activo</td>
-    </tr>
-    @foreach (var item in Model.PerfilesDeUsuario)
+<table id="tablaPerfilesUsuario">
+    <thead>
+        <tr>
+            <th>Login</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Activo</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+     @foreach (var item in Model.PerfilesDeUsuario)
     {
         <tr>
             <td>@item.Usuario.Login</td>
@@ -24,7 +28,9 @@
             <td>@item.Email</td>
             <td>@item.Activo</td>
         </tr>
-    }
+    }   
+    </tbody>
+
 </table>
 
 <div>
