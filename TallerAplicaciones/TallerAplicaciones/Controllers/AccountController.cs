@@ -69,7 +69,9 @@ namespace TallerAplicaciones.Controllers
             // TODO
             // este metodo tiene que obtener la lista de roles y agregarselos
             // al modelo
-            return View();
+            RegisterModel model = new RegisterModel();
+            model.EmpresasDistribuidoras = ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras();
+            return View(model);
         }
 
         //

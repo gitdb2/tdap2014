@@ -36,7 +36,15 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             List<EmpresaDistribuidora> ret = null;
             using (Persistencia db = new Persistencia())
             {
-                ret = db.Empresas.ToList();
+                if (db.Empresas.Count() == 0)
+                {
+                    ret = new List<EmpresaDistribuidora>();
+                }
+                else
+                {
+                    ret = db.Empresas.ToList(); 
+                }
+               
                 
             }
             return ret;

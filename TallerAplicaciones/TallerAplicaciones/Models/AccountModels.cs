@@ -82,6 +82,9 @@ namespace TallerAplicaciones.Models
         [Compare("Password", ErrorMessage = "El password y la confirmacion no coinciden")]
         public string ConfirmPassword { get; set; }
 
+        public List<EmpresaDistribuidora> EmpresasDistribuidoras { get; set; }
+        public List<int> EmpresasSeleccionadas { get; set; }
+
     }
 
     public class UsuarioListModel
