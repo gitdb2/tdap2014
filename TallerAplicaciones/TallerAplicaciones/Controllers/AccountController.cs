@@ -89,7 +89,9 @@ namespace TallerAplicaciones.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
                     WebSecurity.Login(model.UserName, model.Password);
-                    this.AltaUsuario(model);
+
+                    AltaUsuario(model);
+
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -104,7 +106,7 @@ namespace TallerAplicaciones.Controllers
 
         private void AltaUsuario(RegisterModel model)
         {
-            PerfilUsuario nuevoPerfilUsuario = ObtenerPerfilUsuarioSegunRol(model.Rol);
+            PerfilUsuario nuevoPerfilUsuario = ObtenerPerfilUsuarioSegunRol(model);
             nuevoPerfilUsuario.Nombre = model.Nombre;
             nuevoPerfilUsuario.Apellido = model.Apellido;
             nuevoPerfilUsuario.Email = model.Email;
@@ -113,19 +115,43 @@ namespace TallerAplicaciones.Controllers
             iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario, model.UserName);
         }
 
-        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int idRol)
+        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(RegisterModel model)
         {
-            switch (idRol)
+            PerfilUsuario ret = null;
+            switch (model.Rol)
             {
                 case 0:
-                    return new Administrador();
+                    ret= new Administrador()
+                    {
+                        Nombre = model.Nombre,
+                        Apellido = model.Apellido,
+                        Activo = true,
+                        Email = model.Email
+                    };
+                    break;
                 case 1:
-                    return new EjecutivoDeCuenta();
+                    ret = new EjecutivoDeCuenta()
+                    {
+                        Nombre = model.Nombre,
+                        Apellido = model.Apellido,
+                        Activo = true,
+                        Email = model.Email
+                    };
+                    break;
                 case 2:
-                    return new Distribuidor();
+                    ret = new Distribuidor()
+                    {
+                        Nombre = model.Nombre,
+                        Apellido = model.Apellido,
+                        Activo = true,
+                        Email = model.Email,
+                        Empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor)
+                    };
+                    break;
                 default:
                     throw new ArgumentException("Tipo de usuario invalido");
             }
+            return ret;
         }
 
         //
