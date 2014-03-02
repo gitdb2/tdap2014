@@ -106,6 +106,7 @@ namespace TallerAplicaciones.Controllers
             nuevoPerfilUsuario.Nombre = model.Nombre;
             nuevoPerfilUsuario.Apellido = model.Apellido;
             nuevoPerfilUsuario.Email = model.Email;
+            nuevoPerfilUsuario.Activo = true;
             IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
             iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario, model.UserName);
         }

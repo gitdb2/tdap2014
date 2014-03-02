@@ -46,11 +46,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 if (incluirInactivos)
                 {
-                    return db.PerfilesUsuario.ToList();
+                    return db.PerfilesUsuario.Include("Usuario").ToList();
                 }
                 else
                 {
-                    return (db.PerfilesUsuario.Where(p => p.Activo == false)).ToList();
+                    return (db.PerfilesUsuario.Include("Usuario").Where(p => p.Activo == false)).ToList();
                 }
             }
         }

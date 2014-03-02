@@ -7,9 +7,27 @@
 
 <h2>Lista de Usuarios</h2>
 
- @Html.ListBoxFor(model => model.PerfilesDeUsuario, new MultiSelectList(Model.PerfilesDeUsuario, "PerfilUsuarioID", "Nombre"), new { @id = "PerfilUsuarioID" })
- 
- <div>
+<table>
+    <tr>
+        <td>Login</td>
+        <td>Nombre</td>
+        <td>Apellido</td>
+        <td>Email</td>
+        <td>Activo</td>
+    </tr>
+    @foreach (var item in Model.PerfilesDeUsuario)
+    {
+        <tr>
+            <td>@item.Usuario.Login</td>
+            <td>@item.Nombre</td>
+            <td>@item.Apellido</td>
+            <td>@item.Email</td>
+            <td>@item.Activo</td>
+        </tr>
+    }
+</table>
+
+<div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
