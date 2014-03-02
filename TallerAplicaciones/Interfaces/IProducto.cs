@@ -15,7 +15,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         void ModificarProducto(Producto producto);
 
-        List<IProducto> ListarProductos();
+        List<Producto> ListarProductos();
 
         void AgregarImagenProducto(int idProducto, Archivo imagen);
 

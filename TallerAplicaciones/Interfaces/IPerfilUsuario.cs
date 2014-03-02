@@ -15,7 +15,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
         
          void BajaPerfilUsuario(PerfilUsuario perfil);
 
-         List<PerfilUsuario> ListarUsuarios();
+         List<PerfilUsuario> ListarUsuarios(bool incluirInactivos);
 
     }
 }
