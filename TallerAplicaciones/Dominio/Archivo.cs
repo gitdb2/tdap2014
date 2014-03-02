@@ -14,5 +14,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public string URL { get; set; }
         public long Tamanio { get; set; }
 
+        public bool Activo { get; set; }
+
     }
 }

@@ -10,26 +10,6 @@ using System.Web.DynamicData;
 
 namespace TallerAplicaciones.Models
 {
-    /*
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("DefaultConnection")
-        {
-        }
-
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
-
-    [Table("UserProfile")]
-    public class UserProfile
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-    }
-     */
 
     public class RegisterExternalLoginModel
     {
@@ -76,6 +56,8 @@ namespace TallerAplicaciones.Models
 
     public class RegisterModel
     {
+        public bool Activo = true;
+
         [Required]
         [Display(Name = "Login")]
         public string UserName { get; set; }
@@ -107,6 +89,7 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Confirmar password")]
         [Compare("Password", ErrorMessage = "El password y la confirmacion no coinciden")]
         public string ConfirmPassword { get; set; }
+
     }
 
     public class ExternalLogin

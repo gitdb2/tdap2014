@@ -25,6 +25,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public DbSet<Atributo> Atributos { get; set; }
 
+        public DbSet<Usuario> Usuarios { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -40,12 +42,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 context.Database.Delete();
             }
-
             if (!context.Database.Exists())
             {
                 context.Database.Create();
-                context.Database.ExecuteSqlCommand("ALTER TABLE \"Usuario\" ADD CONSTRAINT UniqueLoginUsuario UNIQUE (login)");
-                context.Database.ExecuteSqlCommand("ALTER TABLE \"PerfilUsuario\" ADD CONSTRAINT UniqueLoginPerfilUsuario UNIQUE (login)");
             }
         }
     }
