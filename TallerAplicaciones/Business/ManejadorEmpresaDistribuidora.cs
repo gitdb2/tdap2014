@@ -46,17 +46,14 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             List<EmpresaDistribuidora> ret = null;
             using (var db = new Persistencia())
             {
-                if (db.Empresas.Count() == 0)
+                if (!db.Empresas.Any())
                 {
                     ret = new List<EmpresaDistribuidora>();
                 }
                 else
                 {
-
-                    ret = db.Empresas.Include("Ejecutivo").Where(e => e.Activo == true).ToList(); 
+                    ret = db.Empresas.Include("Ejecutivo").Where(e => e.Activo).ToList(); 
                 }
-               
-                
             }
             return ret;
         }

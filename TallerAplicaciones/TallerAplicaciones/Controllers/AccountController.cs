@@ -99,7 +99,7 @@ namespace TallerAplicaciones.Controllers
 
         private void AltaUsuario(RegisterModel model)
         {
-             IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
+            IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
            
             PerfilUsuario perfil = null;
             switch (model.Rol)
@@ -163,6 +163,24 @@ namespace TallerAplicaciones.Controllers
             else
             {
                 throw new ArgumentException("Tipo de usuario invalido");
+            }
+        }
+
+        // TODO
+        // esto esta muy mal hecho
+        // hay que arreglarlo
+        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int rolId)
+        {
+            switch (rolId)
+            {
+                case 0:
+                    return new Administrador();
+                case 1:
+                    return new EjecutivoDeCuenta();
+                case 2:
+                    return new Distribuidor();
+                default:
+                    throw new ArgumentException("Tipo de usuario invalido");
             }
         }
 
