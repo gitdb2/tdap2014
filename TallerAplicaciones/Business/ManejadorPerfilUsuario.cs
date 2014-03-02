@@ -50,7 +50,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
                 else
                 {
-                    return (db.PerfilesUsuario.Include("Usuario").Where(p => p.Activo == false)).ToList();
+                    return (db.PerfilesUsuario.Include("Usuario").Where(p => p.Activo)).ToList();
                 }
             }
         }
