@@ -34,7 +34,15 @@
                         </td>
                         <td>
                             <div class="notRolAdmin notRolEjec rolDist" style="display:none">
-                                dist
+                                @Html.Label("Empresa Distribuidora")
+                                @if (Model.EmpresasDistribuidoras.Count > 0)
+                                {
+                                    @Html.ListBoxFor(model => model.EmpresasSeleccionadas, new SelectList(Model.EmpresasDistribuidoras, "EmpresaDistribuidoraID", "Nombre"), new { @id = "EmpresaDistribuidoraID" })
+                                }else
+                                {
+                                    @("No hay empresas en el sistema.")
+                                }
+                        
                             </div>
                              <div class="notRolAdmin notRolDist rolEjec" style="display:none">
                                 ejec

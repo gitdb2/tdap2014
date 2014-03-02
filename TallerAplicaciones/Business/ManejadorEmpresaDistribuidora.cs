@@ -34,7 +34,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         public List<EmpresaDistribuidora> ListarEmpresasDistribuidoras()
         {
             List<EmpresaDistribuidora> ret = null;
-            using (Persistencia db = new Persistencia())
+            using (var db = new Persistencia())
             {
                 if (db.Empresas.Count() == 0)
                 {

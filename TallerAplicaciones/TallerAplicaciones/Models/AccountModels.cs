@@ -68,11 +68,11 @@ namespace TallerAplicaciones.Models
 
         [Required]
         [Display(Name = "Email")]
-        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Ingrese una direccion de email valida")]
+   //     [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Ingrese una direccion de email valida")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} caracteres", MinimumLength = 6)]
+    //    [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} caracteres", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -82,7 +82,15 @@ namespace TallerAplicaciones.Models
         [Compare("Password", ErrorMessage = "El password y la confirmacion no coinciden")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Empresas Distribuidoras")]
         public List<EmpresaDistribuidora> EmpresasDistribuidoras { get; set; }
+
+   //     [Required]
+        [Display(Name = "Empresa del Distribuidor")]
+        public int EmpresaDelDistribuidor { get; set; }
+
+      //  [Required]
+        [Display(Name = "Empresa Distribuidoras Asosciadas")]
         public List<int> EmpresasSeleccionadas { get; set; }
 
     }

@@ -21,9 +21,10 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public void AltaPerfilUsuario(PerfilUsuario perfil, string loginUsuario)
         {
-            using (Persistencia db = new Persistencia())
+            using (var db = new Persistencia())
             {
                 Usuario usuario = db.Usuarios.SingleOrDefault(u => u.Login == loginUsuario);
+                
                 perfil.Usuario = usuario;
                 db.PerfilesUsuario.Add(perfil);
                 db.SaveChanges();
@@ -42,7 +43,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public List<PerfilUsuario> ListarUsuarios(bool incluirInactivos)
         {
-            using (Persistencia db = new Persistencia())
+            using (var db = new Persistencia())
             {
                 if (incluirInactivos)
                 {
