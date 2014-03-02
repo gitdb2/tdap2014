@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
-    public class ManejadorUsuario : IPerfilUsuario
+    public class ManejadorPerfilUsuario : IPerfilUsuario
     {
         #region singleton
-        private static ManejadorUsuario instance = new ManejadorUsuario();
+        private static ManejadorPerfilUsuario instance = new ManejadorPerfilUsuario();
 
-        private ManejadorUsuario() { }
+        private ManejadorPerfilUsuario() { }
 
-        public static ManejadorUsuario GetInstance()
+        public static ManejadorPerfilUsuario GetInstance()
         {
             return instance;
         }
@@ -41,10 +40,23 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             throw new NotImplementedException();
         }
 
-        public List<PerfilUsuario> ListarUsuarios()
+        public List<PerfilUsuario> ListarUsuarios(bool incluirInactivos)
         {
-            throw new NotImplementedException();
+            using (Persistencia db = new Persistencia())
+            {
+                if (incluirInactivos)
+                {
+                    return db.PerfilesUsuario.ToList();
+                }
+                else
+                {
+                    return (db.PerfilesUsuario.Where(p => p.Activo == false)).ToList();
+                }
+            }
         }
 
     }
 }
+
+
+

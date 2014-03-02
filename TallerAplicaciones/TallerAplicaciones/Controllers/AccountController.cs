@@ -106,7 +106,7 @@ namespace TallerAplicaciones.Controllers
             nuevoPerfilUsuario.Nombre = model.Nombre;
             nuevoPerfilUsuario.Apellido = model.Apellido;
             nuevoPerfilUsuario.Email = model.Email;
-            IPerfilUsuario iPerfil = ManejadorUsuario.GetInstance();
+            IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
             iPerfil.AltaPerfilUsuario(nuevoPerfilUsuario, model.UserName);
         }
 
@@ -239,9 +239,15 @@ namespace TallerAplicaciones.Controllers
         public ActionResult List()
         {
             UsuarioListModel model = null;
-
-            ////
-
+            try
+            {
+                IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
+                model = new UsuarioListModel() { PerfilesDeUsuario = iPerfilUsuario.ListarUsuarios(false) };
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
             return View(model);
         }
 
@@ -320,5 +326,10 @@ namespace TallerAplicaciones.Controllers
             }
         }
         #endregion
+
+        public ActionResult Index()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

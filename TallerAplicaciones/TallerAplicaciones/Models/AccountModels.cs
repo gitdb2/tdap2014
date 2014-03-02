@@ -7,18 +7,10 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 using System.Web.DynamicData;
+using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace TallerAplicaciones.Models
 {
-
-    public class RegisterExternalLoginModel
-    {
-        [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
-
-        public string ExternalLoginData { get; set; }
-    }
 
     public class LocalPasswordModel
     {
@@ -92,10 +84,10 @@ namespace TallerAplicaciones.Models
 
     }
 
-    public class ExternalLogin
+    public class UsuarioListModel
     {
-        public string Provider { get; set; }
-        public string ProviderDisplayName { get; set; }
-        public string ProviderUserId { get; set; }
+        [Display(Name = "Usuarios")]
+        public List<PerfilUsuario> PerfilesDeUsuario { get; set; }
     }
+
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.interfaces;
+using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
@@ -19,7 +20,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-        public void AltaProducto(dominio.Producto producto)
+        public void AltaProducto(Producto producto)
         {
             throw new NotImplementedException();
         }
@@ -29,22 +30,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             throw new NotImplementedException();
         }
 
-        public void ModificarProducto(dominio.Producto producto)
+        public void ModificarProducto(Producto producto)
         {
             throw new NotImplementedException();
         }
 
-        public List<IProducto> ListarProductos()
+        public List<Producto> ListarProductos()
         {
             throw new NotImplementedException();
         }
 
-        public void AgregarImagenProducto(int idProducto, dominio.Archivo imagen)
+        public void AgregarImagenProducto(int idProducto, Archivo imagen)
         {
             throw new NotImplementedException();
         }
 
-        public void AgregarVideoProducto(int idProducto, dominio.Archivo video)
+        public void AgregarVideoProducto(int idProducto, Archivo video)
         {
             throw new NotImplementedException();
         }

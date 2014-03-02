@@ -1,0 +1,18 @@
+﻿@model TallerAplicaciones.Models.UsuarioListModel
+
+@{
+    ViewBag.Title = "Lista de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Usuarios</h2>
+
+ @Html.ListBoxFor(model => model.PerfilesDeUsuario, new MultiSelectList(Model.PerfilesDeUsuario, "PerfilUsuarioID", "Nombre"), new { @id = "PerfilUsuarioID" })
+ 
+ <div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
