@@ -126,8 +126,6 @@ namespace TallerAplicaciones.Controllers
                         Email = model.Email,
                      };
                     iPerfil.AltaPerfilUsuario((EjecutivoDeCuenta) perfil, model.UserName, model.EmpresasSeleccionadas);
-//                    ManejadorPerfilUsuario.GetInstance()
-//                        .AsignarEmpresas((EjecutivoDeCuenta) perfil, model.EmpresasSeleccionadas);
                     break;
                 case 2:
                     perfil = new Distribuidor()

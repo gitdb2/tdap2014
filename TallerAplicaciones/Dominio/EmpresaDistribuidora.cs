@@ -7,10 +7,16 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 {
     public class EmpresaDistribuidora
     {
+        public EmpresaDistribuidora()
+        {
+            Activo = true;
+            Ejecutivo = null;
+        }
+
         public int EmpresaDistribuidoraID { get; set; }
 
         public string Nombre { get; set; }
-        public List<Distribuidor> Usuarios { get; set; }
+   
         public EjecutivoDeCuenta Ejecutivo { get; set; }
 
         public bool Activo { get; set; }
