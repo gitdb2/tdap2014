@@ -15,11 +15,14 @@ namespace DistribuidoresApp
 {
     public partial class Home : Page
     {
+
+        public LoginUsuario LoginActual { get; set; }
+
         public Home()
         {
             InitializeComponent();
-            var loginUsuario = new LoginUsuario();
-            LayoutRoot.DataContext = loginUsuario;
+            LoginActual = new LoginUsuario();
+            LayoutRoot.DataContext = LoginActual;
         }
 
         // Executes when the user navigates to this page.
@@ -29,7 +32,8 @@ namespace DistribuidoresApp
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            IControlador iControlador = Controlador.GetInstance();
+            var resLogin = iControlador.Login(LoginActual.Usuario, LoginActual.Password);
         }
 
     }
