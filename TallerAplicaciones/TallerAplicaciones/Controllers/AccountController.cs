@@ -34,13 +34,17 @@ namespace TallerAplicaciones.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
+            var usuario = iPerfilUsuario.ObtenerUsuario(model.UserName);
+            if (usuario != null && usuario.Activo)
             {
-                return RedirectToLocal(returnUrl);
+                if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+                {
+                    return RedirectToLocal(returnUrl);
+                }    
             }
-
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "Usuario y/o Password invalido o Usuario inactivo");
             return View(model);
         }
 

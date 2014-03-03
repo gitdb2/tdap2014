@@ -116,6 +116,14 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+        public Usuario ObtenerUsuario(string login)
+        {
+            using (var db = new Persistencia())
+            {
+                return db.Usuarios.FirstOrDefault(u => u.Login == login);
+            }
+        }
+
     }
 }
 
