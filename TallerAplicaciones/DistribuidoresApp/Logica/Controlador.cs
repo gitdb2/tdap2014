@@ -26,10 +26,16 @@ namespace DistribuidoresApp
         }
         #endregion
 
+        public LoginUsuario LoginActual { get; set; }
+
         public bool Login(string usuario, string password)
         {
             return true;
         }
 
+        public void GuardarLoginActual(LoginUsuario loginActual)
+        {
+            this.LoginActual = loginActual;
+        }
     }
 }

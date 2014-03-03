@@ -17,5 +17,6 @@ namespace DistribuidoresApp
 
         bool Login(string usuario, string password);
 
+        void GuardarLoginActual(LoginUsuario loginActual);
     }
 }

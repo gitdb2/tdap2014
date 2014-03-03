@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DistribuidoresApp.Views;
 
 namespace DistribuidoresApp
 {
@@ -33,7 +34,13 @@ namespace DistribuidoresApp
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             IControlador iControlador = Controlador.GetInstance();
-            var resLogin = iControlador.Login(LoginActual.Usuario, LoginActual.Password);
+            var loginResult = iControlador.Login(LoginActual.Usuario, LoginActual.Password);
+            if (loginResult)
+            {
+                iControlador.GuardarLoginActual(LoginActual);
+                var proximaPagina = new DataDistribuidor();
+                this.Content = proximaPagina;
+            }
         }
 
     }
