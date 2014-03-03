@@ -162,23 +162,67 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     perfil.Empresa = empresa;
                     db.SaveChanges();
                 }
-
-     
-
-
-             /*   var perfil =
-                    db.PerfilesUsuario.OfType<Distribuidor>().SingleOrDefault(p => p.PerfilUsuarioID == idPerfil);
-                var empresa = db.Empresas.First(e => e.EmpresaDistribuidoraID == idNewCompany);
-                    //ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idNewCompany);
-                if (perfil != null && empresa != null)
-                {
-                    perfil.Empresa = null;
-                    perfil.Empresa = empresa;
-                    db.SaveChanges();
-                }
-*/
             }
         }
+
+        public EjecutivoDeCuenta FindEjecutivo(int idDistrib)
+        {
+            using (var db = new Persistencia())
+            {
+                return db.PerfilesUsuario.OfType<EjecutivoDeCuenta>()
+                    .Include(p => p.Usuario)
+                    .SingleOrDefault(p => p.PerfilUsuarioID == idDistrib);
+               
+            }
+        }
+
+        public void ModificarPerfilUsuario(EjecutivoDeCuenta perfil, List<int> idEmpresas)
+        {
+            using (var db = new Persistencia())
+            {
+               
+
+                EjecutivoDeCuenta dbejec = db.PerfilesUsuario
+                                             .OfType<EjecutivoDeCuenta>()
+                                             .Single(p => p.PerfilUsuarioID == perfil.PerfilUsuarioID);
+                if (dbejec != null)
+                {
+
+                    List<EmpresaDistribuidora> empresasDeEjec =
+                   db.Empresas
+                       .Include(e => e.Ejecutivo)
+                       .Where(e => e.Ejecutivo.PerfilUsuarioID == perfil.PerfilUsuarioID)
+                       .ToList();
+                    foreach (var empresa in empresasDeEjec)
+                    {
+                        empresa.Ejecutivo = null;
+                    }
+                List<EmpresaDistribuidora> empresasSelecccionadas =
+                    db.Empresas
+                        .Include(e => e.Ejecutivo)
+                        .Where(e => idEmpresas.Contains(e.EmpresaDistribuidoraID))
+                        .ToList();
+
+                foreach (var empresa in empresasSelecccionadas)
+                {
+                    empresa.Ejecutivo = dbejec;
+                }
+
+
+                dbejec.Nombre = perfil.Nombre;
+                dbejec.Apellido = perfil.Apellido;
+                dbejec.Email = perfil.Email;
+                dbejec.Activo = perfil.Activo;
+                }
+
+               
+
+                db.SaveChanges();
+                
+            }
+        }
+
+
     }
 }
 
