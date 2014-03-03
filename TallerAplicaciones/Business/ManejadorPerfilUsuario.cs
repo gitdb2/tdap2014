@@ -192,7 +192,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                
 
-                EjecutivoDeCuenta dbejec = db.PerfilesUsuario
+                EjecutivoDeCuenta dbejec = db.PerfilesUsuario.Include("Usuario")
                                              .OfType<EjecutivoDeCuenta>()
                                              .Single(p => p.PerfilUsuarioID == perfil.PerfilUsuarioID);
                 if (dbejec != null)
@@ -223,13 +223,16 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 dbejec.Apellido = perfil.Apellido;
                 dbejec.Email = perfil.Email;
                 dbejec.Activo = perfil.Activo;
+                dbejec.Usuario.Activo = perfil.Activo;
+
                 }
 
-               
 
                 db.SaveChanges();
                 
             }
+
+          
         }
 
 

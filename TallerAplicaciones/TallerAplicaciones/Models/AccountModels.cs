@@ -48,12 +48,13 @@ namespace TallerAplicaciones.Models
         {
             EmpresasSeleccionadas = new List<int>();
             EmpresasDistribuidoras =  new List<EmpresaDistribuidora>();
+            Activo = true;
         }
 
         public PerfilUsuario PerfilUsuario { get; set; }
         public int idPerfil { get; set; }
 
-        public bool Activo = true;
+        public bool Activo { get; set; }
 
         [Required]
         [Display(Name = "Login")]

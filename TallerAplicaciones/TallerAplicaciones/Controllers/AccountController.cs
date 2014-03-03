@@ -425,17 +425,19 @@ namespace TallerAplicaciones.Controllers
         public ActionResult ModifyDistribuidor(int idDistrib)
         {
             Distribuidor dist = ManejadorPerfilUsuario.GetInstance().FindDistribuidor(idDistrib);
-            var model = new RegisterModel();
-
-            model.PerfilUsuario = dist;
-            model.idPerfil = idDistrib;
-            model.Rol = dist.GetRol();
-            model.Nombre = dist.Nombre;
-            model.Apellido = dist.Apellido;
-            model.Email = dist.Email;
-            model.UserName = dist.Usuario.Login;
-            model.EmpresaDelDistribuidor = dist.Empresa.EmpresaDistribuidoraID;
-            model.EmpresasDistribuidoras = ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras();
+            var model = new RegisterModel
+            {
+                Activo = dist.Activo,
+                PerfilUsuario = dist,
+                idPerfil = idDistrib,
+                Rol = dist.GetRol(),
+                Nombre = dist.Nombre,
+                Apellido = dist.Apellido,
+                Email = dist.Email,
+                UserName = dist.Usuario.Login,
+                EmpresaDelDistribuidor = dist.Empresa.EmpresaDistribuidoraID,
+                EmpresasDistribuidoras = ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras()
+            };
 
             return View(model);
         }
@@ -453,6 +455,7 @@ namespace TallerAplicaciones.Controllers
               dist.Nombre = model.Nombre;
               dist.Apellido = model.Apellido;
               dist.Email = model.Email;
+            dist.Activo = model.Activo;
 
            ManejadorPerfilUsuario.GetInstance().ModificarPerfilUsuario(dist);
            ManejadorPerfilUsuario.GetInstance().UpdateCompany(model.idPerfil, model.EmpresaDelDistribuidor);
@@ -467,6 +470,7 @@ namespace TallerAplicaciones.Controllers
             var model = new RegisterModel
             {
                 PerfilUsuario = ejec,
+                Activo = ejec.Activo,
                 idPerfil = idDistrib,
                 Rol = ejec.GetRol(),
                 Nombre = ejec.Nombre,

@@ -37,6 +37,10 @@
                 @Html.TextBoxFor(m => m.Email)
                 @Html.ValidationMessageFor(model => model.Email)
             </li>
+             <li>
+                @Html.LabelFor(m => m.Activo)
+                @Html.CheckBoxFor(m => m.Activo)
+            </li>
 
             <li>
                 @Html.LabelFor(m=> m.EmpresaDelDistribuidor)
