@@ -28,7 +28,7 @@ namespace DistribuidoresApp.Views
                 new PedidoFake() {PedidoFakeId = 3, Descripcion = "Pedido3", Aprobado = false},
                 new PedidoFake() {PedidoFakeId = 4, Descripcion = "Pedido4", Aprobado = true}
             };
-            ListBoxPedidos.ItemsSource = Pedidos;
+            DataGridPedidos.ItemsSource = Pedidos;
         }
 
         // Executes when the user navigates to this page.

@@ -11,6 +11,17 @@
            Title="Page1 Page">
     <Grid x:Name="LayoutRoot">
 
+        <sdk:DataGrid 
+            x:Name="DataGridPedidos"
+            Height="241" 
+            HorizontalAlignment="Left" 
+            Margin="42,24,0,0" 
+            VerticalAlignment="Top" 
+            Width="280">
+
+        </sdk:DataGrid>
+
+        <!--
         <ListBox
             x:Name="ListBoxPedidos" 
             Height="241" 
@@ -28,8 +39,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
-        <sdk:DataGrid />
+        -->
 
     </Grid>
 </navigation:Page>
