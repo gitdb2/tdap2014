@@ -24,5 +24,10 @@ namespace DistribuidoresApp
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

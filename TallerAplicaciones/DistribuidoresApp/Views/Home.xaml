@@ -8,18 +8,62 @@
     Style="{StaticResource PageStyle}">
 
     <Grid x:Name="LayoutRoot">
-        <ScrollViewer x:Name="PageScrollViewer" Style="{StaticResource PageScrollViewerStyle}">
 
-            <StackPanel x:Name="ContentStackPanel">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="HeaderText" Style="{StaticResource HeaderTextStyle}" 
-                                   Text="Home"/>
-                <TextBlock x:Name="ContentText" Style="{StaticResource ContentTextStyle}" 
-                                   Text="Home page content"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            </StackPanel>
+        <TextBox Name="TxtBoxUsuario" 
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 Height="23"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Width="185"/>
 
-        </ScrollViewer>
+        <TextBox Name="TxtBoxPassword" 
+                 Grid.Column="0"
+                 Grid.Row="1"
+                 Height="23"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Width="185"/>
+
+        <Button Content="Login"
+                Grid.Column="0"
+                Grid.Row="2"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Name="BtnLogin"
+                Height="23"
+                Width="185"
+                Margin="0,10,0,0"
+                Click="BtnLogin_Click" />
+
+        <TextBlock
+            Grid.Row="0"
+            Name="TextBlockUsuario"
+            Text="Usuario"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="150,20,0,0"
+            Height="23"/>
+
+        <TextBlock
+            Grid.Row="1"
+            Name="TextBlockPassword"
+            Text="Password"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="150,20,0,0"
+            Height="23"/>
+
     </Grid>
 
 </navigation:Page>
