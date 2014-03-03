@@ -1,0 +1,74 @@
+﻿@model TallerAplicaciones.Models.AtributoModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<h2>Crar Atributo</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>AltaAtributoModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nombre)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nombre)
+            @Html.ValidationMessageFor(model => model.Nombre)
+        </div>
+        
+        <div class="editor-field">
+            <label for="campos"> Valor unico</label> <input type="radio" name="group1" onclick="toggle(this)" value="0" checked> 
+            <label for="campos"> Multiples valores</label> <input type="radio" name="group1" onclick="toggle(this)" value="1" >
+        </div>
+    
+        <div id="uno" style="display:none">
+            <form class="editor-label" id="form" name="form" method="post">
+                <li id="rut1' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="campo' + nextinput + '"&nbsp; /></li>
+                <div id="campos"></div> 
+                <br/>
+                 <a href="#" onclick="AgregarCampos();">Agregar nuevo valor</a>
+	        </form>
+        </div>
+ 
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <script type="text/javascript">
+        var nextinput = 1;
+
+        function AgregarCampos() {
+            nextinput++;
+            campo = '<li id="rut' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="campo' + nextinput + '"&nbsp; /></li>';
+            $("#campos").append(campo);
+        }
+
+        function toggle(elemento) {
+            if (elemento.value == "0") {
+                document.getElementById("uno").style.display = "none";
+              
+            } else {
+                    document.getElementById("uno").style.display = "block";
+               
+            }
+        }
+    </script>
+    
+}
