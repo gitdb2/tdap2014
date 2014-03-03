@@ -110,14 +110,11 @@ namespace TallerAplicaciones.Models
     public class ModificarUsuarioModel
     {
         public int PerfilUsuarioID { get; set; }
+        public int Rol { get; set; }
 
         [Required]
         [Display(Name = "Login")]
         public string UserName { get; set; }
-
-        [Required]
-        [Display(Name = "Rol")]
-        public int Rol { get; set; }
 
         [Required]
         [Display(Name = "Nombre")]

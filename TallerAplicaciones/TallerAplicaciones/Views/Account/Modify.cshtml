@@ -15,12 +15,14 @@
         <legend>Datos</legend>
         <ol>
             <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName, new { @readonly="readonly" })
+                @Html.HiddenFor(m => m.PerfilUsuarioID)
             </li>
             <li>
-                @Html.LabelFor(m => m.Rol)
-                @Html.TextBoxFor(m => m.Rol, new { @readonly="readonly" })
+                @Html.HiddenFor(m => m.Rol)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName, new { @readonly="readonly" })
             </li>
             <li>
                 @Html.LabelFor(m => m.Nombre)

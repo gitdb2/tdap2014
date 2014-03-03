@@ -11,7 +11,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         void AltaPerfilUsuario(PerfilUsuario perfil, string loginUsuario);
 
-        void ModificarPerfilUsuario(PerfilUsuario perfil);
+        void ModificarPerfilUsuario(PerfilUsuario perfilModificado);
         
         void BajaPerfilUsuario(int idPerfil);
 
@@ -19,7 +19,9 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         List<PerfilUsuario> ListarUsuarios(bool incluirInactivos);
 
+        Usuario ObtenerUsuario(int usuarioId);
 
-         void AltaPerfilUsuario(EjecutivoDeCuenta ejecutivoDeCuenta, string login, List<int> empresas);
+        void AltaPerfilUsuario(EjecutivoDeCuenta ejecutivoDeCuenta, string login, List<int> empresas);
+
     }
 }

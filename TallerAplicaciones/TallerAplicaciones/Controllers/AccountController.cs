@@ -62,9 +62,6 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            // TODO
-            // este metodo tiene que obtener la lista de roles y agregarselos
-            // al modelo
             var model = new RegisterModel();
             model.EmpresasDistribuidoras = ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras();
             return View(model);
@@ -102,7 +99,7 @@ namespace TallerAplicaciones.Controllers
 
         private void AltaUsuario(RegisterModel model)
         {
-             IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
+            IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
            
             PerfilUsuario perfil = null;
             switch (model.Rol)
@@ -142,6 +139,47 @@ namespace TallerAplicaciones.Controllers
                     throw new ArgumentException("Tipo de usuario invalido");
             }
            
+        }
+
+        // TODO
+        // esto esta muy mal hecho
+        // hay que arreglarlo
+        private int ObtenerRolSegunPerfilUsuario(PerfilUsuario perfil)
+        {
+            if (perfil is Administrador)
+            {
+                return 0;
+            } 
+            else if (perfil is EjecutivoDeCuenta)
+            {
+                return 1;
+            }
+            else if (perfil is Distribuidor)
+            {
+                return 2;
+            }
+            else
+            {
+                throw new ArgumentException("Tipo de usuario invalido");
+            }
+        }
+
+        // TODO
+        // esto esta muy mal hecho
+        // hay que arreglarlo
+        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int rolId)
+        {
+            switch (rolId)
+            {
+                case 0:
+                    return new Administrador();
+                case 1:
+                    return new EjecutivoDeCuenta();
+                case 2:
+                    return new Distribuidor();
+                default:
+                    throw new ArgumentException("Tipo de usuario invalido");
+            }
         }
 
         //
@@ -300,7 +338,8 @@ namespace TallerAplicaciones.Controllers
                 IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
                 PerfilUsuario perfil = iPerfilUsuario.ObtenerPerfil(idPerfilUsuario);
                 model = new ModificarUsuarioModel() { 
-                    //PerfilUsuarioID = idPerfilUsuario, 
+                    PerfilUsuarioID = idPerfilUsuario,
+                    Rol = ObtenerRolSegunPerfilUsuario(perfil),
                     Nombre = perfil.Nombre,
                     Apellido = perfil.Apellido,
                     Email = perfil.Email,
@@ -311,6 +350,35 @@ namespace TallerAplicaciones.Controllers
             {
                 ModelState.AddModelError("", "ERROR");
             }
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Modify(ModificarUsuarioModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
+                    PerfilUsuario perfilUsuario = ObtenerPerfilUsuarioSegunRol(model.Rol);
+                    perfilUsuario.PerfilUsuarioID = model.PerfilUsuarioID;
+                    perfilUsuario.Nombre = model.Nombre;
+                    perfilUsuario.Apellido = model.Apellido;
+                    perfilUsuario.Email = model.Email;
+                    perfilUsuario.Activo = true;
+
+                    iPerfilUsuario.ModificarPerfilUsuario(perfilUsuario);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (MembershipCreateUserException e)
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+            }
+            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
