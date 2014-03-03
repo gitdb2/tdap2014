@@ -400,7 +400,14 @@ namespace TallerAplicaciones.Controllers
                 {
                     changePasswordSucceeded = false;
                 }
-                return RedirectToAction("List", "Account");
+                if (changePasswordSucceeded)
+                {
+                    return RedirectToAction("List", "Account");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "El password actual es incorrecto o el nuevo password es invalido");
+                }
             }
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -487,5 +494,6 @@ namespace TallerAplicaciones.Controllers
         {
             throw new NotImplementedException();
         }
+
     }
 }
