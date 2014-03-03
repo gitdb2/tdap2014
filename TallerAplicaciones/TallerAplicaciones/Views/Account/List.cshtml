@@ -28,6 +28,7 @@
             <td>@item.Apellido</td>
             <td>@item.Email</td>
             <td>@item.Activo</td>
+            <td>@(item.GetRol()==0?"Admin":item.GetRol()==1?"Ejec":"Dist")</td>
             <td>@Html.ActionLink("Modificar", "Modify", "Account", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)
                 | @Html.ActionLink("Eliminar", "Delete", "Account", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)</td>
         </tr>
