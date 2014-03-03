@@ -1,0 +1,65 @@
+﻿@model TallerAplicaciones.Models.RegisterModel
+@{
+    ViewBag.Title = "Modificar datos Distribuidor";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Datos</legend>
+        <ol>
+            <li>
+                @Html.HiddenFor(m => m.idPerfil)
+            </li>
+            <li>
+                @Html.HiddenFor(m => m.Rol)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName, new { @readonly="readonly" })
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Nombre)
+                @Html.TextBoxFor(m => m.Nombre)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Apellido)
+                @Html.TextBoxFor(m => m.Apellido)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </li>
+
+            <li>
+                @Html.LabelFor(m=> m.EmpresaDelDistribuidor)
+                @if (Model.EmpresasDistribuidoras.Any())
+                {
+                    @Html.DropDownListFor(m => m.EmpresaDelDistribuidor,
+                        Model.EmpresasDistribuidoras.Select(item => new SelectListItem
+                    {
+                        Value = item.EmpresaDistribuidoraID.ToString(),
+                        Text = item.Nombre.ToString(),
+                        Selected = Model.EmpresaDelDistribuidor == item.EmpresaDistribuidoraID ? true : false
+                    }))
+                }else
+                {
+                    @("No hay empresas en el sistema.")
+                }
+            </li>    
+     
+        </ol>
+        <input type="submit" value="Actualizar datos" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -97,7 +97,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
                 return db.PerfilesUsuario.OfType<Distribuidor>()
-                    .Include(p => p.Empresa).SingleOrDefault(p => p.PerfilUsuarioID == idDistribuidor);
+                    .Include(p => p.Empresa)
+                    .Include(p => p.Usuario)
+                    .SingleOrDefault(p => p.PerfilUsuarioID == idDistribuidor);
                
             }
         }
@@ -150,16 +152,31 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             using (var db = new Persistencia())
             {
-                var perfil =
-                    db.PerfilesUsuario.OfType<Distribuidor>().SingleOrDefault(p => p.PerfilUsuarioID == idPerfil);
+                var perfil = db.PerfilesUsuario.OfType<Distribuidor>().SingleOrDefault(p => p.PerfilUsuarioID == idPerfil);
                 var empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idNewCompany);
+                db.Empresas.Attach(empresa);
+
                 if (perfil != null && empresa != null)
                 {
-
+                  
                     perfil.Empresa = empresa;
                     db.SaveChanges();
                 }
 
+     
+
+
+             /*   var perfil =
+                    db.PerfilesUsuario.OfType<Distribuidor>().SingleOrDefault(p => p.PerfilUsuarioID == idPerfil);
+                var empresa = db.Empresas.First(e => e.EmpresaDistribuidoraID == idNewCompany);
+                    //ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idNewCompany);
+                if (perfil != null && empresa != null)
+                {
+                    perfil.Empresa = null;
+                    perfil.Empresa = empresa;
+                    db.SaveChanges();
+                }
+*/
             }
         }
     }

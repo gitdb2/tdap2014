@@ -327,7 +327,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         //
-        // GET: /Account/Modify
+        // GET: /Account/EditEmpresa
         [AllowAnonymous]
         public ActionResult EditEmpresa(int idPerfilUsuario)
         {
@@ -362,6 +362,44 @@ namespace TallerAplicaciones.Controllers
 
         }
 
+        [AllowAnonymous]
+        public ActionResult ModifyDistribuidor(int idDistrib)
+        {
+            Distribuidor dist = ManejadorPerfilUsuario.GetInstance().FindDistribuidor(idDistrib);
+            var model = new RegisterModel();
+
+            model.PerfilUsuario = dist;
+            model.idPerfil = idDistrib;
+            model.Rol = dist.GetRol();
+            model.Nombre = dist.Nombre;
+            model.Apellido = dist.Apellido;
+            model.Email = dist.Email;
+            model.UserName = dist.Usuario.Login;
+            model.EmpresaDelDistribuidor = dist.Empresa.EmpresaDistribuidoraID;
+            model.EmpresasDistribuidoras = ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras();
+
+            return View(model);
+        }
+          [HttpPost]
+        [AllowAnonymous]
+         public ActionResult ModifyDistribuidor(RegisterModel model)
+        {
+            Distribuidor dist = ManejadorPerfilUsuario.GetInstance().FindDistribuidor(model.idPerfil);
+              dist.Apellido = model.Apellido;
+              dist.Email = model.Email;
+
+              dist.PerfilUsuarioID = model.idPerfil;
+              dist.Nombre = model.Nombre;
+              dist.Apellido = model.Apellido;
+              dist.Email = model.Email;
+
+           ManejadorPerfilUsuario.GetInstance().ModificarPerfilUsuario(dist);
+           ManejadorPerfilUsuario.GetInstance().UpdateCompany(model.idPerfil, model.EmpresaDelDistribuidor);
+
+           return RedirectToAction("List");
+        }
+
+
 
         [AllowAnonymous]
         public ActionResult Modify(int idPerfilUsuario)
@@ -371,6 +409,14 @@ namespace TallerAplicaciones.Controllers
             {
                 IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
                 PerfilUsuario perfil = iPerfilUsuario.ObtenerPerfil(idPerfilUsuario);
+
+                if (perfil.GetRol() == 2)
+                {
+                    return RedirectToActionPermanent("ModifyDistribuidor", new { idDistrib = idPerfilUsuario });
+                }
+                    
+                  
+                
                 model = new ModificarUsuarioModel() { 
                     PerfilUsuarioID = idPerfilUsuario,
                     Rol = perfil.GetRol(),
