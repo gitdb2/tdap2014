@@ -426,8 +426,8 @@ namespace TallerAplicaciones.Controllers
             dist.Email = model.Email;
             dist.Activo = model.Activo;
 
-            ManejadorPerfilUsuario.GetInstance().ModificarPerfilUsuario(dist);
-            ManejadorPerfilUsuario.GetInstance().UpdateCompany(model.idPerfil, model.EmpresaDelDistribuidor);
+            ManejadorPerfilUsuario.GetInstance().ModificarPerfilUsuario(dist, model.EmpresasSeleccionadas);
+
 
             return RedirectToAction("List");
         }
