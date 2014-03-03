@@ -37,6 +37,13 @@
                 @Html.TextBoxFor(m => m.Email)
                 @Html.ValidationMessageFor(model => model.Email)
             </li>
+            @if (Model.Rol == 2)
+            {
+            <li>
+                <input type="button" value="Modificar empresa" onclick="window.open('EditEmpresa?idPerfilUsuario=@Model.PerfilUsuarioID')" />
+            </li>    
+            }
+            
         </ol>
         <input type="submit" value="Actualizar datos" />
     </fieldset>

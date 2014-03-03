@@ -144,25 +144,25 @@ namespace TallerAplicaciones.Controllers
         // TODO
         // esto esta muy mal hecho
         // hay que arreglarlo
-        private int ObtenerRolSegunPerfilUsuario(PerfilUsuario perfil)
-        {
-            if (perfil is Administrador)
-            {
-                return 0;
-            } 
-            else if (perfil is EjecutivoDeCuenta)
-            {
-                return 1;
-            }
-            else if (perfil is Distribuidor)
-            {
-                return 2;
-            }
-            else
-            {
-                throw new ArgumentException("Tipo de usuario invalido");
-            }
-        }
+//        private int ObtenerRolSegunPerfilUsuario(PerfilUsuario perfil)
+//        {
+//            if (perfil is Administrador)
+//            {
+//                return 0;
+//            } 
+//            else if (perfil is EjecutivoDeCuenta)
+//            {
+//                return 1;
+//            }
+//            else if (perfil is Distribuidor)
+//            {
+//                return 2;
+//            }
+//            else
+//            {
+//                throw new ArgumentException("Tipo de usuario invalido");
+//            }
+//        }
 
         // TODO
         // esto esta muy mal hecho
@@ -328,6 +328,40 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Account/Modify
+        [AllowAnonymous]
+        public ActionResult EditEmpresa(int idPerfilUsuario)
+        {
+            Distribuidor dist = ManejadorPerfilUsuario.GetInstance().FindDistribuidor(idPerfilUsuario);
+            var model = new RegisterModel()
+
+            {
+                PerfilUsuario = dist,
+                EmpresaDelDistribuidor = dist.Empresa.EmpresaDistribuidoraID,
+                EmpresasDistribuidoras =  ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras()
+
+            };
+             return View(model);
+            
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult EditEmpresa(RegisterModel model)
+        {
+
+
+           ManejadorPerfilUsuario.GetInstance().UpdateCompany(model.idPerfil, model.EmpresaDelDistribuidor);
+//           EmpresaDistribuidora emp=  ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor);
+//
+//            dist.Empresa = emp;
+//
+//            ManejadorPerfilUsuario.GetInstance().ModificarPerfilUsuario(dist);
+//
+
+            return View("WindowClose");
+
+        }
+
 
         [AllowAnonymous]
         public ActionResult Modify(int idPerfilUsuario)
@@ -339,7 +373,7 @@ namespace TallerAplicaciones.Controllers
                 PerfilUsuario perfil = iPerfilUsuario.ObtenerPerfil(idPerfilUsuario);
                 model = new ModificarUsuarioModel() { 
                     PerfilUsuarioID = idPerfilUsuario,
-                    Rol = ObtenerRolSegunPerfilUsuario(perfil),
+                    Rol = perfil.GetRol(),
                     Nombre = perfil.Nombre,
                     Apellido = perfil.Apellido,
                     Email = perfil.Email,
@@ -371,7 +405,7 @@ namespace TallerAplicaciones.Controllers
 
                     iPerfilUsuario.ModificarPerfilUsuario(perfilUsuario);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List");
                 }
                 catch (MembershipCreateUserException e)
                 {

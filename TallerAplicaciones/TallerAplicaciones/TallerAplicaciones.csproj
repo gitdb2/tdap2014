@@ -314,6 +314,12 @@
   <ItemGroup>
     <Content Include="Views\Account\Modify.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\EditEmpresa.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\WindowClose.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

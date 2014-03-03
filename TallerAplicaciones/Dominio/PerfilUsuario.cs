@@ -17,6 +17,8 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public Usuario Usuario { get; set; }
 
         public bool Activo { get; set; }
-        
+
+        public abstract int GetRol();
+
     }
 }

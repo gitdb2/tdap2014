@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
@@ -91,6 +92,29 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 			}
 		}
 
+        public Distribuidor FindDistribuidor(int idDistribuidor)
+        {
+            using (var db = new Persistencia())
+            {
+                return db.PerfilesUsuario.OfType<Distribuidor>()
+                    .Include(p => p.Empresa).SingleOrDefault(p => p.PerfilUsuarioID == idDistribuidor);
+               
+            }
+        }
+
+
+        public EmpresaDistribuidora GetEmpresaDistribuidoraPerfil(int idPerfil)
+        {
+            using (var db = new Persistencia())
+            {
+                var empresa = db.PerfilesUsuario.OfType<Distribuidor>()
+                    .Where(p => p.PerfilUsuarioID == idPerfil)
+                    .Select(p => p.Empresa)
+                    .SingleOrDefault();
+                return empresa;
+            }
+        }
+
  		public void AltaPerfilUsuario(EjecutivoDeCuenta perfil, string login, List<int> idEmpresas)
         {  
             using (var db = new Persistencia())
@@ -121,6 +145,23 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+
+        public void UpdateCompany(int idPerfil, int idNewCompany)
+        {
+            using (var db = new Persistencia())
+            {
+                var perfil =
+                    db.PerfilesUsuario.OfType<Distribuidor>().SingleOrDefault(p => p.PerfilUsuarioID == idPerfil);
+                var empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idNewCompany);
+                if (perfil != null && empresa != null)
+                {
+
+                    perfil.Empresa = empresa;
+                    db.SaveChanges();
+                }
+
+            }
+        }
     }
 }
 
