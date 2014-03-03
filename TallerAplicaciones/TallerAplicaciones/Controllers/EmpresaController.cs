@@ -70,7 +70,11 @@ namespace TallerAplicaciones.Controllers
                 try
                 {
                     IEmpresaDistribuidora iEmpresa = ManejadorEmpresaDistribuidora.GetInstance();
-                    iEmpresa.AltaEmpresa(new EmpresaDistribuidora() { Nombre = model.Nombre});
+                    iEmpresa.AltaEmpresa(new EmpresaDistribuidora()
+                    {
+                        Nombre = model.Nombre, 
+                        
+                    });
 
                     return RedirectToAction("List");
                   

@@ -13,6 +13,10 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         {
 
         }
+        public override int GetRol()
+        {
+            return 2;
+        }
 
         public EmpresaDistribuidora Empresa { get; set; }
         public List<Pedido> Pedidos { get; set; }

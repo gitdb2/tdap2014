@@ -311,8 +311,20 @@
   <ItemGroup>
     <Content Include="Views\Account\Modify.cshtml" />
   </ItemGroup>
-  <ItemGroup>
+ <ItemGroup>
     <Content Include="Views\Account\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\EditEmpresa.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\WindowClose.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ModifyDistribuidor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ModifyEjecutivo.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

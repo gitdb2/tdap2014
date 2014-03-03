@@ -36,7 +36,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             EmpresaDistribuidora ret = null;
             using (var db = new Persistencia())
             {
-                ret = db.Empresas.First(e => e.EmpresaDistribuidoraID == id);
+                ret = db.Empresas.FirstOrDefault(e => e.EmpresaDistribuidoraID == id);
             }
             return ret;
         }
@@ -56,6 +56,19 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
             }
             return ret;
+        }
+
+        public List<int> GetEmpresasDeEjecutivo(int idDistrib)
+        {
+         
+            using (var db = new Persistencia())
+            {
+                return db.Empresas
+                    .Include("Ejecutivo")
+                    .Where(e => e.Activo && e.Ejecutivo.PerfilUsuarioID == idDistrib)
+                    .Select(e=> e.EmpresaDistribuidoraID).ToList(); 
+            }
+           
         }
     }
 }

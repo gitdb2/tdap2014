@@ -13,6 +13,11 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         {
 
         }
-        
+
+
+        public override int GetRol()
+        {
+          return 0;
+        }
     }
 }

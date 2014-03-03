@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
@@ -62,11 +63,18 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public List<PerfilUsuario> ListarUsuarios()
+        public List<PerfilUsuario> ListarUsuarios(bool incluirInactivos)
         {
             using (var db = new Persistencia())
             {
-                return db.PerfilesUsuario.Include("Usuario").ToList();
+                if (incluirInactivos)
+                {
+                    return db.PerfilesUsuario.Include("Usuario").ToList();
+                }
+                else
+                {
+                    return (db.PerfilesUsuario.Include("Usuario").Where(p => p.Activo)).ToList();
+                }
             }
         }
 
@@ -85,6 +93,31 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 return db.Usuarios.SingleOrDefault(u => u.UsuarioID == usuarioId);
 			}
 		}
+
+        public Distribuidor FindDistribuidor(int idDistribuidor)
+        {
+            using (var db = new Persistencia())
+            {
+                return db.PerfilesUsuario.OfType<Distribuidor>()
+                    .Include(p => p.Empresa)
+                    .Include(p => p.Usuario)
+                    .SingleOrDefault(p => p.PerfilUsuarioID == idDistribuidor);
+               
+            }
+        }
+
+
+        public EmpresaDistribuidora GetEmpresaDistribuidoraPerfil(int idPerfil)
+        {
+            using (var db = new Persistencia())
+            {
+                var empresa = db.PerfilesUsuario.OfType<Distribuidor>()
+                    .Where(p => p.PerfilUsuarioID == idPerfil)
+                    .Select(p => p.Empresa)
+                    .SingleOrDefault();
+                return empresa;
+            }
+        }
 
  		public void AltaPerfilUsuario(EjecutivoDeCuenta perfil, string login, List<int> idEmpresas)
         {  
@@ -124,6 +157,90 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+
+        public void UpdateCompany(int idPerfil, int idNewCompany)
+        {
+            using (var db = new Persistencia())
+            {
+                var perfil = db.PerfilesUsuario.OfType<Distribuidor>().SingleOrDefault(p => p.PerfilUsuarioID == idPerfil);
+                var empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idNewCompany);
+                db.Empresas.Attach(empresa);
+
+                if (perfil != null && empresa != null)
+                {
+                  
+                    perfil.Empresa = empresa;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public EjecutivoDeCuenta FindEjecutivo(int idDistrib)
+        {
+            using (var db = new Persistencia())
+            {
+                return db.PerfilesUsuario.OfType<EjecutivoDeCuenta>()
+                    .Include(p => p.Usuario)
+                    .SingleOrDefault(p => p.PerfilUsuarioID == idDistrib);
+               
+            }
+        }
+
+        public void ModificarPerfilUsuario(EjecutivoDeCuenta perfil, List<int> idEmpresas)
+        {
+            using (var db = new Persistencia())
+            {
+               
+
+                EjecutivoDeCuenta dbejec = db.PerfilesUsuario
+                                             .OfType<EjecutivoDeCuenta>()
+                                             .Single(p => p.PerfilUsuarioID == perfil.PerfilUsuarioID);
+                if (dbejec != null)
+                {
+
+                    List<EmpresaDistribuidora> empresasDeEjec =
+                   db.Empresas
+                       .Include(e => e.Ejecutivo)
+                       .Where(e => e.Ejecutivo.PerfilUsuarioID == perfil.PerfilUsuarioID)
+                       .ToList();
+                    foreach (var empresa in empresasDeEjec)
+                    {
+                        empresa.Ejecutivo = null;
+                    }
+                List<EmpresaDistribuidora> empresasSelecccionadas =
+                    db.Empresas
+                        .Include(e => e.Ejecutivo)
+                        .Where(e => idEmpresas.Contains(e.EmpresaDistribuidoraID))
+                        .ToList();
+
+                foreach (var empresa in empresasSelecccionadas)
+                {
+                    empresa.Ejecutivo = dbejec;
+                }
+
+
+                dbejec.Nombre = perfil.Nombre;
+                dbejec.Apellido = perfil.Apellido;
+                dbejec.Email = perfil.Email;
+                dbejec.Activo = perfil.Activo;
+                }
+
+               
+
+                db.SaveChanges();
+                
+            }
+        }
+
+
+
+        public List<PerfilUsuario> ListarUsuarios()
+        {
+            using (var db = new Persistencia())
+            {
+                return db.PerfilesUsuario.Include("Usuario").ToList();
+            }
+        }
     }
 }
 

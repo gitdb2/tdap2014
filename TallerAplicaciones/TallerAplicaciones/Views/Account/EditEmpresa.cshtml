@@ -1,0 +1,68 @@
+﻿@using System.Data.SqlClient
+@using System.Globalization
+@model TallerAplicaciones.Models.RegisterModel
+@{
+    ViewBag.Title = "Edit Empresa";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Create a new account.</h2>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    
+    <fieldset>
+        <legend>Editar empresa</legend>
+        <ol>
+            <li>
+
+                @Html.LabelFor(m=> m.EmpresaDelDistribuidor)
+                @if (Model.EmpresasDistribuidoras.Any())
+                {
+                    @Html.DropDownListFor(m => m.EmpresaDelDistribuidor,
+                        Model.EmpresasDistribuidoras.Select(item => new SelectListItem
+                    {
+                        Value = item.EmpresaDistribuidoraID.ToString(),
+                        Text = item.Nombre.ToString(),
+                        Selected = Model.EmpresaDelDistribuidor == item.EmpresaDistribuidoraID ? true : false
+                    }))
+                }else
+                {
+                    @("No hay empresas en el sistema.")
+                }
+                        
+
+            </li>
+         
+
+        </ol>
+        <input type="submit" value="Modificar" />
+    </fieldset>
+}
+
+@section Scripts {
+    <script>
+        function  changeRol() {
+
+            switch ($("#Rol").val()) {
+                case "0":
+                    $(".rolAdmin").show();
+                    $(".notRolAdmin").hide();
+                break;
+            case "1":
+                $(".rolEjec").show();
+                $(".notRolEjec").hide();
+                    break;
+                case "2":
+                    $(".rolDist").show();
+                    $(".notRolDist").hide();
+                    break;
+                default:
+                 alert("La opcion seleccioanda no es correcta");
+            }
+           
+        }
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

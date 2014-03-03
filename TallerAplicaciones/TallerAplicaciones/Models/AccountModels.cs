@@ -49,6 +49,10 @@ namespace TallerAplicaciones.Models
             EmpresasSeleccionadas = new List<int>();
             EmpresasDistribuidoras =  new List<EmpresaDistribuidora>();
         }
+
+        public PerfilUsuario PerfilUsuario { get; set; }
+        public int idPerfil { get; set; }
+
         public bool Activo = true;
 
         [Required]

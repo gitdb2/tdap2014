@@ -15,6 +15,7 @@
             <th>Apellido</th>
             <th>Email</th>
             <th>Activo</th>
+            <th>Rol</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -27,6 +28,7 @@
             <td>@item.Apellido</td>
             <td>@item.Email</td>
             <td>@(item.Activo ? "Si" : "No")</td>
+            <td>@(item.GetRol()==0?"Admin":item.GetRol()==1?"Ejec":"Dist")</td>
             <td>@Html.ActionLink("Modificar", "Modify", "Account", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)
                 | @Html.ActionLink("Cambiar Password", "ChangePassword", "Account", new { login = @item.Usuario.Login }, null)
             </td>
