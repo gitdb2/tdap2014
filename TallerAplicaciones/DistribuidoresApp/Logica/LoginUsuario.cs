@@ -15,8 +15,34 @@ namespace DistribuidoresApp
     public class LoginUsuario
     {
 
-        public string Usuario { get; set; }
-        public string Password { get; set; }
+        private string _usuario;
+        private string _password;
+
+        public string Usuario
+        {
+            get { return _usuario; }
+            set
+            {
+                if (value == null || value.Trim().Equals(""))
+                {
+                    throw new ArgumentException("Campo obligatorio");
+                }
+                _usuario = value;
+            }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                if (value == null || value.Trim().Equals(""))
+                {
+                    throw new ArgumentException("Campo obligatorio");
+                }
+                _password = value;
+            }
+        }
 
         public LoginUsuario()
         {
