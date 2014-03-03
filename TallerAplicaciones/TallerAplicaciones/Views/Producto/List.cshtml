@@ -1,0 +1,41 @@
+﻿@using Microsoft.Ajax.Utilities
+@using uy.edu.ort.taller.aplicaciones.dominio
+@model TallerAplicaciones.Models.ProductoListModel
+
+@{
+    ViewBag.Title = "Lista de Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Codigo</th>
+        <th>Descripcion</th>
+        <th>Activo</th>
+        <th>Multimedia</th>
+        <th>Acciones</th>
+    </tr>
+    
+     @foreach (var item in Model.Productos)
+    {
+        <tr>
+
+            <td>@item.Nombre</td>
+            <td>@item.Codigo</td>
+            <td>@item.Descripcion</td>
+            <td>@(item.Activo ? "Si" : "No")</td>
+            <td>ahhh si aca va algo</td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", "Producto", new { idProducto = @item.ProductoID }, null) | 
+                @Html.ActionLink("Eliminar", "Delete", "Producto", new { idProducto = @item.ProductoID }, null)
+            </td>
+        </tr>
+    }   
+
+</table>

@@ -7,6 +7,10 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 {
     public class Producto
     {
+        public Producto()
+        {
+            Activo = true;
+        }
 
         public int ProductoID { get; set; }
 

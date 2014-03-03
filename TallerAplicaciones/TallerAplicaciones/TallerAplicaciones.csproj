@@ -162,12 +162,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EmpresaModels.cs" />
+    <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -311,7 +313,7 @@
   <ItemGroup>
     <Content Include="Views\Account\Modify.cshtml" />
   </ItemGroup>
- <ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +327,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\ModifyEjecutivo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Pedido\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Producto\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Producto\Cressate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Producto\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Producto\List.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

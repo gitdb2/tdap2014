@@ -17,9 +17,9 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         List<Producto> ListarProductos();
 
-        void AgregarImagenProducto(int idProducto, Archivo imagen);
+        void AgregarImagenProducto(int idProducto, Foto imagen);
 
-        void AgregarVideoProducto(int idProducto, Archivo video);
+        void AgregarVideoProducto(int idProducto, Video video);
 
     }
 }
