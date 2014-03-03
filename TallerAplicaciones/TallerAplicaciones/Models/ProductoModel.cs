@@ -13,7 +13,7 @@ namespace TallerAplicaciones.Models
 
         [Required]
         [StringLength(5, ErrorMessage = "El {0} debe tener {2} caracteres", MinimumLength = 5)]
-        [RegularExpression(@"^[a-zA-Z0-9]{9}$", ErrorMessage = "Tiene que tener exactamente 5 caracteres a-z 0-9 sin blancos")]
+        [RegularExpression(@"^[a-zA-Z0-9]{5}$", ErrorMessage = "Tiene que tener exactamente 5 caracteres a-z 0-9 sin blancos")]
         [Display(Name = "Codigo")]
         public string Codigo { get; set; }
 
