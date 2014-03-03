@@ -15,6 +15,8 @@ namespace TallerAplicaciones.Models
 
     public class LocalPasswordModel
     {
+        public string LoginUsuario { get; set; }
+        
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]

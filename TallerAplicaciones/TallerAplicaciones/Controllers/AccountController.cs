@@ -123,8 +123,6 @@ namespace TallerAplicaciones.Controllers
                         Email = model.Email,
                      };
                     iPerfil.AltaPerfilUsuario((EjecutivoDeCuenta) perfil, model.UserName, model.EmpresasSeleccionadas);
-//                    ManejadorPerfilUsuario.GetInstance()
-//                        .AsignarEmpresas((EjecutivoDeCuenta) perfil, model.EmpresasSeleccionadas);
                     break;
                 case 2:
                     perfil = new Distribuidor()
@@ -381,6 +379,48 @@ namespace TallerAplicaciones.Controllers
                 }
             }
             // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // GET: /Account/ChangePassword
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ChangePassword(LocalPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool changePasswordSucceeded;
+                try
+                {
+                    changePasswordSucceeded = WebSecurity.ChangePassword(model.LoginUsuario, model.OldPassword, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+                return RedirectToAction("List", "Account");
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // POST: /Account/ChangePassword
+
+        [AllowAnonymous]
+        public ActionResult ChangePassword(string login)
+        {
+            LocalPasswordModel model = null;
+            try
+            {
+                model = new LocalPasswordModel() { LoginUsuario = login };
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
             return View(model);
         }
 
