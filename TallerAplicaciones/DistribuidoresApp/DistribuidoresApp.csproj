@@ -79,6 +79,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IControlador.cs" />
+    <Compile Include="Logica\Controlador.cs" />
+    <Compile Include="Logica\LoginUsuario.cs" />
+    <Compile Include="Logica\Utils.cs" />
     <Compile Include="Views\ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>

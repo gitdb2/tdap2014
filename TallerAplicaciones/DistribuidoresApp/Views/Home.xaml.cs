@@ -18,6 +18,8 @@ namespace DistribuidoresApp
         public Home()
         {
             InitializeComponent();
+            var loginUsuario = new LoginUsuario();
+            LayoutRoot.DataContext = loginUsuario;
         }
 
         // Executes when the user navigates to this page.
