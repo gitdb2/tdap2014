@@ -17,7 +17,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         PerfilUsuario ObtenerPerfil(int idPerfil);
 
-        List<PerfilUsuario> ListarUsuarios(bool incluirInactivos);
+        List<PerfilUsuario> ListarUsuarios();
 
         Usuario ObtenerUsuario(int usuarioId);
 

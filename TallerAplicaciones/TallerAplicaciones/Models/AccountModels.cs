@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
-using System.Globalization;
 using System.Web.Mvc;
-using System.Web.Security;
-using System.Web.UI.WebControls;
-using System.Web.DynamicData;
 using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace TallerAplicaciones.Models
@@ -19,25 +12,25 @@ namespace TallerAplicaciones.Models
         
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Password actual")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} caracteres", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nuevo password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirmar el nuevo password")]
+        [Compare("NewPassword", ErrorMessage = "El password y su confirmacion no coinciden")]
         public string ConfirmPassword { get; set; }
     }
 
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Login")]
         public string UserName { get; set; }
 
         [Required]
@@ -45,7 +38,7 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Recordarme?")]
         public bool RememberMe { get; set; }
     }
 
@@ -131,6 +124,9 @@ namespace TallerAplicaciones.Models
         [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Ingrese una direccion de email valida")]
         public string Email { get; set; }
 
+        [Required]
+        [Display(Name = "Activo")]
+        public bool Activo { get; set; }
     }
 
 }

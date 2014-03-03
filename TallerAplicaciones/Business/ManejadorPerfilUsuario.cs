@@ -41,6 +41,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     perfilActual.Nombre = perfilModificado.Nombre;
                     perfilActual.Apellido = perfilModificado.Apellido;
                     perfilActual.Email = perfilModificado.Email;
+                    perfilActual.Activo = perfilModificado.Activo;
+                    perfilActual.Usuario.Activo = perfilModificado.Activo;
                 }
                 db.SaveChanges();
             }
@@ -60,18 +62,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public List<PerfilUsuario> ListarUsuarios(bool incluirInactivos)
+        public List<PerfilUsuario> ListarUsuarios()
         {
             using (var db = new Persistencia())
             {
-                if (incluirInactivos)
-                {
-                    return db.PerfilesUsuario.Include("Usuario").ToList();
-                }
-                else
-                {
-                    return (db.PerfilesUsuario.Include("Usuario").Where(p => p.Activo)).ToList();
-                }
+                return db.PerfilesUsuario.Include("Usuario").ToList();
             }
         }
 

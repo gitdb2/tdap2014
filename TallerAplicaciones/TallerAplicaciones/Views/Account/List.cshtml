@@ -18,23 +18,21 @@
             <th>Acciones</th>
         </tr>
     </thead>
-    
     <tbody>
-     @foreach (var item in Model.PerfilesDeUsuario)
+    @foreach (var item in Model.PerfilesDeUsuario)
     {
         <tr>
             <td>@item.Usuario.Login</td>
             <td>@item.Nombre</td>
             <td>@item.Apellido</td>
             <td>@item.Email</td>
-            <td>@item.Activo</td>
-            <td>@Html.ActionLink("Modificar Datos", "Modify", "Account", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)
+            <td>@(item.Activo ? "Si" : "No")</td>
+            <td>@Html.ActionLink("Modificar", "Modify", "Account", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)
                 | @Html.ActionLink("Cambiar Password", "ChangePassword", "Account", new { login = @item.Usuario.Login }, null)
-                | @Html.ActionLink("Eliminar", "Delete", "Account", new { idPerfilUsuario = @item.PerfilUsuarioID }, null)</td>
+            </td>
         </tr>
     }   
     </tbody>
-
 </table>
 
 <div>

@@ -220,31 +220,13 @@ namespace TallerAplicaciones.Controllers
             try
             {
                 IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
-                model = new UsuarioListModel() { PerfilesDeUsuario = iPerfilUsuario.ListarUsuarios(false) };
+                model = new UsuarioListModel() { PerfilesDeUsuario = iPerfilUsuario.ListarUsuarios() };
             }
             catch (Exception e)
             {
                 ModelState.AddModelError("", "ERROR");
             }
             return View(model);
-        }
-
-        //
-        // GET: /Account/Delete
-
-        [AllowAnonymous]
-        public ActionResult Delete(int idPerfilUsuario)
-        {
-            try
-            {
-                IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
-                iPerfilUsuario.BajaPerfilUsuario(idPerfilUsuario);
-            }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("", "ERROR");
-            }
-            return RedirectToAction("List");
         }
 
         //
@@ -264,7 +246,8 @@ namespace TallerAplicaciones.Controllers
                     Nombre = perfil.Nombre,
                     Apellido = perfil.Apellido,
                     Email = perfil.Email,
-                    UserName = perfil.Usuario.Login
+                    UserName = perfil.Usuario.Login,
+                    Activo = perfil.Activo
                 };
             }
             catch (Exception e)
@@ -273,6 +256,9 @@ namespace TallerAplicaciones.Controllers
             }
             return View(model);
         }
+
+        //
+        // POST: /Account/Modify
 
         [HttpPost]
         [AllowAnonymous]
@@ -288,11 +274,11 @@ namespace TallerAplicaciones.Controllers
                     perfilUsuario.Nombre = model.Nombre;
                     perfilUsuario.Apellido = model.Apellido;
                     perfilUsuario.Email = model.Email;
-                    perfilUsuario.Activo = true;
+                    perfilUsuario.Activo = model.Activo;
 
                     iPerfilUsuario.ModificarPerfilUsuario(perfilUsuario);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List", "Account");
                 }
                 catch (MembershipCreateUserException e)
                 {
