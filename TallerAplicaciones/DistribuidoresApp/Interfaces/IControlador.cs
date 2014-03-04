@@ -27,5 +27,7 @@ namespace DistribuidoresApp
 
         List<ProductoFake> ListarProductos();
 
+        List<ValorAtributoFake> ObtenerAtributos(int idProductoSeleccionado);
+
     }
 }

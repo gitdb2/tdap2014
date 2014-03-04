@@ -73,5 +73,48 @@ namespace DistribuidoresApp
             return productos;
         }
 
+        //TODO
+        public List<ValorAtributoFake> ObtenerAtributos(int idProductoSeleccionado)
+        {
+            var res = new List<ValorAtributoFake>();
+
+            var valor1 = new ValorAtributoFake
+            {
+                Nombre = "valor1",
+                Valores = new List<Valor>
+                {
+                    new Valor() {ValorString = "aaaaa"},
+                    new Valor() {ValorString = "bbbbb"},
+                    new Valor() {ValorString = "ccccc"}
+                }
+            };
+
+            var valor2 = new ValorAtributoFake
+            {
+                Nombre = "valor2",
+                Valores = new List<Valor>
+                {
+                    new Valor() {ValorString = "ddddd"}
+                }
+            };
+
+            var valor3 = new ValorAtributoFake
+            {
+                Nombre = "valor3",
+                Valores = new List<Valor>
+                {
+                    new Valor() {ValorString = "eeeee"},
+                    new Valor() {ValorString = "fffff"}
+                }
+            };
+
+            res.Add(valor1);
+            res.Add(valor2);
+            res.Add(valor3);
+
+            return res;
+        }
+
     }
 }
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace DistribuidoresApp.Views
     {
         public List<PedidoFake> Pedidos;
         public List<ProductoFake> Productos;
+        public List<ValorAtributoFake> Atributos;
 
         public DataDistribuidorTabs()
         {
@@ -28,7 +30,11 @@ namespace DistribuidoresApp.Views
             DataGridPedidos.ItemsSource = Pedidos;
 
             Productos = iControlador.ListarProductos();
-            //DataGridProductos.ItemsSource = Productos;
+            DataGridProductos.ItemsSource = Productos;
+
+            var idProductoSeleccionado = 1;
+            Atributos = iControlador.ObtenerAtributos(idProductoSeleccionado);
+            TreeViewCamposVariables.ItemsSource = Atributos;
         }
 
         // Executes when the user navigates to this page.

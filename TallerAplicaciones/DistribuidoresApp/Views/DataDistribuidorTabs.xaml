@@ -16,7 +16,7 @@
 
         <sdk:TabControl>
             
-            <sdk:TabItem Header="Productos" x:Name="TabItemProductos">
+            <sdk:TabItem Header="Pedidos" x:Name="TabItemPedidos">
 
                 <sdk:DataGrid
                     x:Name="DataGridPedidos"
@@ -45,43 +45,53 @@
                 
             </sdk:TabItem>
 
-            <sdk:TabItem Header="Pedidos" x:Name="TabItemPedidos">
+            <sdk:TabItem Header="Productos" x:Name="TabItemProductos">
+                
+                <StackPanel 
+                    x:Name="PanelDatosProducto" 
+                    Orientation="Vertical"
+                    HorizontalAlignment="Left" d:DataContext="{d:DesignInstance temp:ValorAtributoFake}">
+
+                    <StackPanel.Resources>
+                        
+                        <sdk:HierarchicalDataTemplate x:Name="SubTemplate">
+                            <TextBlock Text="{Binding Path=ValorString}" d:DataContext="{d:DesignInstance temp:Valor}">
+                            </TextBlock>
+                        </sdk:HierarchicalDataTemplate>
+
+                        <sdk:HierarchicalDataTemplate x:Name="NameTemplate" 
+                                                      ItemsSource="{Binding Path=Valores}" 
+                                                      ItemTemplate="{StaticResource SubTemplate}">
+                            <TextBlock Text="{Binding Path=Nombre}"></TextBlock>
+                        </sdk:HierarchicalDataTemplate>
+
+                    </StackPanel.Resources>
+
+                    <sdk:DataGrid
+                        x:Name="DataGridProductos"
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" 
+                        Width="250"
+                        AutoGenerateColumns="False" 
+                        ColumnWidth="*"
+                        d:DataContext="{d:DesignInstance temp:ProductoFake}">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoFakeId}"/>
+                                <sdk:DataGridTextColumn Header="Codigo" IsReadOnly="True" Binding="{Binding Codigo}"/>
+                                <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
+                            </sdk:DataGrid.Columns>
+                    </sdk:DataGrid>
+                    
+                    <sdk:Label>Campos Variables</sdk:Label>
+
+                    <sdk:TreeView x:Name="TreeViewCamposVariables" ItemsSource="{Binding}" ItemTemplate="{StaticResource NameTemplate}">
+                    </sdk:TreeView>
+
+                </StackPanel>
                 
             </sdk:TabItem>
             
         </sdk:TabControl>
         
-        <!--
-                
-        </StackPanel>
-
-        <StackPanel Orientation="Vertical" Grid.Column="1">
-            <sdk:Label 
-                Height="30" 
-                Width="250"
-                VerticalAlignment="Center" 
-                HorizontalAlignment="Right"
-                Margin="0,30,120,0" FlowDirection="RightToLeft">Productos</sdk:Label>
-
-                <sdk:DataGrid
-                    x:Name="DataGridProductos"
-                    Height="241" 
-                    HorizontalAlignment="Right" 
-                    Margin="0,0,20,0"
-                    VerticalAlignment="Top" 
-                    Width="350"
-                    SelectionMode="Single"
-                    AutoGenerateColumns="False" 
-                    ColumnWidth="*"
-                    d:DataContext="{d:DesignInstance temp:ProductoFake}">
-                        <sdk:DataGrid.Columns>
-                            <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoFakeId}"/>
-                            <sdk:DataGridTextColumn Header="Codigo" IsReadOnly="True" Binding="{Binding Codigo}"/>
-                            <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
-                        </sdk:DataGrid.Columns>
-                </sdk:DataGrid>
-        </StackPanel>
-        -->
-
     </Grid>
 </navigation:Page>
