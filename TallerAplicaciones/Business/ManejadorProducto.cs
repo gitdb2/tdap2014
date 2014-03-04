@@ -164,5 +164,106 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
             return ret;
         }
+
+        public void AsignarFotos(int idProducto, List<string> fotoDirs)
+        {
+            if (fotoDirs.Count == 0) return;
+            var archivos = fotoDirs.Select(item => new Foto
+            {
+                Activo = true,
+                Nombre = item,
+                URL = item
+            }).ToList();
+            AsignarArchivo(idProducto, archivos);
+        }
+
+        public void AsignarVideos(int idProducto, List<string> videoDirs)
+        {
+            if (videoDirs.Count == 0) return;
+            var archivos = videoDirs.Select(item => new Video
+            {
+                Activo = true,
+                Nombre = item,
+                URL = item
+            }).ToList();
+            AsignarArchivo(idProducto, archivos);
+        }
+
+
+
+
+        private void AsignarArchivo(int idProducto, IEnumerable<Archivo> archivos)
+        {
+            using (var db = new Persistencia())
+            {
+                var productoDb = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == idProducto);
+                if (productoDb != null && archivos.Any())
+                {
+                    if (productoDb.Archivos == null)
+                    {
+                        productoDb.Archivos = new List<Archivo>();
+                    }
+                    foreach (var archivo in archivos)
+                    {
+                        productoDb.Archivos.Add(archivo);
+
+                    }
+                    db.SaveChanges();
+                }
+            }
+        }
+
+
+        public void AltaProducto(Producto producto, List<string> fotoDirs, List<string> videoDirs)
+        {
+
+            try
+            {
+                using (var db = new Persistencia())
+                {
+                     producto.Archivos = new List<Archivo>();
+
+                    if (videoDirs.Count > 0)
+                    {
+                        foreach (var item in fotoDirs)
+                        {
+                            producto.Archivos.Add(new Video
+                            {
+                                Activo = true,
+                                Nombre = item,
+                                URL = item
+                            });
+                        }
+                    }
+
+                    if (fotoDirs.Count > 0)
+                    {
+                        foreach (var item in fotoDirs)
+                        {
+                            producto.Archivos.Add(new Foto
+                            {
+                                Activo = true,
+                                Nombre = item,
+                                URL = item
+                            });
+                        }
+                    }
+
+                    db.Productos.Add(producto);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            {
+                if (e.InnerException.InnerException.Message.Contains("UNIQUE KEY"))
+                {
+                    throw new ValorDuplicadoException("El codigo ya existe", e);
+                }
+
+                throw;
+            }
+      
+        }
     }
 }

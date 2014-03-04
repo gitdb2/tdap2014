@@ -33,22 +33,19 @@
             @Html.ValidationMessageFor(model => model.Descripcion)
         </div>
         <div class="editor-field Fotos">
-            @* <input type="file" name="Fotos" id="Fotos"  />*@
             <div>
-                @Html.TextBoxFor(model => model.Fotos, new { type = "file" })
-                &nbsp;<a href="javascript:void(0)" onclick="addNew('Fotos')">+</a>
-            </div>
-            <!--
-
                 <label for="fotos">Fotos:</label>
-                <input type="file" name="fotos" id="fotos"  accept=".png" />
-                -->
+                @Html.TextBoxFor(model => model.Fotos, new { type = "file", accept = ".png,.jpg" })
+                &nbsp;<a href="javascript:void(0)" onclick="addNew('Fotos')">[+]</a>
+                 @Html.ValidationMessageFor(model => model.Fotos)
+            </div>
         </div>
         <div class="editor-field Videos">
             <div>
-                @* <input type="file" name="Videos" id="videos"  />*@
-                @Html.TextBoxFor(model => model.Videos, new { type = "file" })
-                &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">+</a>
+                <label for="Videos">Videos:</label>
+                @Html.TextBoxFor(model => model.Videos, new { type = "file", accept = ".wmv" })
+                &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">[+]</a>
+                 @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
         <p>
@@ -62,8 +59,11 @@
 @section Scripts {
     <script>
         function addNew(name) {
-            $("." + name).append($('<div><input type="file" value="" name="' + name + '"/>' +
-                '<a href="javascript:void(0)" onclick="$(this).parent().remove()">X</a>' +
+
+            var accept = (name == "Fotos") ? '.png,.jpg' : '.wmv';
+
+            $("." + name).append($('<div><input type="file" value="" name="' + name + '" accept="'+accept+'"/>' +
+                '<a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a>' +
                 '</div>'));
         }
     </script>
