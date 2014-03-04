@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
@@ -70,8 +71,13 @@ namespace TallerAplicaciones.Controllers
 
                 return RedirectToAction("Create");
             }
+            catch (ValorDuplicadoException ex)
+            {
+                ModelState.AddModelError("Codigo", ex.Message);
+            }
             catch (Exception e)
             {
+               
                 ModelState.AddModelError("", e.Message);
             }
 

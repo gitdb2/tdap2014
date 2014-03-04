@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
 
@@ -22,11 +23,25 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public void AltaProducto(Producto producto)
         {
-            using (var db = new Persistencia())
+            try
             {
-                db.Productos.Add(producto);
-                db.SaveChanges();
+                using (var db = new Persistencia())
+                {
+                    db.Productos.Add(producto);
+                    db.SaveChanges();
+                }
+
             }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            {
+                if (e.InnerException.InnerException.Message.Contains("UNIQUE KEY"))
+                {
+                    throw new ValorDuplicadoException("El codigo ya existe", e);
+                }
+                   
+                throw;
+            }
+           
         }
 
         public void BajaProducto(int idProducto)
