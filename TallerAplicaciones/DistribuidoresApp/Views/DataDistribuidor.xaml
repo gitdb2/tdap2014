@@ -11,9 +11,15 @@
            d:DesignWidth="640" 
            d:DesignHeight="480"
            Title="Page1 Page">
+    
     <Grid x:Name="LayoutRoot">
 
-        <StackPanel Orientation="Vertical">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Orientation="Vertical" Grid.Column="0">
 
             <sdk:Label 
                 Height="30" 
@@ -22,42 +28,36 @@
                 HorizontalAlignment="Left"
                 Margin="20,30,0,0">Pedidos</sdk:Label>
             
-            <sdk:DataGrid
-                x:Name="DataGridPedidos"
-                Height="241"    
-                HorizontalAlignment="Left" 
-                Margin="20,0,0,0"
-                VerticalAlignment="Top" 
-                Width="350"
-                SelectionMode="Single"
-                AutoGenerateColumns="False" 
-                ColumnWidth="*" 
-                d:DataContext="{d:DesignInstance temp:PedidoFake}">
+                <sdk:DataGrid
+                    x:Name="DataGridPedidos"
+                    Height="241"    
+                    HorizontalAlignment="Left" 
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Top" 
+                    Width="350"
+                    SelectionMode="Single"
+                    AutoGenerateColumns="False" 
+                    ColumnWidth="*" 
+                    d:DataContext="{d:DesignInstance temp:PedidoFake}">
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding PedidoFakeId}"/>
                         <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
-                        
-                        <!-- <sdk:DataGridCheckBoxColumn Header="Aprobado" IsReadOnly="True" Binding="{Binding Aprobado, Mode=TwoWay}"/> -->
-
-                    <sdk:DataGridTemplateColumn Header="Aprobado">
-                        <sdk:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox 
+                        <sdk:DataGridTemplateColumn Header="Aprobado">
+                            <sdk:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox 
                                     x:Name="AprobadoCambiarEstado" 
                                     IsChecked="{Binding Aprobado}"
                                     Tag="{Binding}" 
                                     Click="AprobadoCambiarEstado_Click" />
-                            </DataTemplate>
-                        </sdk:DataGridTemplateColumn.CellTemplate>
-                    </sdk:DataGridTemplateColumn>
-
-                </sdk:DataGrid.Columns>
-            </sdk:DataGrid>
-
+                                </DataTemplate>
+                            </sdk:DataGridTemplateColumn.CellTemplate>
+                        </sdk:DataGridTemplateColumn>
+                    </sdk:DataGrid.Columns>
+                </sdk:DataGrid>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical">
-
+        <StackPanel Orientation="Vertical" Grid.Column="1">
             <sdk:Label 
                 Height="30" 
                 Width="250"
@@ -65,24 +65,23 @@
                 HorizontalAlignment="Right"
                 Margin="0,30,120,0" FlowDirection="RightToLeft">Productos</sdk:Label>
 
-            <sdk:DataGrid
-                x:Name="DataGridProductos"
-                Height="241" 
-                HorizontalAlignment="Right" 
-                Margin="0,0,20,0"
-                VerticalAlignment="Top" 
-                Width="350"
-                SelectionMode="Single"
-                AutoGenerateColumns="False" 
-                ColumnWidth="*"
-                d:DataContext="{d:DesignInstance temp:ProductoFake}">
-                    <sdk:DataGrid.Columns>
-                        <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoFakeId}"/>
-                        <sdk:DataGridTextColumn Header="Codigo" IsReadOnly="True" Binding="{Binding Codigo}"/>
-                        <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
-                    </sdk:DataGrid.Columns>
-            </sdk:DataGrid>
-                
+                <sdk:DataGrid
+                    x:Name="DataGridProductos"
+                    Height="241" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,0,20,0"
+                    VerticalAlignment="Top" 
+                    Width="350"
+                    SelectionMode="Single"
+                    AutoGenerateColumns="False" 
+                    ColumnWidth="*"
+                    d:DataContext="{d:DesignInstance temp:ProductoFake}">
+                        <sdk:DataGrid.Columns>
+                            <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoFakeId}"/>
+                            <sdk:DataGridTextColumn Header="Codigo" IsReadOnly="True" Binding="{Binding Codigo}"/>
+                            <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
+                        </sdk:DataGrid.Columns>
+                </sdk:DataGrid>
         </StackPanel>
 
     </Grid>
