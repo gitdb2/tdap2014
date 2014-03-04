@@ -1,4 +1,5 @@
-﻿@model TallerAplicaciones.Models.AtributoModel
+﻿@using TallerAplicaciones.Models
+@model TallerAplicaciones.Models.AtributoModel
 
 @{
     ViewBag.Title = "Create";
@@ -8,7 +9,7 @@
 
 
 
-<h2>Crar Atributo</h2>
+<h2>Crear Atributo</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -25,13 +26,13 @@
         </div>
         
         <div class="editor-field">
-            <label for="campos"> Valor unico</label> <input type="radio" name="group1" onclick="toggle(this)" value="0" checked> 
-            <label for="campos"> Multiples valores</label> <input type="radio" name="group1" onclick="toggle(this)" value="1" >
+            <label > Valor unico</label> @Html.RadioButtonFor(model => model.DataCombo, false, new { @onclick = "toggle(this)" })
+            <label > Multiples valores</label> @Html.RadioButtonFor(model => model.DataCombo, true, new { @onclick = "toggle(this)" }) 
         </div>
     
         <div id="uno" style="display:none">
             <form class="editor-label" id="form" name="form" method="post">
-                <li id="rut1' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="campo' + nextinput + '"&nbsp; /></li>
+                <li id="rut1' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="Valores" &nbsp; /> <a href="#" onclick="borrarLinea($(this));">Eliminar valor</a> </li> 
                 <div id="campos"></div> 
                 <br/>
                  <a href="#" onclick="AgregarCampos();">Agregar nuevo valor</a>
@@ -56,19 +57,23 @@
 
         function AgregarCampos() {
             nextinput++;
-            campo = '<li id="rut' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="campo' + nextinput + '"&nbsp; /></li>';
+            campo = '<li id="rut' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="Valores" &nbsp; /> <a href="#" onclick="borrarLinea($(this));">Eliminar valor</a> </li> ';
             $("#campos").append(campo);
         }
 
         function toggle(elemento) {
-            if (elemento.value == "0") {
+            if (elemento.value == "False") {
                 document.getElementById("uno").style.display = "none";
               
             } else {
                     document.getElementById("uno").style.display = "block";
-               
             }
         }
+
+        function borrarLinea(elem) {
+            elem.parent().remove();
+        }
+
     </script>
     
 }

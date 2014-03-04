@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Models;
+using uy.edu.ort.taller.aplicaciones.interfaces;
+using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
 {
@@ -36,13 +39,18 @@ namespace TallerAplicaciones.Controllers
         // POST: /Atributo/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(AtributoModel collection)
         {
             try
             {
                 // TODO: Add insert logic here
 
+                // Creo objeto a persistir con el maneger
+                IAtributo iAtributo = ManejadorAtributo.GetInstance();
+                //iEmpresa.AltaEmpresa(new EmpresaDistribuidora() { Nombre = model.Nombre});  ==> Analogo pero con Atributo <==
+
                 return RedirectToAction("Index");
+
             }
             catch
             {
