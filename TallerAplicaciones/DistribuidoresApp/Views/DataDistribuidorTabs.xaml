@@ -62,7 +62,7 @@
                         <sdk:HierarchicalDataTemplate x:Name="NameTemplate" 
                                                       ItemsSource="{Binding Path=Valores}" 
                                                       ItemTemplate="{StaticResource SubTemplate}">
-                            <TextBlock Text="{Binding Path=Nombre}"></TextBlock>
+                            <TextBlock Text="{Binding Path=Nombre}" FontWeight="Bold"> </TextBlock>
                         </sdk:HierarchicalDataTemplate>
 
                     </StackPanel.Resources>
@@ -74,7 +74,7 @@
                         Width="250"
                         AutoGenerateColumns="False" 
                         ColumnWidth="*"
-                        d:DataContext="{d:DesignInstance temp:ProductoFake}">
+                        d:DataContext="{d:DesignInstance temp:ProductoFake}" IsReadOnly="True" SelectionChanged="DataGridProductos_SelectionChanged">
                             <sdk:DataGrid.Columns>
                                 <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoFakeId}"/>
                                 <sdk:DataGridTextColumn Header="Codigo" IsReadOnly="True" Binding="{Binding Codigo}"/>
@@ -82,7 +82,7 @@
                             </sdk:DataGrid.Columns>
                     </sdk:DataGrid>
                     
-                    <sdk:Label>Campos Variables</sdk:Label>
+                    <sdk:Label Margin="0,10" Content="Campos Variables:"></sdk:Label>
 
                     <sdk:TreeView x:Name="TreeViewCamposVariables" ItemsSource="{Binding}" ItemTemplate="{StaticResource NameTemplate}">
                     </sdk:TreeView>

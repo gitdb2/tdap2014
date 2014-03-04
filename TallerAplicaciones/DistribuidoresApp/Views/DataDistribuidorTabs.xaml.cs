@@ -24,17 +24,38 @@ namespace DistribuidoresApp.Views
         public DataDistribuidorTabs()
         {
             InitializeComponent();
-            IControlador iControlador = Controlador.GetInstance();
+            RefrescarPedidos();
+            RefrescarProductos();
+            RefrescarArbolAtributos();
+        }
 
+        private void RefrescarPedidos()
+        {
+            IControlador iControlador = Controlador.GetInstance();
             Pedidos = iControlador.ListarPedidos();
             DataGridPedidos.ItemsSource = Pedidos;
+        }
 
+        private void RefrescarProductos()
+        {
+            IControlador iControlador = Controlador.GetInstance();
             Productos = iControlador.ListarProductos();
             DataGridProductos.ItemsSource = Productos;
+            if (Productos.Any())
+            {
+                DataGridProductos.SelectedIndex = 0;
+            }
+        }
 
-            var idProductoSeleccionado = 1;
-            Atributos = iControlador.ObtenerAtributos(idProductoSeleccionado);
-            TreeViewCamposVariables.ItemsSource = Atributos;
+        private void RefrescarArbolAtributos()
+        {
+            var productoFakeSeleccionado = (ProductoFake) DataGridProductos.SelectedItem;
+            if (productoFakeSeleccionado != null)
+            {
+                IControlador iControlador = Controlador.GetInstance();
+                Atributos = iControlador.ObtenerAtributos(productoFakeSeleccionado.ProductoFakeId);
+                TreeViewCamposVariables.ItemsSource = Atributos;
+            }
         }
 
         // Executes when the user navigates to this page.
@@ -53,6 +74,11 @@ namespace DistribuidoresApp.Views
                 IControlador iControlador = Controlador.GetInstance();
                 iControlador.CambiarEstadoPedido(pedidoFakeSeleccionado.PedidoFakeId, aprobado);    
             }
+        }
+
+        private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RefrescarArbolAtributos();
         }
     }
 }
