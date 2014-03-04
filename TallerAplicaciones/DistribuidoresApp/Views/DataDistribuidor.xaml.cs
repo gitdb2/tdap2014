@@ -17,6 +17,7 @@ namespace DistribuidoresApp.Views
     public partial class DataDistribuidor : Page
     {
         public List<PedidoFake> Pedidos;
+        public List<ProductoFake> Productos;
 
         public DataDistribuidor()
         {
@@ -29,6 +30,16 @@ namespace DistribuidoresApp.Views
                 new PedidoFake() {PedidoFakeId = 4, Descripcion = "Pedido4", Aprobado = true}
             };
             DataGridPedidos.ItemsSource = Pedidos;
+
+            Productos = new List<ProductoFake>
+            {
+                new ProductoFake() {ProductoFakeId = 1, Codigo = "AAAAA", Descripcion = "Producto1"},
+                new ProductoFake() {ProductoFakeId = 2, Codigo = "BBBBB", Descripcion = "Producto2"},
+                new ProductoFake() {ProductoFakeId = 3, Codigo = "CCCCC", Descripcion = "Producto3"},
+                new ProductoFake() {ProductoFakeId = 4, Codigo = "DDDDD", Descripcion = "Producto4"}
+            };
+            DataGridProductos.ItemsSource = Productos;
+
         }
 
         // Executes when the user navigates to this page.

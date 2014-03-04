@@ -11,13 +11,13 @@ using System.Windows.Shapes;
 
 namespace DistribuidoresApp.Temp
 {
-    public class PedidoFake
+    public class ProductoFake
     {
-        public int PedidoFakeId { get; set; }
+        public int ProductoFakeId { get; set; }
+        public string Codigo { get; set; }
         public string Descripcion { get; set; }
-        public bool Aprobado { get; set; }
 
-        public PedidoFake()
+        public ProductoFake()
         {
             
         }
