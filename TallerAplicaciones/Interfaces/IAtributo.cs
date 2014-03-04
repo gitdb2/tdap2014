@@ -8,6 +8,10 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 {
     public interface IAtributo
     {
-        void AltaAtgributo(Atributo atributo);
+        void AltaAtributo(Atributo atributo);
+
+        void AltaAtributoCombo(AtributoCombo atributoCombo);
+
+        void AltaAtributoSimple(AtributoSimple atributoSimple);
     }
 }

@@ -21,17 +21,33 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-        public void AltaAtgributo(dominio.Atributo atributo)
+        public void AltaAtributo(dominio.Atributo atributo)
         {
             using (var db = new Persistencia())
             {
-                
+                db.Atributos.Add(atributo);
+                db.SaveChanges();
             }
         }
 
-        private object Persistencia()
+        public void AltaAtributoCombo(dominio.AtributoCombo atributo)
         {
-            throw new NotImplementedException();
+            using (var db = new Persistencia())
+            {
+                db.Atributos.Add(atributo);
+                db.SaveChanges();
+            }
         }
+
+        public void AltaAtributoSimple(dominio.AtributoSimple atributo)
+        {
+            using (var db = new Persistencia())
+            {
+                db.Atributos.Add(atributo);
+                db.SaveChanges();
+            }
+        }
+
+
     }
 }
