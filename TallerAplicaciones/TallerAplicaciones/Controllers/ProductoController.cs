@@ -51,50 +51,10 @@ namespace TallerAplicaciones.Controllers
             return View();
         }
 
-        //
         // POST: /Producto/Create
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Create(ProductoModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            try
-            {
-                var producto = new Producto()
-                {
-                    Codigo = model.Codigo,
-                    Descripcion = model.Descripcion,
-                    Nombre = model.Nombre,
-                    Activo = true
-                };
-                ManejadorProducto.GetInstance().AltaProducto(producto);
-
-                return RedirectToAction("Create");
-            }
-            catch (ValorDuplicadoException ex)
-            {
-                ModelState.AddModelError("Codigo", ex.Message);
-            }
-            catch (Exception e)
-            {
-
-                ModelState.AddModelError("", e.Message);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        [AllowAnonymous]
-        public ActionResult CreateConArchivos()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult CreateConArchivos(ProductoConArchivosSubmitModel model)
+        public ActionResult Create(ProductoConArchivosSubmitModel model)
         {
 
             if (!ModelState.IsValid) return View(model);
