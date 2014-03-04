@@ -167,68 +167,57 @@ namespace TallerAplicaciones.Controllers
                 {
                     System.IO.File.Delete(file.PathFileSystem);
                 }
-
-             
-
             }
             catch (Exception e)
             {
-
                 ModelState.AddModelError("", e.Message);
             }
-
             // If we got this far, something failed, redisplay form
-            return View();
+            return View(model);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         //
         // GET: /Producto/Edit/5
 
         public ActionResult Edit(int id)
         {
-            return View();
+            var producto = ManejadorProducto.GetInstance().GetProducto(id);
+            return View(new ProductoConArchivosSubmitModel
+            {
+                Activo = producto.Activo,
+                Producto = producto,
+                Descripcion = producto.Descripcion,
+                Nombre = producto.Nombre,
+                Codigo = producto.Codigo,
+                ProductoID = producto.ProductoID
+            });
         }
 
         //
         // POST: /Producto/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ProductoConArchivosSubmitModel model)
         {
+
+            if (!ModelState.IsValid) return View(model);
+
             try
             {
-                // TODO: Add update logic here
+                
 
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
-            catch
+            catch (ValorDuplicadoException ex)
             {
-                return View();
+                ModelState.AddModelError("Codigo", ex.Message);
             }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+            return View(model);
         }
 
         //

@@ -254,5 +254,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         }
 
+
+        public Producto GetProducto(int idProducto)
+        {
+            using (var db = new Persistencia())
+            {
+                var productoDb = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == idProducto);
+                if (productoDb != null)
+                {
+                    if (productoDb.Archivos == null)
+                    {
+                        productoDb.Archivos = new List<Archivo>();
+                    }
+                  
+                }
+                return productoDb;
+            }
+        }
     }
 }
