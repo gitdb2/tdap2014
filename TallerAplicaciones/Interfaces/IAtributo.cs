@@ -13,5 +13,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
         void AltaAtributoCombo(AtributoCombo atributoCombo);
 
         void AltaAtributoSimple(AtributoSimple atributoSimple);
+
+        List<Atributo> GetAtributos();
     }
 }

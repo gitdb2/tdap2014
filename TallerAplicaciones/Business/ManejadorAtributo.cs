@@ -48,6 +48,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+        public List<Atributo> GetAtributos()
+        {
+            using (var db = new Persistencia())
+            {
+                return db.Atributos.ToList();
+            }
+        }
 
     }
 }

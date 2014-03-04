@@ -95,6 +95,27 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Atributo/Edit/5
 
+        public ActionResult List()
+        {
+            ListAtributoModel model = null;
+            try
+            {
+                IAtributo iAtributo = ManejadorAtributo.GetInstance();
+                List<Atributo> listaAtributos = iAtributo.GetAtributos();
+
+                model = new ListAtributoModel() { Atributos = listaAtributos };
+
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
+            return View(model);
+        }
+
+        //
+        // GET: /Atributo/Edit/5
+
         public ActionResult Edit(int id)
         {
             return View();
