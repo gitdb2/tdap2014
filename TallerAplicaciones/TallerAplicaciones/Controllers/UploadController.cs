@@ -33,7 +33,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload(HttpPostedFileBase file, string puto)
         {
 
             if (file.ContentLength > 0)

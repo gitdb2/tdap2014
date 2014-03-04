@@ -52,9 +52,11 @@ namespace TallerAplicaciones.Models
         public string Descripcion { get; set; }
 
         [Display(Name = "Fotos")]
-        public IEnumerable<HttpPostedFileBase> Fotos { get; set; }
+     //   [Required(ErrorMessage = "file required")]
+        public List<HttpPostedFileBase> Fotos { get; set; }
         [Display(Name = "Videos")]
-        public IEnumerable<HttpPostedFileBase> Videos { get; set; } 
+      //  [Required(ErrorMessage = "file required")]
+        public List<HttpPostedFileBase> Videos { get; set; } 
 
         public bool Activo { get; set; }
 

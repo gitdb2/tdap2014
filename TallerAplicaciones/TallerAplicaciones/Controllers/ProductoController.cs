@@ -23,12 +23,12 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Producto/Details/5
 
-//        public ActionResult Details(int id)
-//        {
-//            return View();
-//        }
+        //        public ActionResult Details(int id)
+        //        {
+        //            return View();
+        //        }
 
-      
+
         [AllowAnonymous]
         public ActionResult List()
         {
@@ -40,7 +40,7 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-    
+
 
         //
         // GET: /Producto/Create
@@ -77,7 +77,7 @@ namespace TallerAplicaciones.Controllers
             }
             catch (Exception e)
             {
-               
+
                 ModelState.AddModelError("", e.Message);
             }
 
@@ -85,43 +85,60 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-
-
-         [HttpPost]
         [AllowAnonymous]
-        public ActionResult CreateConArchivos(ProductoConArchivosSubmitModel model)
+        public ActionResult CreateConArchivos()
         {
-            if (!ModelState.IsValid) return View(model);
+            return View();
+        }
 
-            try
-            {
-                var producto = new Producto()
-                {
-                    Codigo = model.Codigo,
-                    Descripcion = model.Descripcion,
-                    Nombre = model.Nombre,
-                    Activo = true
-                };
-                ManejadorProducto.GetInstance().AltaProducto(producto);
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult CreateConArchivos( 
+            ProductoConArchivosSubmitModel model){
+           //HttpPostedFileBase file
+            //string Codigo, string Descripcion, string Nombre
+            //){
 
-                return RedirectToAction("List");
-            }
-            catch (ValorDuplicadoException ex)
-            {
-                ModelState.AddModelError("Codigo", ex.Message);
-            }
-            catch (Exception e)
-            {
-               
-                ModelState.AddModelError("", e.Message);
-            }
+
+            Console.Out.Write("ssssssss");
+
+            //ProductoConArchivosSubmitModel model){
+        
+          //  if (!ModelState.IsValid) return View(model);
+
+            //try
+            //{
+            //    var producto = new Producto()
+            //    {
+            //        //Codigo = model.Codigo,
+            //        //Descripcion = model.Descripcion,
+            //        //Nombre = model.Nombre,
+
+            //        Codigo = Codigo,
+            //        Descripcion = Descripcion,
+            //        Nombre = Nombre,
+            //        Activo = true
+            //    };
+            //    ManejadorProducto.GetInstance().AltaProducto(producto);
+
+            //    return RedirectToAction("List");
+            //}
+            //catch (ValorDuplicadoException ex)
+            //{
+            //    ModelState.AddModelError("Codigo", ex.Message);
+            //}
+            //catch (Exception e)
+            //{
+
+            //    ModelState.AddModelError("", e.Message);
+            //}
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View();
         }
 
 
-        
+
 
 
 

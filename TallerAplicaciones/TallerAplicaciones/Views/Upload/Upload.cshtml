@@ -17,8 +17,11 @@
 @using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
    @Html.ValidationSummary(true)
+
+    
+        <input type="text" name="puto"/>
         <label for="file">@(title):</label>
-    <input type="file" name="file" id="file"  accept="@extension" />
+        <input type="file" name="file" id="file"  accept="@extension" />
  
         <p>
             <input type="submit" value="submit" />

@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Crear Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TallerAplicaciones.Models.ProductoConArchivosSubmitModel
+<h2>
+    Crear Producto</h2>
+@using (Html.BeginForm("CreateConArchivos", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Alta Producto Con archivos</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nombre)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nombre)
+            @Html.ValidationMessageFor(model => model.Nombre)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Codigo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Codigo)
+            @Html.ValidationMessageFor(model => model.Codigo)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Descripcion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Descripcion)
+            @Html.ValidationMessageFor(model => model.Descripcion)
+        </div>
+        <div class="editor-field Fotos">
+            @* <input type="file" name="Fotos" id="Fotos"  />*@
+            <div>
+                @Html.TextBoxFor(model => model.Fotos, new { type = "file" })
+                &nbsp;<a href="javascript:void(0)" onclick="addNew('Fotos')">+</a>
+            </div>
+            <!--
+
+                <label for="fotos">Fotos:</label>
+                <input type="file" name="fotos" id="fotos"  accept=".png" />
+                -->
+        </div>
+        <div class="editor-field Videos">
+            <div>
+                @* <input type="file" name="Videos" id="videos"  />*@
+                @Html.TextBoxFor(model => model.Videos, new { type = "file" })
+                &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">+</a>
+            </div>
+        </div>
+        <p>
+            <input type="submit" value="Crear Producto" />
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    <script>
+        function addNew(name) {
+            $("." + name).append($('<div><input type="file" value="" name="' + name + '"/>' +
+                '<a href="javascript:void(0)" onclick="$(this).parent().remove()">X</a>' +
+                '</div>'));
+        }
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
