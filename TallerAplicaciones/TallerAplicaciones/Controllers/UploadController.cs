@@ -55,6 +55,29 @@ namespace TallerAplicaciones.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult Index(IEnumerable<HttpPostedFileBase> files)
+        {
+
+            var basePath = Server.MapPath("~/Uploads");
+
+            if (!Directory.Exists(basePath))
+            {
+                Directory.CreateDirectory(basePath);
+            }
+
+            foreach (var file in files)
+            {
+                if (file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(basePath, fileName);
+                    file.SaveAs(path);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
 
 
     }
