@@ -27,6 +27,7 @@ namespace DistribuidoresApp.Views
             RefrescarPedidos();
             RefrescarProductos();
             RefrescarArbolAtributos();
+            RefrescarVideosProducto();
         }
 
         private void RefrescarPedidos()
@@ -80,5 +81,27 @@ namespace DistribuidoresApp.Views
         {
             RefrescarArbolAtributos();
         }
+
+        private void RefrescarVideosProducto()
+        {
+            Media.AutoPlay = true;
+            Media.Source = new Uri("http://mschannel9.vo.msecnd.net/o9/mix/09/wmv/key01.wmv");
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            Media.Stop();
+        }
+
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Media.Pause();
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            Media.Play();
+        }
+
     }
 }
