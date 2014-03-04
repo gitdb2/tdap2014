@@ -88,6 +88,9 @@
     <Compile Include="Logica\Utils.cs" />
     <Compile Include="Temp\PedidoFake.cs" />
     <Compile Include="Temp\ProductoFake.cs" />
+    <Compile Include="Views\DataDistribuidorTabs.xaml.cs">
+      <DependentUpon>DataDistribuidorTabs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DetalleProducto.xaml.cs">
       <DependentUpon>DetalleProducto.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\DataDistribuidorTabs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DataDistribuidor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
