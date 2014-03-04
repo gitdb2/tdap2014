@@ -1,41 +1,83 @@
 ﻿@using Microsoft.Ajax.Utilities
 @using uy.edu.ort.taller.aplicaciones.dominio
+@using uy.edu.ort.taller.aplicaciones.utiles.Formatters
 @model TallerAplicaciones.Models.ProductoListModel
-
 @{
     ViewBag.Title = "Lista de Productos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>List</h2>
-
+<h2>
+    List</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table>
     <tr>
-        <th>Nombre</th>
-        <th>Codigo</th>
-        <th>Descripcion</th>
-        <th>Activo</th>
-        <th>Multimedia</th>
-        <th>Acciones</th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Codigo
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Activo
+        </th>
+        <th>
+            Multimedia
+        </th>
+        <th>
+            Acciones
+        </th>
     </tr>
-    
-     @foreach (var item in Model.Productos)
+    @{ var formatter = new HtmlFormatter(); }
+    @foreach (var item in Model.Productos)
     {
         <tr>
-
-            <td>@item.Nombre</td>
-            <td>@item.Codigo</td>
-            <td>@item.Descripcion</td>
-            <td>@(item.Activo ? "Si" : "No")</td>
-            <td>ahhh si aca va algo</td>
+            <td>@item.Nombre
+            </td>
+            <td>@item.Codigo
+            </td>
+            <td>@item.Descripcion
+            </td>
+            <td>@(item.Activo ? "Si" : "No")
+            </td>
+            <td>@{
+                    foreach (var archivo in item.Archivos)
+                    {
+                        archivo.Accept(formatter);
+                        Output.Write(formatter.Html);
+                    }
+                }
+            </td>
             <td>
-                @Html.ActionLink("Modificar", "Edit", "Producto", new { idProducto = @item.ProductoID }, null) | 
+                @Html.ActionLink("Modificar", "Edit", "Producto", new { idProducto = @item.ProductoID }, null)
+                |
                 @Html.ActionLink("Eliminar", "Delete", "Producto", new { idProducto = @item.ProductoID }, null)
             </td>
         </tr>
-    }   
-
+    }
 </table>
+
+
+
+
+@section Scripts {
+    <script>
+        function openImage(elem){
+                    window.open(elem.attr("data"));
+      }
+
+       function openVideo(elem){
+                    window.open(elem.attr("data"));
+      }
+    
+
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

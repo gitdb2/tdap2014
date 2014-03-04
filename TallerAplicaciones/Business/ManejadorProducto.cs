@@ -92,7 +92,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             using (var db = new Persistencia())
             {
-                return db.Productos.ToList();
+                return db.Productos.Include("Archivos").ToList();
             }
         }
 

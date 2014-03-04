@@ -5,7 +5,7 @@ using System.Text;
 
 namespace uy.edu.ort.taller.aplicaciones.dominio
 {
-    public abstract class Archivo
+    public abstract class Archivo 
     {
 
         public int ArchivoID { get; set; }
@@ -16,6 +16,8 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public string Url { get; set; }
        
         public bool Activo { get; set; }
+
+        public abstract void Accept(IVisitorHtmlFormatter visitor);
 
     }
 }
