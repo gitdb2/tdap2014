@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -15,6 +16,9 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public int ProductoID { get; set; }
 
         public string Nombre { get; set; }
+
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(5)]
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
 

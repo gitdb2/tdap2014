@@ -10,11 +10,14 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 {
     public class Persistencia : DbContext
     {
+        static Persistencia(){
+             Database.SetInitializer<Persistencia>(new PersistenciaInitializer());
+        }
 
         public Persistencia()
             : base("DefaultConnection")
         {
-
+           
         }
 
         public DbSet<PerfilUsuario> PerfilesUsuario { get; set; }
@@ -46,6 +49,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 context.Database.Create();
             }
+//            context.Database.ExecuteSqlCommand("ALTER TABLE \"Producto\" ADD CONSTRAINT UniqueCodeInProducto UNIQUE (Codigo) ");
+            context.Database.ExecuteSqlCommand("ALTER TABLE Producto ADD UNIQUE (Codigo) ");
+//            context.Database.ExecuteSqlCommand("alter table " + entityModelType.Name + " add unique(" + s + ")"); 
         }
     }
 
