@@ -24,7 +24,7 @@
             
             <sdk:DataGrid
                 x:Name="DataGridPedidos"
-                Height="241" 
+                Height="241"    
                 HorizontalAlignment="Left" 
                 Margin="20,0,0,0"
                 VerticalAlignment="Top" 
@@ -36,8 +36,22 @@
                     <sdk:DataGrid.Columns>
                         <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding PedidoFakeId}"/>
                         <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
-                        <sdk:DataGridCheckBoxColumn Header="Aprobado" IsReadOnly="True" Binding="{Binding Aprobado}"/>
-                    </sdk:DataGrid.Columns>
+                        
+                        <!-- <sdk:DataGridCheckBoxColumn Header="Aprobado" IsReadOnly="True" Binding="{Binding Aprobado, Mode=TwoWay}"/> -->
+
+                    <sdk:DataGridTemplateColumn Header="Aprobado">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox 
+                                    x:Name="AprobadoCambiarEstado" 
+                                    IsChecked="{Binding Aprobado}"
+                                    Tag="{Binding}" 
+                                    Click="AprobadoCambiarEstado_Click" />
+                            </DataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+
+                </sdk:DataGrid.Columns>
             </sdk:DataGrid>
 
         </StackPanel>

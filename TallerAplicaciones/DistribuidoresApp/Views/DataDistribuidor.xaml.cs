@@ -22,24 +22,13 @@ namespace DistribuidoresApp.Views
         public DataDistribuidor()
         {
             InitializeComponent();
-            Pedidos = new List<PedidoFake>
-            {
-                new PedidoFake() {PedidoFakeId = 1, Descripcion = "Pedido1", Aprobado = true},
-                new PedidoFake() {PedidoFakeId = 2, Descripcion = "Pedido2", Aprobado = false},
-                new PedidoFake() {PedidoFakeId = 3, Descripcion = "Pedido3", Aprobado = false},
-                new PedidoFake() {PedidoFakeId = 4, Descripcion = "Pedido4", Aprobado = true}
-            };
+            IControlador iControlador = Controlador.GetInstance();
+
+            Pedidos = iControlador.ListarPedidos();
             DataGridPedidos.ItemsSource = Pedidos;
 
-            Productos = new List<ProductoFake>
-            {
-                new ProductoFake() {ProductoFakeId = 1, Codigo = "AAAAA", Descripcion = "Producto1"},
-                new ProductoFake() {ProductoFakeId = 2, Codigo = "BBBBB", Descripcion = "Producto2"},
-                new ProductoFake() {ProductoFakeId = 3, Codigo = "CCCCC", Descripcion = "Producto3"},
-                new ProductoFake() {ProductoFakeId = 4, Codigo = "DDDDD", Descripcion = "Producto4"}
-            };
+            Productos = iControlador.ListarProductos();
             DataGridProductos.ItemsSource = Productos;
-
         }
 
         // Executes when the user navigates to this page.
@@ -48,5 +37,16 @@ namespace DistribuidoresApp.Views
 
         }
 
+        private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
+        {
+            var chkBox = sender as CheckBox;
+            var pedidoFakeSeleccionado = DataGridPedidos.SelectedItem as PedidoFake;
+            if (chkBox != null && pedidoFakeSeleccionado != null)
+            {
+                var aprobado = chkBox.IsChecked != null && (bool)chkBox.IsChecked;
+                IControlador iControlador = Controlador.GetInstance();
+                iControlador.CambiarEstadoPedido(pedidoFakeSeleccionado.PedidoFakeId, aprobado);    
+            }
+        }
     }
 }
