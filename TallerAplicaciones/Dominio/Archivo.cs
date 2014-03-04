@@ -10,10 +10,11 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         public int ArchivoID { get; set; }
 
-        public string Nombre { get; set; }
-        public string URL { get; set; }
-        public long Tamanio { get; set; }
+        public string PathFileSystem { get; set; }
 
+        public string Nombre { get; set; }
+        public string Url { get; set; }
+       
         public bool Activo { get; set; }
 
     }

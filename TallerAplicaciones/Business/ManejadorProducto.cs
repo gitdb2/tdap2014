@@ -172,7 +172,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 Activo = true,
                 Nombre = item,
-                URL = item
+                Url = item
             }).ToList();
             AsignarArchivo(idProducto, archivos);
         }
@@ -184,7 +184,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 Activo = true,
                 Nombre = item,
-                URL = item
+                Url = item
             }).ToList();
             AsignarArchivo(idProducto, archivos);
         }
@@ -214,40 +214,28 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
 
 
-        public void AltaProducto(Producto producto, List<string> fotoDirs, List<string> videoDirs)
+       
+
+
+        public void AltaProducto(Producto producto, List<Foto> fotos, List<Video> videos)
         {
 
             try
             {
                 using (var db = new Persistencia())
                 {
-                     producto.Archivos = new List<Archivo>();
+                    producto.Archivos = new List<Archivo>();
 
-                    if (videoDirs.Count > 0)
+                    foreach (var item in fotos)
                     {
-                        foreach (var item in fotoDirs)
-                        {
-                            producto.Archivos.Add(new Video
-                            {
-                                Activo = true,
-                                Nombre = item,
-                                URL = item
-                            });
-                        }
+                        producto.Archivos.Add(item);
                     }
 
-                    if (fotoDirs.Count > 0)
+                    foreach (var item in videos)
                     {
-                        foreach (var item in fotoDirs)
-                        {
-                            producto.Archivos.Add(new Foto
-                            {
-                                Activo = true,
-                                Nombre = item,
-                                URL = item
-                            });
-                        }
+                        producto.Archivos.Add(item);
                     }
+
 
                     db.Productos.Add(producto);
                     db.SaveChanges();
@@ -263,7 +251,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                 throw;
             }
-      
+
         }
+
     }
 }

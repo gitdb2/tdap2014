@@ -35,7 +35,7 @@
         <div class="editor-field Fotos">
             <div>
                 <label for="fotos">Fotos:</label>
-                @Html.TextBoxFor(model => model.Fotos, new { type = "file", accept = ".png,.jpg" })
+                @Html.TextBoxFor(model => model.Fotos, new { type = "file" })
                 &nbsp;<a href="javascript:void(0)" onclick="addNew('Fotos')">[+]</a>
                  @Html.ValidationMessageFor(model => model.Fotos)
             </div>
@@ -60,9 +60,9 @@
     <script>
         function addNew(name) {
 
-            var accept = (name == "Fotos") ? '.png,.jpg' : '.wmv';
+            var accept = (name == "Fotos") ? ".jpg" : ".wmv";
 
-            $("." + name).append($('<div><input type="file" value="" name="' + name + '" accept="'+accept+'"/>' +
+            $("." + name).append($('<div><input type="file" value="" name="' + name + '" />' +
                 '<a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a>' +
                 '</div>'));
         }

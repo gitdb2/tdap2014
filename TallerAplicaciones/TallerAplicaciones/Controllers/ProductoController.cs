@@ -99,6 +99,11 @@ namespace TallerAplicaciones.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
+        
+            var videoList = new List<Video>();
+            var fotoList = new List<Foto>();
+  
+
             try
             {
                 var producto = new Producto()
@@ -106,16 +111,13 @@ namespace TallerAplicaciones.Controllers
                     Codigo = model.Codigo,
                     Descripcion = model.Descripcion,
                     Nombre = model.Nombre,
-                    
-                    Activo = true
+                    Activo = true,
+                    Archivos = new List<Archivo>()
                 };
-              
 
-               
-                var fotoDirs = new List<string>(); 
-                {///Fotos
-                   
-                    
+
+              
+                {//FOTOS
                     var basePath = Server.MapPath("~/Uploads");
                     basePath = Path.Combine(basePath, "Fotos");
                     if (!Directory.Exists(basePath))
@@ -128,20 +130,29 @@ namespace TallerAplicaciones.Controllers
                         if (file != null && file.ContentLength > 0)
                         {
                             var fileName = Path.GetFileName(file.FileName);
-                            var path = Path.Combine(basePath, fileName);
-                            file.SaveAs(path);
-                            fotoDirs.Add(path);
+                            if (fileName != null)
+                            {
+                                var extension = Path.GetExtension(file.FileName);
+                                var fsName = Guid.NewGuid().ToString() + extension;
+                                var path = Path.Combine(basePath, fsName);
+                                var archivo = new Foto
+                                {
+                                    Url = "/Uploads/Fotos/" + fsName,
+                                    PathFileSystem = path,
+                                    Nombre = fileName,
+                                    Activo = true
+                                };
+                                producto.Archivos.Add(archivo);
+                                fotoList.Add(archivo);
+                                file.SaveAs(path);
+                            }
+
                         }
                     }
-                    //if (fotoDirs.Any())
-                    //{
-                      
-                    //    ManejadorProducto.GetInstance().AsignarFotos(producto.ProductoID, fotoDirs);
-                    //}
                 }
 
-                var videoDirs = new List<string>();    
-                {///Videos
+                
+                {//Videos
                    
                     var basePath = Server.MapPath("~/Uploads");
                     basePath = Path.Combine(basePath, "Videos");
@@ -153,19 +164,33 @@ namespace TallerAplicaciones.Controllers
                     {
                         if (file!=null && file.ContentLength > 0)
                         {
+                           
                             var fileName = Path.GetFileName(file.FileName);
-                            var path = Path.Combine(basePath, fileName);
-                            file.SaveAs(path);
-                            videoDirs.Add(path);
+                            if (fileName != null)
+                            {
+                                var extension = Path.GetExtension(file.FileName);
+                                var fsName = Guid.NewGuid().ToString() + "." + extension;
+                                var path = Path.Combine(basePath, fsName);
+
+                                var archivo = new Video
+                                {
+                                    Url = "/Uploads/Videos/" + fsName,
+                                    PathFileSystem = path,
+                                    Nombre = fileName,
+                                    Activo = true
+                                };
+                                producto.Archivos.Add(archivo);
+                                videoList.Add(archivo);
+                                file.SaveAs(path);
+                            }
+                            
                         }
                     }
-                    //if (videoDirs.Any())
-                    //{
-                    //    ManejadorProducto.GetInstance().AsignarVideos(producto.ProductoID, videoDirs);
-                    //}
                 }
 
-                ManejadorProducto.GetInstance().AltaProducto(producto, fotoDirs, videoDirs);
+                
+
+                ManejadorProducto.GetInstance().AltaProducto(producto);
 
 
                 return RedirectToAction("List");
@@ -173,6 +198,18 @@ namespace TallerAplicaciones.Controllers
             catch (ValorDuplicadoException ex)
             {
                 ModelState.AddModelError("Codigo", ex.Message);
+
+                foreach (var file in videoList)
+                {
+                    System.IO.File.Delete(file.PathFileSystem);
+                }
+                foreach (var file in fotoList)
+                {
+                    System.IO.File.Delete(file.PathFileSystem);
+                }
+
+             
+
             }
             catch (Exception e)
             {
