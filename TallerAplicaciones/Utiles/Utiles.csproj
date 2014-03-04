@@ -8,7 +8,7 @@
     <ProjectGuid>{724D61E3-1370-4B40-923F-222A119C23AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Utiles</RootNamespace>
+    <RootNamespace>uy.edu.ort.taller.aplicaciones.utiles</RootNamespace>
     <AssemblyName>Utiles</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="OperacionesArchivosSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

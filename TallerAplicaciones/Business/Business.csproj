@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ManejadorArchivos.cs" />
     <Compile Include="ManejadorEmpresaDistribuidora.cs" />
     <Compile Include="ManejadorProducto.cs" />
     <Compile Include="ManejadorPerfilUsuario.cs" />
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{0DF6BD7D-09D6-494D-B025-9FBD03968488}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utiles\Utiles.csproj">
+      <Project>{724D61E3-1370-4B40-923F-222A119C23AA}</Project>
+      <Name>Utiles</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

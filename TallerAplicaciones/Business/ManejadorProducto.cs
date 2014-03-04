@@ -38,42 +38,53 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 {
                     throw new ValorDuplicadoException("El codigo ya existe", e);
                 }
-                   
+
                 throw;
             }
-           
+
         }
 
         public void BajaProducto(int idProducto)
         {
             using (var db = new Persistencia())
             {
-                var producto = db.Productos.SingleOrDefault(p=> p.ProductoID == idProducto);
+                var producto = db.Productos.SingleOrDefault(p => p.ProductoID == idProducto);
                 if (producto != null)
                 {
                     producto.Activo = false;
                     db.SaveChanges();
                 }
-               
+
             }
         }
 
 
         public void ModificarProducto(Producto producto)
         {
-            using (var db = new Persistencia())
+            try
             {
-                var productoDb = db.Productos.SingleOrDefault(p => p.ProductoID == producto.ProductoID);
-                if (productoDb != null)
+                using (var db = new Persistencia())
                 {
-                    productoDb.Activo       = producto.Activo;
-                    productoDb.Codigo       = producto.Codigo;
-                    productoDb.Descripcion  = producto.Descripcion;
-                    productoDb.Nombre       = producto.Nombre;
+                    var productoDb = db.Productos.SingleOrDefault(p => p.ProductoID == producto.ProductoID);
+                    if (productoDb != null)
+                    {
+                        productoDb.Activo = producto.Activo;
+                        productoDb.Codigo = producto.Codigo;
+                        productoDb.Descripcion = producto.Descripcion;
+                        productoDb.Nombre = producto.Nombre;
 
-                    db.SaveChanges();
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            {
+                if (e.InnerException.InnerException.Message.Contains("UNIQUE KEY"))
+                {
+                    throw new ValorDuplicadoException("El codigo ya existe", e);
                 }
 
+                throw;
             }
         }
 
@@ -89,10 +100,10 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             using (var db = new Persistencia())
             {
-                var productoDB = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == idProducto);
-                if (productoDB != null)
+                var productoDb = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == idProducto);
+                if (productoDb != null)
                 {
-                    productoDB.Archivos.Add(imagen);
+                    productoDb.Archivos.Add(imagen);
 
                     db.SaveChanges();
                 }
@@ -121,7 +132,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public List<Foto> GetFotosProducto(int idProducto)
         {
-            var  ret =new List<Foto>();
+            var ret = new List<Foto>();
             using (var db = new Persistencia())
             {
                 var productoDb = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == idProducto);
@@ -146,12 +157,12 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 {
                     if (productoDb.Archivos.OfType<Video>().Any())
                     {
-                        return productoDb.Archivos.OfType<Video>().ToList(); 
+                        return productoDb.Archivos.OfType<Video>().ToList();
                     }
-                  
+
                 }
             }
             return ret;
-        } 
+        }
     }
 }
