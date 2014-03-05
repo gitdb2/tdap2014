@@ -60,8 +60,8 @@ namespace TallerAplicaciones.Controllers
             if (!ModelState.IsValid) return View(model);
 
         
-            var videoList = new List<Video>();
-            var fotoList = new List<Foto>();
+            var videoList = new List<Archivo>();
+            var fotoList = new List<Archivo>();
   
 
             try
@@ -77,80 +77,82 @@ namespace TallerAplicaciones.Controllers
 
 
               
-                {//FOTOS
-                    var basePath = Server.MapPath("~/Uploads");
-                    basePath = Path.Combine(basePath, "Fotos");
-                    if (!Directory.Exists(basePath))
-                    {
-                        Directory.CreateDirectory(basePath);
-                    }
+                //{//FOTOS
+                //    var basePath = Server.MapPath("~/Uploads");
+                //    basePath = Path.Combine(basePath, "Fotos");
+                //    if (!Directory.Exists(basePath))
+                //    {
+                //        Directory.CreateDirectory(basePath);
+                //    }
 
-                    foreach (var file in model.Fotos)
-                    {
-                        if (file != null && file.ContentLength > 0)
-                        {
-                            var fileName = Path.GetFileName(file.FileName);
-                            if (fileName != null)
-                            {
-                                var extension = Path.GetExtension(file.FileName);
-                                var fsName = Guid.NewGuid().ToString() + extension;
-                                var path = Path.Combine(basePath, fsName);
-                                var archivo = new Foto
-                                {
-                                    Url = "/Uploads/Fotos/" + fsName,
-                                    PathFileSystem = path,
-                                    Nombre = fileName,
-                                    Activo = true
-                                };
-                                producto.Archivos.Add(archivo);
-                                fotoList.Add(archivo);
-                                file.SaveAs(path);
-                            }
+                //    foreach (var file in model.Fotos)
+                //    {
+                //        if (file != null && file.ContentLength > 0)
+                //        {
+                //            var fileName = Path.GetFileName(file.FileName);
+                //            if (fileName != null)
+                //            {
+                //                var extension = Path.GetExtension(file.FileName);
+                //                var fsName = Guid.NewGuid().ToString() + extension;
+                //                var path = Path.Combine(basePath, fsName);
+                //                var archivo = new Foto
+                //                {
+                //                    Url = "/Uploads/Fotos/" + fsName,
+                //                    PathFileSystem = path,
+                //                    Nombre = fileName,
+                //                    Activo = true
+                //                };
+                //                producto.Archivos.Add(archivo);
+                //                fotoList.Add(archivo);
+                //                file.SaveAs(path);
+                //            }
 
-                        }
-                    }
-                }
+                //        }
+                //    }
+                //}
 
                 
-                {//Videos
+                //{//Videos
                    
-                    var basePath = Server.MapPath("~/Uploads");
-                    basePath = Path.Combine(basePath, "Videos");
-                    if (!Directory.Exists(basePath))
-                    {
-                        Directory.CreateDirectory(basePath);
-                    }
-                    foreach (var file in model.Videos)
-                    {
-                        if (file!=null && file.ContentLength > 0)
-                        {
+                //    var basePath = Server.MapPath("~/Uploads");
+                //    basePath = Path.Combine(basePath, "Videos");
+                //    if (!Directory.Exists(basePath))
+                //    {
+                //        Directory.CreateDirectory(basePath);
+                //    }
+                //    foreach (var file in model.Videos)
+                //    {
+                //        if (file!=null && file.ContentLength > 0)
+                //        {
                            
-                            var fileName = Path.GetFileName(file.FileName);
-                            if (fileName != null)
-                            {
-                                var extension = Path.GetExtension(file.FileName);
-                                var fsName = Guid.NewGuid().ToString() + "." + extension;
-                                var path = Path.Combine(basePath, fsName);
+                //            var fileName = Path.GetFileName(file.FileName);
+                //            if (fileName != null)
+                //            {
+                //                var extension = Path.GetExtension(file.FileName);
+                //                var fsName = Guid.NewGuid().ToString() + "." + extension;
+                //                var path = Path.Combine(basePath, fsName);
 
-                                var archivo = new Video
-                                {
-                                    Url = "/Uploads/Videos/" + fsName,
-                                    PathFileSystem = path,
-                                    Nombre = fileName,
-                                    Activo = true
-                                };
-                                producto.Archivos.Add(archivo);
-                                videoList.Add(archivo);
-                                file.SaveAs(path);
-                            }
+                //                var archivo = new Video
+                //                {
+                //                    Url = "/Uploads/Videos/" + fsName,
+                //                    PathFileSystem = path,
+                //                    Nombre = fileName,
+                //                    Activo = true
+                //                };
+                //                producto.Archivos.Add(archivo);
+                //                videoList.Add(archivo);
+                //                file.SaveAs(path);
+                //            }
                             
-                        }
-                    }
-                }
+                //        }
+                //    }
+                //}
 
-                
+                fotoList = GetArchivosAndSaveFiles(model, producto, false);
+                videoList = GetArchivosAndSaveFiles(model, producto, true);
 
-                ManejadorProducto.GetInstance().AltaProducto(producto);
+
+                 ManejadorProducto.GetInstance().AltaProducto(producto);
 
 
                 return RedirectToAction("List");
@@ -245,5 +247,56 @@ namespace TallerAplicaciones.Controllers
                 return View();
             }
         }
+
+
+
+        protected List<Archivo> GetArchivosAndSaveFiles(ProductoConArchivosSubmitModel model, Producto producto, bool isVideo)
+        {
+            string tipo = isVideo ? "Videos" : "Fotos";
+            var videoList = new List<Archivo>();
+            string basePath = Server.MapPath("~/Uploads");
+            basePath = Path.Combine(basePath, tipo);
+            if (!Directory.Exists(basePath))
+            {
+                Directory.CreateDirectory(basePath);
+            }
+            foreach (var file in isVideo ? model.Videos: model.Fotos)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    if (fileName != null)
+                    {
+                        var extension = Path.GetExtension(file.FileName);
+                        var fsName = Guid.NewGuid().ToString() + "." + extension;
+                        var path = Path.Combine(basePath, fsName);
+
+
+                        Archivo archivo = null;
+                        if (isVideo)
+                        {
+                            archivo = new Video();
+                        }
+                        else
+                        {
+                          archivo = new Foto();  
+                        }
+                        
+                        archivo.Url = "/Uploads/"+tipo+"/" + fsName;
+                        archivo.PathFileSystem = path;
+                        archivo.Nombre = fileName;
+                        archivo.Activo = true;
+                   
+                        producto.Archivos.Add(archivo);
+                        videoList.Add(archivo);
+                        file.SaveAs(path);
+                    }
+                }
+            }
+            return videoList;
+        }
+
     }
+
+
 }
