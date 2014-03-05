@@ -76,7 +76,7 @@ namespace TallerAplicaciones.Models
     public class DeleteProductModel
     {
         [Required]
-        public int idProducto { get; set; }
+        public int IdProducto { get; set; }
 
     }
 

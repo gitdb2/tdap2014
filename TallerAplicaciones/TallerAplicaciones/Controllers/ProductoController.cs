@@ -227,7 +227,7 @@ namespace TallerAplicaciones.Controllers
 
         public ActionResult Delete(int idProducto)
         {
-            return View(new DeleteProductModel { idProducto = idProducto });
+            return View(new DeleteProductModel { IdProducto = idProducto });
         }
 
         //
@@ -242,7 +242,7 @@ namespace TallerAplicaciones.Controllers
         
             try
             {
-                if (ManejadorProducto.GetInstance().BajaProducto(model.idProducto))
+                if (ManejadorProducto.GetInstance().BajaProducto(model.IdProducto))
                 {
                     return RedirectToAction("List");
                 }
