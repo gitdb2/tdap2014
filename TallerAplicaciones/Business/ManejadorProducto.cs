@@ -44,7 +44,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         }
 
-        public void BajaProducto(int idProducto)
+        public bool BajaProducto(int idProducto)
         {
             using (var db = new Persistencia())
             {
@@ -52,10 +52,16 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 if (producto != null)
                 {
                     producto.Activo = false;
-                    db.SaveChanges();
+                    return db.SaveChanges() > 0;
+
+                }
+                else
+                {
+                    throw new Exception("No se pudo encontrar ese peroducto");
                 }
 
             }
+            return false;
         }
 
 

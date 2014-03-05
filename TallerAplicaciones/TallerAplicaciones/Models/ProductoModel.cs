@@ -33,11 +33,11 @@ namespace TallerAplicaciones.Models
     {
         [Display(Name = "Productos")]
         public List<Producto> Productos { get; set; }
-         
+
     }
 
 
-     public class ProductoConArchivosSubmitModel :ProductoModel
+    public class ProductoConArchivosSubmitModel : ProductoModel
     {
         //[Required]
         //[Display(Name = "Nombre")]
@@ -54,10 +54,10 @@ namespace TallerAplicaciones.Models
         //public string Descripcion { get; set; }
 
         [Display(Name = "Fotos")]
-     //   [Required(ErrorMessage = "file required")]
+        //   [Required(ErrorMessage = "file required")]
         public List<HttpPostedFileBase> Fotos { get; set; }
         [Display(Name = "Videos")]
-      //  [Required(ErrorMessage = "file required")]
+        //  [Required(ErrorMessage = "file required")]
         public List<HttpPostedFileBase> Videos { get; set; }
 
         //public Producto Producto { get; set; }
@@ -67,11 +67,18 @@ namespace TallerAplicaciones.Models
 
         //public int ProductoID { get; set; }
 
-         /// <summary>
-         /// lista de ids de archivosa borrar
-         /// </summary>
-         public List<int> DeleteFiles { get; set; }
+        /// <summary>
+        /// lista de ids de archivosa borrar
+        /// </summary>
+        public List<int> DeleteFiles { get; set; }
     }
-    
+
+    public class DeleteProductModel
+    {
+        [Required]
+        public int idProducto { get; set; }
+
+    }
+
 
 }

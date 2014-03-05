@@ -225,27 +225,36 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Producto/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int idProducto)
         {
-            return View();
+            return View(new DeleteProductModel { idProducto = idProducto });
         }
 
         //
         // POST: /Producto/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int idProducto, DeleteProductModel model)
+            //int id, FormCollection collection)
         {
+
+            //var model = new DeleteProductModel {id = id};
+        
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                if (ManejadorProducto.GetInstance().BajaProducto(model.idProducto))
+                {
+                    return RedirectToAction("List");
+                }
+                ModelState.AddModelError("idProducto", "El producto No fue  modificado");
+ 
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("idProducto", ex.Message);
             }
+
+            return View(model);
         }
 
 

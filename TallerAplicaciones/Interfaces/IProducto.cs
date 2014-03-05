@@ -11,7 +11,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         void AltaProducto(Producto producto);
 
-        void BajaProducto(int idProducto);
+        bool BajaProducto(int idProducto);
 
         void ModificarProducto(Producto producto);
 
