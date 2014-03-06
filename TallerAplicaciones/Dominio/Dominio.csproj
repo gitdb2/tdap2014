@@ -52,7 +52,7 @@
     <Compile Include="Distribuidor.cs" />
     <Compile Include="EjecutivoDeCuenta.cs" />
     <Compile Include="EmpresaDistribuidora.cs" />
-    <Compile Include="Exceptions\ValorDuplicadoException.cs" />
+    <Compile Include="Exceptions\CustomExceptions.cs" />
     <Compile Include="Foto.cs" />
     <Compile Include="IVisitor.cs" />
     <Compile Include="PerfilUsuario.cs" />

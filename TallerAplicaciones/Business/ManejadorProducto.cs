@@ -65,34 +65,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
 
 
-        public void ModificarProducto(Producto producto)
-        {
-            try
-            {
-                using (var db = new Persistencia())
-                {
-                    var productoDb = db.Productos.SingleOrDefault(p => p.ProductoID == producto.ProductoID);
-                    if (productoDb != null)
-                    {
-                        productoDb.Activo = producto.Activo;
-                        productoDb.Codigo = producto.Codigo;
-                        productoDb.Descripcion = producto.Descripcion;
-                        productoDb.Nombre = producto.Nombre;
-
-                        db.SaveChanges();
-                    }
-                }
-            }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
-            {
-                if (e.InnerException.InnerException.Message.Contains("UNIQUE KEY"))
-                {
-                    throw new ValorDuplicadoException("El codigo ya existe", e);
-                }
-
-                throw;
-            }
-        }
+       
 
         public List<Producto> ListarProductos()
         {
@@ -223,42 +196,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
        
 
 
-        public void AltaProducto(Producto producto, List<Foto> fotos, List<Video> videos)
-        {
-
-            try
-            {
-                using (var db = new Persistencia())
-                {
-                    producto.Archivos = new List<Archivo>();
-
-                    foreach (var item in fotos)
-                    {
-                        producto.Archivos.Add(item);
-                    }
-
-                    foreach (var item in videos)
-                    {
-                        producto.Archivos.Add(item);
-                    }
-
-
-                    db.Productos.Add(producto);
-                    db.SaveChanges();
-                }
-
-            }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
-            {
-                if (e.InnerException.InnerException.Message.Contains("UNIQUE KEY"))
-                {
-                    throw new ValorDuplicadoException("El codigo ya existe", e);
-                }
-
-                throw;
-            }
-
-        }
 
 
         public Producto GetProducto(int idProducto)
@@ -277,5 +214,69 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 return productoDb;
             }
         }
+
+        public void Modificar(Producto productoUpdate, List<int> filesToDelete)
+        {
+            try
+            {
+                using (var db = new Persistencia())
+                {
+
+                    bool ok = true;
+                    string message = "";
+                    string key = "";
+
+                    var productoDb = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == productoUpdate.ProductoID);
+                    if (productoDb != null)
+                    {
+                       
+
+                        productoDb.Activo = productoUpdate.Activo;
+                        productoDb.Descripcion = productoUpdate.Descripcion;
+                        productoDb.Nombre = productoUpdate.Nombre;
+                     
+                        productoDb.Codigo = productoUpdate.Codigo;
+                   
+
+                        if (productoDb.Archivos == null)
+                        {
+                            productoDb.Archivos  = new List<Archivo>();
+                        }
+
+                        if (productoDb.Archivos.Any() && filesToDelete!=null && filesToDelete.Any())
+                        {
+                            productoDb.Archivos.RemoveAll(a => filesToDelete.Contains(a.ArchivoID));
+                        }
+
+                        if (productoUpdate.Archivos != null && productoUpdate.Archivos.Any())
+                        {
+                            foreach (var archivo in productoUpdate.Archivos)
+                            {
+                                productoDb.Archivos.Add(archivo);
+                            }
+                        }
+
+                        if (ok)
+                        {
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new CustomException(message){Key = key};
+                        }
+                    }
+                }
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            {
+                if (e.InnerException.InnerException.Message.Contains("UNIQUE KEY"))
+                {
+                    throw new ValorDuplicadoException("El codigo >"+productoUpdate.Codigo+"< ya existe", e);
+                }
+
+                throw;
+            }
+        }
+
     }
 }

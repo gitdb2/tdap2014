@@ -42,6 +42,8 @@
             @Html.ValidationMessageFor(model => model.Activo)
         </div>
         <div class="editor-label">
+            <label for="Videos">Fotos:</label>
+           
             Fotos Almacenadas (Seleccione para eliminar)
         </div>
         <div class="editor-field">
@@ -56,15 +58,62 @@
                             Output.Write(formatter.Html);
                             @Html.Raw("</li>") 
                         }
-
                     }
                 }
             </ul>
         </div>
+         <div class="editor-label">
+            Subir Fotos
+        </div>
+          <div class="editor-field Fotos">
+            <div>
+              
+                @Html.TextBoxFor(model => model.Fotos, new { type = "file" })
+                &nbsp;<a href="javascript:void(0)" onclick="addNew('Fotos')">[+]</a>
+                 @Html.ValidationMessageFor(model => model.Fotos)
+            </div>
+        </div>
+      
+
+        
+        <div class="editor-label">
+            <label for="Videos">Videos:</label>
+            
+            Videos Almacenadas (Seleccione para eliminar)
+        </div>
+        <div class="editor-field">
+            <ul class="gallery">
+                @{  
+                    if (Model.Producto.Archivos != null)
+                    {
+                        foreach (var item in Model.Producto.Archivos.OfType<Video>())
+                        {
+                            @Html.Raw("<li>")
+                            item.Accept(formatter);
+                            Output.Write(formatter.Html);
+                            @Html.Raw("</li>")
+                        }
+                    }
+                }
+            </ul>
+        </div>
+         <div class="editor-label">
+            Subir Videos
+        </div>
+          <div class="editor-field Videos">
+            <div>
+               
+                @Html.TextBoxFor(model => model.Videos, new { type = "file" })
+                &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">[+]</a>
+                 @Html.ValidationMessageFor(model => model.Videos)
+            </div>
+        </div>
+
         <p>
            
             @Html.HiddenFor(model => model.ProductoID)
-            <input type="submit" value="Guardar" />
+            @Html.ValidationMessageFor(model => model.ProductoID)
+            <input type="submit" value="Modificar" />
         </p>
     </fieldset>
 }
@@ -83,6 +132,16 @@
         function openVideo(elem) {
             window.open(elem.attr("data"));
         }
+
+        function addNew(name) {
+
+            var accept = (name == "Fotos") ? ".jpg" : ".wmv";
+
+            $("." + name).append($('<div><input type="file" value="" name="' + name + '" />' +
+                '<a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a>' +
+                '</div>'));
+        }
+
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
