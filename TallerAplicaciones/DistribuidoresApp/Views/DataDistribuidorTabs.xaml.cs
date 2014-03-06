@@ -94,7 +94,7 @@ namespace DistribuidoresApp.Views
 
         private void SetearSiguienteVideo()
         {
-            var siguienteVideo = CalcularVideoMenosMostrado();
+            var siguienteVideo = VideoMenosMostrado();
             if (siguienteVideo != null)
             {
                 PlayList[siguienteVideo]++;
@@ -102,7 +102,7 @@ namespace DistribuidoresApp.Views
             }
         }
 
-        private string CalcularVideoMenosMostrado()
+        private string VideoMenosMostrado()
         {
             int minVeces = Int16.MaxValue;
             string videoMinVeces = null;
