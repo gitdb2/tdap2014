@@ -18,7 +18,7 @@ namespace TallerAplicaciones.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View("Create");
         }
 
         //
@@ -70,7 +70,7 @@ namespace TallerAplicaciones.Controllers
                     });
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
 
             }
             catch (Exception e)

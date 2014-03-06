@@ -53,10 +53,16 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             using (var db = new Persistencia())
             {
-                return db.Atributos
-                           .OfType<AtributoCombo>().Include(combo => combo.Valores).Cast<Atributo>()
-                           .Union(db.Atributos
-                               .OfType<AtributoSimple>().Cast<Atributo>()).ToList();
+
+
+                var atribCombos = db.Atributos
+                    .OfType<AtributoCombo>().Include("Valores").ToList();
+
+                var atribSimple = db.Atributos.OfType<AtributoSimple>().Cast<Atributo>().ToList();
+
+                return atribCombos.Union(atribSimple).ToList();
+
+
 
             }
         }
