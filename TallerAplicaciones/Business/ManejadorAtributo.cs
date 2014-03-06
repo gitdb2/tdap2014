@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.interfaces;
@@ -7,7 +8,7 @@ using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
-    public class ManejadorAtributo: IAtributo
+    public class ManejadorAtributo : IAtributo
     {
 
         #region singleton
@@ -52,7 +53,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             using (var db = new Persistencia())
             {
-                return db.Atributos.ToList();
+                return db.Atributos
+                           .OfType<AtributoCombo>().Include(combo => combo.Valores).Cast<Atributo>()
+                           .Union(db.Atributos
+                               .OfType<AtributoSimple>().Cast<Atributo>()).ToList();
+
             }
         }
 

@@ -12,5 +12,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public string Valor { get; set; }
 
         public bool Activo { get; set; }
+
+        
     }
 }

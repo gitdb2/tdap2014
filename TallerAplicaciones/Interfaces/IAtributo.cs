@@ -15,5 +15,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
         void AltaAtributoSimple(AtributoSimple atributoSimple);
 
         List<Atributo> GetAtributos();
+
+        //List<ValorPredefinido> GetValoresPredefinidos();
     }
 }

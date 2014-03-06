@@ -12,11 +12,15 @@
 </p>
 <table>
     <colgroup width="150"></colgroup>
+    <colgroup width="150"></colgroup>
     <colgroup width="150"></colgroup> 
     <colgroup ></colgroup>
     <tr>
         <th>
             @Html.Label("Atributo")
+        </th>
+        <th>
+            @Html.Label("Valores")
         </th>
         <th>
             @Html.Label("Activo")
@@ -26,20 +30,21 @@
         </th>
     </tr>
 
-    @foreach (var item in Model.Atributos)
+    @foreach (var atributo in Model.Atributos)
     {
         <tr>
             <td>
-                @Html.Label(item.Nombre)
+                @Html.Label(atributo.Nombre)
+            </td>
+            <td>
+
             </td>
         
             <td>
-                @Html.CheckBox(item.Nombre, item.Activo)
+                @Html.CheckBox(atributo.Nombre, atributo.Activo)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
     }

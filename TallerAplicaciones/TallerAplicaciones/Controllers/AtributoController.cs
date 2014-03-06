@@ -102,8 +102,8 @@ namespace TallerAplicaciones.Controllers
             {
                 IAtributo iAtributo = ManejadorAtributo.GetInstance();
                 List<Atributo> listaAtributos = iAtributo.GetAtributos();
-
-                model = new ListAtributoModel() { Atributos = listaAtributos };
+                //List<ValorPredefinido> ValoresPredefinidos = iAtributo.GetValoresPredefinidos();
+                model = new ListAtributoModel() { Atributos = listaAtributos }; //, ValoresPredefinidos = ValoresPredefinidos };
 
             }
             catch (Exception e)
