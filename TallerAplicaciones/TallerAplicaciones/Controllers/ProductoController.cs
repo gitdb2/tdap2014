@@ -182,9 +182,12 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Producto/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int idProducto)
         {
-            var producto = ManejadorProducto.GetInstance().GetProducto(id);
+            var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
+            if(producto == null) throw new Exception("El producto id "+ idProducto + " no existe");
+
+           
             return View(new ProductoConArchivosSubmitModel
             {
                 Activo = producto.Activo,

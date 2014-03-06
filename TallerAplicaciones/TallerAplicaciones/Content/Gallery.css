@@ -1,0 +1,13 @@
+﻿ul.gallery {
+  
+}
+ul.gallery li {
+    list-style: none;
+      display:inline;
+}
+
+input[type="checkbox"].gallerySelection {
+    left: -16px;
+    position: relative;
+    top: -1px;
+}

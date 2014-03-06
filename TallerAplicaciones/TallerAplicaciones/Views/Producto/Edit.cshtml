@@ -1,19 +1,18 @@
-﻿@model TallerAplicaciones.Models.ProductoConArchivosSubmitModel
-
+﻿@using uy.edu.ort.taller.aplicaciones.dominio
+@using uy.edu.ort.taller.aplicaciones.utiles.Formatters
+@model TallerAplicaciones.Models.ProductoConArchivosSubmitModel
 @{
     ViewBag.Title = "Editar Producto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Edit</h2>
-
+<h2>
+    Edit</h2>
 @using (Html.BeginForm("Edit", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>Editar Producto</legend>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Nombre)
         </div>
@@ -21,7 +20,6 @@
             @Html.EditorFor(model => model.Nombre)
             @Html.ValidationMessageFor(model => model.Nombre)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Codigo)
         </div>
@@ -29,7 +27,6 @@
             @Html.EditorFor(model => model.Codigo)
             @Html.ValidationMessageFor(model => model.Codigo)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Descripcion)
         </div>
@@ -37,7 +34,6 @@
             @Html.EditorFor(model => model.Descripcion)
             @Html.ValidationMessageFor(model => model.Descripcion)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Activo)
         </div>
@@ -45,18 +41,48 @@
             @Html.CheckBoxFor(model => model.Activo)
             @Html.ValidationMessageFor(model => model.Activo)
         </div>
+        <div class="editor-label">
+            Fotos Almacenadas (Seleccione para eliminar)
+        </div>
+        <div class="editor-field">
+            <ul class="gallery">
+                @{  var formatter = new GalleryHtmlFormatter() { CheckboxName = "DeleteFiles" };
+                    if (Model.Producto.Archivos != null)
+                    {
+                        foreach (var item in Model.Producto.Archivos.OfType<Foto>())
+                        {
+                            @Html.Raw("<li>") 
+                            item.Accept(formatter);
+                            Output.Write(formatter.Html);
+                            @Html.Raw("</li>") 
+                        }
 
+                    }
+                }
+            </ul>
+        </div>
         <p>
-             @Html.HiddenFor(model => model.ProductoID)
+           
+            @Html.HiddenFor(model => model.ProductoID)
             <input type="submit" value="Guardar" />
         </p>
     </fieldset>
 }
-
 <div>
     @Html.ActionLink("Back to list", "List")
 </div>
-
+@section Styles {
+    @Styles.Render("~/Content/gallery")
+}
 @section Scripts {
+    <script>
+        function openImage(elem) {
+            window.open(elem.attr("data"));
+        }
+
+        function openVideo(elem) {
+            window.open(elem.attr("data"));
+        }
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
