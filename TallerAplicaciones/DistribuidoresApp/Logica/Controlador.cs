@@ -74,7 +74,7 @@ namespace DistribuidoresApp
         }
 
         //TODO
-        public List<ValorAtributoFake> ObtenerAtributos(int idProductoSeleccionado)
+        public List<ValorAtributoFake> ObtenerAtributosProducto(int idProductoSeleccionado)
         {
             var res = new List<ValorAtributoFake>();
 
@@ -116,13 +116,23 @@ namespace DistribuidoresApp
         }
 
         //TODO
-        public List<string> ObtenerVideos(int idProductoSeleccionado)
+        public List<string> ObtenerVideosProducto(int idProductoSeleccionado)
         {
             return new List<string>()
             {
                 "http://www.2atoms.com/video/haha/fighting_cats4.wmv",
                 "http://www.2atoms.com/video/haha/head_rush4.wmv",
                 "http://www.2atoms.com/video/haha/smelly_monkey4.wmv"
+            };
+        }
+
+        public List<string> ObtenerImagenesProducto(int productoFakeId)
+        {
+            return new List<string>()
+            {
+                "http://3.bp.blogspot.com/-5A5xpicPF5g/T8srguvp3TI/AAAAAAAAEPs/bLuFIK0gDss/s400/nature-wallpaper-23.jpg",
+                "https://lh5.googleusercontent.com/-S1WYyGa-vyY/AAAAAAAAAAI/AAAAAAAAALM/0d9afxaQGz4/photo.jpg",
+                "https://lh3.googleusercontent.com/-TlQ5OjVwfLo/AAAAAAAAAAI/AAAAAAAAAEU/4jxTh4IK3s4/photo.jpg"
             };
         }
 

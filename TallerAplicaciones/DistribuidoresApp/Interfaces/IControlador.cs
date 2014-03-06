@@ -27,8 +27,11 @@ namespace DistribuidoresApp
 
         List<ProductoFake> ListarProductos();
 
-        List<ValorAtributoFake> ObtenerAtributos(int idProductoSeleccionado);
+        List<ValorAtributoFake> ObtenerAtributosProducto(int idProductoSeleccionado);
 
-        List<string> ObtenerVideos(int idProductoSeleccionado);
+        List<string> ObtenerVideosProducto(int productoFakeId);
+
+        List<string> ObtenerImagenesProducto(int productoFakeId);
+
     }
 }

@@ -53,7 +53,7 @@ namespace DistribuidoresApp.Views
             if (productoFakeSeleccionado != null)
             {
                 IControlador iControlador = Controlador.GetInstance();
-                AtributosProducto = iControlador.ObtenerAtributos(productoFakeSeleccionado.ProductoFakeId);
+                AtributosProducto = iControlador.ObtenerAtributosProducto(productoFakeSeleccionado.ProductoFakeId);
                 TreeViewCamposVariables.ItemsSource = AtributosProducto;
             }
         }
@@ -85,25 +85,55 @@ namespace DistribuidoresApp.Views
 
         private void RefrescarImagenesProducto()
         {
-            ImagenesProducto.Source = new BitmapImage(new Uri("http://upload.wikimedia.org/wikipedia/commons/1/1a/Bachalpseeflowers.jpg"));
+            var productoFakeSeleccionado = (ProductoFake)DataGridProductos.SelectedItem;
+            if (productoFakeSeleccionado != null)
+            {
+                IControlador iControlador = Controlador.GetInstance();
+                var imagenesProducto = iControlador.ObtenerImagenesProducto(productoFakeSeleccionado.ProductoFakeId);
+                PlayListImagenesProducto = GenerarPlayList(imagenesProducto);
+                SetearSiguienteImagen();
+            }
         }
 
         private void RefrescarVideosProducto()
         {
-            var productoFakeSeleccionado = (ProductoFake) DataGridProductos.SelectedItem;
+            var productoFakeSeleccionado = (ProductoFake)DataGridProductos.SelectedItem;
             if (productoFakeSeleccionado != null)
             {
                 IControlador iControlador = Controlador.GetInstance();
-                var videosProducto = iControlador.ObtenerVideos(productoFakeSeleccionado.ProductoFakeId);
+                var videosProducto = iControlador.ObtenerVideosProducto(productoFakeSeleccionado.ProductoFakeId);
                 VideosProducto.AutoPlay = true;
-                PopularPlayList(videosProducto);
+                PlayListVideosProducto = GenerarPlayList(videosProducto);
                 SetearSiguienteVideo();
+            }
+        }
+
+        private Dictionary<string, int> GenerarPlayList(List<string> origen)
+        {
+            var playList = new Dictionary<string, int>();
+            if (origen.Any())
+            {
+                foreach (var item in origen)
+                {
+                    playList.Add(item, 0);
+                }
+            }
+            return playList;
+        }
+
+        private void SetearSiguienteImagen()
+        {
+            var siguienteImagen = ElementoPlayListMenosMostrado(PlayListImagenesProducto);
+            if (siguienteImagen != null)
+            {
+                PlayListImagenesProducto[siguienteImagen]++;
+                ImagenesProducto.Source = new BitmapImage(new Uri(siguienteImagen));
             }
         }
 
         private void SetearSiguienteVideo()
         {
-            var siguienteVideo = VideoMenosMostrado();
+            var siguienteVideo = ElementoPlayListMenosMostrado(PlayListVideosProducto);
             if (siguienteVideo != null)
             {
                 PlayListVideosProducto[siguienteVideo]++;
@@ -111,28 +141,19 @@ namespace DistribuidoresApp.Views
             }
         }
 
-        private string VideoMenosMostrado()
+        private string ElementoPlayListMenosMostrado(Dictionary<string, int> playList)
         {
             int minVeces = Int16.MaxValue;
-            string videoMinVeces = null;
-            foreach (var par in PlayListVideosProducto)
+            string elementoMinVecesMostrado = null;
+            foreach (var par in playList)
             {
                 if (par.Value <= minVeces)
                 {
                     minVeces = par.Value;
-                    videoMinVeces = par.Key;
+                    elementoMinVecesMostrado = par.Key;
                 }
             }
-            return videoMinVeces;
-        }
-
-        private void PopularPlayList(List<string> videos)
-        {
-            PlayListVideosProducto = new Dictionary<string, int>();
-            foreach (var video in videos)
-            {
-                PlayListVideosProducto.Add(video, 0);
-            }        
+            return elementoMinVecesMostrado;
         }
 
         private void VideosProducto_OnMediaEnded(object sender, RoutedEventArgs e)
