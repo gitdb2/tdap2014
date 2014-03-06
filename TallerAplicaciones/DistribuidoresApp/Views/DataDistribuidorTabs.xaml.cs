@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using DistribuidoresApp.Temp;
@@ -77,6 +78,12 @@ namespace DistribuidoresApp.Views
         {
             RefrescarArbolAtributos();
             RefrescarVideosProducto();
+            RefrescarImagenesProducto();
+        }
+
+        private void RefrescarImagenesProducto()
+        {
+            ImagenesProducto.Source = new BitmapImage(new Uri("http://upload.wikimedia.org/wikipedia/commons/1/1a/Bachalpseeflowers.jpg"));
         }
 
         private void RefrescarVideosProducto()
@@ -86,7 +93,7 @@ namespace DistribuidoresApp.Views
             {
                 IControlador iControlador = Controlador.GetInstance();
                 var videosProducto = iControlador.ObtenerVideos(productoFakeSeleccionado.ProductoFakeId);
-                Media.AutoPlay = true;
+                VideosProducto.AutoPlay = true;
                 PopularPlayList(videosProducto);
                 SetearSiguienteVideo();
             }
@@ -98,7 +105,7 @@ namespace DistribuidoresApp.Views
             if (siguienteVideo != null)
             {
                 PlayList[siguienteVideo]++;
-                Media.Source = new Uri(siguienteVideo);    
+                VideosProducto.Source = new Uri(siguienteVideo);    
             }
         }
 
@@ -126,22 +133,7 @@ namespace DistribuidoresApp.Views
             }        
         }
 
-        private void StopButton_Click(object sender, RoutedEventArgs e)
-        {
-            Media.Stop();
-        }
-
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-            Media.Pause();
-        }
-
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            Media.Play();
-        }
-
-        private void Media_OnMediaEnded(object sender, RoutedEventArgs e)
+        private void VideosProducto_OnMediaEnded(object sender, RoutedEventArgs e)
         {
             SetearSiguienteVideo();
         }
