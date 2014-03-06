@@ -12,12 +12,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using DistribuidoresApp.Temp;
 
 namespace DistribuidoresApp.Views
 {
     public partial class DataDistribuidorTabs : Page
     {
+        private const int _intervaloMostrarImagen = 2000;
         public List<PedidoFake> Pedidos;
 
         public List<ProductoFake> Productos;
@@ -91,7 +93,7 @@ namespace DistribuidoresApp.Views
                 IControlador iControlador = Controlador.GetInstance();
                 var imagenesProducto = iControlador.ObtenerImagenesProducto(productoFakeSeleccionado.ProductoFakeId);
                 PlayListImagenesProducto = GenerarPlayList(imagenesProducto);
-                SetearSiguienteImagen();
+                IniciarSlideShowImagenesProducto();
             }
         }
 
@@ -119,6 +121,15 @@ namespace DistribuidoresApp.Views
                 }
             }
             return playList;
+        }
+
+        private void IniciarSlideShowImagenesProducto()
+        {
+            SetearSiguienteImagen();
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(3000);
+            timer.Tick += (sender, e) => SetearSiguienteImagen();
+            timer.Start();
         }
 
         private void SetearSiguienteImagen()

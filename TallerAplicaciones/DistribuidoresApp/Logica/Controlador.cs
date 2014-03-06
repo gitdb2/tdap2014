@@ -130,7 +130,9 @@ namespace DistribuidoresApp
         {
             return new List<string>()
             {
-                "http://3.bp.blogspot.com/-5A5xpicPF5g/T8srguvp3TI/AAAAAAAAEPs/bLuFIK0gDss/s400/nature-wallpaper-23.jpg"
+                "http://blogs.periodistadigital.com/imgs/20080429/traves.jpg",
+                "http://www.lancenet.com.br/brasileirao/Travestis-Ronaldo-Foto-Gilvan-Souza_LANIMA20101027_0101_26.jpg",
+                "http://3.bp.blogspot.com/-5A5xpicPF5g/T8srguvp3TI/AAAAAAAAEPs/bLuFIK0gDss/s400/nature-wallpaper-23.jpg",
             };
         }
 

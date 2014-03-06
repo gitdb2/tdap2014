@@ -119,8 +119,8 @@
                         Grid.Row="3" 
                         Grid.Column="1"
                         Stretch="Fill"
-                        x:Name="ImagenesProducto"></Image>
-
+                        x:Name="ImagenesProducto"/>
+                    
                 </Grid>
 
             </sdk:TabItem>
