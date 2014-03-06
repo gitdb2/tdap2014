@@ -109,16 +109,17 @@
                     <MediaElement 
                         x:Name="VideosProducto" 
                         Grid.Column="1" 
-                        Grid.Row="1" 
+                        Grid.Row="1"
+                        Stretch="Fill"
                         MediaEnded="VideosProducto_OnMediaEnded"/>
 
                     <sdk:Label Grid.Row="2" Grid.Column="1" Margin="0,10">Fotos del Producto seleccionado</sdk:Label>
-
+                    
                     <Image 
-                        x:Name="ImagenesProducto" 
                         Grid.Row="3" 
-                        Grid.Column="1" 
-                        Stretch="Fill"></Image>
+                        Grid.Column="1"
+                        Stretch="Fill"
+                        x:Name="ImagenesProducto"></Image>
 
                 </Grid>
 

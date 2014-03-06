@@ -130,9 +130,7 @@ namespace DistribuidoresApp
         {
             return new List<string>()
             {
-                "http://3.bp.blogspot.com/-5A5xpicPF5g/T8srguvp3TI/AAAAAAAAEPs/bLuFIK0gDss/s400/nature-wallpaper-23.jpg",
-                "https://lh5.googleusercontent.com/-S1WYyGa-vyY/AAAAAAAAAAI/AAAAAAAAALM/0d9afxaQGz4/photo.jpg",
-                "https://lh3.googleusercontent.com/-TlQ5OjVwfLo/AAAAAAAAAAI/AAAAAAAAAEU/4jxTh4IK3s4/photo.jpg"
+                "http://3.bp.blogspot.com/-5A5xpicPF5g/T8srguvp3TI/AAAAAAAAEPs/bLuFIK0gDss/s400/nature-wallpaper-23.jpg"
             };
         }
 
