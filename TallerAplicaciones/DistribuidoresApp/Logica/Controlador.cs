@@ -115,6 +115,18 @@ namespace DistribuidoresApp
             return res;
         }
 
+        //TODO
+        public List<string> ObtenerVideos(int idProductoSeleccionado)
+        {
+            return new List<string>()
+            {
+                "http://download.wavetlan.com/SVV/Media/HTTP/WMV/ConvertedFiles/Blaze/Blaze_test1_WMV-WMV9MP_CBR_320x240_AR4to3_15fps_512kbps_WMA9.2L2_32kbps_44100Hz_Mono.wmv",
+                "http://download.wavetlan.com/SVV/Media/HTTP/WMV/Blaze2/Blaze_test3_WMV9MP(VC1)_CBR_64kbps_480x320_30fps_WMA3_64kbps_Stereo_48000Hz.wmv",
+                "http://download.wavetlan.com/SVV/Media/HTTP/WMV/Blaze2/Blaze_test5_WMV9MP(VC1)_CBR_256kbps_480x320_25fps_WMA2_48kbps_Stereo_32000Hz.wmv",
+                "http://mschannel9.vo.msecnd.net/o9/mix/09/wmv/key01.wmv"
+            };
+        }
+
     }
 }
 

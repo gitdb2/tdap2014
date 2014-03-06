@@ -20,14 +20,13 @@ namespace DistribuidoresApp.Views
         public List<PedidoFake> Pedidos;
         public List<ProductoFake> Productos;
         public List<ValorAtributoFake> Atributos;
+        public Dictionary<string, int> PlayList { get; set; }
 
         public DataDistribuidorTabs()
         {
             InitializeComponent();
             RefrescarPedidos();
             RefrescarProductos();
-            RefrescarArbolAtributos();
-            RefrescarVideosProducto();
         }
 
         private void RefrescarPedidos()
@@ -42,10 +41,7 @@ namespace DistribuidoresApp.Views
             IControlador iControlador = Controlador.GetInstance();
             Productos = iControlador.ListarProductos();
             DataGridProductos.ItemsSource = Productos;
-            if (Productos.Any())
-            {
-                DataGridProductos.SelectedIndex = 0;
-            }
+            DataGridProductos.SelectedIndex = -1;
         }
 
         private void RefrescarArbolAtributos()
@@ -80,12 +76,54 @@ namespace DistribuidoresApp.Views
         private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefrescarArbolAtributos();
+            RefrescarVideosProducto();
         }
 
         private void RefrescarVideosProducto()
         {
-            Media.AutoPlay = true;
-            Media.Source = new Uri("http://mschannel9.vo.msecnd.net/o9/mix/09/wmv/key01.wmv");
+            var productoFakeSeleccionado = (ProductoFake) DataGridProductos.SelectedItem;
+            if (productoFakeSeleccionado != null)
+            {
+                IControlador iControlador = Controlador.GetInstance();
+                var videosProducto = iControlador.ObtenerVideos(productoFakeSeleccionado.ProductoFakeId);
+                Media.AutoPlay = true;
+                PopularPlayList(videosProducto);
+                SetearSiguienteVideo();
+            }
+        }
+
+        private void SetearSiguienteVideo()
+        {
+            var siguienteVideo = CalcularVideoMenosMostrado();
+            if (siguienteVideo != null)
+            {
+                PlayList[siguienteVideo]++;
+                Media.Source = new Uri(siguienteVideo);    
+            }
+        }
+
+        private string CalcularVideoMenosMostrado()
+        {
+            int minVeces = Int16.MaxValue;
+            string videoMinVeces = null;
+            foreach (var par in PlayList)
+            {
+                if (par.Value <= minVeces)
+                {
+                    minVeces = par.Value;
+                    videoMinVeces = par.Key;
+                }
+            }
+            return videoMinVeces;
+        }
+
+        private void PopularPlayList(List<string> videos)
+        {
+            PlayList = new Dictionary<string, int>();
+            foreach (var video in videos)
+            {
+                PlayList.Add(video, 0);
+            }        
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
@@ -101,6 +139,11 @@ namespace DistribuidoresApp.Views
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             Media.Play();
+        }
+
+        private void Media_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }
