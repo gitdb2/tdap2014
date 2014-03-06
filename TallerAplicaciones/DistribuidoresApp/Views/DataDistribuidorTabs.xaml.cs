@@ -19,9 +19,11 @@ namespace DistribuidoresApp.Views
     public partial class DataDistribuidorTabs : Page
     {
         public List<PedidoFake> Pedidos;
+
         public List<ProductoFake> Productos;
-        public List<ValorAtributoFake> Atributos;
-        public Dictionary<string, int> PlayList { get; set; }
+        public List<ValorAtributoFake> AtributosProducto;
+        public Dictionary<string, int> PlayListVideosProducto { get; set; }
+        public Dictionary<string, int> PlayListImagenesProducto { get; set; }
 
         public DataDistribuidorTabs()
         {
@@ -51,8 +53,8 @@ namespace DistribuidoresApp.Views
             if (productoFakeSeleccionado != null)
             {
                 IControlador iControlador = Controlador.GetInstance();
-                Atributos = iControlador.ObtenerAtributos(productoFakeSeleccionado.ProductoFakeId);
-                TreeViewCamposVariables.ItemsSource = Atributos;
+                AtributosProducto = iControlador.ObtenerAtributos(productoFakeSeleccionado.ProductoFakeId);
+                TreeViewCamposVariables.ItemsSource = AtributosProducto;
             }
         }
 
@@ -104,7 +106,7 @@ namespace DistribuidoresApp.Views
             var siguienteVideo = VideoMenosMostrado();
             if (siguienteVideo != null)
             {
-                PlayList[siguienteVideo]++;
+                PlayListVideosProducto[siguienteVideo]++;
                 VideosProducto.Source = new Uri(siguienteVideo);    
             }
         }
@@ -113,7 +115,7 @@ namespace DistribuidoresApp.Views
         {
             int minVeces = Int16.MaxValue;
             string videoMinVeces = null;
-            foreach (var par in PlayList)
+            foreach (var par in PlayListVideosProducto)
             {
                 if (par.Value <= minVeces)
                 {
@@ -126,10 +128,10 @@ namespace DistribuidoresApp.Views
 
         private void PopularPlayList(List<string> videos)
         {
-            PlayList = new Dictionary<string, int>();
+            PlayListVideosProducto = new Dictionary<string, int>();
             foreach (var video in videos)
             {
-                PlayList.Add(video, 0);
+                PlayListVideosProducto.Add(video, 0);
             }        
         }
 
