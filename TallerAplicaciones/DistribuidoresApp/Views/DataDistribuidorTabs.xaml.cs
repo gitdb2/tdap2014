@@ -143,7 +143,7 @@ namespace DistribuidoresApp.Views
 
         private void Media_OnMediaEnded(object sender, RoutedEventArgs e)
         {
-
+            SetearSiguienteVideo();
         }
 
     }
