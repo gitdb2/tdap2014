@@ -1,0 +1,34 @@
+﻿@using uy.edu.ort.taller.aplicaciones.dominio
+@using uy.edu.ort.taller.aplicaciones.utiles.Formatters
+@model TallerAplicaciones.Models.PedidoModel
+@{
+    ViewBag.Title = "Editar Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    Edit</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Editar Pedido</legend>
+      
+
+        <p>
+           
+            @Html.HiddenFor(model => model.PedidoID)
+            @Html.ValidationMessageFor(model => model.PedidoID)
+            <input type="submit" value="Modificar" />
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to list", "List")
+</div>
+@section Scripts {
+    <script>
+      
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

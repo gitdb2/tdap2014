@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Crear Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TallerAplicaciones.Models.PedidoModel
+<h2>
+    Crear Pedido</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Alta Pedido</legend>
+        
+        <p>
+            <input type="submit" value="Crear Pedido" />
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to Index", "Index")
+</div>
+@section Scripts {
+    <script>
+      
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

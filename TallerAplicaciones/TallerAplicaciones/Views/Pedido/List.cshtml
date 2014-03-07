@@ -1,0 +1,76 @@
+﻿@using Microsoft.Ajax.Utilities
+@using uy.edu.ort.taller.aplicaciones.dominio
+@using uy.edu.ort.taller.aplicaciones.utiles.Formatters
+@model TallerAplicaciones.Models.PedidoListModel
+@{
+    ViewBag.Title = "Lista de Pedidos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    Lista de Pedidos</h2>
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Codigo
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Activo
+        </th>
+        <th>
+            Multimedia
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+   
+    @foreach (var item in Model.Pedidos)
+    {
+        <tr>
+            <td>@item.Nombre
+            </td>
+            <td>@item.Codigo
+            </td>
+            <td>@item.Descripcion
+            </td>
+            <td>@(item.Activo ? "Si" : "No")
+            </td>
+            <td>@{
+                    foreach (var archivo in item.Archivos)
+                    {
+                        archivo.Accept(formatter);
+                        Output.Write(formatter.Html);
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", "Pedido", new { idPedido = @item.PedidoID }, null)
+                |
+                @Html.ActionLink("Eliminar", "Delete", "Pedido", new { idPedido = @item.PedidoID }, null)
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+@section Scripts {
+    <script>
+
+
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

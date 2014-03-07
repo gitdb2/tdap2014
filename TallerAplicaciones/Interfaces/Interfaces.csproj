@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IArchivo.cs" />
     <Compile Include="IEmpresaDistribuidora.cs" />
+    <Compile Include="IPedido.cs" />
     <Compile Include="IPerfilUsuario.cs" />
     <Compile Include="IProducto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

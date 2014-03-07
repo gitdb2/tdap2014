@@ -1,0 +1,22 @@
+﻿@model TallerAplicaciones.Models.DeletePedidoModel
+
+@{
+    ViewBag.Title = "Borrar Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Borrar Producto</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Delete Pedido</legend>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        @Html.HiddenFor(m => m.idPedido)
+        <input type="submit" value="Borrar Pedido id @Model.idPedido" /> |
+        @Html.ValidationMessageFor(model => model.idPedido)
+
+        @Html.ActionLink("Back to List", "List")
+    </p>
+}
