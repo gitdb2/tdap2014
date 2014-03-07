@@ -10,65 +10,40 @@
     Style="{StaticResource PageStyle}">
 
     <Grid x:Name="LayoutRoot">
+        
+        <StackPanel Orientation="Vertical" Margin="0,20" HorizontalAlignment="Center">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <TextBox Name="TxtBoxUsuario"
-                 Text="{Binding Usuario, Mode=TwoWay, ValidatesOnExceptions=True}"
-                 Grid.Column="0"
-                 Grid.Row="0"
-                 Height="23"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center"
-                 Width="185" 
-                 d:DataContext="{d:DesignInstance distribuidoresApp:LoginUsuario}" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                
+                <sdk:Label Content="Usuario" Width="100" HorizontalAlignment="Center"/>
+                
+                <TextBox
+                    Name="TxtBoxUsuario"
+                    Text="{Binding Usuario, Mode=TwoWay, ValidatesOnExceptions=True}" 
+                    Width="120" 
+                    d:DataContext="{d:DesignInstance distribuidoresApp:LoginUsuario}"
                  />
+                
+            </StackPanel>
 
-        <TextBox Name="TxtBoxPassword" 
-                 Grid.Column="0"
-                 Text="{Binding Password, Mode=TwoWay, ValidatesOnExceptions=True}"
-                 Grid.Row="1"
-                 Height="23"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center"
-                 Width="185" d:DataContext="{d:DesignInstance distribuidoresApp:LoginUsuario}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+                
+                <sdk:Label Content="Password" Width="100" HorizontalAlignment="Center"/>
+                
+                <PasswordBox 
+                    Name="TxtBoxPassword" 
+                    Password="{Binding Password, Mode=TwoWay, ValidatesOnExceptions=True}"
+                    Width="120"
+                    d:DataContext="{d:DesignInstance distribuidoresApp:LoginUsuario}" 
+                />
+                
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Width="100" Content="Login" Name="BtnLogin" Click="BtnLogin_Click" />
+            </StackPanel>
 
-        <Button Content="Login"
-                Grid.Column="0"
-                Grid.Row="2"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Name="BtnLogin"
-                Height="23"
-                Width="185"
-                Margin="0,10,0,0"
-                Click="BtnLogin_Click"/>
-
-        <TextBlock
-            Grid.Row="0"
-            Name="TextBlockUsuario"
-            Text="Usuario"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Left"
-            Margin="150,20,0,0"
-            Height="23"/>
-
-        <TextBlock
-            Grid.Row="1"
-            Name="TextBlockPassword"
-            Text="Password"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Left"
-            Margin="150,20,0,0"
-            Height="23"/>
+        </StackPanel>
 
     </Grid>
 
