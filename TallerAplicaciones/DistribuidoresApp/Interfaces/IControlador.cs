@@ -19,8 +19,12 @@ namespace DistribuidoresApp
 
         bool Login(string usuario, string password);
 
+        void LogOff();
+
+        bool HayUsuarioLogueado();
+
         void GuardarLoginActual(LoginUsuario loginActual);
-        
+
         void CambiarEstadoPedido(int idPedido, bool aprobado);
 
         List<PedidoFake> ListarPedidos();

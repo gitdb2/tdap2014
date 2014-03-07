@@ -38,7 +38,6 @@ namespace DistribuidoresApp
             if (loginResult)
             {
                 iControlador.GuardarLoginActual(LoginActual);
-                //var proximaPagina = new DataDistribuidor();
                 var proximaPagina = new DataDistribuidorTabs();
                 this.Content = proximaPagina;
             }

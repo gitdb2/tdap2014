@@ -20,6 +20,7 @@
                   </uriMapper:UriMapper>
                 </navigation:Frame.UriMapper>
             </navigation:Frame>
+            
         </Border>
 
         <Grid x:Name="NavigationGrid" Style="{StaticResource NavigationGridStyle}">
@@ -35,17 +36,16 @@
             </Border>
 
             <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}">
+                
                 <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
-
-                    <HyperlinkButton x:Name="Link1" Style="{StaticResource LinkStyle}" 
-                                     NavigateUri="/Home" TargetName="ContentFrame" Content="home"/>
-									 
-                    <Rectangle x:Name="Divider1" Style="{StaticResource DividerStyle}"/>
-					
-                    <HyperlinkButton x:Name="Link2" Style="{StaticResource LinkStyle}" 
-                                     NavigateUri="/About" TargetName="ContentFrame" Content="about"/>
-
+                    <HyperlinkButton 
+                        x:Name="BtnCerrarSesion"
+                        Style="{StaticResource LinkStyle}" 
+                        NavigateUri="/Home"
+                        TargetName="ContentFrame"
+                        Content="Cerrar Sesion"/>
                 </StackPanel>
+                
             </Border>
 
         </Grid>

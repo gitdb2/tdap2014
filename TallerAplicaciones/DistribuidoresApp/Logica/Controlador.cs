@@ -36,6 +36,16 @@ namespace DistribuidoresApp
             return true;
         }
 
+        public bool HayUsuarioLogueado()
+        {
+            return LoginActual != null;
+        }
+
+        public void LogOff()
+        {
+            LoginActual = null;
+        }
+
         public void GuardarLoginActual(LoginUsuario loginActual)
         {
             this.LoginActual = loginActual;

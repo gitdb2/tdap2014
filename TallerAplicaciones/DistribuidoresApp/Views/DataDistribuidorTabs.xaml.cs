@@ -19,9 +19,7 @@ namespace DistribuidoresApp.Views
 {
     public partial class DataDistribuidorTabs : Page
     {
-        private const int _intervaloMostrarImagen = 2000;
         public List<PedidoFake> Pedidos;
-
         public List<ProductoFake> Productos;
         public List<ValorAtributoFake> AtributosProducto;
         public Dictionary<string, int> PlayListVideosProducto { get; set; }
@@ -171,6 +169,9 @@ namespace DistribuidoresApp.Views
         {
             SetearSiguienteVideo();
         }
+
+
+
 
     }
 }
