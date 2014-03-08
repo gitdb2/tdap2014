@@ -29,6 +29,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         public DbSet<Atributo> Atributos { get; set; }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

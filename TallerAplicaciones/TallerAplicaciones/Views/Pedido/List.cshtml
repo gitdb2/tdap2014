@@ -14,10 +14,10 @@
 <table>
     <tr>
         <th>
-            Nombre
+            ID
         </th>
         <th>
-            Codigo
+            Fecha
         </th>
         <th>
             Descripcion
@@ -26,7 +26,10 @@
             Activo
         </th>
         <th>
-            Multimedia
+            Ejecutivo
+        </th>
+        <th>
+            Cliente
         </th>
         <th>
             Acciones
@@ -36,22 +39,19 @@
     @foreach (var item in Model.Pedidos)
     {
         <tr>
-            <td>@item.Nombre
+            <td>@item.PedidoID
             </td>
-            <td>@item.Codigo
+            <td>@item.Fecha
             </td>
             <td>@item.Descripcion
             </td>
             <td>@(item.Activo ? "Si" : "No")
             </td>
-            <td>@{
-                    foreach (var archivo in item.Archivos)
-                    {
-                        archivo.Accept(formatter);
-                        Output.Write(formatter.Html);
-                    }
-                }
+             <td>@(item.Ejecutivo.Usuario.Login + " - " + item.Ejecutivo.Nombre)
             </td>
+            <td>@(item.Distribuidor.Usuario.Login + " - " + item.Distribuidor.Empresa.Nombre)
+            </td>
+            
             <td>
                 @Html.ActionLink("Modificar", "Edit", "Pedido", new { idPedido = @item.PedidoID }, null)
                 |

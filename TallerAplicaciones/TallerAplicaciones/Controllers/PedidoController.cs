@@ -65,41 +65,24 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create(PedidoCreatePOSTModel model)
         {
-            //model.ProductosDisponibles = new List<Producto>();
-            //model.EjecutivoDeCuenta = (EjecutivoDeCuenta)Session["Perfil"];
 
-            //model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
-            //    .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoDeCuenta.PerfilUsuarioID);
-            //model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
-
-
-
-
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid )
             {
-                return RedirectToAction("Create");
+                return View(TransformarAErrorModelo(model));
             }
-
-
-
-
-
+            
             try
             {
-                //var producto = new Producto()
-                //{
-                //    Codigo = model.Codigo,
-                //    Descripcion = model.Descripcion,
-                //    Nombre = model.Nombre,
-                //    Activo = true,
-                //    Archivos = new List<Archivo>()
-                //};
+                var pedido = new Pedido()
+                {
+                    Activo = true,
+                    Aprobado = model.Aprobado,
+                    Descripcion = model.Descripcion,
+                    Fecha = model.Fecha
+                };
 
-                //fotoList = GetArchivosAndSaveFiles(model, producto, false);
-                //videoList = GetArchivosAndSaveFiles(model, producto, true);
-
-
-                // ManejadorProducto.GetInstance().AltaProducto(producto);
+             
+                ManejadorPedido.GetInstance().Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
 
 
                 return RedirectToAction("List");
@@ -113,7 +96,31 @@ namespace TallerAplicaciones.Controllers
                 ModelState.AddModelError("", e.Message);
             }
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View(TransformarAErrorModelo(model));
+        }
+
+        private PedidoCreateModel TransformarAErrorModelo(PedidoCreatePOSTModel modelIn)
+        {
+            var model = new PedidoCreateModel()
+            {
+                PedidoID = modelIn.PedidoID,
+                Aprobado = modelIn.Aprobado,
+                Descripcion = modelIn.Descripcion,
+                Fecha = modelIn.Fecha,
+                Activo = modelIn.Activo,
+                EjecutivoId = modelIn.EjecutivoId,
+                DistribuidorID = modelIn.DistribuidorID,
+                Productos = modelIn.Productos,
+                Cantidades = modelIn.Cantidades
+            };
+
+            model.ProductosDisponibles = new List<Producto>();
+            model.EjecutivoDeCuenta = (EjecutivoDeCuenta)Session["Perfil"];
+
+            model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
+                .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoDeCuenta.PerfilUsuarioID);
+            model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
+            return model;
         }
 
 
