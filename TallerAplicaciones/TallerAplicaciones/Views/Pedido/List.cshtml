@@ -54,6 +54,8 @@
             
             <td>
                 @Html.ActionLink("Modificar", "Edit", "Pedido", new { idPedido = @item.PedidoID }, null)
+                | 
+                @Html.ActionLink("Detalle", "Detalle", "Pedido", new { idPedido = @item.PedidoID }, null)
                 |
                 @Html.ActionLink("Eliminar", "Delete", "Pedido", new { idPedido = @item.PedidoID }, null)
             </td>
