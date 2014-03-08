@@ -1,28 +1,76 @@
-﻿@{
-    ViewBag.Title = "Crear Pedido";
+﻿@model TallerAplicaciones.Models.PedidoCreateModel
+
+@{
+    ViewBag.Title = "Create Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model TallerAplicaciones.Models.PedidoModel
-<h2>
-    Crear Pedido</h2>
-@using (Html.BeginForm())
-{
+
+<h2>Create Pedido</h2>
+
+@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Alta Pedido</legend>
+        <legend>Crear Pedido</legend>
+
+     
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Descripcion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Descripcion)
+            @Html.ValidationMessageFor(model => model.Descripcion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Fecha)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Fecha)
+            @Html.ValidationMessageFor(model => model.Fecha)
+        </div>
         
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Aprobado)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Aprobado)
+            @Html.ValidationMessageFor(model => model.Aprobado)
+        </div>
+        
+        
+        
+
+
+        @* <div class="editor-label">
+            @Html.LabelFor(model => model.EjecutivoId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EjecutivoId)
+            @Html.ValidationMessageFor(model => model.EjecutivoId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DistribuidorID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DistribuidorID)
+            @Html.ValidationMessageFor(model => model.DistribuidorID)
+        </div>*@
+
         <p>
+            
+             @Html.HiddenFor(model => model.Activo)
             <input type="submit" value="Crear Pedido" />
         </p>
     </fieldset>
 }
+
 <div>
-    @Html.ActionLink("Back to Index", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
 @section Scripts {
-    <script>
-      
-    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

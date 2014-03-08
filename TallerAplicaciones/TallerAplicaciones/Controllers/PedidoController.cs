@@ -44,13 +44,16 @@ namespace TallerAplicaciones.Controllers
             var eject = (EjecutivoDeCuenta) Session["Perfil"];
 
             var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(eject.PerfilUsuarioID);
-            var pedido =  new PedidoModel
+            var productosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
+            var pedido =  new PedidoCreateModel()
             {
                 EjecutivoDeCuenta = eject,
                 EjecutivoId = eject.PerfilUsuarioID,
                 DistribuidoresDisponibles = distribuidores,
+                ProductosDisponibles = productosDisponibles,
                 Aprobado = false,
                 Activo = true
+               
             };
 
 
@@ -60,7 +63,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Pedido/Create
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Create(PedidoModel model)
+        public ActionResult Create(PedidoCreateModel model)
         {
 
             if (!ModelState.IsValid) return View(model);

@@ -350,12 +350,13 @@
     <Content Include="Views\Producto\Delete.cshtml" />
     <Content Include="Views\Pedido\List.cshtml" />
     <Content Include="Views\Pedido\Edit.cshtml" />
-    <Content Include="Views\Pedido\Create.cshtml" />
+    <Content Include="Views\Pedido\Creasste.cshtml" />
     <Content Include="Views\Pedido\Delete.cshtml" />
     <Content Include="Views\Empresa\List.cshtml" />
     <Content Include="Views\Empresa\Index.cshtml" />
     <Content Include="Views\Empresa\Delete.cshtml" />
     <Content Include="Views\Empresa\Edit.cshtml" />
+    <Content Include="Views\Pedido\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

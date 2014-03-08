@@ -1,0 +1,22 @@
+﻿@model TallerAplicaciones.Models.DeleteEmpresaModel
+
+@{
+    ViewBag.Title = "Borrar Empresa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Borrar Empresa</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Delete Empresa</legend>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        @Html.HiddenFor(m => m.idEmpresa)
+        <input type="submit" value="Borrar Empresa id @Model.idEmpresa" /> |
+        @Html.ValidationMessageFor(model => model.idEmpresa)
+
+        @Html.ActionLink("Back to List", "List")
+    </p>
+}
