@@ -86,6 +86,11 @@
     <Compile Include="Logica\Controlador.cs" />
     <Compile Include="Logica\LoginUsuario.cs" />
     <Compile Include="Logica\Utils.cs" />
+    <Compile Include="Service References\ApiDistribuidores\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Temp\PedidoFake.cs" />
     <Compile Include="Temp\ProductoFake.cs" />
     <Compile Include="Temp\Valor.cs" />
@@ -125,9 +130,35 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
+    <None Include="Service References\ApiDistribuidores\ApiDistribuidores.wsdl" />
+    <None Include="Service References\ApiDistribuidores\ApiDistribuidores.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ApiDistribuidores\ApiDistribuidores1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ApiDistribuidores\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ApiDistribuidores\ApiDistribuidores.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ApiDistribuidores\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ApiDistribuidores\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ApiDistribuidores\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

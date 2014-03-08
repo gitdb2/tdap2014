@@ -6,6 +6,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClienteDistribuidores", "ClienteDistribuidores\ClienteDistribuidores.csproj", "{4551D364-633F-4B63-B80D-24D7DB27EDE5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{46B21D77-9709-48E9-BCEB-1DC8419A4115} = {46B21D77-9709-48E9-BCEB-1DC8419A4115}
+		{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF} = {68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "Dominio\Dominio.csproj", "{BFD1CE2A-CDA7-4C3A-B21D-ED8CDD7A6456}"

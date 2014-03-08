@@ -1,1 +1,35 @@
-﻿<configuration />
+﻿<configuration>
+
+  <system.serviceModel>
+
+    <bindings>
+      <basicHttpBinding>
+        <binding
+           name="ApiDistribuidores.ApiDistribuidoresEndPoint"
+           closeTimeout="00:59:00"
+           openTimeout="00:53:00"
+           receiveTimeout="00:15:00"
+           sendTimeout="00:21:00"
+           maxBufferSize="1048576"
+           maxReceivedMessageSize="1048576"
+           textEncoding="utf-8" >
+          <security mode="None" />
+        </binding>
+      </basicHttpBinding>
+    </bindings>
+    
+    <client>
+      <endpoint
+         address="http://localhost/ApiDistribuidores/ApiDistribuidores.ApiDistribuidores.svc"
+         binding="basicHttpBinding"
+         bindingConfiguration="ApiDistribuidores.ApiDistribuidoresEndPoint"
+         contract="ApiDistribuidores.IApiDistribuidores"
+         name="ApiDistribuidores.ApiDistribuidoresEndPoint" />
+    </client>
+
+  </system.serviceModel>
+  
+</configuration>
+
+
+

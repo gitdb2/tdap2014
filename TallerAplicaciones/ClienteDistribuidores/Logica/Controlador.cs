@@ -33,8 +33,17 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         //TODO
         public bool Login(string usuario, string password)
         {
-            IApiDistribuidores apiDistribuidores = new ApiDistribuidoresClient();
-            return true;
+            bool loginOk = false;
+            IApiDistribuidores api = new ApiDistribuidoresClient();
+
+
+            object estado = "BeginLogin";
+
+            AsyncCallback asyncCallback = (
+                resultado => loginOk = ((IApiDistribuidores) resultado.AsyncState).EndLogin(resultado)
+            );
+            api.BeginLogin(usuario, password, asyncCallback, estado);
+            return loginOk;
         }
 
         public bool HayUsuarioLogueado()
