@@ -10,42 +10,38 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DistribuidoresApp.Views;
 
 namespace DistribuidoresApp
 {
-    public partial class MainPage : UserControl
+    public partial class MainPage : Page
     {
+
+        public LoginUsuario LoginActual { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
+            LoginActual = new LoginUsuario();
+            LayoutRoot.DataContext = LoginActual;
         }
 
-        // After the Frame navigates, ensure the HyperlinkButton representing the current page is selected
-        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+        // Executes when the user navigates to this page.
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            foreach (UIElement child in LinksStackPanel.Children)
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            IControlador iControlador = Controlador.GetInstance();
+            var loginResult = iControlador.Login(LoginActual.Usuario, LoginActual.Password);
+            if (loginResult)
             {
-                HyperlinkButton hb = child as HyperlinkButton;
-                if (hb != null && hb.NavigateUri != null)
-                {
-                    if (hb.NavigateUri.ToString().Equals(e.Uri.ToString()))
-                    {
-                        VisualStateManager.GoToState(hb, "ActiveLink", true);
-                    }
-                    else
-                    {
-                        VisualStateManager.GoToState(hb, "InactiveLink", true);
-                    }
-                }
+                iControlador.GuardarLoginActual(LoginActual);
+                var proximaPagina = new DataDistribuidorTabs();
+                this.Content = proximaPagina;
             }
         }
 
-        // If an error occurs during navigation, show an error window
-        private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            e.Handled = true;
-            ChildWindow errorWin = new ErrorWindow(e.Uri);
-            errorWin.Show();
-        }
     }
 }
