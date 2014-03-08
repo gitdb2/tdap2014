@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores;
 
 // ReSharper disable once CheckNamespace
 namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
@@ -32,6 +33,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         //TODO
         public bool Login(string usuario, string password)
         {
+            IApiDistribuidores apiDistribuidores = new ApiDistribuidoresClient();
             return true;
         }
 

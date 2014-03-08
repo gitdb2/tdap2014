@@ -12,15 +12,7 @@ namespace ApiDistribuidores
     {
 
         [OperationContract]
-        Guid RealizarApuesta(int[] numeros);
-
-        
-        [OperationContract]
-        double CorrespondePremio(Guid identificadorApuesta);
-
-        
-        [OperationContract]
-        void EfectuarPago(Guid identificadorApuesta);
+        bool Login(string login, string password);
 
     }
 }

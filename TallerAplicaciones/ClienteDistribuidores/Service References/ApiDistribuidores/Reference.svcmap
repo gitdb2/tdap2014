@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4e35e664-cea2-4c38-8bab-520778f4328c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:5498/ApiDistribuidores.ApiDistribuidores.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ApiDistribuidores.wsdl" MetadataType="Wsdl" ID="042e7fb9-f714-41a8-a2d0-25925f109c69" SourceId="1" SourceUrl="http://localhost:5498/ApiDistribuidores.ApiDistribuidores.svc?wsdl" />
+    <MetadataFile FileName="ApiDistribuidores.xsd" MetadataType="Schema" ID="b15f33cb-1ead-4c1d-a747-add855a2a0f1" SourceId="1" SourceUrl="http://localhost:5498/ApiDistribuidores.ApiDistribuidores.svc?xsd=xsd0" />
+    <MetadataFile FileName="ApiDistribuidores.disco" MetadataType="Disco" ID="bb0e9ca0-d68d-4706-a2d3-5ac5c9948cec" SourceId="1" SourceUrl="http://localhost:5498/ApiDistribuidores.ApiDistribuidores.svc?disco" />
+    <MetadataFile FileName="ApiDistribuidores1.xsd" MetadataType="Schema" ID="98221c7f-2641-49c7-8279-20c6da42807c" SourceId="1" SourceUrl="http://localhost:5498/ApiDistribuidores.ApiDistribuidores.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
