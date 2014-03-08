@@ -144,6 +144,29 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+
+        public void AltaPerfilUsuario(Distribuidor perfil, int idEmpresa, string login)
+        {
+            using (var db = new Persistencia())
+            {
+                using (var scope = new TransactionScope())
+                {
+                    Usuario usuario = db.Usuarios.SingleOrDefault(u => u.Login == login);
+
+                    perfil.Usuario = usuario;
+                    db.PerfilesUsuario.Add(perfil);
+
+                    var empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idEmpresa);
+                    db.Empresas.Attach(empresa);
+
+                    perfil.Empresa = empresa;
+
+                    db.SaveChanges();
+                    scope.Complete();
+                } 
+            }
+        }
+
  		public void AltaPerfilUsuario(EjecutivoDeCuenta perfil, string login, List<int> idEmpresas)
         {  
             using (var db = new Persistencia())
@@ -171,6 +194,15 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     db.SaveChanges();
                     scope.Complete();
                 }          
+            }
+        }
+
+        public PerfilUsuario GetPerfilUsuarioByLogin(string login)
+        {
+            using (var db = new Persistencia())
+            {
+                var ret = db.PerfilesUsuario.Include("Usuario").FirstOrDefault(p => p.Usuario.Login == login);
+                return ret;
             }
         }
 

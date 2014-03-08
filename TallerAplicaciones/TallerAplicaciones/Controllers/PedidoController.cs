@@ -27,6 +27,7 @@ namespace TallerAplicaciones.Controllers
         {
             var model = new PedidoListModel
             {
+              
                 Pedidos = ManejadorPedido.GetInstance().ListarPedidos()
             };
 
@@ -40,11 +41,16 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            EjecutivoDeCuenta eject = (EjecutivoDeCuenta) Session["Usuario"];
+            EjecutivoDeCuenta eject = (EjecutivoDeCuenta) Session["Perfil"];
 
-            var empresasDeEjecutivo =  ManejadorPerfilUsuario.GetInstance().GetEmpresaDistribuidoraPerfil(eject.PerfilUsuarioID);
+            var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(eject.PerfilUsuarioID);
             PedidoModel pedido =  new PedidoModel();
-            pedido.
+            pedido.EjecutivoDeCuenta = eject;
+            pedido.EjecutivoId = eject.PerfilUsuarioID;
+            pedido.DistribuidoresDisponibles = distribuidores;
+            pedido.Aprobado = false;
+            pedido.Activo = true;
+            
 
             return View();
         }
@@ -149,8 +155,8 @@ namespace TallerAplicaciones.Controllers
                 List<int> cantidades = model.Cantidades;
 
                 
-                
-                ManejadorPedido.GetInstance().Modificar(pedido, Otros Params);
+                throw new NotImplementedException();
+                //ManejadorPedido.GetInstance().Modificar(pedido, Otros Params);
 
 
                 return RedirectToAction("List");
@@ -182,7 +188,7 @@ namespace TallerAplicaciones.Controllers
 
         public ActionResult Delete(int idPedido)
         {
-            return View(new DeleteProductModel { IdProducto = idProducto });
+            return View(new DeletePedidoModel { PedidoID = idPedido });
         }
 
         //
@@ -197,11 +203,12 @@ namespace TallerAplicaciones.Controllers
 
             try
             {
-                if (ManejadorPedido.GetInstance().Baja(model.IdPedido))
-                {
-                    return RedirectToAction("List");
-                }
-                ModelState.AddModelError("idPedido", "El Pedido No fue  modificado");
+                throw new NotImplementedException();
+                //if (ManejadorPedido.GetInstance().Baja(model.IdPedido))
+                //{
+                //    return RedirectToAction("List");
+                //}
+                //ModelState.AddModelError("idPedido", "El Pedido No fue  modificado");
 
             }
 

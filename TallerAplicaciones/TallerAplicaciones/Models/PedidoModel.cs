@@ -52,4 +52,10 @@ namespace TallerAplicaciones.Models
     {
         public List<Pedido> Pedidos { get; set; } 
     }
+
+    public class DeletePedidoModel
+    {
+        public int PedidoID { get; set; }
+    }
+
 }

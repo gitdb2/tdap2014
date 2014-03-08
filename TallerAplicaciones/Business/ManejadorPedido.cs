@@ -21,6 +21,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-      
+
+
+        public List<Pedido> ListarPedidos()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

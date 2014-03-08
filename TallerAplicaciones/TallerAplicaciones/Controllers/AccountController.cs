@@ -41,7 +41,7 @@ namespace TallerAplicaciones.Controllers
                 if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
 
-                    Session["Usuario"] = usuario;
+                    Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
                     return RedirectToLocal(returnUrl);
                 }    
             }
@@ -91,6 +91,9 @@ namespace TallerAplicaciones.Controllers
 
                     AltaUsuario(model);
 
+                    //Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+             
+
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -105,7 +108,7 @@ namespace TallerAplicaciones.Controllers
 
         private void AltaUsuario(RegisterModel model)
         {
-            IPerfilUsuario iPerfil = ManejadorPerfilUsuario.GetInstance();
+           var iPerfil = ManejadorPerfilUsuario.GetInstance();
            
             PerfilUsuario perfil = null;
             switch (model.Rol)
@@ -136,10 +139,10 @@ namespace TallerAplicaciones.Controllers
                         Nombre = model.Nombre,
                         Apellido = model.Apellido,
                         Activo = true,
-                        Email = model.Email,
-                        Empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor)
+                        Email = model.Email
+                        //Empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor)
                     };
-                    iPerfil.AltaPerfilUsuario(perfil, model.UserName);
+                    iPerfil.AltaPerfilUsuario((Distribuidor) perfil, model.EmpresaDelDistribuidor, model.UserName);
                     break;
                 default:
                     throw new ArgumentException("Tipo de usuario invalido");
@@ -437,7 +440,7 @@ namespace TallerAplicaciones.Controllers
                 Apellido = dist.Apellido,
                 Email = dist.Email,
                 UserName = dist.Usuario.Login,
-                EmpresaDelDistribuidor = dist.Empresa.EmpresaDistribuidoraID,
+                EmpresaDelDistribuidor = dist.Empresa!=null ? dist.Empresa.EmpresaDistribuidoraID : -1,
                 EmpresasDistribuidoras = ManejadorEmpresaDistribuidora.GetInstance().ListarEmpresasDistribuidoras()
             };
 
