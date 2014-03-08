@@ -118,7 +118,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 try
                 {
-                    var distribuidores = db.PerfilesUsuario.OfType<Distribuidor>().Include(d => d.Empresa)
+                    var distribuidores = db.PerfilesUsuario.OfType<Distribuidor>()
+                                .Include(d => d.Empresa)
+                                .Include(d => d.Usuario)
                                .Where(d => d.Empresa.Ejecutivo.PerfilUsuarioID == idEjecutivo)
                                .OrderBy(d=> d.Empresa.EmpresaDistribuidoraID)
                               .ToList();

@@ -1,20 +1,16 @@
 ﻿@model TallerAplicaciones.Models.PedidoCreateModel
-
 @{
     ViewBag.Title = "Create Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Create Pedido</h2>
-
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
+<h2>
+    Create Pedido</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false)
 
     <fieldset>
         <legend>Crear Pedido</legend>
-
-     
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Descripcion)
         </div>
@@ -22,7 +18,6 @@
             @Html.EditorFor(model => model.Descripcion)
             @Html.ValidationMessageFor(model => model.Descripcion)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Fecha)
         </div>
@@ -30,7 +25,6 @@
             @Html.EditorFor(model => model.Fecha)
             @Html.ValidationMessageFor(model => model.Fecha)
         </div>
-        
         <div class="editor-label">
             @Html.LabelFor(model => model.Aprobado)
         </div>
@@ -38,39 +32,101 @@
             @Html.EditorFor(model => model.Aprobado)
             @Html.ValidationMessageFor(model => model.Aprobado)
         </div>
-        
-        
-        
-
-
-        @* <div class="editor-label">
-            @Html.LabelFor(model => model.EjecutivoId)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EjecutivoDeCuenta)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.EjecutivoId)
-            @Html.ValidationMessageFor(model => model.EjecutivoId)
+            @Html.DisplayFor(model => model.EjecutivoDeCuenta.Nombre)
+            @Html.HiddenFor(model => model.EjecutivoId)
+             @Html.ValidationMessageFor(model => model.EjecutivoId)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.DistribuidorID)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DistribuidorID)
-            @Html.ValidationMessageFor(model => model.DistribuidorID)
-        </div>*@
-
+            @if (Model.DistribuidoresDisponibles!= null && Model.DistribuidoresDisponibles.Any())
+            {
+                @Html.DropDownListFor(m => m.DistribuidorID,
+                                     Model.DistribuidoresDisponibles.Select(item => new SelectListItem
+                                       {
+                                           Value = item.PerfilUsuarioID.ToString(),
+                                           Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")"
+                                       }))
+                @Html.ValidationMessageFor(model => model.DistribuidorID)
+                 @Html.ValidationMessageFor(model => model.DistribuidoresDisponibles)
+            }
+            else
+            {
+                @("No hay Distribuidores en el sistema.")
+            }
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductosDisponibles)
+        </div>
+        <div class="editor-field">
+            @if (Model.ProductosDisponibles != null && Model.ProductosDisponibles.Any())
+            {
+                <div>
+                    @Html.DropDownListFor(m => m.ProductosDisponibles,
+                                          Model.ProductosDisponibles.Select(item => new SelectListItem
+                                          {
+                                              Value = item.ProductoID.ToString(),
+                                              Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
+                                          }))
+                    
+                    <input type="button" value="agregar" onclick="agregar()" />
+                     @Html.ValidationMessageFor(model => model.Productos)
+                     @Html.ValidationMessageFor(model => model.Cantidades)
+                      @Html.ValidationMessageFor(model => model.ProductosDisponibles)
+                </div>
+                <div id="orden">
+                 
+                </div>
+            }
+            else
+            {
+                @("No hay Productos en el sistema.")
+            }
+        </div>
         <p>
-            
-             @Html.HiddenFor(model => model.Activo)
+            @Html.HiddenFor(model => model.DistribuidoresDisponibles)
+            @Html.HiddenFor(model => model.Activo)
             <input type="submit" value="Crear Pedido" />
         </p>
     </fieldset>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
 @section Scripts {
+    <script>
+        function agregar() {
+
+            var $select = $("#ProductosDisponibles");
+            var $container = $("#orden");
+
+            var existe = $container.find("input[name='Productos']").filter("input[value='" + $select.val() + "']");
+
+            if (existe.length == 0) {
+                var $lineaNueve = $(
+                    "<div class=\"order-line\">" +
+                    "<input name=\"Productos\"  type=\"hidden\" value=\"" + $select.val() + "\" />" +
+                    "<label>" + $select.find('option:selected').text() + "</label>&nbsp;" +
+                    "<input name=\"Cantidades\" value = \"1\"/> &nbsp;" +
+                    "<input type=\"button\" onclick=\"eliminar($(this))\" value=\"Remover\"/>" +
+                    "</div>"
+                );
+                $container.append($lineaNueve);
+            } else {
+                existe.siblings().filter("input[name='Cantidades']").focus();
+                alert("ya esta agragado, buscalo");
+            }
+        }
+
+        function eliminar($elem) {
+            $elem.parent().remove();
+
+        }
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

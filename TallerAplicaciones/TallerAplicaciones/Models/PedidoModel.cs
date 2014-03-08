@@ -54,17 +54,17 @@ namespace TallerAplicaciones.Models
         /// <summary>
         /// Lista de distribuidores disponibles para asociar al pedido
         /// </summary>
-        [Display(Name = "Distribuidor")]
+      //  [Display(Name = "Distribuidor")]
         public List<Distribuidor> DistribuidoresDisponibles { get; set; }
 
         /// <summary>
         /// Lista de productos disponibles para las seleccion
         /// </summary>
-          [Display(Name = "Productos")]
+      //    [Display(Name = "Productos")]
         public List<Producto> ProductosDisponibles { get; set; }
 
         // para modificacion
-        [Display(Name = "Ejecutivo")]
+     ///   [Display(Name = "Ejecutivo")]
         public EjecutivoDeCuenta EjecutivoDeCuenta { get; set; }
       
 
