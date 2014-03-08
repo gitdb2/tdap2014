@@ -106,6 +106,31 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+        /// <summary>
+        /// retorna una lista de distribuidores, incluyendo la referencia a la empresa a al que pertenences, y 
+        /// cuyo ejecutivo de cuenta tiene ide idEjecutivo.
+        /// </summary>
+        /// <param name="idEjecutivo"></param>
+        /// <returns></returns>
+        public List<Distribuidor> GetDistribuidoresConEmpresasDeEjecutivo(int idEjecutivo)
+        {
+            using (var db = new Persistencia())
+            {
+                try
+                {
+                    var distribuidores = db.PerfilesUsuario.OfType<Distribuidor>().Include(d => d.Empresa)
+                               .Where(d => d.Empresa.Ejecutivo.PerfilUsuarioID == idEjecutivo)
+                               .OrderBy(d=> d.Empresa.EmpresaDistribuidoraID)
+                              .ToList();
+                    return distribuidores;
+                }
+                catch (Exception)
+                {
+                    
+                   return new List<Distribuidor>();
+                }
+            }
+        } 
 
         public EmpresaDistribuidora GetEmpresaDistribuidoraPerfil(int idPerfil)
         {

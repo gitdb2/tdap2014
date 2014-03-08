@@ -40,6 +40,12 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
+            EjecutivoDeCuenta eject = (EjecutivoDeCuenta) Session["Usuario"];
+
+            var empresasDeEjecutivo =  ManejadorPerfilUsuario.GetInstance().GetEmpresaDistribuidoraPerfil(eject.PerfilUsuarioID);
+            PedidoModel pedido =  new PedidoModel();
+            pedido.
+
             return View();
         }
 
