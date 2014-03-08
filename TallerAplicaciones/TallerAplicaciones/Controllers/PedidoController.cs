@@ -20,14 +20,14 @@ namespace TallerAplicaciones.Controllers
             return View();
         }
 
-  
+
 
         [AllowAnonymous]
         public ActionResult List()
         {
             var model = new PedidoListModel
             {
-              
+
                 Pedidos = ManejadorPedido.GetInstance().ListarPedidos()
             };
 
@@ -41,11 +41,11 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            var eject = (EjecutivoDeCuenta) Session["Perfil"];
+            var eject = (EjecutivoDeCuenta)Session["Perfil"];
 
             var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(eject.PerfilUsuarioID);
             var productosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
-            var model =  new PedidoCreateModel()
+            var model = new PedidoCreateModel()
             {
                 EjecutivoDeCuenta = eject,
                 EjecutivoId = eject.PerfilUsuarioID,
@@ -53,7 +53,7 @@ namespace TallerAplicaciones.Controllers
                 ProductosDisponibles = productosDisponibles,
                 Aprobado = false,
                 Activo = true
-               
+
             };
 
 
@@ -63,16 +63,24 @@ namespace TallerAplicaciones.Controllers
         // POST: /Pedido/Create
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Create(PedidoCreateModel model)
+        public ActionResult Create(PedidoCreatePOSTModel model)
         {
-            model.ProductosDisponibles= new List<Producto>();
-            var valido = ModelState.IsValid;
+            //model.ProductosDisponibles = new List<Producto>();
+            //model.EjecutivoDeCuenta = (EjecutivoDeCuenta)Session["Perfil"];
+
+            //model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
+            //    .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoDeCuenta.PerfilUsuarioID);
+            //model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
 
 
 
-            if (!ModelState.IsValid) return View(model);//RedirectToAction("Create");
 
-        
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Create");
+            }
+
+
 
 
 
@@ -108,7 +116,7 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-        
+
         //
         // GET: /Pedido/Edit/5
 
@@ -147,7 +155,7 @@ namespace TallerAplicaciones.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
-          
+
 
             try
             {
@@ -161,12 +169,12 @@ namespace TallerAplicaciones.Controllers
                     PedidoID = model.PedidoID,
                 };
 
-                int idEj= model.EjecutivoId;
+                int idEj = model.EjecutivoId;
                 int idDistrib = model.DistribuidorID;
                 List<int> idprods = model.Productos;
                 List<int> cantidades = model.Cantidades;
 
-                
+
                 throw new NotImplementedException();
                 //ManejadorPedido.GetInstance().Modificar(pedido, Otros Params);
 
@@ -208,7 +216,7 @@ namespace TallerAplicaciones.Controllers
 
         [HttpPost]
         public ActionResult Delete(int idPedido, DeletePedidoModel model)
-            //int id, FormCollection collection)
+        //int id, FormCollection collection)
         {
 
             //var model = new DeleteProductModel {id = id};
@@ -233,7 +241,7 @@ namespace TallerAplicaciones.Controllers
         }
 
 
-     
+
 
     }
 

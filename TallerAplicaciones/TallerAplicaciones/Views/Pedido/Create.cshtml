@@ -52,13 +52,18 @@
                                            Value = item.PerfilUsuarioID.ToString(),
                                            Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")"
                                        }))
-                @Html.ValidationMessageFor(model => model.DistribuidorID)
-                 @Html.ValidationMessageFor(model => model.DistribuidoresDisponibles)
+              
+               
             }
             else
             {
                 @("No hay Distribuidores en el sistema.")
             }
+            model.DistribuidorID
+             @Html.ValidationMessageFor(model => model.DistribuidorID)
+              model.DistribuidoresDisponibles)
+            @Html.ValidationMessageFor(model => model.DistribuidoresDisponibles)
+
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.ProductosDisponibles)
@@ -66,6 +71,7 @@
         <div class="editor-field">
             @if (Model.ProductosDisponibles != null && Model.ProductosDisponibles.Any())
             {
+
                 <div>
                     @Html.DropDownListFor(m => m.ProductosDisponibles,
                                           Model.ProductosDisponibles.Select(item => new SelectListItem
@@ -75,9 +81,12 @@
                                           }))
                     
                     <input type="button" value="agregar" onclick="agregar()" />
+                    model.Productos
                      @Html.ValidationMessageFor(model => model.Productos)
+                     model.Cantidades
                      @Html.ValidationMessageFor(model => model.Cantidades)
-                      @Html.ValidationMessageFor(model => model.ProductosDisponibles)
+                     model.ProductosDisponibles
+                     @Html.ValidationMessageFor(model => model.ProductosDisponibles)
                 </div>
                 <div id="orden">
                  
