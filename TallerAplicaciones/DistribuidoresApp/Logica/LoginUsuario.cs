@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,11 +24,14 @@ namespace DistribuidoresApp
             get { return _usuario; }
             set
             {
-                if (value == null || value.Trim().Equals(""))
+                if (_usuario != value)
                 {
-                    throw new ArgumentException("Campo obligatorio");
+                    if (value == null || value.Trim().Equals(""))
+                    {
+                        throw new ValidationException("Campo obligatorio");
+                    }
+                    _usuario = value;
                 }
-                _usuario = value;
             }
         }
 
@@ -36,11 +40,14 @@ namespace DistribuidoresApp
             get { return _password; }
             set
             {
-                if (value == null || value.Trim().Equals(""))
+                if (_password != value)
                 {
-                    throw new ArgumentException("Campo obligatorio");
+                    if (value == null || value.Trim().Equals(""))
+                    {
+                        throw new ValidationException("Campo obligatorio");
+                    }
+                    _password = value;
                 }
-                _password = value;
             }
         }
 

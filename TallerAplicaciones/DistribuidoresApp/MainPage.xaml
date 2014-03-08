@@ -34,8 +34,7 @@
                     Name="TxtBoxUsuario"
                     Text="{Binding Usuario, Mode=TwoWay, ValidatesOnExceptions=True}" 
                     Width="120" 
-                    d:DataContext="{d:DesignInstance distribuidoresApp:LoginUsuario}"
-                 />
+                    d:DataContext="{d:DesignInstance distribuidoresApp:LoginUsuario}"/>
                 
             </StackPanel>
 

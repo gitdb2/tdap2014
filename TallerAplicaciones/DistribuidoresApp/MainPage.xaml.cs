@@ -26,11 +26,6 @@ namespace DistribuidoresApp
             LayoutRoot.DataContext = LoginActual;
         }
 
-        // Executes when the user navigates to this page.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-        }
-
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             IControlador iControlador = Controlador.GetInstance();
