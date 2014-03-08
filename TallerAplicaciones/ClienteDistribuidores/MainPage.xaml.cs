@@ -10,9 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DistribuidoresApp.Views;
 
-namespace DistribuidoresApp
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
     public partial class MainPage : Page
     {

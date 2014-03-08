@@ -9,10 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using DistribuidoresApp.Temp;
 
 // ReSharper disable once CheckNamespace
-namespace DistribuidoresApp
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
     public class Controlador : IControlador
     {
@@ -71,7 +70,7 @@ namespace DistribuidoresApp
         }
 
         //TODO
-        public List<Temp.ProductoFake> ListarProductos()
+        public List<ProductoFake> ListarProductos()
         {
             var productos = new List<ProductoFake>
             {

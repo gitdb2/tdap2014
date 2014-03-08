@@ -9,10 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using DistribuidoresApp.Temp;
 
 // ReSharper disable once CheckNamespace
-namespace DistribuidoresApp
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
     public interface IControlador
     {

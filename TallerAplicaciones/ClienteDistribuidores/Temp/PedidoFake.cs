@@ -9,16 +9,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace DistribuidoresApp.Temp
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
-    public class ProductoFake
+    public class PedidoFake
     {
-        public int ProductoFakeId { get; set; }
-        public string Nombre { get; set; }
-        public string Codigo { get; set; }
+        public int PedidoFakeId { get; set; }
         public string Descripcion { get; set; }
+        public bool Aprobado { get; set; }
 
-        public ProductoFake()
+        public PedidoFake()
         {
             
         }

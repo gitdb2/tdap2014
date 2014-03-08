@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 // ReSharper disable once CheckNamespace
-namespace DistribuidoresApp
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
     public class LoginUsuario
     {

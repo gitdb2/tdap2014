@@ -9,10 +9,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace DistribuidoresApp.Temp
+// ReSharper disable once CheckNamespace
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
-    public class Valor
+    public class Utils
     {
-        public string ValorString { get; set; }
+
     }
 }

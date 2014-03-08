@@ -14,9 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using System.Windows.Threading;
-using DistribuidoresApp.Temp;
 
-namespace DistribuidoresApp.Views
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
     public partial class DataDistribuidorTabs : Page
     {

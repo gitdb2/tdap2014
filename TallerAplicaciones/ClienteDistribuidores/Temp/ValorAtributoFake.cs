@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,11 +10,14 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-// ReSharper disable once CheckNamespace
-namespace DistribuidoresApp
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
-    public class Utils
+    public class ValorAtributoFake
     {
+
+        public string Nombre { get; set; }
+
+        public List<Valor> Valores { get; set; }
 
     }
 }
