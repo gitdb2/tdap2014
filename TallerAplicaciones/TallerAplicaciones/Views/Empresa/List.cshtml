@@ -1,18 +1,51 @@
 ﻿@model TallerAplicaciones.Models.EmpresaListModel
 @{
-    ViewBag.Title = "Lista de Empresas";
+    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2>
+    Lista Empresas</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            activo
+        </th>
+        <th>
+            Accion
+        </th>
+    </tr>
+    @foreach (var item in Model.Empresas)
+    {
+        <tr>
+            <td>@item.Nombre
+            </td>
+            <td>@(item.Activo ? "Si" : "No")
+            </td>
+          
+            <td>
+                @Html.ActionLink("Modificar", "Edit", "Empresa", new { idEmpresa = @item.EmpresaDistribuidoraID }, null)
+                |
+                @Html.ActionLink("Eliminar", "Delete", "Empresa", new { idEmpresa = @item.EmpresaDistribuidoraID }, null)
+            </td>
+           
+            
+            
+        </tr>
+    }
+</table>
 
-<h2>Lista de Empresas</h2>
-
- @Html.ListBoxFor(model => model.Empresas, new MultiSelectList(Model.Empresas, "EmpresaDistribuidoraID", "Nombre"), new { @id = "EmpresaDistribuidoraID" })
- 
- <div>
-    @Html.ActionLink("Back to List", "Index")
+<div>
+    @Html.ActionLink("Back to Index", "Index")
 </div>
 
 @section Scripts {
+    <script>
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
-

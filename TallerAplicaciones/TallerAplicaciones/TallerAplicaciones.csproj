@@ -310,9 +310,6 @@
     <Content Include="Views\Empresa\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Empresa\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Account\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +352,10 @@
     <Content Include="Views\Pedido\Edit.cshtml" />
     <Content Include="Views\Pedido\Create.cshtml" />
     <Content Include="Views\Pedido\Delete.cshtml" />
+    <Content Include="Views\Empresa\List.cshtml" />
+    <Content Include="Views\Empresa\Index.cshtml" />
+    <Content Include="Views\Empresa\Delete.cshtml" />
+    <Content Include="Views\Empresa\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

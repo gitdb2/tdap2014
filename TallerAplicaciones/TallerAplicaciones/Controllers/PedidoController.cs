@@ -41,16 +41,18 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            EjecutivoDeCuenta eject = (EjecutivoDeCuenta) Session["Perfil"];
+            var eject = (EjecutivoDeCuenta) Session["Perfil"];
 
             var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(eject.PerfilUsuarioID);
-            PedidoModel pedido =  new PedidoModel();
-            pedido.EjecutivoDeCuenta = eject;
-            pedido.EjecutivoId = eject.PerfilUsuarioID;
-            pedido.DistribuidoresDisponibles = distribuidores;
-            pedido.Aprobado = false;
-            pedido.Activo = true;
-            
+            var pedido =  new PedidoModel
+            {
+                EjecutivoDeCuenta = eject,
+                EjecutivoId = eject.PerfilUsuarioID,
+                DistribuidoresDisponibles = distribuidores,
+                Aprobado = false,
+                Activo = true
+            };
+
 
             return View();
         }
@@ -106,7 +108,7 @@ namespace TallerAplicaciones.Controllers
             return View(GetPedidoModelFromDB(idPedido));
         }
 
-        private PedidoModel GetPedidoModelFromDB(int idPedido)
+        private PedidoCreateModel GetPedidoModelFromDB(int idPedido)
         {
             //var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
             //if (producto == null) throw new Exception("El producto id " + idProducto + " no existe");
@@ -121,7 +123,7 @@ namespace TallerAplicaciones.Controllers
             //    Codigo = producto.Codigo,
             //    ProductoID = producto.ProductoID
             //}; 
-            var ret = new PedidoModel();
+            var ret = new PedidoCreateModel();
             return ret;
         }
 
@@ -130,7 +132,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Pedido/Edit
 
         [HttpPost]
-        public ActionResult Edit(PedidoModel model)
+        public ActionResult Edit(PedidoCreateModel model)
         {
 
             if (!ModelState.IsValid) return View(model);

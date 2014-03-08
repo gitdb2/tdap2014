@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivoEnum.cs" />
     <Compile Include="ManejadorPedido.cs" />
     <Compile Include="ManejadorArchivos.cs" />
     <Compile Include="ManejadorEmpresaDistribuidora.cs" />

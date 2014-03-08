@@ -7,7 +7,7 @@ using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace TallerAplicaciones.Models
 {
-    public class PedidoModel
+    public class PedidoCreateModel
     {
 
         //para alta
@@ -41,12 +41,18 @@ namespace TallerAplicaciones.Models
         public List<Distribuidor> DistribuidoresDisponibles { get; set; }
 
         // para modificacion
-        public Pedido Pedido { get; set; }
+       
         public EjecutivoDeCuenta EjecutivoDeCuenta { get; set; }
-        public CantidadProductoPedido CantidadProductoPedido { get; set; }
+      
 
     }
 
+    public class PedidoEditModel : PedidoCreateModel
+    {
+        public Pedido Pedido { get; set; }
+        public List<CantidadProductoPedido> CantidadProductoPedido { get; set; }
+    }
+    
 
     public class PedidoListModel
     {

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
@@ -22,15 +23,18 @@ namespace TallerAplicaciones.Controllers
 
 
         // GET: /Empresa/List
-        public ActionResult List()
+        public ActionResult List(EmpresaListModel model)
         {
 
-            EmpresaListModel model = null;
+            //EmpresaListModel model = null;
             try
             {
-                IEmpresaDistribuidora iEmpresa = ManejadorEmpresaDistribuidora.GetInstance();
+                var iEmpresa = ManejadorEmpresaDistribuidora.GetInstance();
 
-                model = new EmpresaListModel() { Empresas = iEmpresa.ListarEmpresasDistribuidoras() };
+                model = new EmpresaListModel()
+                {
+                    Empresas = iEmpresa.ListarEmpresasDistribuidoras(ActivoEnum.Todos)
+                };
 
             }
             catch (Exception e)
@@ -39,20 +43,20 @@ namespace TallerAplicaciones.Controllers
             }
             return View(model);
 
-          
+
         }
 
-        //
-        // GET: /Empresa/Details/5
+        ////
+        //// GET: /Empresa/Details/5
 
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
         //
         // GET: /Empresa/Create
-            [AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
@@ -66,22 +70,22 @@ namespace TallerAplicaciones.Controllers
         {
             if (ModelState.IsValid)
             {
-              
+
                 try
                 {
                     IEmpresaDistribuidora iEmpresa = ManejadorEmpresaDistribuidora.GetInstance();
                     iEmpresa.AltaEmpresa(new EmpresaDistribuidora()
                     {
-                        Nombre = model.Nombre, 
-                        
+                        Nombre = model.Nombre,
+
                     });
 
                     return RedirectToAction("List");
-                  
+
                 }
                 catch (Exception e)
                 {
-                    ModelState.AddModelError("","ERROR");
+                    ModelState.AddModelError("", "ERROR");
                 }
             }
 
@@ -91,55 +95,107 @@ namespace TallerAplicaciones.Controllers
         }
 
         //
-        // GET: /Empresa/Edit/5
-
-        public ActionResult Edit(int id)
+        // GET: /Empresa/Edit/
+        public ActionResult Edit(int idEmpresa)
         {
-            return View();
+            var model = GetEditEmpresaModel(idEmpresa);
+
+            return View(model);
+        }
+
+        private static EmpresaEditModel GetEditEmpresaModel(int idEmpresa)
+        {
+            var empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idEmpresa);
+            if (empresa != null)
+            {
+
+                var model = new EmpresaEditModel
+                {
+                    Activo = empresa.Activo,
+                    EmpresaId = empresa.EmpresaDistribuidoraID,
+                    Nombre = empresa.Nombre
+                };
+                return model;
+            }
+            return null;
+
+
         }
 
         //
         // POST: /Empresa/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, AltaEmpresaModel collection)
+        public ActionResult Edit(int idEmpresa, EmpresaEditModel model)
         {
+            if (!ModelState.IsValid) return View(model);
+
             try
             {
-                // TODO: Add update logic here
+                var empresa = new EmpresaDistribuidora()
+                {
+                    Nombre = model.Nombre,
+                    Activo = model.Activo,
+                    EmpresaDistribuidoraID = model.EmpresaId,
+                };
 
-                return RedirectToAction("Index");
+                ManejadorEmpresaDistribuidora.GetInstance().Modificar(empresa);
+
+
+                return RedirectToAction("List");
             }
-            catch
+
+            catch (CustomException ex)
             {
-                return View();
+                ModelState.AddModelError(ex.Key, ex.Message);
             }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+
+            // If we got this far, something failed, redisplay form
+            ///Este es el modelo que se devuelve en caso que la operacion de modificacion de error
+            var errorModel = GetEditEmpresaModel(model.EmpresaId);
+            errorModel.Activo = model.Activo;
+            errorModel.Nombre = model.Nombre;
+         
+            return View(errorModel);
         }
 
         //
         // GET: /Empresa/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int idEmpresa)
         {
-            return View();
+            return View(new DeleteEmpresaModel { IdEmpresa = idEmpresa });
         }
-
         //
         // POST: /Empresa/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, AltaEmpresaModel collection)
+        public ActionResult Delete(int idProducto, DeleteEmpresaModel model)
         {
             try
             {
-                // TODO: Add delete logic here
+                if (ManejadorEmpresaDistribuidora.GetInstance().Baja(model.IdEmpresa))
+                {
+                    return RedirectToAction("List");
+                }
+                ModelState.AddModelError("idEmpresa", "La empresa No fue  modificada");
 
-                return RedirectToAction("Index");
             }
-            catch
+
+            catch (CustomException ex)
             {
-                return View();
+                ModelState.AddModelError(ex.Key, ex.Message);
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("idEmpresa", ex.Message);
+            }
+
+            return View(model);
         }
     }
 }
