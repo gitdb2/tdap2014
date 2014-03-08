@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ServicioTombola
+namespace ApiDistribuidores
 {
-    public class ServicioTombola : IServicioTombola
+    public class ApiDistribuidores : IApiDistribuidores
     {
 
 

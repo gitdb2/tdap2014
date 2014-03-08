@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{0DF6BD7D-09D6-494D-B025-9FBD03968488}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicioTombola", "ServicioTombola\ServicioTombola.csproj", "{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDistribuidores", "ApiDistribuidores\ApiDistribuidores.csproj", "{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

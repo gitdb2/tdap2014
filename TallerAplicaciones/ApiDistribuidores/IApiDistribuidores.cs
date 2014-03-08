@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 
-namespace ServicioTombola
+namespace ApiDistribuidores
 {
 
     [ServiceContract]
-    public interface IServicioTombola
+    public interface IApiDistribuidores
     {
 
         [OperationContract]
