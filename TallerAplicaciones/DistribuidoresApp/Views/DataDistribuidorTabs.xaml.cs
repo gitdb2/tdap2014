@@ -25,7 +25,7 @@ namespace DistribuidoresApp.Views
         public List<ValorAtributoFake> AtributosProducto;
         public Dictionary<string, int> PlayListVideosProducto { get; set; }
         public Dictionary<string, int> PlayListImagenesProducto { get; set; }
-        private DispatcherTimer Timer;
+        private DispatcherTimer _timer;
 
         public DataDistribuidorTabs()
         {
@@ -126,10 +126,16 @@ namespace DistribuidoresApp.Views
         private void IniciarSlideShowImagenesProducto()
         {
             SetearSiguienteImagen();
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromMilliseconds(3000);
-            Timer.Tick += (sender, e) => SetearSiguienteImagen();
-            Timer.Start();
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMilliseconds(3000);
+            _timer.Tick += (sender, e) => SetearSiguienteImagen();
+            _timer.Start();
+        }
+
+        private void DetenerSlideShowImagenesProducto()
+        {
+            if (_timer != null) 
+                _timer.Stop();
         }
 
         private void SetearSiguienteImagen()
@@ -156,12 +162,15 @@ namespace DistribuidoresApp.Views
         {
             int minVeces = Int16.MaxValue;
             string elementoMinVecesMostrado = null;
-            foreach (var par in playList)
+            if (playList != null)
             {
-                if (par.Value <= minVeces)
+                foreach (var par in playList)
                 {
-                    minVeces = par.Value;
-                    elementoMinVecesMostrado = par.Key;
+                    if (par.Value <= minVeces)
+                    {
+                        minVeces = par.Value;
+                        elementoMinVecesMostrado = par.Key;
+                    }
                 }
             }
             return elementoMinVecesMostrado;
@@ -174,12 +183,7 @@ namespace DistribuidoresApp.Views
 
         private void BtnCerrarSesion_OnClick(object sender, RoutedEventArgs e)
         {
-            Timer.Stop();
-            Pedidos = null;
-            Productos = null;
-            AtributosProducto = null;
-            PlayListVideosProducto = null;
-            PlayListImagenesProducto = null;
+            DetenerSlideShowImagenesProducto();
             IControlador iControlador = Controlador.GetInstance();
             iControlador.LogOff();
             Content = new MainPage();
