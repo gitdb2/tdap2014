@@ -25,6 +25,20 @@
 
                 </StackPanel>
             </Border>
+
+            <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}">
+
+                <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
+                    <HyperlinkButton 
+                        x:Name="BtnCerrarSesion"
+                        Style="{StaticResource LinkStyle}" 
+                        TargetName="ContentFrame"
+                        Content="Cerrar Sesion"
+                        Click="BtnCerrarSesion_OnClick"/>
+                </StackPanel>
+
+            </Border>
+
         </Grid>
 
         <sdk:TabControl Margin="5,45,5,5">

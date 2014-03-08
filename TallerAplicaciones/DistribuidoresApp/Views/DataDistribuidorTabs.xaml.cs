@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -24,6 +25,7 @@ namespace DistribuidoresApp.Views
         public List<ValorAtributoFake> AtributosProducto;
         public Dictionary<string, int> PlayListVideosProducto { get; set; }
         public Dictionary<string, int> PlayListImagenesProducto { get; set; }
+        private DispatcherTimer Timer;
 
         public DataDistribuidorTabs()
         {
@@ -124,10 +126,10 @@ namespace DistribuidoresApp.Views
         private void IniciarSlideShowImagenesProducto()
         {
             SetearSiguienteImagen();
-            var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(3000);
-            timer.Tick += (sender, e) => SetearSiguienteImagen();
-            timer.Start();
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromMilliseconds(3000);
+            Timer.Tick += (sender, e) => SetearSiguienteImagen();
+            Timer.Start();
         }
 
         private void SetearSiguienteImagen()
@@ -170,8 +172,18 @@ namespace DistribuidoresApp.Views
             SetearSiguienteVideo();
         }
 
-
-
+        private void BtnCerrarSesion_OnClick(object sender, RoutedEventArgs e)
+        {
+            Timer.Stop();
+            Pedidos = null;
+            Productos = null;
+            AtributosProducto = null;
+            PlayListVideosProducto = null;
+            PlayListImagenesProducto = null;
+            IControlador iControlador = Controlador.GetInstance();
+            iControlador.LogOff();
+            Content = new MainPage();
+        }
 
     }
 }
