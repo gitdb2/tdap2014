@@ -9,15 +9,14 @@ namespace TallerAplicaciones
     [ServiceContract(Namespace = "")]
     [SilverlightFaultBehavior]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class Api
+    public class ApiDistribuidores
     {
+
         [OperationContract]
-        public bool DoWork(bool param)
+        public bool Login(string usuario, string password)
         {
-            // Add your operation implementation here
-            return !param;
+            return true;
         }
 
-        // Add more operations here and mark them with [OperationContract]
     }
 }

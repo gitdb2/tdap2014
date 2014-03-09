@@ -2,16 +2,16 @@
     <system.serviceModel>
         <bindings>
             <customBinding>
-                <binding name="CustomBinding_Api">
+                <binding name="CustomBinding_ApiDistribuidores">
                     <binaryMessageEncoding />
                     <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
                 </binding>
             </customBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:1770/Api.svc" binding="customBinding"
-                bindingConfiguration="CustomBinding_Api" contract="ServiceReference1.Api"
-                name="CustomBinding_Api" />
+            <endpoint address="http://localhost:1770/ApiDistribuidores.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_ApiDistribuidores"
+                contract="ApiDistribuidores.ApiDistribuidores" name="CustomBinding_ApiDistribuidores" />
         </client>
     </system.serviceModel>
 </configuration>

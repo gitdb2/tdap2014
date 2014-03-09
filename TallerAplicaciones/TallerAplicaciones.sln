@@ -6,8 +6,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClienteDistribuidores", "ClienteDistribuidores\ClienteDistribuidores.csproj", "{4551D364-633F-4B63-B80D-24D7DB27EDE5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{46B21D77-9709-48E9-BCEB-1DC8419A4115} = {46B21D77-9709-48E9-BCEB-1DC8419A4115}
-		{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF} = {68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}
-		{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF} = {68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}
+		{46B21D77-9709-48E9-BCEB-1DC8419A4115} = {46B21D77-9709-48E9-BCEB-1DC8419A4115}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "Dominio\Dominio.csproj", "{BFD1CE2A-CDA7-4C3A-B21D-ED8CDD7A6456}"
@@ -19,8 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{A933C2BF-DE00-47E8-B1FF-8D4CE441CB06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{0DF6BD7D-09D6-494D-B025-9FBD03968488}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDistribuidores", "ApiDistribuidores\ApiDistribuidores.csproj", "{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,10 +53,6 @@ Global
 		{0DF6BD7D-09D6-494D-B025-9FBD03968488}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DF6BD7D-09D6-494D-B025-9FBD03968488}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DF6BD7D-09D6-494D-B025-9FBD03968488}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68B593F8-A6E4-4DAE-AA21-55ECF6708ADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

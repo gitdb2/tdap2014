@@ -157,16 +157,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api.svc.cs">
-      <DependentUpon>Api.svc</DependentUpon>
+    <Compile Include="ApiDistribuidores.svc.cs">
+      <DependentUpon>ApiDistribuidores.svc</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="SilverlightFaultBehavior.cs" />
-    <Content Include="Api.svc" />
-    <Content Include="ClientAccessPolicy.xml" />
+    <Content Include="ApiDistribuidores.svc" />
+    <Content Include="ClientAccessPolicy.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

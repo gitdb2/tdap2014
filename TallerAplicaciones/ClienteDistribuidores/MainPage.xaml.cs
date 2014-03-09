@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ServiceReference1;
+using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores;
 
 namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
@@ -40,33 +40,30 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            ApiClient proxy = new ApiClient();
-            proxy.DoWorkCompleted += new EventHandler<DoWorkCompletedEventArgs>(DoWorkCompleted);             proxy.DoWorkAsync(true);             */        }
+            BusyIndicatorMainPage.IsBusy = true;
+            ApiDistribuidoresClient api = new ApiDistribuidoresClient();
+            api.LoginCompleted += new EventHandler<LoginCompletedEventArgs>(LoginCompleted);
+            api.LoginAsync(TxtBoxUsuario.Text, TxtBoxPassword.Password);
+        }
 
-        private void DoWorkCompleted(object sender, DoWorkCompletedEventArgs e)
+        private void LoginCompleted(object sender, LoginCompletedEventArgs e)
         {
-            /*
             try
             {
-                TxtBoxUsuario.Text = e.Result.ToString();
+                IControlador iControlador = Controlador.GetInstance();
+                if (e.Result)
+                {
+                    iControlador.GuardarLoginActual(LoginActual);
+                    this.Content = new DataDistribuidorTabs();
+                }
             }
             catch (Exception err)
             {
-                TxtBoxUsuario.Text = "Error contacting web service";
+                new ErrorWindow(err).Show();
             }
-             */
-        }
-
-        private void ProcesarResultadoLogin()
-        {
-            var loginResult = true;
-            IControlador iControlador = Controlador.GetInstance();
-            if (loginResult)
+            finally
             {
-                iControlador.GuardarLoginActual(LoginActual);
-                var proximaPagina = new DataDistribuidorTabs();
-                this.Content = proximaPagina;
+                BusyIndicatorMainPage.IsBusy = false;
             }
         }
 
