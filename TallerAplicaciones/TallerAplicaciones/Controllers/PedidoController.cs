@@ -133,7 +133,7 @@ namespace TallerAplicaciones.Controllers
             return View(GetPedidoModelFromDB(idPedido));
         }
 
-        private PedidoCreateModel GetPedidoModelFromDB(int idPedido)
+        private PedidoEditModel GetPedidoModelFromDB(int idPedido)
         {
             //var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
             //if (producto == null) throw new Exception("El producto id " + idProducto + " no existe");
