@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="af7f017c-0edc-4537-a802-b9275f234d13" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1770/ApiDistribuidores.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ApiDistribuidores.wsdl" MetadataType="Wsdl" ID="16cfd157-a74c-4dd2-a20d-0752b6a5c24e" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?wsdl" />
+    <MetadataFile FileName="ApiDistribuidores1.wsdl" MetadataType="Wsdl" ID="b1ade201-87a0-46e2-a792-88797d9695b6" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="ApiDistribuidores.disco" MetadataType="Disco" ID="ae06e673-cff4-477f-a07a-1436208d1185" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?disco" />
+    <MetadataFile FileName="ApiDistribuidores.xsd" MetadataType="Schema" ID="8d60c608-bc8f-4613-808b-3823bb3c36db" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd1" />
+    <MetadataFile FileName="ApiDistribuidores1.xsd" MetadataType="Schema" ID="63b9b60c-a31b-4a8c-85e8-58593bbd2b41" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

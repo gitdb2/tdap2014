@@ -50,9 +50,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 context.Database.Create();
             }
-//            context.Database.ExecuteSqlCommand("ALTER TABLE \"Producto\" ADD CONSTRAINT UniqueCodeInProducto UNIQUE (Codigo) ");
             context.Database.ExecuteSqlCommand("ALTER TABLE Producto ADD UNIQUE (Codigo) ");
-//            context.Database.ExecuteSqlCommand("alter table " + entityModelType.Name + " add unique(" + s + ")"); 
         }
     }
 

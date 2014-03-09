@@ -15,7 +15,7 @@
     <AssemblyName>TallerAplicaciones</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <SilverlightApplicationList>{4551D364-633F-4B63-B80D-24D7DB27EDE5}|..\DistribuidoresApp\DistribuidoresApp.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -42,6 +42,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -155,17 +157,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiDistribuidores.svc.cs">
+      <DependentUpon>ApiDistribuidores.svc</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="SilverlightFaultBehavior.cs" />
+    <Content Include="ApiDistribuidores.svc" />
+    <Content Include="ClientAccessPolicy.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+	<Compile Include="Controllers\WebServiceController.cs" />
+    <Content Include="CrossDomain.xml">
+      <SubType>Designer</SubType>
+    </Content>    
+	<Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,8 +190,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClientBin\DistribuidoresApp.xap" />
-    <Content Include="Content\Gallery.css" />
+    <Content Include="ClientBin\ClienteDistribuidores.xap" />
+	<Content Include="Content\Gallery.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -232,8 +246,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="DistribuidoresAppTestPage.aspx" />
-    <Content Include="DistribuidoresAppTestPage.html" />
+    <Content Include="ClienteDistribuidoresTestPage.aspx" />
+    <Content Include="ClienteDistribuidoresTestPage.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
@@ -253,7 +267,9 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Silverlight.js" />
     <Content Include="Views\Pedido\Delete.cshtml" />
-    <Content Include="Web.config" />
+	<Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -309,6 +325,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Empresa\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Empresa\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\List.cshtml" />
@@ -373,10 +392,11 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>1770</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1770/</IISUrl>
+          <IISUrl>
+          </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

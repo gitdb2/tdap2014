@@ -1,0 +1,71 @@
+﻿<navigation:Page x:Class="uy.edu.ort.taller.aplicaciones.clientedistribuidores.MainPage" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:clientedistribuidores="clr-namespace:uy.edu.ort.taller.aplicaciones.clientedistribuidores"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"                 
+    mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+    Title="Home"
+    Style="{StaticResource PageStyle}">
+
+    <Grid x:Name="LayoutRoot">
+
+        <toolkit:BusyIndicator
+            BusyContent="Espere por favor..."
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Name="BusyIndicatorMainPage"
+            IsBusy="False"/>
+
+            <Grid x:Name="GridBordeSuperior" Style="{StaticResource NavigationGridStyle}">
+
+            <Border x:Name="BrandingBorder" Style="{StaticResource BrandingBorderStyle}">
+                <StackPanel x:Name="BrandingStackPanel" Style="{StaticResource BrandingStackPanelStyle}">
+
+                    <ContentControl Style="{StaticResource LogoIcon}"/>
+                    <TextBlock x:Name="ApplicationNameTextBlock" Style="{StaticResource ApplicationNameStyle}" 
+                               Text="Aplicacion para Distribuidores"/>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <StackPanel Orientation="Vertical" Margin="0,70" HorizontalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                
+                <sdk:Label Content="Usuario" Width="100" HorizontalAlignment="Center"/>
+                
+                <TextBox
+                    Name="TxtBoxUsuario"
+                    Text="{Binding Usuario, Mode=TwoWay, ValidatesOnExceptions=True}" 
+                    Width="120" 
+                    d:DataContext="{d:DesignInstance clientedistribuidores:LoginUsuario}"/>
+                
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+                
+                <sdk:Label Content="Password" Width="100" HorizontalAlignment="Center"/>
+                
+                <PasswordBox 
+                    Name="TxtBoxPassword" 
+                    Password="{Binding Password, Mode=TwoWay, ValidatesOnExceptions=True}"
+                    Width="120"
+                    d:DataContext="{d:DesignInstance clientedistribuidores:LoginUsuario}" 
+                />
+                
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Width="100" Content="Login" Name="BtnLogin" Click="BtnLogin_Click" />
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+</navigation:Page>
