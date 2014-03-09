@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ServiceReference1;
 
 namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
@@ -25,10 +26,42 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             LayoutRoot.DataContext = LoginActual;
         }
 
-        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private void BtnLogin_Click2(object sender, RoutedEventArgs e)
         {
             IControlador iControlador = Controlador.GetInstance();
             var loginResult = iControlador.Login(LoginActual.Usuario, LoginActual.Password);
+            if (loginResult)
+            {
+                iControlador.GuardarLoginActual(LoginActual);
+                var proximaPagina = new DataDistribuidorTabs();
+                this.Content = proximaPagina;
+            }
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            ApiClient proxy = new ApiClient();
+            proxy.DoWorkCompleted += new EventHandler<DoWorkCompletedEventArgs>(DoWorkCompleted);             proxy.DoWorkAsync(true);             */        }
+
+        private void DoWorkCompleted(object sender, DoWorkCompletedEventArgs e)
+        {
+            /*
+            try
+            {
+                TxtBoxUsuario.Text = e.Result.ToString();
+            }
+            catch (Exception err)
+            {
+                TxtBoxUsuario.Text = "Error contacting web service";
+            }
+             */
+        }
+
+        private void ProcesarResultadoLogin()
+        {
+            var loginResult = true;
+            IControlador iControlador = Controlador.GetInstance();
             if (loginResult)
             {
                 iControlador.GuardarLoginActual(LoginActual);

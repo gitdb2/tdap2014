@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores;
 
 // ReSharper disable once CheckNamespace
 namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
@@ -33,17 +32,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         //TODO
         public bool Login(string usuario, string password)
         {
-            bool loginOk = false;
-            IApiDistribuidores api = new ApiDistribuidoresClient();
-
-
-            object estado = "BeginLogin";
-
-            AsyncCallback asyncCallback = (
-                resultado => loginOk = ((IApiDistribuidores) resultado.AsyncState).EndLogin(resultado)
-            );
-            api.BeginLogin(usuario, password, asyncCallback, estado);
-            return loginOk;
+            return true;
         }
 
         public bool HayUsuarioLogueado()

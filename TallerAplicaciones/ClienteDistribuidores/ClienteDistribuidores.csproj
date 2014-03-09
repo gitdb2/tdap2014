@@ -29,7 +29,7 @@
     <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
     <UsePlatformExtensions>false</UsePlatformExtensions>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <LinkedServerProject>..\TallerAplicaciones\TallerAplicaciones.csproj</LinkedServerProject>
+    <LinkedServerProject>..\ApiDistribuidores\ApiDistribuidores.csproj</LinkedServerProject>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -86,7 +86,7 @@
     <Compile Include="Logica\Controlador.cs" />
     <Compile Include="Logica\LoginUsuario.cs" />
     <Compile Include="Logica\Utils.cs" />
-    <Compile Include="Service References\ApiDistribuidores\Reference.cs">
+    <Compile Include="Service References\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -130,11 +130,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
-    <None Include="Service References\ApiDistribuidores\ApiDistribuidores.wsdl" />
-    <None Include="Service References\ApiDistribuidores\ApiDistribuidores.xsd">
+    <None Include="Service References\ServiceReference1\Api.wsdl" />
+    <None Include="Service References\ServiceReference1\Api.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ApiDistribuidores\ApiDistribuidores1.xsd">
+    <None Include="Service References\ServiceReference1\Api1.wsdl" />
+    <None Include="Service References\ServiceReference1\Api1.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="ServiceReferences.ClientConfig" />
@@ -143,19 +144,19 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ApiDistribuidores\" />
+    <WCFMetadataStorage Include="Service References\ServiceReference1\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ApiDistribuidores\ApiDistribuidores.disco" />
+    <None Include="Service References\ServiceReference1\Api.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ApiDistribuidores\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ApiDistribuidores\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference1\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ApiDistribuidores\Reference.svcmap">
+    <None Include="Service References\ServiceReference1\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
