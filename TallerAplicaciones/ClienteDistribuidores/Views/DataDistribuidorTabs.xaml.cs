@@ -14,11 +14,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores;
 
 namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
     public partial class DataDistribuidorTabs : Page
     {
+
         public List<PedidoFake> Pedidos;
         public List<ProductoFake> Productos;
         public List<ValorAtributoFake> AtributosProducto;
@@ -29,15 +31,35 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         public DataDistribuidorTabs()
         {
             InitializeComponent();
-            RefrescarPedidos();
+            RefrescarPedidosAsync();
             RefrescarProductos();
         }
 
-        private void RefrescarPedidos()
+        private void RefrescarPedidosAsync()
         {
-            IControlador iControlador = Controlador.GetInstance();
-            Pedidos = iControlador.ListarPedidos();
-            DataGridPedidos.ItemsSource = Pedidos;
+            BusyIndicatorPedidosTab.IsBusy = true;
+            ApiDistribuidoresClient api = new ApiDistribuidoresClient();
+            api.ListarPedidosDistribuidorCompleted += new EventHandler<ListarPedidosDistribuidorCompletedEventArgs>(ListarPedidosDistribuidorCompleted);
+            api.ListarPedidosDistribuidorAsync(Controlador.GetInstance().LoginActual.Usuario);
+        }
+
+        private void ListarPedidosDistribuidorCompleted(object sender, ListarPedidosDistribuidorCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    DataGridPedidos.ItemsSource = e.Result;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
         }
 
         private void RefrescarProductos()
@@ -190,3 +212,5 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
     }
 }
+
+

@@ -169,7 +169,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Pedido/Edit
 
         [HttpPost]
-        public ActionResult Edit(PedidoCreateModel model)
+        public ActionResult Edit(PedidoEditModel model)
         {
 
             if (!ModelState.IsValid) return View(model);

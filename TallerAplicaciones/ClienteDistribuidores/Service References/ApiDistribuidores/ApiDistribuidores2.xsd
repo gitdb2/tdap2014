@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfPedidoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PedidoDTO" nillable="true" type="tns:PedidoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPedidoDTO" nillable="true" type="tns:ArrayOfPedidoDTO" />
+  <xs:complexType name="PedidoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Aprobado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ejecutivo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fecha" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PedidoId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PedidoDTO" nillable="true" type="tns:PedidoDTO" />
+</xs:schema>

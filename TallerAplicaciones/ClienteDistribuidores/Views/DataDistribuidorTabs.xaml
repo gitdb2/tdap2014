@@ -8,11 +8,20 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            xmlns:temp="clr-namespace:uy.edu.ort.taller.aplicaciones.clientedistribuidores"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:apiDistribuidores="clr-namespace:uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores"
            d:DesignWidth="640" 
            d:DesignHeight="480"
            Title="Page1 Page">
     
     <Grid x:Name="LayoutRoot">
+
+        <toolkit:BusyIndicator
+            BusyContent="Espere por favor..."
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Name="BusyIndicatorPedidosTab"
+            IsBusy="False"/>
 
         <Grid x:Name="GridBordeSuperior" Style="{StaticResource NavigationGridStyle}">
 
@@ -51,11 +60,12 @@
                     VerticalAlignment="Top" 
                     SelectionMode="Single"
                     AutoGenerateColumns="False" 
-                    ColumnWidth="*"
-                    d:DataContext="{d:DesignInstance temp:PedidoFake}">
+                    ColumnWidth="*" d:DataContext="{d:DesignInstance apiDistribuidores:PedidoDTO}">
                     <sdk:DataGrid.Columns>
-                        <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding PedidoFakeId}"/>
+                        <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding PedidoId}"/>
                         <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
+                        <sdk:DataGridTextColumn Header="Fecha" IsReadOnly="True" Binding="{Binding Fecha}"/>
+                        <sdk:DataGridTextColumn Header="Ejecutivo de Cuenta" IsReadOnly="True" Binding="{Binding Ejecutivo}"/>
                         <sdk:DataGridTemplateColumn Header="Aprobado">
                             <sdk:DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

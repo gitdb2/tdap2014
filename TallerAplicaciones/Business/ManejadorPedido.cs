@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using uy.edu.ort.taller.aplicaciones.dominio.DTO;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
+    
+
     public class ManejadorPedido : IPedido
     {
         #region singleton
@@ -22,17 +25,10 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-
-
         public List<Pedido> ListarPedidos()
         {
-
             using (var db = new Persistencia())
             {
-
-
-
-
                 return db.Pedidos
                     .Include(p => p.Ejecutivo)
                     .Include(p2 => p2.Ejecutivo.Usuario)
@@ -40,38 +36,23 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     .Include(p4 => p4.Distribuidor.Usuario)
                     .Include(p5 => p5.Distribuidor.Empresa)
                     .Include(p6 => p6.CantidadProductoPedidoList)
-                    
-                    //.Include("CantidadProductoPedidoList")
-                    //.Include("Distribuidor")
-
-                    //.Include("Empresa")
-
-
                     .ToList();
             }
 
         }
 
-        public void Alta(Pedido pedido, int idDistribuidor, int idEjecutivo,
-                                     List<int> productos, List<int> cantidades)
+        public void Alta(Pedido pedido, int idDistribuidor, int idEjecutivo, List<int> productos, List<int> cantidades)
         {
             using (var db = new Persistencia())
             {
-                //var distrib = ManejadorPerfilUsuario.GetInstance().FindDistribuidor(idDistribuidor);
-                //db.PerfilesUsuario.Attach(distrib);
-
-                //var ejecutivo = ManejadorPerfilUsuario.GetInstance().FindEjecutivo(idEjecutivo);
-                //  db.PerfilesUsuario.Attach(ejecutivo);
                 pedido.Distribuidor = db.PerfilesUsuario.OfType<Distribuidor>()
                     .Include(p => p.Empresa)
                     .Include(p2 => p2.Usuario)
                     .SingleOrDefault(p => p.PerfilUsuarioID == idDistribuidor);
-                
 
                 pedido.Ejecutivo = db.PerfilesUsuario.OfType<EjecutivoDeCuenta>()
                     .Include(p => p.Usuario)
                     .SingleOrDefault(p2 => p2.PerfilUsuarioID == idEjecutivo);
-
                 
                 pedido.CantidadProductoPedidoList = new List<CantidadProductoPedido>();
 
@@ -109,8 +90,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     .Include(p4 => p4.CantidadProductoPedidoList.Select(t => t.Producto))
                     .SingleOrDefault(p => p.PedidoID == idPedido);
 
-                
-
                 return pedido;
             }
         }
@@ -131,5 +110,36 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
             }
         }
+
+        public List<PedidoDTO> ListarPedidos(string loginDistribuidor)
+        {
+            var resultado = new List<PedidoDTO>();
+            using (var db = new Persistencia())
+            {
+                List<Pedido> aDevolver = db.Pedidos
+                .Where(p0 => p0.Distribuidor.Usuario.Login == loginDistribuidor && p0.Activo)
+                .Include(p => p.Ejecutivo)
+                .Include(p2 => p2.Ejecutivo.Usuario)
+                .Include(p3 => p3.Distribuidor)
+                .Include(p4 => p4.Distribuidor.Usuario)
+                .ToList();
+                if (aDevolver.Any())
+                {
+                    foreach (var pedido in aDevolver)
+                    {
+                        resultado.Add(new PedidoDTO()
+                        {
+                            PedidoId = pedido.PedidoID,
+                            Aprobado = pedido.Activo,
+                            Descripcion = pedido.Descripcion,
+                            Ejecutivo = pedido.Ejecutivo.Nombre,
+                            Fecha = pedido.Fecha
+                        });
+                    }
+                }
+            }
+            return resultado;
+        }
+
     }
 }

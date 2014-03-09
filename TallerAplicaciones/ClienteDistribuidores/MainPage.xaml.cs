@@ -40,6 +40,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             {
                 if (e.Result)
                 {
+                    Controlador.GetInstance().GuardarLoginActual(LoginActual);
                     this.Content = new DataDistribuidorTabs();
                 }
             }

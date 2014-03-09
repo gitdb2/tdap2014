@@ -24,10 +24,11 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="ApiDistribuidores.wsdl" MetadataType="Wsdl" ID="16cfd157-a74c-4dd2-a20d-0752b6a5c24e" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?wsdl" />
+    <MetadataFile FileName="ApiDistribuidores1.xsd" MetadataType="Schema" ID="63b9b60c-a31b-4a8c-85e8-58593bbd2b41" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd0" />
+    <MetadataFile FileName="ApiDistribuidores2.xsd" MetadataType="Schema" ID="86f1f2a3-af2c-4efa-a2ea-4aeac033841d" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd2" />
     <MetadataFile FileName="ApiDistribuidores1.wsdl" MetadataType="Wsdl" ID="b1ade201-87a0-46e2-a792-88797d9695b6" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?wsdl=wsdl0" />
     <MetadataFile FileName="ApiDistribuidores.disco" MetadataType="Disco" ID="ae06e673-cff4-477f-a07a-1436208d1185" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?disco" />
     <MetadataFile FileName="ApiDistribuidores.xsd" MetadataType="Schema" ID="8d60c608-bc8f-4613-808b-3823bb3c36db" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd1" />
-    <MetadataFile FileName="ApiDistribuidores1.xsd" MetadataType="Schema" ID="63b9b60c-a31b-4a8c-85e8-58593bbd2b41" SourceId="1" SourceUrl="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

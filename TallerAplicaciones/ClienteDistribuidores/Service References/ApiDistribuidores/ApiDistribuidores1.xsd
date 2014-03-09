@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DTO" />
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
@@ -12,6 +13,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="LoginResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarPedidosDistribuidor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loginDistribuidor" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarPedidosDistribuidorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DTO" minOccurs="0" name="ListarPedidosDistribuidorResult" nillable="true" type="q1:ArrayOfPedidoDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

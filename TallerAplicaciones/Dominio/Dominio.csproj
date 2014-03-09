@@ -36,6 +36,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +51,7 @@
     <Compile Include="AtributoSimple.cs" />
     <Compile Include="CantidadProductoPedido.cs" />
     <Compile Include="Distribuidor.cs" />
+    <Compile Include="DTO\PedidoDTO.cs" />
     <Compile Include="EjecutivoDeCuenta.cs" />
     <Compile Include="EmpresaDistribuidora.cs" />
     <Compile Include="Exceptions\CustomExceptions.cs" />

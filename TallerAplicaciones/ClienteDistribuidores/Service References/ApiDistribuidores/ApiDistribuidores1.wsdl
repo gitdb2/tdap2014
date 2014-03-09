@@ -4,6 +4,7 @@
     <xsd:schema targetNamespace="/Imports">
       <xsd:import schemaLocation="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd0" />
       <xsd:import schemaLocation="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:1770/ApiDistribuidores.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DTO" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ApiDistribuidores_Login_InputMessage">
@@ -12,10 +13,20 @@
   <wsdl:message name="ApiDistribuidores_Login_OutputMessage">
     <wsdl:part name="parameters" element="LoginResponse" />
   </wsdl:message>
+  <wsdl:message name="ApiDistribuidores_ListarPedidosDistribuidor_InputMessage">
+    <wsdl:part name="parameters" element="ListarPedidosDistribuidor" />
+  </wsdl:message>
+  <wsdl:message name="ApiDistribuidores_ListarPedidosDistribuidor_OutputMessage">
+    <wsdl:part name="parameters" element="ListarPedidosDistribuidorResponse" />
+  </wsdl:message>
   <wsdl:portType name="ApiDistribuidores">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="urn:ApiDistribuidores/Login" message="ApiDistribuidores_Login_InputMessage" />
       <wsdl:output wsaw:Action="urn:ApiDistribuidores/LoginResponse" message="ApiDistribuidores_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarPedidosDistribuidor">
+      <wsdl:input wsaw:Action="urn:ApiDistribuidores/ListarPedidosDistribuidor" message="ApiDistribuidores_ListarPedidosDistribuidor_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ApiDistribuidores/ListarPedidosDistribuidorResponse" message="ApiDistribuidores_ListarPedidosDistribuidor_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

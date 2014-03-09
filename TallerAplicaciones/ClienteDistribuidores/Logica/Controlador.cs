@@ -47,7 +47,9 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
         public void GuardarLoginActual(LoginUsuario loginActual)
         {
-            this.LoginActual = loginActual;
+            this.LoginActual = new LoginUsuario();
+            this.LoginActual.Usuario = loginActual.Usuario;
+            this.LoginActual.Password = loginActual.Password;
         }
 
         //TODO
