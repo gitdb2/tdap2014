@@ -175,11 +175,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
-	<Compile Include="Controllers\WebServiceController.cs" />
+    <Compile Include="Controllers\WebServiceController.cs" />
     <Content Include="CrossDomain.xml">
       <SubType>Designer</SubType>
-    </Content>    
-	<Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    </Content>
+    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,7 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\ClienteDistribuidores.xap" />
-	<Content Include="Content\Gallery.css" />
+    <Content Include="Content\Gallery.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -267,7 +267,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Silverlight.js" />
     <Content Include="Views\Pedido\Delete.cshtml" />
-	<Content Include="Web.config">
+    <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Debug.config">
@@ -321,6 +321,10 @@
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{0DF6BD7D-09D6-494D-B025-9FBD03968488}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utiles\Utiles.csproj">
+      <Project>{724D61E3-1370-4B40-923F-222A119C23AA}</Project>
+      <Name>Utiles</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
