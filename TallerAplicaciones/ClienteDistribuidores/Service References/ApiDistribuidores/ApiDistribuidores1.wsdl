@@ -25,6 +25,12 @@
   <wsdl:message name="ApiDistribuidores_CambiarEstadoPedido_OutputMessage">
     <wsdl:part name="parameters" element="CambiarEstadoPedidoResponse" />
   </wsdl:message>
+  <wsdl:message name="ApiDistribuidores_ListarProductos_InputMessage">
+    <wsdl:part name="parameters" element="ListarProductos" />
+  </wsdl:message>
+  <wsdl:message name="ApiDistribuidores_ListarProductos_OutputMessage">
+    <wsdl:part name="parameters" element="ListarProductosResponse" />
+  </wsdl:message>
   <wsdl:portType name="ApiDistribuidores">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="urn:ApiDistribuidores/Login" message="ApiDistribuidores_Login_InputMessage" />
@@ -37,6 +43,10 @@
     <wsdl:operation name="CambiarEstadoPedido">
       <wsdl:input wsaw:Action="urn:ApiDistribuidores/CambiarEstadoPedido" message="ApiDistribuidores_CambiarEstadoPedido_InputMessage" />
       <wsdl:output wsaw:Action="urn:ApiDistribuidores/CambiarEstadoPedidoResponse" message="ApiDistribuidores_CambiarEstadoPedido_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarProductos">
+      <wsdl:input wsaw:Action="urn:ApiDistribuidores/ListarProductos" message="ApiDistribuidores_ListarProductos_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ApiDistribuidores/ListarProductosResponse" message="ApiDistribuidores_ListarProductos_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

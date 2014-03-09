@@ -114,13 +114,13 @@
                             VerticalAlignment="Top" 
                             AutoGenerateColumns="False" 
                             ColumnWidth="*"
-                            d:DataContext="{d:DesignInstance temp:ProductoFake}" 
                             IsReadOnly="True" 
                             SelectionChanged="DataGridProductos_SelectionChanged" 
-                            Margin="0,0,5,5">
+                            Margin="0,0,5,5" d:DataContext="{d:DesignInstance apiDistribuidores:ProductoDTO}">
                         
                         <sdk:DataGrid.Columns>
-                            <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoFakeId}"/>
+                            <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoId}"/>
+                            <sdk:DataGridTextColumn Header="Nombre" IsReadOnly="True" Binding="{Binding Nombre}"/>
                             <sdk:DataGridTextColumn Header="Codigo" IsReadOnly="True" Binding="{Binding Codigo}"/>
                             <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
                         </sdk:DataGrid.Columns>

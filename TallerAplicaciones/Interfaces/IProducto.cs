@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.DTO;
 
 namespace uy.edu.ort.taller.aplicaciones.interfaces
 {
@@ -20,6 +21,8 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
         void AgregarImagenProducto(int idProducto, Foto imagen);
 
         void AgregarVideoProducto(int idProducto, Video video);
+
+        List<ProductoDTO> ListarProductosDTO();
 
     }
 }

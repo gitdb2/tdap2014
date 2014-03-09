@@ -16,4 +16,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PedidoDTO" nillable="true" type="tns:PedidoDTO" />
+  <xs:complexType name="ArrayOfProductoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductoDTO" nillable="true" type="tns:ProductoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductoDTO" nillable="true" type="tns:ArrayOfProductoDTO" />
+  <xs:complexType name="ProductoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductoId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductoDTO" nillable="true" type="tns:ProductoDTO" />
 </xs:schema>

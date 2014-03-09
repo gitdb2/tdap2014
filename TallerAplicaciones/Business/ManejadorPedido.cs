@@ -25,7 +25,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-        public List<Pedido> ListarPedidos()
+        public List<Pedido> ListarPedidosDTO()
         {
             using (var db = new Persistencia())
             {
@@ -111,7 +111,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public List<PedidoDTO> ListarPedidos(string loginDistribuidor)
+        public List<PedidoDTO> ListarPedidosDTO(string loginDistribuidor)
         {
             var resultado = new List<PedidoDTO>();
             using (var db = new Persistencia())

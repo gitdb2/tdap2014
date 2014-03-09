@@ -28,7 +28,7 @@ namespace TallerAplicaciones.Controllers
             var model = new PedidoListModel
             {
 
-                Pedidos = ManejadorPedido.GetInstance().ListarPedidos()
+                Pedidos = ManejadorPedido.GetInstance().ListarPedidosDTO()
             };
 
             return View(model);

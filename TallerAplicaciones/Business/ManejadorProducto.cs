@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using uy.edu.ort.taller.aplicaciones.dominio.DTO;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
@@ -53,7 +54,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 {
                     producto.Activo = false;
                     return db.SaveChanges() > 0;
-
                 }
                 else
                 {
@@ -64,15 +64,35 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return false;
         }
 
-
-       
-
         public List<Producto> ListarProductos()
         {
             using (var db = new Persistencia())
             {
                 return db.Productos.Include("Archivos").ToList();
             }
+        }
+
+        public List<ProductoDTO> ListarProductosDTO()
+        {
+            var resultado = new List<ProductoDTO>();
+            using (var db = new Persistencia())
+            {
+                var aDevolver = db.Productos.Where(p => p.Activo).ToList();
+                if (aDevolver.Any())
+                {
+                    foreach (var producto in aDevolver)
+                    {
+                        resultado.Add(new ProductoDTO()
+                        {
+                            ProductoId = producto.ProductoID,
+                            Codigo = producto.Codigo,
+                            Nombre = producto.Nombre,
+                            Descripcion = producto.Descripcion
+                        });
+                    }
+                }
+            }
+            return resultado;
         }
 
         public void AgregarImagenProducto(int idProducto, Foto imagen)
@@ -168,9 +188,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             AsignarArchivo(idProducto, archivos);
         }
 
-
-
-
         private void AsignarArchivo(int idProducto, IEnumerable<Archivo> archivos)
         {
             using (var db = new Persistencia())
@@ -185,18 +202,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     foreach (var archivo in archivos)
                     {
                         productoDb.Archivos.Add(archivo);
-
                     }
                     db.SaveChanges();
                 }
             }
         }
-
-
-       
-
-
-
 
         public Producto GetProducto(int idProducto)
         {
@@ -229,14 +239,10 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     var productoDb = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == productoUpdate.ProductoID);
                     if (productoDb != null)
                     {
-                       
-
                         productoDb.Activo = productoUpdate.Activo;
                         productoDb.Descripcion = productoUpdate.Descripcion;
                         productoDb.Nombre = productoUpdate.Nombre;
-                     
                         productoDb.Codigo = productoUpdate.Codigo;
-                   
 
                         if (productoDb.Archivos == null)
                         {

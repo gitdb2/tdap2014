@@ -10,9 +10,9 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
     public interface IPedido
     {
 
-        List<Pedido> ListarPedidos();
+        List<Pedido> ListarPedidosDTO();
 
-        List<PedidoDTO> ListarPedidos(string loginDistribuidor);
+        List<PedidoDTO> ListarPedidosDTO(string loginDistribuidor);
 
         void Alta(Pedido pedido, int idDistribuidor, int idEjecutivo,
     

@@ -31,7 +31,7 @@ namespace TallerAplicaciones
         public List<PedidoDTO> ListarPedidosDistribuidor(string loginDistribuidor)
         {
             IPedido iPedido = ManejadorPedido.GetInstance();
-            return iPedido.ListarPedidos(loginDistribuidor);
+            return iPedido.ListarPedidosDTO(loginDistribuidor);
         }
 
         [OperationContract]
@@ -39,6 +39,13 @@ namespace TallerAplicaciones
         {
             IPedido iPedido = ManejadorPedido.GetInstance();
             return iPedido.CambiarEstadoPedido(idPedido, nuevoEstado);
+        }
+
+        [OperationContract]
+        public List<ProductoDTO> ListarProductos()
+        {
+            IProducto iProducto = ManejadorProducto.GetInstance();
+            return iProducto.ListarProductosDTO();
         }
 
     }

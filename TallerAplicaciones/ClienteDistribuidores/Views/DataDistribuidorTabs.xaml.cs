@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Navigation;
 using System.Windows.Threading;
 using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores;
 
@@ -32,9 +23,10 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         {
             InitializeComponent();
             RefrescarPedidosAsync();
-            RefrescarProductos();
+            RefrescarProductosAsync();
         }
 
+        #region refrescar pedidos
         private void RefrescarPedidosAsync()
         {
             BusyIndicatorPedidosTab.IsBusy = true;
@@ -61,14 +53,37 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
+        #endregion
 
-        private void RefrescarProductos()
+        #region refrescar productos
+        private void RefrescarProductosAsync()
         {
-            IControlador iControlador = Controlador.GetInstance();
-            Productos = iControlador.ListarProductos();
-            DataGridProductos.ItemsSource = Productos;
-            DataGridProductos.SelectedIndex = -1;
+            BusyIndicatorPedidosTab.IsBusy = true;
+            ApiDistribuidoresClient api = new ApiDistribuidoresClient();
+            api.ListarProductosCompleted += new EventHandler<ListarProductosCompletedEventArgs>(ListarProductosCompleted);
+            api.ListarProductosAsync();
         }
+
+        private void ListarProductosCompleted(object sender, ListarProductosCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    DataGridProductos.ItemsSource = e.Result;
+                    DataGridProductos.SelectedIndex = -1;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
+        #endregion
 
         private void RefrescarArbolAtributos()
         {
@@ -81,6 +96,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             }
         }
 
+        #region cambiar estado pedido
         private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
         {
             var chkBox = sender as CheckBox;
@@ -91,7 +107,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 CambiarEstadoPedido(pedidoSeleccionado, aprobado);
             }
         }
-
+        
         private void CambiarEstadoPedido(PedidoDTO pedidoSeleccionado, bool nuevoEstado)
         {
             BusyIndicatorPedidosTab.IsBusy = true;
@@ -118,6 +134,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
+        #endregion
 
         private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
