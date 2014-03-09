@@ -225,29 +225,16 @@ namespace TallerAplicaciones.Controllers
         public ActionResult Delete(int idPedido, DeletePedidoModel model)
         //int id, FormCollection collection)
         {
-
             if (!ModelState.IsValid) return View(model);
-
-            //var model = new DeleteProductModel {id = id};
-
-
-
             try
             {
                 ManejadorPedido.GetInstance().Baja(model.PedidoID);
-                //if (ManejadorPedido.GetInstance().Baja(model.IdPedido))
-                //{
-                //    return RedirectToAction("List");
-                //}
-                //ModelState.AddModelError("idPedido", "El Pedido No fue  modificado");
                 return RedirectToAction("List");
             }
-
             catch (Exception ex)
             {
-                ModelState.AddModelError("idPedido", ex.Message);
+                ModelState.AddModelError("PedidoID", ex.Message);
             }
-
             return View(model);
         }
 
