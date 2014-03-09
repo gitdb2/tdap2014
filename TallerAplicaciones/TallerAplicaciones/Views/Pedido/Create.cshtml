@@ -38,13 +38,13 @@
         <div class="editor-field">
             @Html.DisplayFor(model => model.EjecutivoDeCuenta.Nombre)
             @Html.HiddenFor(model => model.EjecutivoId)
-             @Html.ValidationMessageFor(model => model.EjecutivoId)
+            @Html.ValidationMessageFor(model => model.EjecutivoId)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.DistribuidorID)
         </div>
         <div class="editor-field">
-            @if (Model.DistribuidoresDisponibles!= null && Model.DistribuidoresDisponibles.Any())
+            @if (Model.DistribuidoresDisponibles != null && Model.DistribuidoresDisponibles.Any())
             {
                 @Html.DropDownListFor(m => m.DistribuidorID,
                                      Model.DistribuidoresDisponibles.Select(item => new SelectListItem
@@ -59,11 +59,9 @@
             {
                 @("No hay Distribuidores en el sistema.")
             }
-            model.DistribuidorID
-             @Html.ValidationMessageFor(model => model.DistribuidorID)
-              model.DistribuidoresDisponibles)
+            @Html.ValidationMessageFor(model => model.DistribuidorID)
+           
             @Html.ValidationMessageFor(model => model.DistribuidoresDisponibles)
-
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.ProductosDisponibles)
@@ -79,17 +77,15 @@
                                               Value = item.ProductoID.ToString(),
                                               Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
                                           }))
-                    
                     <input type="button" value="agregar" onclick="agregar()" />
                     model.Productos
-                     @Html.ValidationMessageFor(model => model.Productos)
-                     model.Cantidades
-                     @Html.ValidationMessageFor(model => model.Cantidades)
-                     model.ProductosDisponibles
-                     @Html.ValidationMessageFor(model => model.ProductosDisponibles)
+                    @Html.ValidationMessageFor(model => model.Productos)
+                    model.Cantidades
+                    @Html.ValidationMessageFor(model => model.Cantidades)
+                    model.ProductosDisponibles
+                    @Html.ValidationMessageFor(model => model.ProductosDisponibles)
                 </div>
                 <div id="orden">
-                 
                 </div>
             }
             else

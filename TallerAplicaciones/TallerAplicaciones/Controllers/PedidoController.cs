@@ -66,11 +66,11 @@ namespace TallerAplicaciones.Controllers
         public ActionResult Create(PedidoCreatePOSTModel model)
         {
 
-            if (!ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
                 return View(TransformarAErrorModelo(model));
             }
-            
+
             try
             {
                 var pedido = new Pedido()
@@ -81,7 +81,7 @@ namespace TallerAplicaciones.Controllers
                     Fecha = model.Fecha
                 };
 
-             
+
                 ManejadorPedido.GetInstance().Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
 
 
@@ -135,9 +135,6 @@ namespace TallerAplicaciones.Controllers
 
         private PedidoEditModel GetPedidoModelFromDB(int idPedido)
         {
-            //var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
-            //if (producto == null) throw new Exception("El producto id " + idProducto + " no existe");
-
 
             var pedido = ManejadorPedido.GetInstance().GetPedido(idPedido);
             if (pedido == null) throw new CustomException("El pedido id " + idPedido + " no existe")
@@ -165,11 +162,73 @@ namespace TallerAplicaciones.Controllers
         }
 
 
+
+        public class ModificarCantidadPedidoJson
+        {
+            public int IdCantidadProductoPedido { get; set; }
+            public int Cantidad { get; set; }
+            public bool Borrado { get; set; }
+            public bool Ok { get; set; }
+            public string Message { get; set; }
+        }
+
+        [HttpPost]
+      //   [HttpGet]
+        public JsonResult ModificarPedidoCantidadProducto(int idPedido, int idCantidadProductoPedido,
+            bool borrar, int cantidad)
+        {
+
+            var ret = new ModificarCantidadPedidoJson()
+            {
+                IdCantidadProductoPedido = idCantidadProductoPedido,
+                Message = ""
+            };
+
+
+            if (borrar)
+            {
+                try
+                {
+                    //retorna true o false si pudo borrar y tira excepcion si se produjo algun problema
+                    ret.Borrado = ManejadorPedido.GetInstance().BajaCantidadPedido(idPedido, idCantidadProductoPedido);
+                    ret.Ok = true;
+                }
+                catch (Exception e)
+                {
+                    ret.Message = e.Message;
+                    ret.Ok = false;
+                }
+            }
+            else
+            {
+                if (cantidad <= 0)
+                {
+                    ret.Ok = false;
+                    ret.Message = "cantidad no puede ser negantivo ni cero";
+                }
+                else
+                {
+                    try
+                    {
+                        ret.Ok = ManejadorPedido.GetInstance().UpdateCantidadProductoPedido(idPedido, idCantidadProductoPedido, cantidad);
+                        ret.Cantidad = cantidad;
+                    } 
+                    catch (Exception e)
+                    {
+                        ret.Message = e.Message;
+                        ret.Ok = false;
+                    }
+                }
+            }
+            return Json(ret,  JsonRequestBehavior.AllowGet);
+        }
+
+
         //
         // POST: /Pedido/Edit
 
         [HttpPost]
-        public ActionResult Edit(PedidoCreateModel model)
+        public ActionResult Edit(PedidoEditModel model)
         {
 
             if (!ModelState.IsValid) return View(model);
