@@ -184,7 +184,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         {
             DetenerSlideShowImagenesProducto();
             IControlador iControlador = Controlador.GetInstance();
-            iControlador.LogOff();
+            iControlador.CerrarSesion();
             Content = new MainPage();
         }
 

@@ -26,22 +26,10 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             LayoutRoot.DataContext = LoginActual;
         }
 
-        private void BtnLogin_Click2(object sender, RoutedEventArgs e)
-        {
-            IControlador iControlador = Controlador.GetInstance();
-            var loginResult = iControlador.Login(LoginActual.Usuario, LoginActual.Password);
-            if (loginResult)
-            {
-                iControlador.GuardarLoginActual(LoginActual);
-                var proximaPagina = new DataDistribuidorTabs();
-                this.Content = proximaPagina;
-            }
-        }
-
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             BusyIndicatorMainPage.IsBusy = true;
-            ApiDistribuidoresClient api = new ApiDistribuidoresClient();
+            var api = new ApiDistribuidoresClient();
             api.LoginCompleted += new EventHandler<LoginCompletedEventArgs>(LoginCompleted);
             api.LoginAsync(TxtBoxUsuario.Text, TxtBoxPassword.Password);
         }
@@ -50,10 +38,8 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         {
             try
             {
-                IControlador iControlador = Controlador.GetInstance();
                 if (e.Result)
                 {
-                    iControlador.GuardarLoginActual(LoginActual);
                     this.Content = new DataDistribuidorTabs();
                 }
             }

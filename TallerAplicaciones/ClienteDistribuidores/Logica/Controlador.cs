@@ -40,7 +40,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             return LoginActual != null;
         }
 
-        public void LogOff()
+        public void CerrarSesion()
         {
             LoginActual = null;
         }

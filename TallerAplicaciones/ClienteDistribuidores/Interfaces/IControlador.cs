@@ -16,9 +16,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
     public interface IControlador
     {
 
-        bool Login(string usuario, string password);
-
-        void LogOff();
+        void CerrarSesion();
 
         bool HayUsuarioLogueado();
 
