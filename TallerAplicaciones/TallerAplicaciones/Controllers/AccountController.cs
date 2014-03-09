@@ -13,7 +13,7 @@ using uy.edu.ort.taller.aplicaciones.negocio;
 namespace TallerAplicaciones.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //

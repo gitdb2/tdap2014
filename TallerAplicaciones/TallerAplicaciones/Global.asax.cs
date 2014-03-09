@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebMatrix.WebData;
 
 namespace TallerAplicaciones
 {
@@ -16,6 +17,10 @@ namespace TallerAplicaciones
     {
         protected void Application_Start()
         {
+
+            if (!WebSecurity.Initialized)
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuario", "UsuarioID", "Login", autoCreateTables: true);
+
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
