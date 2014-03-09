@@ -10,7 +10,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
     public interface IPedido
     {
 
-        List<Pedido> ListarPedidosDTO();
+        List<Pedido> ListarPedidos();
 
         List<PedidoDTO> ListarPedidosDTO(string loginDistribuidor);
 

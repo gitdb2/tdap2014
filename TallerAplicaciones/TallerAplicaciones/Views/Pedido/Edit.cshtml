@@ -13,9 +13,7 @@
 
     <fieldset>
         <legend>Editar Pedido</legend>
-      
-      
-       <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.Descripcion)
         </div>
         <div class="editor-field">
@@ -42,34 +40,10 @@
         <div class="editor-field">
             @Html.DisplayFor(model => model.EjecutivoDeCuenta.Nombre)
             @Html.HiddenFor(model => model.EjecutivoId)
-             @Html.ValidationMessageFor(model => model.EjecutivoId)
+            @Html.ValidationMessageFor(model => model.EjecutivoId)
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DistribuidorID)
-        </div>
-        <div class="editor-field">
-            @if (Model.DistribuidoresDisponibles!= null && Model.DistribuidoresDisponibles.Any())
-            {
-                @Html.DropDownListFor(m => m.DistribuidorID,
-                                     Model.DistribuidoresDisponibles.Select(item => new SelectListItem
-                                       {
-                                           Value = item.PerfilUsuarioID.ToString(),
-                                           Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")"
-                                       }))
-              
-               
-            }
-            else
-            {
-                @("No hay Distribuidores en el sistema.")
-            }
-            model.DistribuidorID
-             @Html.ValidationMessageFor(model => model.DistribuidorID)
-              model.DistribuidoresDisponibles)
-            @Html.ValidationMessageFor(model => model.DistribuidoresDisponibles)
-
-        </div>
-        <div class="editor-label">
+        
+      <div class="editor-label">
             @Html.LabelFor(model => model.ProductosDisponibles)
         </div>
         <div class="editor-field">
@@ -83,17 +57,9 @@
                                               Value = item.ProductoID.ToString(),
                                               Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
                                           }))
-                    
                     <input type="button" value="agregar" onclick="agregar()" />
-                    model.Productos
-                     @Html.ValidationMessageFor(model => model.Productos)
-                     model.Cantidades
-                     @Html.ValidationMessageFor(model => model.Cantidades)
-                     model.ProductosDisponibles
-                     @Html.ValidationMessageFor(model => model.ProductosDisponibles)
-                </div>
-                <div id="orden">
                  
+                    
                 </div>
             }
             else
@@ -101,37 +67,118 @@
                 @("No hay Productos en el sistema.")
             }
         </div>
+    <div class="display-label">
+        <label>Orden</label>
+    </div>
+        <div class="display-field">
+            Orden actual:<br/>
+            <table id="order">
+                <tr>
+                    <th>
+                        Producto
+                    </th>
+                    <th>
+                        Codigo Producto
+                    </th>
+                  
+                    <th>
+                        Producto Activo
+                    </th>
+                    <th>
+                        Cantidad
+                    </th>
+                    <th>
+                        Eliminar?
+                    </th>
+                </tr>
+                @foreach (var item in Model.Pedido.CantidadProductoPedidoList)
+                {
+                    <tr class="order-line">
+                        <td>@item.Producto.Nombre
+                        </td>
+                        <td>@item.Producto.Codigo
+                        </td>
+                      <td>@(item.Producto.Activo ? "Si" : "No")
+                        </td>
+                        <td><input type="text" id="cantidad_@item.CantidadProductoPedidoID" value="@item.Cantidad"/>
+                             &nbsp;<input type="button" onclick="modificarCantidad(@item.Pedido.PedidoID, @item.CantidadProductoPedidoID)" value='>'/>
+                        </td>
+                        <td><input type="button" onclick="remover($(this))" value="Sacar"/></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        
+               
+        
+        
+
+        @* <div class="editor-label">
+            @Html.LabelFor(model => model.DistribuidorID)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Pedido.Distribuidor.Nombre)
+             @if (Model.DistribuidoresDisponibles != null && Model.DistribuidoresDisponibles.Any())
+            {
+                @Html.DropDownListFor(m => m.DistribuidorID,
+                                     Model.DistribuidoresDisponibles.Select(item => new SelectListItem
+                                       {
+                                           Value = item.PerfilUsuarioID.ToString(),
+                                           Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")",
+                                           Selected = item.PerfilUsuarioID == Model.DistribuidorID
+
+                                       }))
+              
+               
+            }
+            else
+            {
+                @("No hay Distribuidores en el sistema.")
+            }
+          
+        
+          
+        </div>*@
+        
+        
+        
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.ProductosDisponibles)
+        </div>
+        <div class="editor-field">
+            @if (Model.ProductosDisponibles != null && Model.ProductosDisponibles.Any())
+            {
+
+                <div>
+                    @Html.DropDownListFor(m => m.ProductosDisponibles,
+                                          Model.ProductosDisponibles.Select(item => new SelectListItem
+                                          {
+                                              Value = item.ProductoID.ToString(),
+                                              Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
+                                          }))
+                    <input type="button" value="agregar" onclick="agregar()" />
+                 
+                    
+                </div>
+                <div id="orden">
+                </div>
+            }
+            else
+            {
+                @("No hay Productos en el sistema.")
+            }
+        </div>*@
         <p>
             @Html.HiddenFor(model => model.DistribuidoresDisponibles)
             @Html.HiddenFor(model => model.Activo)
             <input type="submit" value="Crear Pedido" />
         </p>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
         <p>
             @Html.HiddenFor(model => model.PedidoID)
             @Html.ValidationMessageFor(model => model.PedidoID)
             <input type="submit" value="Modificar" />
         </p>
-        
-        
-        
-        
-
     </fieldset>
 }
 <div>
@@ -139,7 +186,72 @@
 </div>
 @section Scripts {
     <script>
-      
+        function agregar() {
+
+            var $select = $("#ProductosDisponibles");
+            var $container = $("#orden");
+
+            var existe = $container.find("input[name='Productos']").filter("input[value='" + $select.val() + "']");
+
+            if (existe.length == 0) {
+                var $lineaNueve = $(
+                    "<div class=\"order-line\">" +
+                    "<input name=\"Productos\"  type=\"hidden\" value=\"" + $select.val() + "\" />" +
+                    "<label>" + $select.find('option:selected').text() + "</label>&nbsp;" +
+                    "<input name=\"Cantidades\" value = \"1\"/> &nbsp;" +
+                    "<input type=\"button\" onclick=\"eliminar($(this))\" value=\"Remover\"/>" +
+                    "</div>"
+                );
+                $container.append($lineaNueve);
+            } else {
+                existe.siblings().filter("input[name='Cantidades']").focus();
+                alert("ya esta agragado, buscalo");
+            }
+        }
+
+        function modificarCantidad(idPedido, idCantidadPedido) {
+
+            var $valueInput = $("#cantidad_" + idCantidadPedido);
+            if (!$.isNumeric($valueInput.val())) {
+                alert("El valor ingresado no es numerico");
+                return;
+            }
+
+            var valor = parseInt($valueInput.val());
+            if (valor < 1) {
+                alert("El valor ingresado debe ser mayor o igual a 1");
+                return;
+            }
+
+            var data = {
+                idPedido: idPedido,
+                idCantidadProductoPedido: idCantidadPedido,
+                borrar: false,
+                cantidad: valor
+            };
+
+            $.post("ModificarPedidoCantidadProducto", data, function(response) {
+                if(response.Ok)
+                {
+                    $valueInput.val(response.Cantidad);
+                }else
+                {
+                    alert(response.Message);
+                }
+
+                //{"IdCantidadProductoPedido":1,"Cantidad":2,"Borrado":false,"Ok":true,"Message":null}
+            }, "json");
+        };
+
+        //  http: //localhost:1770/Pedido/ModificarPedidoCantidadProducto?idPedido=1&idCantidadProductoPedido=1&delete=false&cantidad=2
+
+
+    
+
+
+        function eliminar($elem){
+            $elem.parent().remove();
+        }
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
