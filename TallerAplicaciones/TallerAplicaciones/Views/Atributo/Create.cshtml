@@ -24,12 +24,25 @@
             @Html.EditorFor(model => model.Nombre)
             @Html.ValidationMessageFor(model => model.Nombre)
         </div>
-        
-        <div class="editor-field">
-            <label > Valor unico</label> @Html.RadioButtonFor(model => model.DataCombo, false, new { @onclick = "toggle(this)" })
-            <label > Multiples valores</label> @Html.RadioButtonFor(model => model.DataCombo, true, new { @onclick = "toggle(this)" }) 
-        </div>
-    
+        <table>
+            <tr>
+                <td>
+                    <label > Valor unico</label>
+                </td>
+                <td>
+                    @Html.RadioButtonFor(model => model.DataCombo, false, new { @onclick = "toggle(this)", @checked = "checked" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label > Multiples valores</label>
+                </td>
+                <td>
+                    @Html.RadioButtonFor(model => model.DataCombo, true, new { @onclick = "toggle(this)" }) 
+                </td>
+            </tr>
+        </table>
+        <br/>
         <div id="uno" style="display:none">
             <form class="editor-label" id="form" name="form" method="post">
                 <li id="rut1' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="Valores" &nbsp; /> <a href="#" onclick="borrarLinea($(this));">Eliminar valor</a> </li> 

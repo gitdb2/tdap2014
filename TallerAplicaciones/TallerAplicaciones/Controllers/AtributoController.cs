@@ -79,14 +79,13 @@ namespace TallerAplicaciones.Controllers
             }
         }
 
+
         private List<ValorPredefinido> ValoresPredefinidosAtributos(List<String> valores)
         {
             List<ValorPredefinido> aRetornar = new List<ValorPredefinido>();
             foreach (var v in valores)
             {
-                ValorPredefinido valorPredefinido = new ValorPredefinido();
-                valorPredefinido.Activo = true;
-                valorPredefinido.Valor = v;
+                ValorPredefinido valorPredefinido = new ValorPredefinido(v, true);
                 aRetornar.Add(valorPredefinido);
             }
             return aRetornar;
@@ -102,9 +101,7 @@ namespace TallerAplicaciones.Controllers
             {
                 IAtributo iAtributo = ManejadorAtributo.GetInstance();
                 List<Atributo> listaAtributos = iAtributo.GetAtributos();
-                //List<ValorPredefinido> ValoresPredefinidos = iAtributo.GetValoresPredefinidos();
-                model = new ListAtributoModel() { Atributos = listaAtributos }; //, ValoresPredefinidos = ValoresPredefinidos };
-
+                model = new ListAtributoModel() { Atributos = listaAtributos }; 
             }
             catch (Exception e)
             {
@@ -116,26 +113,54 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Atributo/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int idAtributo)
         {
-            return View();
+            EditAtributoModel model = null;
+            try
+            {
+                IAtributo iAtributo = ManejadorAtributo.GetInstance();
+                Atributo atributos = iAtributo.GetAtributo(idAtributo);
+                model = new EditAtributoModel() { IdAtributo = atributos.AtributoID, Activo = atributos.Activo, Nombre = atributos.Nombre, DataCombo = atributos.DataCombo};
+                if (atributos.DataCombo)
+                {
+                    AtributoCombo atributoCombo = iAtributo.GetAtributoCombo(idAtributo);
+                    model.Valores = atributoCombo.Valores;
+                }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
+            return View(model);
         }
 
         //
         // POST: /Atributo/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(EditPostAtributoModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                IAtributo iAtributo = ManejadorAtributo.GetInstance();
+
+                if (model.DataCombo)
+                {
+                    iAtributo.EditarAtributoCombo(model.IdAtributo, model.Activo, model.Nombre, model.DataCombo, model.ListaBorrar, model.ValoresNuevos);
+                }
+                else
+                {
+                    iAtributo.EditarAtributoSimple(model.IdAtributo, model.Activo, model.Nombre);
+                }
+
+                return RedirectToAction("List");
+
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return RedirectToAction("List");
             }
         }
 

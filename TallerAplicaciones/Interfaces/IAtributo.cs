@@ -16,6 +16,14 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         List<Atributo> GetAtributos();
 
-        //List<ValorPredefinido> GetValoresPredefinidos();
+        Atributo GetAtributo(int idAtributo);
+
+        AtributoCombo GetAtributoCombo(int idAtributo);
+
+        void EditarAtributoSimple(int idAtributo, bool Activo, string nuevoNombre);
+
+        void EditarAtributoCombo(int idAtributo, bool Activo, string nuevoNombre, bool dataCombo, List<int> listaABorrar, List<String> valoresNuevos);
+
+
     }
 }

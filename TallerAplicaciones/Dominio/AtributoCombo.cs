@@ -18,5 +18,9 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         
         }
 
+        public override void Accept(IVisitorHtmlAtributo visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

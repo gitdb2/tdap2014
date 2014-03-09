@@ -305,6 +305,10 @@
       <Project>{0DF6BD7D-09D6-494D-B025-9FBD03968488}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utiles\Utiles.csproj">
+      <Project>{724D61E3-1370-4B40-923F-222A119C23AA}</Project>
+      <Name>Utiles</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Empresa\Create.cshtml" />
@@ -323,6 +327,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Atributo\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Atributo\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿@model TallerAplicaciones.Models.ListAtributoModel
+﻿@using Utiles
+@model TallerAplicaciones.Models.ListAtributoModel
 
 @{
     ViewBag.Title = "List";
@@ -11,16 +12,16 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table>
-    <colgroup width="150"></colgroup>
-    <colgroup width="150"></colgroup>
-    <colgroup width="150"></colgroup> 
+    <colgroup width="130"></colgroup>
+    <colgroup width="170"></colgroup>
+    <colgroup width="140"></colgroup> 
     <colgroup ></colgroup>
     <tr>
         <th>
             @Html.Label("Atributo")
         </th>
         <th>
-            @Html.Label("Valores")
+            @Html.Label("Tipos")
         </th>
         <th>
             @Html.Label("Activo")
@@ -29,6 +30,8 @@
             @Html.Label("Aciones")
         </th>
     </tr>
+    
+    @{ var formatter = new HtmlFormatterAtributo(); }
 
     @foreach (var atributo in Model.Atributos)
     {
@@ -36,15 +39,17 @@
             <td>
                 @Html.Label(atributo.Nombre)
             </td>
-            <td>
-
+            <td>@{
+                    atributo.Accept(formatter);
+                    Output.Write(formatter.Html);
+                }
             </td>
         
             <td>
-                @Html.CheckBox(atributo.Nombre, atributo.Activo)
+                @Html.CheckBox(atributo.Nombre, atributo.Activo, new { @disabled = "disabled" })
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Modificar", "Edit", "Atributo" ,new { idAtributo = @atributo.AtributoID }, null)
             </td>
         </tr>
     }

@@ -14,6 +14,10 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public bool Activo { get; set; }
         public bool DataCombo { get; set; }
 
-        
+        public abstract void Accept(IVisitorHtmlAtributo visitor);
     }
 }
+
+
+  
+  
