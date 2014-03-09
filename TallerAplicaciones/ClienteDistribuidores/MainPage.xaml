@@ -14,7 +14,7 @@
     <Grid x:Name="LayoutRoot">
 
         <toolkit:BusyIndicator
-            Content="Espere por favor..."
+            BusyContent="Espere por favor..."
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Name="BusyIndicatorMainPage"

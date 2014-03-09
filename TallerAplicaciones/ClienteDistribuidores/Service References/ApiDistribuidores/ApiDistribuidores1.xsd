@@ -3,7 +3,7 @@
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="login" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>

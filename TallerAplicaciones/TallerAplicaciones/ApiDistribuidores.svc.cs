@@ -3,6 +3,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using uy.edu.ort.taller.aplicaciones.interfaces;
+using uy.edu.ort.taller.aplicaciones.negocio;
+using WebMatrix.WebData;
 
 namespace TallerAplicaciones
 {
@@ -13,9 +16,12 @@ namespace TallerAplicaciones
     {
 
         [OperationContract]
-        public bool Login(string usuario, string password)
+        public bool Login(string login, string password)
         {
-            return true;
+            WebSecurity.InitializeDatabaseConnection();
+            IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
+            var usuario = iPerfilUsuario.ObtenerUsuario(login);
+            return usuario != null && usuario.Activo && WebSecurity.Login(login, password);
         }
 
     }

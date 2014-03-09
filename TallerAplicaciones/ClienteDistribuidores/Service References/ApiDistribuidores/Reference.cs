@@ -19,7 +19,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
     public interface ApiDistribuidores {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:ApiDistribuidores/Login", ReplyAction="urn:ApiDistribuidores/LoginResponse")]
-        System.IAsyncResult BeginLogin(string usuario, string password, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginLogin(string login, string password, System.AsyncCallback callback, object asyncState);
         
         bool EndLogin(System.IAsyncResult result);
     }
@@ -117,8 +117,8 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.BeginLogin(string usuario, string password, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginLogin(usuario, password, callback, asyncState);
+        System.IAsyncResult uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.BeginLogin(string login, string password, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLogin(login, password, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -127,9 +127,9 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         }
         
         private System.IAsyncResult OnBeginLogin(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string usuario = ((string)(inValues[0]));
+            string login = ((string)(inValues[0]));
             string password = ((string)(inValues[1]));
-            return ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).BeginLogin(usuario, password, callback, asyncState);
+            return ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).BeginLogin(login, password, callback, asyncState);
         }
         
         private object[] OnEndLogin(System.IAsyncResult result) {
@@ -145,11 +145,11 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
             }
         }
         
-        public void LoginAsync(string usuario, string password) {
-            this.LoginAsync(usuario, password, null);
+        public void LoginAsync(string login, string password) {
+            this.LoginAsync(login, password, null);
         }
         
-        public void LoginAsync(string usuario, string password, object userState) {
+        public void LoginAsync(string login, string password, object userState) {
             if ((this.onBeginLoginDelegate == null)) {
                 this.onBeginLoginDelegate = new BeginOperationDelegate(this.OnBeginLogin);
             }
@@ -160,7 +160,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
                 this.onLoginCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLoginCompleted);
             }
             base.InvokeAsync(this.onBeginLoginDelegate, new object[] {
-                        usuario,
+                        login,
                         password}, this.onEndLoginDelegate, this.onLoginCompletedDelegate, userState);
         }
         
@@ -240,9 +240,9 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
                     base(client) {
             }
             
-            public System.IAsyncResult BeginLogin(string usuario, string password, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginLogin(string login, string password, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
-                _args[0] = usuario;
+                _args[0] = login;
                 _args[1] = password;
                 System.IAsyncResult _result = base.BeginInvoke("Login", _args, callback, asyncState);
                 return _result;
