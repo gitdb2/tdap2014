@@ -11,9 +11,13 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public int AtributoID { get; set; }
 
         public string Nombre { get; set; }
-        public string ValorPorDefecto { get; set; }
-
         public bool Activo { get; set; }
+        public bool DataCombo { get; set; }
 
+        public abstract void Accept(IVisitorHtmlAtributo visitor);
     }
 }
+
+
+  
+  

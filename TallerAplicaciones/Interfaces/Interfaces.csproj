@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IArchivo.cs" />
+	<Compile Include="IAtributo.cs" />
     <Compile Include="IEmpresaDistribuidora.cs" />
     <Compile Include="IPedido.cs" />
     <Compile Include="IPerfilUsuario.cs" />

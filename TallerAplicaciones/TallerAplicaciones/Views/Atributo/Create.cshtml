@@ -1,0 +1,92 @@
+﻿@using TallerAplicaciones.Models
+@model TallerAplicaciones.Models.AtributoModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<h2>Crear Atributo</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>AltaAtributoModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nombre)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nombre)
+            @Html.ValidationMessageFor(model => model.Nombre)
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <label > Valor unico</label>
+                </td>
+                <td>
+                    @Html.RadioButtonFor(model => model.DataCombo, false, new { @onclick = "toggle(this)", @checked = "checked" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label > Multiples valores</label>
+                </td>
+                <td>
+                    @Html.RadioButtonFor(model => model.DataCombo, true, new { @onclick = "toggle(this)" }) 
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <div id="uno" style="display:none">
+            <form class="editor-label" id="form" name="form" method="post">
+                <li id="rut1' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="Valores" &nbsp; /> <a href="#" onclick="borrarLinea($(this));">Eliminar valor</a> </li> 
+                <div id="campos"></div> 
+                <br/>
+                 <a href="#" onclick="AgregarCampos();">Agregar nuevo valor</a>
+	        </form>
+        </div>
+ 
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <script type="text/javascript">
+        var nextinput = 1;
+
+        function AgregarCampos() {
+            nextinput++;
+            campo = '<li id="rut' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="Valores" &nbsp; /> <a href="#" onclick="borrarLinea($(this));">Eliminar valor</a> </li> ';
+            $("#campos").append(campo);
+        }
+
+        function toggle(elemento) {
+            if (elemento.value == "False") {
+                document.getElementById("uno").style.display = "none";
+              
+            } else {
+                    document.getElementById("uno").style.display = "block";
+            }
+        }
+
+        function borrarLinea(elem) {
+            elem.parent().remove();
+        }
+
+    </script>
+    
+}

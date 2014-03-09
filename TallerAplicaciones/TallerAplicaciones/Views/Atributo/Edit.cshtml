@@ -1,0 +1,124 @@
+﻿@model TallerAplicaciones.Models.EditAtributoModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>EditAtributoModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nombre)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nombre)
+            @Html.ValidationMessageFor(model => model.Nombre)
+            @Html.CheckBoxFor(m => m.Activo)
+
+            &nbsp;&nbsp; 
+            Atributo Activo &nbsp;&nbsp;
+        </div>
+        
+        <table>
+            <tr>
+                 @{
+                    if (Model.DataCombo == false)
+                    {
+                        <td>
+                            <label > Valor unico</label>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <label > Valores Existentes</label>
+                        </td>
+                    }
+                 }
+            </tr>
+
+        </table>
+       
+                    @{
+                if (Model.DataCombo == true)
+                {
+                        <div id="uno">
+                            <ul>
+                                @foreach (var valor in Model.Valores)
+                                {
+                                    <li>
+                                        Valor:&nbsp; 
+                                        <input type="text" value="@valor.Valor"  size="20" readonly="readonly"/> &nbsp;&nbsp;
+                                        @{
+                                    if (!valor.Activo)
+                                    {
+                                                <input type="checkbox" value="@valor.ValorPredefinidoID" name="ListaBorrar" checked="checked"/>
+                                    }
+                                    else
+                                    {
+                                                <input type="checkbox" value="@valor.ValorPredefinidoID" name="ListaBorrar"/>
+                                    }
+                                        }
+                                        &nbsp;&nbsp;Eliminar Valor
+                                    </li> 
+                                }
+                            </ul>
+                        </div>
+                        <div id="dos" style="display:">
+                            <ul>
+                                <div id="campos"></div>
+                                <br/>
+                                <a href="#" onclick=" AgregarCampos(); ">Agregar nuevo valor</a>
+                            </ul> 
+
+                        </div>
+                }
+            }
+        <p>
+            @Html.HiddenFor(model => model.IdAtributo)
+            @Html.HiddenFor(model => model.DataCombo)
+        
+            <input type="submit" value="Editar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <script type="text/javascript">
+        var nextinput = 1;
+
+        function AgregarCampos() {
+            nextinput++;
+            campo = '<li>Valor:&nbsp;<input type="text" size="20" name="ValoresNuevos" /> <a href="#" onclick="borrarLinea($(this));">Eliminar Valor</a> </li> ';
+            $("#campos").append(campo);
+        }
+
+        function toggle(elemento) {
+            if (elemento.value == "False") {
+                document.getElementById("uno").style.display = "none";
+
+            } else {
+                document.getElementById("uno").style.display = "block";
+            }
+        }
+
+        function borrarLinea(elem) {
+            elem.parent().remove();
+        }
+
+    </script>
+    
+}

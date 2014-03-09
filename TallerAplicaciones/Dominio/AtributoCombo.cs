@@ -10,11 +10,17 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         public bool EsSeleccionMultiple { get; set; }
 
+        public List<ValorPredefinido> Valores { get; set; }
+        
         public AtributoCombo()
             : base()
         { 
         
         }
 
+        public override void Accept(IVisitorHtmlAtributo visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }
