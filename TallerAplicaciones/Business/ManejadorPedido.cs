@@ -130,7 +130,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         resultado.Add(new PedidoDTO()
                         {
                             PedidoId = pedido.PedidoID,
-                            Aprobado = pedido.Activo,
+                            Aprobado = pedido.Aprobado,
                             Descripcion = pedido.Descripcion,
                             Ejecutivo = pedido.Ejecutivo.Nombre,
                             Fecha = pedido.Fecha
@@ -139,6 +139,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
             }
             return resultado;
+        }
+
+        public bool CambiarEstadoPedido(int idPedido, bool nuevoEstado)
+        {
+            bool pudeCambiar = false;
+            using (var db = new Persistencia())
+            {
+                var aCambiar = db.Pedidos.Find(idPedido);
+                if (aCambiar != null)
+                {
+                    aCambiar.Aprobado = nuevoEstado;
+                    db.SaveChanges();
+                    pudeCambiar = true;
+                }
+            }
+            return pudeCambiar;
         }
 
     }

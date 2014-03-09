@@ -119,6 +119,11 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         System.IAsyncResult BeginListarPedidosDistribuidor(string loginDistribuidor, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.PedidoDTO> EndListarPedidosDistribuidor(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:ApiDistribuidores/CambiarEstadoPedido", ReplyAction="urn:ApiDistribuidores/CambiarEstadoPedidoResponse")]
+        System.IAsyncResult BeginCambiarEstadoPedido(int idPedido, bool nuevoEstado, System.AsyncCallback callback, object asyncState);
+        
+        bool EndCambiarEstadoPedido(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -165,6 +170,25 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class CambiarEstadoPedidoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public CambiarEstadoPedidoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ApiDistribuidoresClient : System.ServiceModel.ClientBase<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores>, uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores {
         
         private BeginOperationDelegate onBeginLoginDelegate;
@@ -178,6 +202,12 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         private EndOperationDelegate onEndListarPedidosDistribuidorDelegate;
         
         private System.Threading.SendOrPostCallback onListarPedidosDistribuidorCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginCambiarEstadoPedidoDelegate;
+        
+        private EndOperationDelegate onEndCambiarEstadoPedidoDelegate;
+        
+        private System.Threading.SendOrPostCallback onCambiarEstadoPedidoCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -235,6 +265,8 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         public event System.EventHandler<LoginCompletedEventArgs> LoginCompleted;
         
         public event System.EventHandler<ListarPedidosDistribuidorCompletedEventArgs> ListarPedidosDistribuidorCompleted;
+        
+        public event System.EventHandler<CambiarEstadoPedidoCompletedEventArgs> CambiarEstadoPedidoCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -332,6 +364,54 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
             }
             base.InvokeAsync(this.onBeginListarPedidosDistribuidorDelegate, new object[] {
                         loginDistribuidor}, this.onEndListarPedidosDistribuidorDelegate, this.onListarPedidosDistribuidorCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.BeginCambiarEstadoPedido(int idPedido, bool nuevoEstado, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginCambiarEstadoPedido(idPedido, nuevoEstado, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.EndCambiarEstadoPedido(System.IAsyncResult result) {
+            return base.Channel.EndCambiarEstadoPedido(result);
+        }
+        
+        private System.IAsyncResult OnBeginCambiarEstadoPedido(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int idPedido = ((int)(inValues[0]));
+            bool nuevoEstado = ((bool)(inValues[1]));
+            return ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).BeginCambiarEstadoPedido(idPedido, nuevoEstado, callback, asyncState);
+        }
+        
+        private object[] OnEndCambiarEstadoPedido(System.IAsyncResult result) {
+            bool retVal = ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).EndCambiarEstadoPedido(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnCambiarEstadoPedidoCompleted(object state) {
+            if ((this.CambiarEstadoPedidoCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.CambiarEstadoPedidoCompleted(this, new CambiarEstadoPedidoCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void CambiarEstadoPedidoAsync(int idPedido, bool nuevoEstado) {
+            this.CambiarEstadoPedidoAsync(idPedido, nuevoEstado, null);
+        }
+        
+        public void CambiarEstadoPedidoAsync(int idPedido, bool nuevoEstado, object userState) {
+            if ((this.onBeginCambiarEstadoPedidoDelegate == null)) {
+                this.onBeginCambiarEstadoPedidoDelegate = new BeginOperationDelegate(this.OnBeginCambiarEstadoPedido);
+            }
+            if ((this.onEndCambiarEstadoPedidoDelegate == null)) {
+                this.onEndCambiarEstadoPedidoDelegate = new EndOperationDelegate(this.OnEndCambiarEstadoPedido);
+            }
+            if ((this.onCambiarEstadoPedidoCompletedDelegate == null)) {
+                this.onCambiarEstadoPedidoCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnCambiarEstadoPedidoCompleted);
+            }
+            base.InvokeAsync(this.onBeginCambiarEstadoPedidoDelegate, new object[] {
+                        idPedido,
+                        nuevoEstado}, this.onEndCambiarEstadoPedidoDelegate, this.onCambiarEstadoPedidoCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -434,6 +514,20 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
             public System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.PedidoDTO> EndListarPedidosDistribuidor(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.PedidoDTO> _result = ((System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.PedidoDTO>)(base.EndInvoke("ListarPedidosDistribuidor", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginCambiarEstadoPedido(int idPedido, bool nuevoEstado, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = idPedido;
+                _args[1] = nuevoEstado;
+                System.IAsyncResult _result = base.BeginInvoke("CambiarEstadoPedido", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndCambiarEstadoPedido(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("CambiarEstadoPedido", _args, result)));
                 return _result;
             }
         }

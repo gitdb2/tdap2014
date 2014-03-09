@@ -81,21 +81,41 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             }
         }
 
-        // Executes when the user navigates to this page.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-
-        }
-
         private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
         {
             var chkBox = sender as CheckBox;
-            var pedidoFakeSeleccionado = DataGridPedidos.SelectedItem as PedidoFake;
-            if (chkBox != null && pedidoFakeSeleccionado != null)
+            var pedidoSeleccionado = DataGridPedidos.SelectedItem as PedidoDTO;
+            if (chkBox != null && pedidoSeleccionado != null)
             {
                 var aprobado = chkBox.IsChecked != null && (bool)chkBox.IsChecked;
-                IControlador iControlador = Controlador.GetInstance();
-                iControlador.CambiarEstadoPedido(pedidoFakeSeleccionado.PedidoFakeId, aprobado);    
+                CambiarEstadoPedido(pedidoSeleccionado, aprobado);
+            }
+        }
+
+        private void CambiarEstadoPedido(PedidoDTO pedidoSeleccionado, bool nuevoEstado)
+        {
+            BusyIndicatorPedidosTab.IsBusy = true;
+            var api = new ApiDistribuidoresClient();
+            api.CambiarEstadoPedidoCompleted+= new EventHandler<CambiarEstadoPedidoCompletedEventArgs>(CambiarEstadoPedidoCompleted);
+            api.CambiarEstadoPedidoAsync(pedidoSeleccionado.PedidoId, nuevoEstado);
+        }
+
+        private void CambiarEstadoPedidoCompleted(object sender, CambiarEstadoPedidoCompletedEventArgs e)
+        {
+            try
+            {
+                if (!e.Result)
+                {
+                    new ErrorWindow(new Exception("Ocurrio un error al cambiar el estado del Pedido")).Show();
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
 

@@ -34,5 +34,12 @@ namespace TallerAplicaciones
             return iPedido.ListarPedidos(loginDistribuidor);
         }
 
+        [OperationContract]
+        public bool CambiarEstadoPedido(int idPedido, bool nuevoEstado)
+        {
+            IPedido iPedido = ManejadorPedido.GetInstance();
+            return iPedido.CambiarEstadoPedido(idPedido, nuevoEstado);
+        }
+
     }
 }

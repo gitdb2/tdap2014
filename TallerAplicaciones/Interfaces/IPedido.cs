@@ -22,5 +22,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         void Baja(int idPedido);
 
+        bool CambiarEstadoPedido(int idPedido, bool nuevoEstado);
+
     }
 }
