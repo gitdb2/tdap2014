@@ -35,11 +35,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                 return db.Pedidos
                     .Include(p => p.Ejecutivo)
-                    .Include(p => p.Ejecutivo.Usuario)
-                    .Include(p => p.Distribuidor)
-                    .Include(p => p.Distribuidor.Usuario)
-                    .Include(p => p.Distribuidor.Empresa)
-                    .Include(p => p.CantidadProductoPedidoList)
+                    .Include(p2 => p2.Ejecutivo.Usuario)
+                    .Include(p3 => p3.Distribuidor)
+                    .Include(p4 => p4.Distribuidor.Usuario)
+                    .Include(p5 => p5.Distribuidor.Empresa)
+                    .Include(p6 => p6.CantidadProductoPedidoList)
                     
                     //.Include("CantidadProductoPedidoList")
                     //.Include("Distribuidor")
@@ -64,13 +64,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 //  db.PerfilesUsuario.Attach(ejecutivo);
                 pedido.Distribuidor = db.PerfilesUsuario.OfType<Distribuidor>()
                     .Include(p => p.Empresa)
-                    .Include(p => p.Usuario)
+                    .Include(p2 => p2.Usuario)
                     .SingleOrDefault(p => p.PerfilUsuarioID == idDistribuidor);
                 
 
                 pedido.Ejecutivo = db.PerfilesUsuario.OfType<EjecutivoDeCuenta>()
                     .Include(p => p.Usuario)
-                    .SingleOrDefault(p => p.PerfilUsuarioID == idEjecutivo);
+                    .SingleOrDefault(p2 => p2.PerfilUsuarioID == idEjecutivo);
 
                 
                 pedido.CantidadProductoPedidoList = new List<CantidadProductoPedido>();
@@ -96,6 +96,40 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 db.SaveChanges();
             }
 
+        }
+
+        public Pedido GetPedido(int idPedido)
+        {
+            using (var db = new Persistencia())
+            {
+                Pedido pedido = db.Pedidos
+                    .Include(p => p.Ejecutivo)
+                    .Include(p2 => p2.Distribuidor)
+                    .Include(p3 => p3.Distribuidor.Empresa)
+                    .Include(p4 => p4.CantidadProductoPedidoList.Select(t => t.Producto))
+                    .SingleOrDefault(p => p.PedidoID == idPedido);
+
+                
+
+                return pedido;
+            }
+        }
+
+        public void Baja(int idPedido)
+        {
+            using (var db = new Persistencia())
+            {
+                Pedido pedido = db.Pedidos.SingleOrDefault(p => p.PedidoID == idPedido);
+                if (pedido != null)
+                {
+                    pedido.Activo = false;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    throw new CustomException("No se pudo elimianr el pedido"){Key = "PedidoID"};
+                }
+            }
         }
     }
 }

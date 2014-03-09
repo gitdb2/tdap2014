@@ -226,17 +226,21 @@ namespace TallerAplicaciones.Controllers
         //int id, FormCollection collection)
         {
 
+            if (!ModelState.IsValid) return View(model);
+
             //var model = new DeleteProductModel {id = id};
+
+
 
             try
             {
-                throw new NotImplementedException();
+                ManejadorPedido.GetInstance().Baja(model.PedidoID);
                 //if (ManejadorPedido.GetInstance().Baja(model.IdPedido))
                 //{
                 //    return RedirectToAction("List");
                 //}
                 //ModelState.AddModelError("idPedido", "El Pedido No fue  modificado");
-
+                return RedirectToAction("List");
             }
 
             catch (Exception ex)
@@ -248,7 +252,10 @@ namespace TallerAplicaciones.Controllers
         }
 
 
-
+        public ActionResult Detalle(int idPedido)
+        {
+            return View(ManejadorPedido.GetInstance().GetPedido(idPedido));
+        }
 
     }
 

@@ -13,9 +13,9 @@
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        @Html.HiddenFor(m => m.idPedido)
-        <input type="submit" value="Borrar Pedido id @Model.idPedido" /> |
-        @Html.ValidationMessageFor(model => model.idPedido)
+        @Html.HiddenFor(m => m.PedidoID)
+        <input type="submit" value="Borrar Pedido id @Model.PedidoID" /> |
+        @Html.ValidationMessageFor(model => model.PedidoID)
 
         @Html.ActionLink("Back to List", "List")
     </p>

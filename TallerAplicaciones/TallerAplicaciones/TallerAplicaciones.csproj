@@ -252,6 +252,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Silverlight.js" />
+    <Content Include="Views\Pedido\Delete.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -350,13 +351,11 @@
     <Content Include="Views\Producto\Delete.cshtml" />
     <Content Include="Views\Pedido\List.cshtml" />
     <Content Include="Views\Pedido\Edit.cshtml" />
-    <Content Include="Views\Pedido\Creasste.cshtml" />
-    <Content Include="Views\Pedido\Delete.cshtml" />
     <Content Include="Views\Empresa\List.cshtml" />
     <Content Include="Views\Empresa\Index.cshtml" />
     <Content Include="Views\Empresa\Delete.cshtml" />
     <Content Include="Views\Empresa\Edit.cshtml" />
-    <Content Include="Views\Pedido\Create.cshtml" />
+    <Content Include="Views\Pedido\Detalle.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
