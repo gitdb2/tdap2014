@@ -125,7 +125,7 @@ namespace TallerAplicaciones.Models
     public class PedidoEditModel : PedidoCreateModel
     {
         public Pedido Pedido { get; set; }
-        public List<CantidadProductoPedido> CantidadProductoPedido { get; set; }
+        
     }
     
 

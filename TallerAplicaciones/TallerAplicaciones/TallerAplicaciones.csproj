@@ -356,6 +356,7 @@
     <Content Include="Views\Empresa\Delete.cshtml" />
     <Content Include="Views\Empresa\Edit.cshtml" />
     <Content Include="Views\Pedido\Detalle.cshtml" />
+    <Content Include="Views\Pedido\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -139,16 +139,28 @@ namespace TallerAplicaciones.Controllers
             //if (producto == null) throw new Exception("El producto id " + idProducto + " no existe");
 
 
-            //return new ProductoConArchivosSubmitModel
-            //{
-            //    Activo = producto.Activo,
-            //    Producto = producto,
-            //    Descripcion = producto.Descripcion,
-            //    Nombre = producto.Nombre,
-            //    Codigo = producto.Codigo,
-            //    ProductoID = producto.ProductoID
-            //}; 
-            var ret = new PedidoCreateModel();
+            var pedido = ManejadorPedido.GetInstance().GetPedido(idPedido);
+            if (pedido == null) throw new CustomException("El pedido id " + idPedido + " no existe")
+            {
+                Key = "PedidoID"
+            };
+            var ret = new PedidoEditModel()
+            {
+                Activo = pedido.Activo,
+                Aprobado = pedido.Aprobado,
+                Descripcion = pedido.Descripcion,
+                Fecha = pedido.Fecha,
+                PedidoID = pedido.PedidoID,
+                DistribuidorID = pedido.Distribuidor.PerfilUsuarioID,
+                EjecutivoId = pedido.Ejecutivo.PerfilUsuarioID,
+                EjecutivoDeCuenta = pedido.Ejecutivo,
+                Pedido = pedido,
+            };
+
+            ret.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
+                .GetDistribuidoresConEmpresasDeEjecutivo(ret.EjecutivoId);
+            ret.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
+
             return ret;
         }
 

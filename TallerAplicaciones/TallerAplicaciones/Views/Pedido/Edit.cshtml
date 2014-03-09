@@ -1,6 +1,6 @@
 ﻿@using uy.edu.ort.taller.aplicaciones.dominio
 @using uy.edu.ort.taller.aplicaciones.utiles.Formatters
-@model TallerAplicaciones.Models.PedidoCreateModel
+@model TallerAplicaciones.Models.PedidoEditModel
 @{
     ViewBag.Title = "Editar Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,13 +14,124 @@
     <fieldset>
         <legend>Editar Pedido</legend>
       
+      
+       <div class="editor-label">
+            @Html.LabelFor(model => model.Descripcion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Descripcion)
+            @Html.ValidationMessageFor(model => model.Descripcion)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Fecha)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Fecha)
+            @Html.ValidationMessageFor(model => model.Fecha)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Aprobado)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Aprobado)
+            @Html.ValidationMessageFor(model => model.Aprobado)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EjecutivoDeCuenta)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.EjecutivoDeCuenta.Nombre)
+            @Html.HiddenFor(model => model.EjecutivoId)
+             @Html.ValidationMessageFor(model => model.EjecutivoId)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DistribuidorID)
+        </div>
+        <div class="editor-field">
+            @if (Model.DistribuidoresDisponibles!= null && Model.DistribuidoresDisponibles.Any())
+            {
+                @Html.DropDownListFor(m => m.DistribuidorID,
+                                     Model.DistribuidoresDisponibles.Select(item => new SelectListItem
+                                       {
+                                           Value = item.PerfilUsuarioID.ToString(),
+                                           Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")"
+                                       }))
+              
+               
+            }
+            else
+            {
+                @("No hay Distribuidores en el sistema.")
+            }
+            model.DistribuidorID
+             @Html.ValidationMessageFor(model => model.DistribuidorID)
+              model.DistribuidoresDisponibles)
+            @Html.ValidationMessageFor(model => model.DistribuidoresDisponibles)
+
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductosDisponibles)
+        </div>
+        <div class="editor-field">
+            @if (Model.ProductosDisponibles != null && Model.ProductosDisponibles.Any())
+            {
+
+                <div>
+                    @Html.DropDownListFor(m => m.ProductosDisponibles,
+                                          Model.ProductosDisponibles.Select(item => new SelectListItem
+                                          {
+                                              Value = item.ProductoID.ToString(),
+                                              Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
+                                          }))
+                    
+                    <input type="button" value="agregar" onclick="agregar()" />
+                    model.Productos
+                     @Html.ValidationMessageFor(model => model.Productos)
+                     model.Cantidades
+                     @Html.ValidationMessageFor(model => model.Cantidades)
+                     model.ProductosDisponibles
+                     @Html.ValidationMessageFor(model => model.ProductosDisponibles)
+                </div>
+                <div id="orden">
+                 
+                </div>
+            }
+            else
+            {
+                @("No hay Productos en el sistema.")
+            }
+        </div>
+        <p>
+            @Html.HiddenFor(model => model.DistribuidoresDisponibles)
+            @Html.HiddenFor(model => model.Activo)
+            <input type="submit" value="Crear Pedido" />
+        </p>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
         <p>
-           
             @Html.HiddenFor(model => model.PedidoID)
             @Html.ValidationMessageFor(model => model.PedidoID)
             <input type="submit" value="Modificar" />
         </p>
+        
+        
+        
+        
+
     </fieldset>
 }
 <div>
