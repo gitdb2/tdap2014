@@ -10,7 +10,7 @@ using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
-    
+
 
     public class ManejadorPedido : IPedido
     {
@@ -54,7 +54,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 pedido.Ejecutivo = db.PerfilesUsuario.OfType<EjecutivoDeCuenta>()
                     .Include(p => p.Usuario)
                     .SingleOrDefault(p2 => p2.PerfilUsuarioID == idEjecutivo);
-                
+
                 pedido.CantidadProductoPedidoList = new List<CantidadProductoPedido>();
 
                 for (int i = 0; i < productos.Count; i++)
@@ -107,7 +107,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
                 else
                 {
-                    throw new CustomException("No se pudo elimianr el pedido"){Key = "PedidoID"};
+                    throw new CustomException("No se pudo elimianr el pedido") { Key = "PedidoID" };
                 }
             }
         }
@@ -158,7 +158,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return pudeCambiar;
         }
 
- public bool BajaCantidadPedido(int idPedido, int idCantidadProductoPedido)
+        public bool BajaCantidadPedido(int idPedido, int idCantidadProductoPedido)
         {
             using (var db = new Persistencia())
             {
@@ -173,19 +173,19 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     throw new CustomException("No se puede eliminar el item ya que el pedido debe tener al menos un elemento");
                 }
                 var cantPedidoProd = (from cpp in db.CantidadProductosPedido
-                                        where cpp.Pedido.PedidoID == idPedido 
-                                           && cpp.CantidadProductoPedidoID == idCantidadProductoPedido
-                                        select cpp).SingleOrDefault();
+                                      where cpp.Pedido.PedidoID == idPedido
+                                         && cpp.CantidadProductoPedidoID == idCantidadProductoPedido
+                                      select cpp).SingleOrDefault();
 
                 if (cantPedidoProd != null)
                 {
-                    //cantPedidoProd.Activo = false;
-                  //  db.SaveChanges();
-                  
+                    cantPedidoProd.Activo = false;
+                    db.SaveChanges();
+
                 }
                 else
                 {
-                    throw new CustomException("No se pudo encontrar cantidad producto pedido con id="+ idCantidadProductoPedido);
+                    throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" + idCantidadProductoPedido);
                 }
                 return true;
 
@@ -199,7 +199,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
 
-                 var cantPedidoProd = db.CantidadProductosPedido.SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
+                var cantPedidoProd = db.CantidadProductosPedido.SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
 
                 //var cantPedidoProd = (from cpp in db.CantidadProductosPedido
                 //                      where cpp.Pedido.PedidoID == idPedido
