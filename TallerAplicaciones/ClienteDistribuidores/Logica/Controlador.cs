@@ -53,38 +53,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         }
 
         //TODO
-        public void CambiarEstadoPedido(int idPedido, bool aprobado)
-        {
-            
-        }
-
-        //TODO
-        public List<PedidoFake> ListarPedidos()
-        {
-            var pedidos = new List<PedidoFake>
-            {
-                new PedidoFake() {PedidoFakeId = 1, Descripcion = "Pedido1", Aprobado = true},
-                new PedidoFake() {PedidoFakeId = 2, Descripcion = "Pedido2", Aprobado = false},
-                new PedidoFake() {PedidoFakeId = 3, Descripcion = "Pedido3", Aprobado = false},
-                new PedidoFake() {PedidoFakeId = 4, Descripcion = "Pedido4", Aprobado = true}
-            };
-            return pedidos;
-        }
-
-        //TODO
-        public List<ProductoFake> ListarProductos()
-        {
-            var productos = new List<ProductoFake>
-            {
-                new ProductoFake() {ProductoFakeId = 1, Codigo = "AAAAA", Descripcion = "Producto1"},
-                new ProductoFake() {ProductoFakeId = 2, Codigo = "BBBBB", Descripcion = "Producto2"},
-                new ProductoFake() {ProductoFakeId = 3, Codigo = "CCCCC", Descripcion = "Producto3"},
-                new ProductoFake() {ProductoFakeId = 4, Codigo = "DDDDD", Descripcion = "Producto4"}
-            };
-            return productos;
-        }
-
-        //TODO
         public List<ValorAtributoFake> ObtenerAtributosProducto(int idProductoSeleccionado)
         {
             var res = new List<ValorAtributoFake>();

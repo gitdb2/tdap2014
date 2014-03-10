@@ -95,6 +95,39 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
+        //TODO
+        public List<ValorAtributoDTO> ListarAtributosProductoDTO(int idProducto)
+        {
+            //dummy porque no hay valores de atributo aun
+            var resultado = new List<ValorAtributoDTO>();
+
+            ValorAtributoDTO va1 = new ValorAtributoDTO() { Nombre = "atributo1" };
+            ValorAtributoDTO va2 = new ValorAtributoDTO() { Nombre = "atributo2" };
+            ValorAtributoDTO va3 = new ValorAtributoDTO() { Nombre = "atributo2" };
+
+            List<ValorDTO> v1 = new List<ValorDTO>();
+            v1.Add(new ValorDTO(){ValorString = "aaaaa"});
+            v1.Add(new ValorDTO() { ValorString = "bbbbb" });
+
+            List<ValorDTO> v2 = new List<ValorDTO>();
+            v2.Add(new ValorDTO() { ValorString = "ccccc" });
+            v2.Add(new ValorDTO() { ValorString = "ddddd" });
+
+            List<ValorDTO> v3 = new List<ValorDTO>();
+            v3.Add(new ValorDTO() { ValorString = "eeeee" });
+            v3.Add(new ValorDTO() { ValorString = "fffff" });
+
+            va1.Valores = v1;
+            va2.Valores = v2;
+            va3.Valores = v3;
+
+            resultado.Add(va1);
+            resultado.Add(va2);
+            resultado.Add(va3);
+
+            return resultado;
+        }
+
         public void AgregarImagenProducto(int idProducto, Foto imagen)
         {
             using (var db = new Persistencia())

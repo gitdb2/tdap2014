@@ -11,7 +11,6 @@ using uy.edu.ort.taller.aplicaciones.dominio;
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
 
-
     public class ManejadorPedido : IPedido
     {
         #region singleton
@@ -194,7 +193,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public bool UpdateCantidadProductoPedido(int idPedido, int idCantidadProductoPedido, int cantidad)
         {
-
             if (cantidad <= 0) throw new CustomException("Cantidad debe ser mayor que cero");
             using (var db = new Persistencia())
             {
@@ -216,10 +214,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" + idCantidadProductoPedido);
                 }
                 return true;
-
             }
         }
-
 
     }
 }
