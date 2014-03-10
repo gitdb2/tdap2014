@@ -16,7 +16,5 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         public List<ValorPredefinido> Valores { get; set; }
 
-        public AtributoCombo Atributo { get; set; }
-
     }
 }

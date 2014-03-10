@@ -31,4 +31,29 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ProductoDTO" nillable="true" type="tns:ProductoDTO" />
+  <xs:complexType name="ArrayOfValorAtributoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValorAtributoDTO" nillable="true" type="tns:ValorAtributoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValorAtributoDTO" nillable="true" type="tns:ArrayOfValorAtributoDTO" />
+  <xs:complexType name="ValorAtributoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Valores" nillable="true" type="tns:ArrayOfValorDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValorAtributoDTO" nillable="true" type="tns:ValorAtributoDTO" />
+  <xs:complexType name="ArrayOfValorDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValorDTO" nillable="true" type="tns:ValorDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValorDTO" nillable="true" type="tns:ArrayOfValorDTO" />
+  <xs:complexType name="ValorDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ValorString" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValorDTO" nillable="true" type="tns:ValorDTO" />
 </xs:schema>

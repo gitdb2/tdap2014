@@ -10,7 +10,6 @@ using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
-    
 
     public class ManejadorPedido : IPedido
     {
@@ -158,7 +157,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return pudeCambiar;
         }
 
- public bool BajaCantidadPedido(int idPedido, int idCantidadProductoPedido)
+        public bool BajaCantidadPedido(int idPedido, int idCantidadProductoPedido)
         {
             using (var db = new Persistencia())
             {
@@ -194,17 +193,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public bool UpdateCantidadProductoPedido(int idPedido, int idCantidadProductoPedido, int cantidad)
         {
-
             if (cantidad <= 0) throw new CustomException("Cantidad debe ser mayor que cero");
             using (var db = new Persistencia())
             {
 
-                 var cantPedidoProd = db.CantidadProductosPedido.SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
-
-                //var cantPedidoProd = (from cpp in db.CantidadProductosPedido
-                //                      where cpp.Pedido.PedidoID == idPedido
-                //                         && cpp.CantidadProductoPedidoID == idCantidadProductoPedido
-                //                      select cpp).SingleOrDefault();
+                var cantPedidoProd = db.CantidadProductosPedido.SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
 
                 if (cantPedidoProd != null)
                 {
@@ -219,7 +212,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
             }
         }
-
 
     }
 }

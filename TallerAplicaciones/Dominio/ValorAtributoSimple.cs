@@ -16,7 +16,5 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         
         }
 
-        public ValorAtributoSimple Atributo { get; set; }
-
     }
 }

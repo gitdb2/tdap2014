@@ -22,12 +22,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
         void GuardarLoginActual(LoginUsuario loginActual);
 
-        void CambiarEstadoPedido(int idPedido, bool aprobado);
-
-        List<PedidoFake> ListarPedidos();
-
-        List<ProductoFake> ListarProductos();
-
         List<ValorAtributoFake> ObtenerAtributosProducto(int idProductoSeleccionado);
 
         List<string> ObtenerVideosProducto(int productoFakeId);
