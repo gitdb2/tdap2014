@@ -21,7 +21,7 @@ namespace TallerAplicaciones
         protected void Application_Start()
         {
 
-
+            //para que inicialice la base de datos
             using (var db = new Persistencia())
             {
                 db.Productos.ToList();
