@@ -32,6 +32,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Archivo> Archivos { get; set; }
 
         public DbSet<CantidadProductoPedido> CantidadProductosPedido { get; set; }
 

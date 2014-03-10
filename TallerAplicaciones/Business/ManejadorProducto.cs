@@ -284,7 +284,18 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                         if (productoDb.Archivos.Any() && filesToDelete!=null && filesToDelete.Any())
                         {
-                            productoDb.Archivos.RemoveAll(a => filesToDelete.Contains(a.ArchivoID));
+                           productoDb.Archivos.RemoveAll(a => filesToDelete.Contains(a.ArchivoID));
+
+                           var archivosABorrar   =  db.Archivos
+                                                  .Where(a => filesToDelete.Contains(a.ArchivoID))
+                                                  .ToList();
+
+                           foreach (var arch in archivosABorrar)
+                           {
+                               db.Archivos.Remove(arch);
+                           }
+
+                           
                         }
 
                         if (productoUpdate.Archivos != null && productoUpdate.Archivos.Any())
