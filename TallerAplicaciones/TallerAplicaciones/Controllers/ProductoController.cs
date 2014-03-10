@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
+using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
@@ -48,7 +49,19 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            return View();
+            ProductoConArchivosSubmitModel model = null;
+            try
+            {
+                IAtributo iAtributo = ManejadorAtributo.GetInstance();
+                List<Atributo> listaAtributos = iAtributo.GetAtributos();
+                model.ListaDeAtributos = listaAtributos;
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
+            return View(model);
+      
         }
 
         // POST: /Producto/Create
@@ -80,7 +93,7 @@ namespace TallerAplicaciones.Controllers
 
 
                  ManejadorProducto.GetInstance().AltaProducto(producto);
-
+                 
 
                 return RedirectToAction("List");
             }

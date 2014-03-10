@@ -45,9 +45,21 @@
                 <label for="Videos">Videos:</label>
                 @Html.TextBoxFor(model => model.Videos, new { type = "file" })
                 &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">[+]</a>
-                 @Html.ValidationMessageFor(model => model.Videos)
+                @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
+        <div>
+            <select name="year">
+                @foreach (var atributo in Model.ListaDeAtributos)
+                {
+                    <option>@(atributo)</option>
+                }
+            </select>
+        </div>
+       
+        
+        
+
         <p>
             <input type="submit" value="Crear Producto" />
         </p>
