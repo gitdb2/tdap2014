@@ -24,5 +24,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         List<ProductoDTO> ListarProductosDTO();
 
+        List<ValorAtributoDTO> ListarAtributosProductoDTO(int idProducto);
+
     }
 }
