@@ -144,6 +144,9 @@
     <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ProductoDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ValorAtributoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

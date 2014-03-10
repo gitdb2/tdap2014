@@ -52,7 +52,7 @@ namespace TallerAplicaciones
         public List<ValorAtributoDTO> ListarAtributosProducto(int idProducto)
         {
             IProducto iProducto = ManejadorProducto.GetInstance();
-            return new List<ValorAtributoDTO>();
+            return iProducto.ListarAtributosProductoDTO(idProducto);
         }
 
     }

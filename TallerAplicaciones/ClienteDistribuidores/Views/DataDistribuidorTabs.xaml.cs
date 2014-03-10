@@ -165,7 +165,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
         private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //RefrescarArbolAtributos();
+            RefrescarArbolAtributosAsync();
             RefrescarVideosProducto();
             RefrescarImagenesProducto();
         }
