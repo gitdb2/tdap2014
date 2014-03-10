@@ -32,7 +32,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         private void RefrescarPedidosAsync()
         {
             BusyIndicatorPedidosTab.IsBusy = true;
-            ApiDistribuidoresClient api = new ApiDistribuidoresClient();
+            var api = new ApiDistribuidoresClient();
             api.ListarPedidosDistribuidorCompleted += new EventHandler<ListarPedidosDistribuidorCompletedEventArgs>(ListarPedidosDistribuidorCompleted);
             api.ListarPedidosDistribuidorAsync(Controlador.GetInstance().LoginActual.Usuario);
         }
@@ -62,7 +62,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         private void RefrescarProductosAsync()
         {
             BusyIndicatorPedidosTab.IsBusy = true;
-            ApiDistribuidoresClient api = new ApiDistribuidoresClient();
+            var api = new ApiDistribuidoresClient();
             api.ListarProductosCompleted += new EventHandler<ListarProductosCompletedEventArgs>(ListarProductosCompleted);
             api.ListarProductosAsync();
         }
@@ -89,26 +89,39 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         }
         #endregion
 
-        private void RefrescarArbolAtributos()
-        {
-            //var productoFakeSeleccionado = (ProductoFake) DataGridProductos.SelectedItem;
-            //if (productoFakeSeleccionado != null)
-            //{
-            //    IControlador iControlador = Controlador.GetInstance();
-            //    AtributosProducto = iControlador.ObtenerAtributosProducto(productoFakeSeleccionado.ProductoFakeId);
-            //    TreeViewCamposVariables.ItemsSource = AtributosProducto;
-            //}
-        }
-
+        #region refrescar atributos producto
         private void RefrescarArbolAtributosAsync()
         {
             var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
             if (productoSeleccionado != null)
             {
-                //AtributosProducto = iControlador.ObtenerAtributosProducto(productoFakeSeleccionado.ProductoFakeId);
-                //TreeViewCamposVariables.ItemsSource = AtributosProducto;
+                var api = new ApiDistribuidoresClient();
+                api.ListarAtributosProductoCompleted += new EventHandler<ListarAtributosProductoCompletedEventArgs>(ListarAtributosProductoCompleted);
+                api.ListarAtributosProductoAsync(productoSeleccionado.ProductoId);
+                BusyIndicatorPedidosTab.IsBusy = true;
             }
         }
+
+        private void ListarAtributosProductoCompleted(object sender, ListarAtributosProductoCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    TreeViewCamposVariables.ItemsSource = e.Result;
+                    AtributosProducto = e.Result;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
+        #endregion
 
         #region cambiar estado pedido
         private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
@@ -152,7 +165,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
         private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RefrescarArbolAtributos();
+            //RefrescarArbolAtributos();
             RefrescarVideosProducto();
             RefrescarImagenesProducto();
         }
