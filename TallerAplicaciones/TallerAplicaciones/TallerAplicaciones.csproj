@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -268,6 +269,27 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Silverlight.js" />
+    <Content Include="Uploads\Fotos\0209f99b-4733-4d9a-a028-7eedf39ff718..jpg" />
+    <Content Include="Uploads\Fotos\1147a08c-087f-4a63-9c89-fc92787415e8..jpg" />
+    <Content Include="Uploads\Fotos\124bbf1e-4dd2-44bf-b2d0-e9630e3bfb29..jpg" />
+    <Content Include="Uploads\Fotos\1a4070cc-30f2-4488-a5c8-1b67316f9c69..jpg" />
+    <Content Include="Uploads\Fotos\294d321d-48da-4148-b5d8-df2960239272..jpg" />
+    <Content Include="Uploads\Fotos\36b57149-fb85-4a65-a487-2848e9259adb.jpg" />
+    <Content Include="Uploads\Fotos\3e47136d-2324-42f0-80f4-54784ad35c09..jpg" />
+    <Content Include="Uploads\Fotos\4ad28101-f144-4d1e-91a0-46c7fbf3df10..jpg" />
+    <Content Include="Uploads\Fotos\7df8e7ff-3e38-4394-94fc-35eefd7daee0..jpg" />
+    <Content Include="Uploads\Fotos\8b252d59-2671-4290-9d90-bbba2d407eea..jpg" />
+    <Content Include="Uploads\Fotos\c290bc57-8e18-42a0-8dbf-48d46ab2fe1d..jpg" />
+    <Content Include="Uploads\Fotos\d11dc7e4-a0c7-4987-8255-76e68e66aef6..jpg" />
+    <Content Include="Uploads\Fotos\d5dc8d6c-f0ea-49c8-b8eb-98c0925f40ce.jpg" />
+    <Content Include="Uploads\Fotos\e32dbe61-f6e5-443c-96c3-ba282e4c4b83..jpg" />
+    <Content Include="Uploads\Fotos\f5ba0507-9439-4914-9ef0-bd31334b966d..jpg" />
+    <Content Include="Uploads\Videos\4ead7f32-1134-4ee2-befa-265462b98918..jpg" />
+    <Content Include="Uploads\Videos\5156247c-9249-4d6c-9357-fb512dc41e46..jpg" />
+    <Content Include="Uploads\Videos\88b3fe5d-67b0-4455-bad5-2e8c6d96d6ec..jpg" />
+    <Content Include="Uploads\Videos\9bb305e1-dd63-4e63-8608-19a53181679a..jpg" />
+    <Content Include="Uploads\Videos\be872920-94cd-4a7d-b7b0-2bac273f15fa..jpg" />
+    <Content Include="Uploads\Videos\f9e42b01-931c-4ea9-b784-218ccb2dda38..jpg" />
     <Content Include="Views\Pedido\Delete.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -306,7 +328,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
