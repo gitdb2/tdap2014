@@ -259,9 +259,10 @@ namespace TallerAplicaciones.Controllers
         /// <returns></returns>
         protected List<Archivo> GetArchivosAndSaveFiles(ProductoConArchivosSubmitModel model, Producto producto, bool isVideo)
         {
+            String defaultFolder = "Images";
             string tipo = isVideo ? "Videos" : "Fotos";
             var fileList = new List<Archivo>();
-            string basePath = Server.MapPath("~/Uploads");
+            string basePath = Server.MapPath("~/" + defaultFolder);
             basePath = Path.Combine(basePath, tipo);
             if (!Directory.Exists(basePath))
             {
@@ -279,7 +280,7 @@ namespace TallerAplicaciones.Controllers
                     if (fileName != null)
                     {
                         var extension = Path.GetExtension(file.FileName);
-                        var fsName = Guid.NewGuid().ToString() + "." + extension;
+                        var fsName = Guid.NewGuid().ToString() + extension;
                         var path = Path.Combine(basePath, fsName);
 
 
@@ -293,7 +294,7 @@ namespace TallerAplicaciones.Controllers
                           archivo = new Foto();  
                         }
                         
-                        archivo.Url = "/Uploads/"+tipo+"/" + fsName;
+                        archivo.Url = "/" + defaultFolder+"/"+tipo+"/" + fsName;
                         archivo.PathFileSystem = path;
                         archivo.Nombre = fileName;
                         archivo.Activo = true;
