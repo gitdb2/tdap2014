@@ -156,5 +156,6 @@ $RECYCLE.BIN/
 .DS_Store
 
 
-TallerAplicaciones/TallerAplicaciones/Uploads/*
+TallerAplicaciones/TallerAplicaciones/Images/Fotos/*
+TallerAplicaciones/TallerAplicaciones/Images/Videos/*
 
