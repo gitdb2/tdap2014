@@ -140,7 +140,6 @@ namespace TallerAplicaciones.Controllers
                         Apellido = model.Apellido,
                         Activo = true,
                         Email = model.Email
-                        //Empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor)
                     };
                     iPerfil.AltaPerfilUsuario((Distribuidor) perfil, model.EmpresaDelDistribuidor, model.UserName);
                     break;
@@ -199,7 +198,7 @@ namespace TallerAplicaciones.Controllers
         public ActionResult Disassociate(string provider, string providerUserId)
         {
             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);
-            ManageMessageId? message = null;
+            ManageMessageId ? message = null;
 
             // Only disassociate the account if the currently logged in user is the owner
             if (ownerAccount == User.Identity.Name)

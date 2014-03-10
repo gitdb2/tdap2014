@@ -12,6 +12,6 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public int Cantidad { get; set; }
         public Producto Producto { get; set; }
         public Pedido Pedido { get; set; }
-        //public bool Activo { get; set; }
+        public bool Activo { get; set; }
     }
 }
