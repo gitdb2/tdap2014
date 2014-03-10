@@ -123,6 +123,20 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         }
         #endregion
 
+        private void RefrescarImagenesProducto()
+        {
+            var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
+            if (productoSeleccionado != null)
+            {
+                var api = new ApiDistribuidoresClient();
+                api.ListarAtributosProductoCompleted += new EventHandler<ListarAtributosProductoCompletedEventArgs>(ListarAtributosProductoCompleted);
+                api.ListarAtributosProductoAsync(productoSeleccionado.ProductoId);
+                BusyIndicatorPedidosTab.IsBusy = true;
+            }
+            //PlayListImagenesProducto = GenerarPlayList(imagenesProducto);
+            //IniciarSlideShowImagenesProducto();
+        }
+
         #region cambiar estado pedido
         private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
         {
@@ -163,25 +177,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         }
         #endregion
 
-        private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            RefrescarArbolAtributosAsync();
-            RefrescarVideosProducto();
-            RefrescarImagenesProducto();
-        }
-
-        private void RefrescarImagenesProducto()
-        {
-            //var productoFakeSeleccionado = (ProductoFake)DataGridProductos.SelectedItem;
-            //if (productoFakeSeleccionado != null)
-            //{
-            //    IControlador iControlador = Controlador.GetInstance();
-            //    var imagenesProducto = iControlador.ObtenerImagenesProducto(productoFakeSeleccionado.ProductoFakeId);
-            //    PlayListImagenesProducto = GenerarPlayList(imagenesProducto);
-            //    IniciarSlideShowImagenesProducto();
-            //}
-        }
-
         private void RefrescarVideosProducto()
         {
             //var productoFakeSeleccionado = (ProductoFake)DataGridProductos.SelectedItem;
@@ -193,6 +188,13 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             //    PlayListVideosProducto = GenerarPlayList(videosProducto);
             //    SetearSiguienteVideo();
             //}
+        }
+
+        private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RefrescarArbolAtributosAsync();
+            RefrescarImagenesProducto();
+            RefrescarVideosProducto();
         }
 
         private Dictionary<string, int> GenerarPlayList(List<string> origen)
