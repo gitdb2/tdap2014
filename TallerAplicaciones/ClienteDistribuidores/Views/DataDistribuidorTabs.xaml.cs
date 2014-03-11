@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores;
+using uy.edu.ort.taller.aplicaciones.clientedistribuidores.Logica;
 
 namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
@@ -20,8 +21,8 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         public ObservableCollection<ProductoDTO> Productos;
         public ObservableCollection<ValorAtributoDTO> AtributosProducto;
 
-        public Dictionary<ArchivoDTO, int> PlayListVideosProducto { get; set; }
-        public Dictionary<ArchivoDTO, int> PlayListImagenesProducto { get; set; }
+        public PlayList PlayListVideosProducto { get; set; }
+        public PlayList PlayListImagenesProducto { get; set; }
 
         private DispatcherTimer _timer;
 
@@ -32,7 +33,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             RefrescarProductosAsync();
         }
 
-        #region refrescar pedidos
+        #region pedidos
         private void RefrescarPedidosAsync()
         {
             BusyIndicatorPedidosTab.IsBusy = true;
@@ -60,9 +61,47 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
+
+        private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
+        {
+            var chkBox = sender as CheckBox;
+            var pedidoSeleccionado = DataGridPedidos.SelectedItem as PedidoDTO;
+            if (chkBox != null && pedidoSeleccionado != null)
+            {
+                var aprobado = chkBox.IsChecked != null && (bool)chkBox.IsChecked;
+                CambiarEstadoPedido(pedidoSeleccionado, aprobado);
+            }
+        }
+
+        private void CambiarEstadoPedido(PedidoDTO pedidoSeleccionado, bool nuevoEstado)
+        {
+            BusyIndicatorPedidosTab.IsBusy = true;
+            var api = new ApiDistribuidoresClient();
+            api.CambiarEstadoPedidoCompleted += new EventHandler<CambiarEstadoPedidoCompletedEventArgs>(CambiarEstadoPedidoCompleted);
+            api.CambiarEstadoPedidoAsync(pedidoSeleccionado.PedidoId, nuevoEstado);
+        }
+
+        private void CambiarEstadoPedidoCompleted(object sender, CambiarEstadoPedidoCompletedEventArgs e)
+        {
+            try
+            {
+                if (!e.Result)
+                {
+                    new ErrorWindow(new Exception("Ocurrio un error al cambiar el estado del Pedido")).Show();
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
         #endregion
 
-        #region refrescar productos
+        #region productos
         private void RefrescarProductosAsync()
         {
             BusyIndicatorPedidosTab.IsBusy = true;
@@ -91,9 +130,16 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
+
+        private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RefrescarArbolAtributosAsync();
+            RefrescarImagenesProductoAsync();
+            RefrescarVideosProductoAsync();
+        }
         #endregion
 
-        #region refrescar atributos producto
+        #region atributos producto
         private void RefrescarArbolAtributosAsync()
         {
             var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
@@ -127,7 +173,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         }
         #endregion
 
-        #region refrescar imagenes producto
+        #region imagenes producto
         private void RefrescarImagenesProductoAsync()
         {
             DetenerSlideShowImagenesProducto();
@@ -147,7 +193,8 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             {
                 if (e.Result != null && e.Result.Any())
                 {
-                    PlayListImagenesProducto = GenerarPlayList(e.Result);
+                    PlayListImagenesProducto = new PlayList();
+                    PlayListImagenesProducto.CargarPlayList(e.Result);
                     IniciarSlideShowImagenesProducto();
                 }
             }
@@ -159,111 +206,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             {
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
-        }
-        #endregion
-
-        #region refrescar videos producto
-        private void RefrescarVideosProductoAsync()
-        {
-            DetenerSlideShowVideosProducto();
-            var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
-            if (productoSeleccionado != null)
-            {
-                var api = new ApiDistribuidoresClient();
-                api.ListarVideosProductoCompleted += new EventHandler<ListarVideosProductoCompletedEventArgs>(ListarVideosProductoCompleted);
-                api.ListarVideosProductoAsync(productoSeleccionado.ProductoId);
-                BusyIndicatorPedidosTab.IsBusy = true;
-            }
-        }
-
-        private void ListarVideosProductoCompleted(object sender, ListarVideosProductoCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Result != null && e.Result.Any())
-                {
-                    PlayListVideosProducto = GenerarPlayList(e.Result);
-                    SetearSiguienteVideo();
-                    VideosProducto.AutoPlay = true;
-                }
-            }
-            catch (Exception err)
-            {
-                new ErrorWindow(err).Show();
-            }
-            finally
-            {
-                BusyIndicatorPedidosTab.IsBusy = false;
-            }
-        }
-        #endregion
-
-        #region cambiar estado pedido
-        private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
-        {
-            var chkBox = sender as CheckBox;
-            var pedidoSeleccionado = DataGridPedidos.SelectedItem as PedidoDTO;
-            if (chkBox != null && pedidoSeleccionado != null)
-            {
-                var aprobado = chkBox.IsChecked != null && (bool)chkBox.IsChecked;
-                CambiarEstadoPedido(pedidoSeleccionado, aprobado);
-            }
-        }
-        
-        private void CambiarEstadoPedido(PedidoDTO pedidoSeleccionado, bool nuevoEstado)
-        {
-            BusyIndicatorPedidosTab.IsBusy = true;
-            var api = new ApiDistribuidoresClient();
-            api.CambiarEstadoPedidoCompleted+= new EventHandler<CambiarEstadoPedidoCompletedEventArgs>(CambiarEstadoPedidoCompleted);
-            api.CambiarEstadoPedidoAsync(pedidoSeleccionado.PedidoId, nuevoEstado);
-        }
-
-        private void CambiarEstadoPedidoCompleted(object sender, CambiarEstadoPedidoCompletedEventArgs e)
-        {
-            try
-            {
-                if (!e.Result)
-                {
-                    new ErrorWindow(new Exception("Ocurrio un error al cambiar el estado del Pedido")).Show();
-                }
-            }
-            catch (Exception err)
-            {
-                new ErrorWindow(err).Show();
-            }
-            finally
-            {
-                BusyIndicatorPedidosTab.IsBusy = false;
-            }
-        }
-        #endregion
-
-        private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            RefrescarArbolAtributosAsync();
-            RefrescarImagenesProductoAsync();
-            RefrescarVideosProductoAsync();
-        }
-
-        private Dictionary<ArchivoDTO, int> GenerarPlayList(ObservableCollection<ArchivoDTO> origen)
-        {
-            var playList = new Dictionary<ArchivoDTO, int>();
-            if (origen.Any())
-            {
-                foreach (var item in origen)
-                {
-                    item.Url = GenerarPrefijoUrlArchivo() + item.Url;
-                    playList.Add(item, 0);
-                }
-            }
-            return playList;
-        }
-
-        private string GenerarPrefijoUrlArchivo()
-        {
-            var host = HtmlPage.Document.DocumentUri.Host;
-            var port = HtmlPage.Document.DocumentUri.Port;
-            return "http://" + host + ":" + port;
         }
 
         private void IniciarSlideShowImagenesProducto()
@@ -283,55 +225,74 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             ImagenesProducto.Source = null;
         }
 
+        private void SetearSiguienteImagen()
+        {
+            var siguienteImagen = PlayListImagenesProducto.SiguienteElemento();
+            if (siguienteImagen != null)
+            {
+                ImagenesProducto.Source = new BitmapImage(new Uri(siguienteImagen.Url));
+            }
+        }
+        #endregion
+
+        #region videos producto
+        private void RefrescarVideosProductoAsync()
+        {
+            DetenerSlideShowVideosProducto();
+            var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
+            if (productoSeleccionado != null)
+            {
+                var api = new ApiDistribuidoresClient();
+                api.ListarVideosProductoCompleted += new EventHandler<ListarVideosProductoCompletedEventArgs>(ListarVideosProductoCompleted);
+                api.ListarVideosProductoAsync(productoSeleccionado.ProductoId);
+                BusyIndicatorPedidosTab.IsBusy = true;
+            }
+        }
+
+        private void ListarVideosProductoCompleted(object sender, ListarVideosProductoCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    PlayListVideosProducto = new PlayList();
+                    PlayListVideosProducto.CargarPlayList(e.Result);
+                    SetearSiguienteVideo();
+                    VideosProducto.AutoPlay = true;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
+
         private void DetenerSlideShowVideosProducto()
         {
             VideosProducto.Stop();
             VideosProducto.Source = null;
         }
 
-        private void SetearSiguienteImagen()
-        {
-            var siguienteImagen = ElementoPlayListMenosMostrado(PlayListImagenesProducto);
-            if (siguienteImagen != null)
-            {
-                PlayListImagenesProducto[siguienteImagen]++;
-                ImagenesProducto.Source = new BitmapImage(new Uri(siguienteImagen.Url));
-            }
-        }
-
         private void SetearSiguienteVideo()
         {
-            var siguienteVideo = ElementoPlayListMenosMostrado(PlayListVideosProducto);
+            var siguienteVideo = PlayListVideosProducto.SiguienteElemento();
             if (siguienteVideo != null)
             {
-                PlayListVideosProducto[siguienteVideo]++;
                 VideosProducto.Source = new Uri(siguienteVideo.Url);    
             }
-        }
-
-        private ArchivoDTO ElementoPlayListMenosMostrado(Dictionary<ArchivoDTO, int> playList)
-        {
-            int minVeces = Int16.MaxValue;
-            ArchivoDTO elementoMinVecesMostrado = null;
-            if (playList != null)
-            {
-                foreach (var par in playList)
-                {
-                    if (par.Value <= minVeces)
-                    {
-                        minVeces = par.Value;
-                        elementoMinVecesMostrado = par.Key;
-                    }
-                }
-            }
-            return elementoMinVecesMostrado;
         }
 
         private void VideosProducto_OnMediaEnded(object sender, RoutedEventArgs e)
         {
             SetearSiguienteVideo();
         }
+        #endregion
 
+        #region sesion
         private void BtnCerrarSesion_OnClick(object sender, RoutedEventArgs e)
         {
             DetenerSlideShowImagenesProducto();
@@ -339,6 +300,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             iControlador.CerrarSesion();
             Content = new MainPage();
         }
+        #endregion
 
     }
 }

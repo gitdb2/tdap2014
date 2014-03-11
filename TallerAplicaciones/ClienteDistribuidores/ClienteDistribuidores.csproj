@@ -86,7 +86,7 @@
     <Compile Include="Interfaces\IControlador.cs" />
     <Compile Include="Logica\Controlador.cs" />
     <Compile Include="Logica\LoginUsuario.cs" />
-    <Compile Include="Logica\Utils.cs" />
+    <Compile Include="Logica\PlayList.cs" />
     <Compile Include="Service References\ApiDistribuidores\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
