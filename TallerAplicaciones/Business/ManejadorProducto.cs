@@ -170,7 +170,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 var productoDb = db.Productos.Include("Archivos").SingleOrDefault(p => p.ProductoID == idProducto);
                 if (productoDb != null)
                 {
-                    if (productoDb.Archivos.OfType<Video>().Any())
+                    if (productoDb.Archivos.OfType<Foto>().Any())
                     {
                         return productoDb.Archivos.OfType<Foto>().ToList();
                     }
@@ -191,7 +191,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     {
                         return productoDb.Archivos.OfType<Video>().ToList();
                     }
-
                 }
             }
             return ret;
@@ -315,6 +314,44 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                 throw;
             }
+        }
+
+        public List<ArchivoDTO> ListarImagenesProductoDTO(int idProducto)
+        {
+            var resultado = new List<ArchivoDTO>();
+            var imagenes = GetFotosProducto(idProducto);
+            if (imagenes != null && imagenes.Any())
+            {
+                foreach (var imagen in imagenes)
+                {
+                    resultado.Add(new ArchivoDTO()
+                    {
+                        ArchivoId = imagen.ArchivoID,
+                        Nombre = imagen.Nombre,
+                        Url = imagen.Url
+                    });
+                }
+            }
+            return resultado;
+        }
+
+        public List<ArchivoDTO> ListarVideosProductoDTO(int idProducto)
+        {
+            var resultado = new List<ArchivoDTO>();
+            var videos = GetVideosProducto(idProducto);
+            if (videos != null && videos.Any())
+            {
+                foreach (var video in videos)
+                {
+                    resultado.Add(new ArchivoDTO()
+                    {
+                        ArchivoId = video.ArchivoID,
+                        Nombre = video.Nombre,
+                        Url = video.Url
+                    });
+                }
+            }
+            return resultado;
         }
 
     }

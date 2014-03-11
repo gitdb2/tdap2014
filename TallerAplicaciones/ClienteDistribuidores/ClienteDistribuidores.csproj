@@ -138,6 +138,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.PedidoDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

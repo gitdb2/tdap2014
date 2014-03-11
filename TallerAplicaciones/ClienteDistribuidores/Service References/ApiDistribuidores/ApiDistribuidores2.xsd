@@ -56,4 +56,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ValorDTO" nillable="true" type="tns:ValorDTO" />
+  <xs:complexType name="ArrayOfArchivoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArchivoDTO" nillable="true" type="tns:ArchivoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArchivoDTO" nillable="true" type="tns:ArrayOfArchivoDTO" />
+  <xs:complexType name="ArchivoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ArchivoId" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PathFileSystem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArchivoDTO" nillable="true" type="tns:ArchivoDTO" />
 </xs:schema>

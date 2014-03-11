@@ -259,6 +259,82 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ArchivoDTO", Namespace="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DT" +
+        "O")]
+    public partial class ArchivoDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int ArchivoIdField;
+        
+        private string NombreField;
+        
+        private string PathFileSystemField;
+        
+        private string UrlField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ArchivoId {
+            get {
+                return this.ArchivoIdField;
+            }
+            set {
+                if ((this.ArchivoIdField.Equals(value) != true)) {
+                    this.ArchivoIdField = value;
+                    this.RaisePropertyChanged("ArchivoId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nombre {
+            get {
+                return this.NombreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
+                    this.NombreField = value;
+                    this.RaisePropertyChanged("Nombre");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PathFileSystem {
+            get {
+                return this.PathFileSystemField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PathFileSystemField, value) != true)) {
+                    this.PathFileSystemField = value;
+                    this.RaisePropertyChanged("PathFileSystem");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Url {
+            get {
+                return this.UrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UrlField, value) != true)) {
+                    this.UrlField = value;
+                    this.RaisePropertyChanged("Url");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="", ConfigurationName="ApiDistribuidores.ApiDistribuidores")]
     public interface ApiDistribuidores {
@@ -287,6 +363,16 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         System.IAsyncResult BeginListarAtributosProducto(int idProducto, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ValorAtributoDTO> EndListarAtributosProducto(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:ApiDistribuidores/ListarImagenesProducto", ReplyAction="urn:ApiDistribuidores/ListarImagenesProductoResponse")]
+        System.IAsyncResult BeginListarImagenesProducto(int idProducto, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> EndListarImagenesProducto(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:ApiDistribuidores/ListarVideosProducto", ReplyAction="urn:ApiDistribuidores/ListarVideosProductoResponse")]
+        System.IAsyncResult BeginListarVideosProducto(int idProducto, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> EndListarVideosProducto(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -390,6 +476,44 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ListarImagenesProductoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ListarImagenesProductoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ListarVideosProductoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ListarVideosProductoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ApiDistribuidoresClient : System.ServiceModel.ClientBase<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores>, uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores {
         
         private BeginOperationDelegate onBeginLoginDelegate;
@@ -421,6 +545,18 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         private EndOperationDelegate onEndListarAtributosProductoDelegate;
         
         private System.Threading.SendOrPostCallback onListarAtributosProductoCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginListarImagenesProductoDelegate;
+        
+        private EndOperationDelegate onEndListarImagenesProductoDelegate;
+        
+        private System.Threading.SendOrPostCallback onListarImagenesProductoCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginListarVideosProductoDelegate;
+        
+        private EndOperationDelegate onEndListarVideosProductoDelegate;
+        
+        private System.Threading.SendOrPostCallback onListarVideosProductoCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -484,6 +620,10 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         public event System.EventHandler<ListarProductosCompletedEventArgs> ListarProductosCompleted;
         
         public event System.EventHandler<ListarAtributosProductoCompletedEventArgs> ListarAtributosProductoCompleted;
+        
+        public event System.EventHandler<ListarImagenesProductoCompletedEventArgs> ListarImagenesProductoCompleted;
+        
+        public event System.EventHandler<ListarVideosProductoCompletedEventArgs> ListarVideosProductoCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -721,6 +861,98 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
                         idProducto}, this.onEndListarAtributosProductoDelegate, this.onListarAtributosProductoCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.BeginListarImagenesProducto(int idProducto, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginListarImagenesProducto(idProducto, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.EndListarImagenesProducto(System.IAsyncResult result) {
+            return base.Channel.EndListarImagenesProducto(result);
+        }
+        
+        private System.IAsyncResult OnBeginListarImagenesProducto(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int idProducto = ((int)(inValues[0]));
+            return ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).BeginListarImagenesProducto(idProducto, callback, asyncState);
+        }
+        
+        private object[] OnEndListarImagenesProducto(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> retVal = ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).EndListarImagenesProducto(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnListarImagenesProductoCompleted(object state) {
+            if ((this.ListarImagenesProductoCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ListarImagenesProductoCompleted(this, new ListarImagenesProductoCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ListarImagenesProductoAsync(int idProducto) {
+            this.ListarImagenesProductoAsync(idProducto, null);
+        }
+        
+        public void ListarImagenesProductoAsync(int idProducto, object userState) {
+            if ((this.onBeginListarImagenesProductoDelegate == null)) {
+                this.onBeginListarImagenesProductoDelegate = new BeginOperationDelegate(this.OnBeginListarImagenesProducto);
+            }
+            if ((this.onEndListarImagenesProductoDelegate == null)) {
+                this.onEndListarImagenesProductoDelegate = new EndOperationDelegate(this.OnEndListarImagenesProducto);
+            }
+            if ((this.onListarImagenesProductoCompletedDelegate == null)) {
+                this.onListarImagenesProductoCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnListarImagenesProductoCompleted);
+            }
+            base.InvokeAsync(this.onBeginListarImagenesProductoDelegate, new object[] {
+                        idProducto}, this.onEndListarImagenesProductoDelegate, this.onListarImagenesProductoCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.BeginListarVideosProducto(int idProducto, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginListarVideosProducto(idProducto, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.EndListarVideosProducto(System.IAsyncResult result) {
+            return base.Channel.EndListarVideosProducto(result);
+        }
+        
+        private System.IAsyncResult OnBeginListarVideosProducto(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int idProducto = ((int)(inValues[0]));
+            return ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).BeginListarVideosProducto(idProducto, callback, asyncState);
+        }
+        
+        private object[] OnEndListarVideosProducto(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> retVal = ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).EndListarVideosProducto(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnListarVideosProductoCompleted(object state) {
+            if ((this.ListarVideosProductoCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ListarVideosProductoCompleted(this, new ListarVideosProductoCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ListarVideosProductoAsync(int idProducto) {
+            this.ListarVideosProductoAsync(idProducto, null);
+        }
+        
+        public void ListarVideosProductoAsync(int idProducto, object userState) {
+            if ((this.onBeginListarVideosProductoDelegate == null)) {
+                this.onBeginListarVideosProductoDelegate = new BeginOperationDelegate(this.OnBeginListarVideosProducto);
+            }
+            if ((this.onEndListarVideosProductoDelegate == null)) {
+                this.onEndListarVideosProductoDelegate = new EndOperationDelegate(this.OnEndListarVideosProducto);
+            }
+            if ((this.onListarVideosProductoCompletedDelegate == null)) {
+                this.onListarVideosProductoCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnListarVideosProductoCompleted);
+            }
+            base.InvokeAsync(this.onBeginListarVideosProductoDelegate, new object[] {
+                        idProducto}, this.onEndListarVideosProductoDelegate, this.onListarVideosProductoCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -860,6 +1092,32 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
             public System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ValorAtributoDTO> EndListarAtributosProducto(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ValorAtributoDTO> _result = ((System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ValorAtributoDTO>)(base.EndInvoke("ListarAtributosProducto", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginListarImagenesProducto(int idProducto, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = idProducto;
+                System.IAsyncResult _result = base.BeginInvoke("ListarImagenesProducto", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> EndListarImagenesProducto(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> _result = ((System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO>)(base.EndInvoke("ListarImagenesProducto", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginListarVideosProducto(int idProducto, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = idProducto;
+                System.IAsyncResult _result = base.BeginInvoke("ListarVideosProducto", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> EndListarVideosProducto(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO> _result = ((System.Collections.ObjectModel.ObservableCollection<uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO>)(base.EndInvoke("ListarVideosProducto", _args, result)));
                 return _result;
             }
         }

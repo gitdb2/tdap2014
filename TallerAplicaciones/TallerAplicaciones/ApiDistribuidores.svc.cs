@@ -56,17 +56,17 @@ namespace TallerAplicaciones
         }
 
         [OperationContract]
-        public List<string> ListarImagenesProducto(int idProducto)
+        public List<ArchivoDTO> ListarImagenesProducto(int idProducto)
         {
             IProducto iProducto = ManejadorProducto.GetInstance();
-            return iProducto.ListarImagenesProducto(idProducto);
+            return iProducto.ListarImagenesProductoDTO(idProducto);
         }
 
         [OperationContract]
-        public List<string> ListarVideosProducto(int idProducto)
+        public List<ArchivoDTO> ListarVideosProducto(int idProducto)
         {
             IProducto iProducto = ManejadorProducto.GetInstance();
-            return iProducto.ListarVideosProducto(idProducto);
+            return iProducto.ListarVideosProductoDTO(idProducto);
         }
 
     }

@@ -71,4 +71,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ListarImagenesProducto">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idProducto" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarImagenesProductoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DTO" minOccurs="0" name="ListarImagenesProductoResult" nillable="true" type="q4:ArrayOfArchivoDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarVideosProducto">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idProducto" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListarVideosProductoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DTO" minOccurs="0" name="ListarVideosProductoResult" nillable="true" type="q5:ArrayOfArchivoDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
