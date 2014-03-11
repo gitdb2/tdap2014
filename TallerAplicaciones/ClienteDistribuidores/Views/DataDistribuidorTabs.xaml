@@ -136,13 +136,17 @@
                         FontWeight="Bold"
                         BorderThickness="1"
                         Content="Atributos personalizados del Producto:"/>
-
-                    <StackPanel 
+                    
+                    <Grid
                         Grid.Row="3"
                         Grid.Column="0"
                         d:DataContext="{d:DesignInstance temp:ValorAtributoFake}">
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                        <StackPanel.Resources>
+                        <Grid.Resources>
 
                             <sdk:HierarchicalDataTemplate x:Name="SubTemplate">
                                 <TextBlock Text="{Binding Path=ValorString}" d:DataContext="{d:DesignInstance temp:Valor}">
@@ -155,19 +159,20 @@
                                 <TextBlock Text="{Binding Path=Nombre}" FontWeight="Bold"></TextBlock>
                             </sdk:HierarchicalDataTemplate>
 
-                        </StackPanel.Resources>
+                        </Grid.Resources>
 
-                        <sdk:TreeView 
+                        <sdk:TreeView
                             x:Name="TreeViewCamposVariables" 
-                            ItemsSource="{Binding}" 
+                            ItemsSource="{Binding}"
                             ItemTemplate="{StaticResource NameTemplate}" 
                             Margin="0,0,5,0"
-                            MinHeight="25"
+                            Height="Auto"
                             BorderBrush="Black"
-                            BorderThickness="1"/>
+                            BorderThickness="1"
+                            />
 
-                    </StackPanel>
-                    
+                    </Grid>
+
                     <sdk:Label 
                         Grid.Row="0"
                         Grid.Column="1"

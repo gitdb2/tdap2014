@@ -55,5 +55,19 @@ namespace TallerAplicaciones
             return iProducto.ListarAtributosProductoDTO(idProducto);
         }
 
+        [OperationContract]
+        public List<ArchivoDTO> ListarImagenesProducto(int idProducto)
+        {
+            IProducto iProducto = ManejadorProducto.GetInstance();
+            return iProducto.ListarImagenesProductoDTO(idProducto);
+        }
+
+        [OperationContract]
+        public List<ArchivoDTO> ListarVideosProducto(int idProducto)
+        {
+            IProducto iProducto = ManejadorProducto.GetInstance();
+            return iProducto.ListarVideosProductoDTO(idProducto);
+        }
+
     }
 }
