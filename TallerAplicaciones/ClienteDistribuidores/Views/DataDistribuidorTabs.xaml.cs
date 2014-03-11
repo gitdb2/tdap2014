@@ -130,6 +130,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         #region refrescar imagenes producto
         private void RefrescarImagenesProductoAsync()
         {
+            DetenerSlideShowImagenesProducto();
             var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
             if (productoSeleccionado != null)
             {
@@ -164,6 +165,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         #region refrescar videos producto
         private void RefrescarVideosProductoAsync()
         {
+            DetenerSlideShowVideosProducto();
             var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
             if (productoSeleccionado != null)
             {
@@ -278,6 +280,13 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         {
             if (_timer != null)
                 _timer.Stop();
+            ImagenesProducto.Source = null;
+        }
+
+        private void DetenerSlideShowVideosProducto()
+        {
+            VideosProducto.Stop();
+            VideosProducto.Source = null;
         }
 
         private void SetearSiguienteImagen()
