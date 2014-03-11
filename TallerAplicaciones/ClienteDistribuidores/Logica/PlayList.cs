@@ -19,7 +19,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.Logica
 
         public void CargarPlayList(ObservableCollection<ArchivoDTO> origen)
         {
-            if (origen.Any())
+            if (origen != null && origen.Any())
             {
                 foreach (var item in origen)
                 {
@@ -29,7 +29,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.Logica
             }
         }
 
-        private string GenerarPrefijoUrlArchivo()
+        private static string GenerarPrefijoUrlArchivo()
         {
             var host = HtmlPage.Document.DocumentUri.Host;
             var port = HtmlPage.Document.DocumentUri.Port;
