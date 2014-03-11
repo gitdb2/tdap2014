@@ -34,6 +34,13 @@
             @Html.EditorFor(model => model.Aprobado)
             @Html.ValidationMessageFor(model => model.Aprobado)
         </div>
+         <div class="editor-label">
+            @Html.LabelFor(model => model.Activo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Activo)
+            @Html.ValidationMessageFor(model => model.Activo)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.EjecutivoDeCuenta)
         </div>
@@ -42,8 +49,7 @@
             @Html.HiddenFor(model => model.EjecutivoId)
             @Html.ValidationMessageFor(model => model.EjecutivoId)
         </div>
-        
-      <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.ProductosDisponibles)
         </div>
         <div class="editor-field">
@@ -58,8 +64,6 @@
                                               Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
                                           }))
                     <input type="button" value="agregar" onclick="agregar()" />
-                 
-                    
                 </div>
             }
             else
@@ -67,11 +71,12 @@
                 @("No hay Productos en el sistema.")
             }
         </div>
-    <div class="display-label">
-        <label>Orden</label>
-    </div>
+        <div class="display-label">
+            <label>
+                Orden</label>
+        </div>
         <div class="display-field">
-            Orden actual:<br/>
+            Orden actual:<br />
             <table id="order">
                 <tr>
                     <th>
@@ -80,10 +85,9 @@
                     <th>
                         Codigo Producto
                     </th>
-                  
-                    <th>
+                   @* <th>
                         Producto Activo
-                    </th>
+                    </th>*@
                     <th>
                         Cantidad
                     </th>
@@ -98,21 +102,19 @@
                         </td>
                         <td>@item.Producto.Codigo
                         </td>
-                      <td>@(item.Producto.Activo ? "Si" : "No")
+                       @* <td>@(item.Activo ? "Si" : "No")
+                        </td>*@
+                        <td>
+                            <input type="text" id="cantidad_@item.CantidadProductoPedidoID" value="@item.Cantidad"/>
+                            &nbsp;<input type="button" onclick="modificarCantidad(@item.Pedido.PedidoID, @item.CantidadProductoPedidoID)" value='>'/>
                         </td>
-                        <td><input type="text" id="cantidad_@item.CantidadProductoPedidoID" value="@item.Cantidad"/>
-                             &nbsp;<input type="button" onclick="modificarCantidad(@item.Pedido.PedidoID, @item.CantidadProductoPedidoID)" value='>'/>
+                        <td>
+                            <input type="button" onclick="remover($(this), @item.Pedido.PedidoID, @item.CantidadProductoPedidoID)" value="Sacar"/>
                         </td>
-                        <td><input type="button" onclick="remover($(this))" value="Sacar"/></td>
                     </tr>
                 }
             </table>
         </div>
-        
-               
-        
-        
-
         @* <div class="editor-label">
             @Html.LabelFor(model => model.DistribuidorID)
         </div>
@@ -138,12 +140,7 @@
           
         
           
-        </div>*@
-        
-        
-        
-
-        @*<div class="editor-label">
+        </div>*@ @*<div class="editor-label">
             @Html.LabelFor(model => model.ProductosDisponibles)
         </div>
         <div class="editor-field">
@@ -171,7 +168,7 @@
         </div>*@
         <p>
             @Html.HiddenFor(model => model.DistribuidoresDisponibles)
-            @Html.HiddenFor(model => model.Activo)
+          
             <input type="submit" value="Crear Pedido" />
         </p>
         <p>
@@ -184,6 +181,12 @@
 <div>
     @Html.ActionLink("Back to list", "List")
 </div>
+<style>
+    #order td, #order th
+    {
+        border: 1px solid #000000 !important;
+    }
+</style>
 @section Scripts {
     <script>
         function agregar() {
@@ -230,15 +233,12 @@
                 cantidad: valor
             };
 
-            $.post("ModificarPedidoCantidadProducto", data, function(response) {
-                if(response.Ok)
-                {
+            $.post("ModificarPedidoCantidadProducto", data, function (response) {
+                if (response.Ok) {
                     $valueInput.val(response.Cantidad);
-                }else
-                {
+                } else {
                     alert(response.Message);
                 }
-
                 //{"IdCantidadProductoPedido":1,"Cantidad":2,"Borrado":false,"Ok":true,"Message":null}
             }, "json");
         };
@@ -246,11 +246,26 @@
         //  http: //localhost:1770/Pedido/ModificarPedidoCantidadProducto?idPedido=1&idCantidadProductoPedido=1&delete=false&cantidad=2
 
 
-    
 
 
-        function eliminar($elem){
-            $elem.parent().remove();
+
+        function remover($elem, idPedido, idCantidadPedido) {
+
+            var data = {
+                idPedido: idPedido,
+                idCantidadProductoPedido: idCantidadPedido,
+                borrar: true,
+                cantidad: -1
+            };
+
+            $.post("ModificarPedidoCantidadProducto", data, function (response) {
+                if (response.Ok) {
+                    $elem.parent().parent().remove();
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
+
         }
     </script>
     @Scripts.Render("~/bundles/jqueryval")

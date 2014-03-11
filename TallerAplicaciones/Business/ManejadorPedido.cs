@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using System.Transactions;
 using uy.edu.ort.taller.aplicaciones.dominio.DTO;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
@@ -161,33 +162,65 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             using (var db = new Persistencia())
             {
-
-                var pepe = db.CantidadProductosPedido.ToList();
-
-                int cantidadDeItems = db.Pedidos.Where(p => p.PedidoID == idPedido)
-                    .Select(p => p.CantidadProductoPedidoList).Count();
-
-                if (cantidadDeItems < 2)
+                using (var scope = new TransactionScope())
                 {
-                    throw new CustomException("No se puede eliminar el item ya que el pedido debe tener al menos un elemento");
-                }
-                var cantPedidoProd = (from cpp in db.CantidadProductosPedido
-                                      where cpp.Pedido.PedidoID == idPedido
-                                         && cpp.CantidadProductoPedidoID == idCantidadProductoPedido
-                                      select cpp).SingleOrDefault();
 
-                if (cantPedidoProd != null)
-                {
-                    cantPedidoProd.Activo = false;
-                    db.SaveChanges();
+                    var pedido = db.Pedidos
+                        .Include(p => p.CantidadProductoPedidoList)
+                        .SingleOrDefault(p => p.PedidoID == idPedido && p.Activo == true);
 
-                }
-                else
-                {
-                    throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" + idCantidadProductoPedido);
-                }
-                return true;
+                    if (pedido == null)
+                    {
+                        throw new CustomException("No se pudo encontrar el pedido con id=" + idPedido)
+                        {
+                            Key = "PedidoID"
+                        };
+                    }
 
+                    int cantidadDeItems = pedido.CantidadProductoPedidoList.Count;
+
+                    if (cantidadDeItems < 2)
+                    {
+                        throw new CustomException(
+                            "No se puede eliminar el item ya que el pedido debe tener al menos un elemento");
+                    }
+
+                   
+                    var cantPedidoAEliminar =  db.CantidadProductosPedido
+                                            .Include(p=>p.Pedido)
+                                            .Include(p => p.Producto)
+                                            .SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
+
+                
+                  
+
+                    //var cantPedidoProd = (from cpp in db.CantidadProductosPedido
+                    //    where cpp.Pedido.PedidoID == idPedido
+                    //          && cpp.CantidadProductoPedidoID == idCantidadProductoPedido
+                    //    select cpp).SingleOrDefault();
+
+                    if (cantPedidoAEliminar != null)
+                    {
+
+                        cantPedidoAEliminar.Pedido = null;
+                        cantPedidoAEliminar.Producto = null;
+
+                        pedido.CantidadProductoPedidoList.Remove(cantPedidoAEliminar);
+
+                        db.CantidadProductosPedido.Remove(cantPedidoAEliminar);
+                        
+                        db.SaveChanges();
+                        scope.Complete();
+
+                    }
+                    else
+                    {
+                        throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" +
+                                                  idCantidadProductoPedido);
+                    }
+                   
+                }
+                return true;   
             }
         }
 
