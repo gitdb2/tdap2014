@@ -157,14 +157,15 @@
 
                         </StackPanel.Resources>
 
-                        <sdk:TreeView 
+                        <sdk:TreeView
                             x:Name="TreeViewCamposVariables" 
-                            ItemsSource="{Binding}" 
+                            ItemsSource="{Binding}"
                             ItemTemplate="{StaticResource NameTemplate}" 
                             Margin="0,0,5,0"
                             MinHeight="25"
                             BorderBrush="Black"
-                            BorderThickness="1"/>
+                            BorderThickness="1"
+                            />
 
                     </StackPanel>
                     

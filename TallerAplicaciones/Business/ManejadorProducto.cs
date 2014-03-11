@@ -106,16 +106,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             ValorAtributoDTO va3 = new ValorAtributoDTO() { Nombre = "atributo2" };
 
             List<ValorDTO> v1 = new List<ValorDTO>();
-            v1.Add(new ValorDTO(){ValorString = "aaaaa"});
+            v1.Add(new ValorDTO() { ValorString = "aaaaa" });
             v1.Add(new ValorDTO() { ValorString = "bbbbb" });
+            v1.Add(new ValorDTO() { ValorString = "ggggg" });
+            v1.Add(new ValorDTO() { ValorString = "hhhhh" });
 
             List<ValorDTO> v2 = new List<ValorDTO>();
             v2.Add(new ValorDTO() { ValorString = "ccccc" });
             v2.Add(new ValorDTO() { ValorString = "ddddd" });
+            v2.Add(new ValorDTO() { ValorString = "xxxxx" });
+            v2.Add(new ValorDTO() { ValorString = "yyyyy" });
 
             List<ValorDTO> v3 = new List<ValorDTO>();
             v3.Add(new ValorDTO() { ValorString = "eeeee" });
             v3.Add(new ValorDTO() { ValorString = "fffff" });
+            v3.Add(new ValorDTO() { ValorString = "vvvvv" });
+            v3.Add(new ValorDTO() { ValorString = "ttttt" });
 
             va1.Valores = v1;
             va2.Valores = v2;
