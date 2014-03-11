@@ -9,11 +9,14 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-// ReSharper disable once CheckNamespace
-namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
+namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.Logica
 {
-    public class Utils
+    public class PlayList
     {
+
+
+
+
 
     }
 }
