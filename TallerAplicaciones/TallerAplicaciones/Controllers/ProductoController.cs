@@ -16,7 +16,7 @@ namespace TallerAplicaciones.Controllers
     {
         //
         // GET: /Producto/
-        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             return View();
