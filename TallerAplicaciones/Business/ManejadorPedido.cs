@@ -15,14 +15,18 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
     public class ManejadorPedido : IPedido
     {
         #region singleton
+
         private static ManejadorPedido instance = new ManejadorPedido();
 
-        private ManejadorPedido() { }
+        private ManejadorPedido()
+        {
+        }
 
         public static ManejadorPedido GetInstance()
         {
             return instance;
         }
+
         #endregion
 
         public List<Pedido> ListarPedidos()
@@ -42,7 +46,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
 
         public void Alta(Pedido pedido, int idDistribuidor, int idEjecutivo,
-                                     List<int> productos, List<int> cantidades)
+            List<int> productos, List<int> cantidades)
         {
             using (var db = new Persistencia())
             {
@@ -107,7 +111,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
                 else
                 {
-                    throw new CustomException("No se pudo elimianr el pedido") { Key = "PedidoID" };
+                    throw new CustomException("No se pudo elimianr el pedido") {Key = "PedidoID"};
                 }
             }
         }
@@ -118,12 +122,12 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
                 List<Pedido> aDevolver = db.Pedidos
-                .Where(p0 => p0.Distribuidor.Usuario.Login == loginDistribuidor && p0.Activo)
-                .Include(p => p.Ejecutivo)
-                .Include(p2 => p2.Ejecutivo.Usuario)
-                .Include(p3 => p3.Distribuidor)
-                .Include(p4 => p4.Distribuidor.Usuario)
-                .ToList();
+                    .Where(p0 => p0.Distribuidor.Usuario.Login == loginDistribuidor && p0.Activo)
+                    .Include(p => p.Ejecutivo)
+                    .Include(p2 => p2.Ejecutivo.Usuario)
+                    .Include(p3 => p3.Distribuidor)
+                    .Include(p4 => p4.Distribuidor.Usuario)
+                    .ToList();
                 if (aDevolver.Any())
                 {
                     foreach (var pedido in aDevolver)
@@ -185,14 +189,14 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                             "No se puede eliminar el item ya que el pedido debe tener al menos un elemento");
                     }
 
-                   
-                    var cantPedidoAEliminar =  db.CantidadProductosPedido
-                                            .Include(p=>p.Pedido)
-                                            .Include(p => p.Producto)
-                                            .SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
 
-                
-                  
+                    var cantPedidoAEliminar = db.CantidadProductosPedido
+                        .Include(p => p.Pedido)
+                        .Include(p => p.Producto)
+                        .SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
+
+
+
 
                     //var cantPedidoProd = (from cpp in db.CantidadProductosPedido
                     //    where cpp.Pedido.PedidoID == idPedido
@@ -208,7 +212,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         pedido.CantidadProductoPedidoList.Remove(cantPedidoAEliminar);
 
                         db.CantidadProductosPedido.Remove(cantPedidoAEliminar);
-                        
+
                         db.SaveChanges();
                         scope.Complete();
 
@@ -218,9 +222,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" +
                                                   idCantidadProductoPedido);
                     }
-                   
+
                 }
-                return true;   
+                return true;
             }
         }
 
@@ -230,7 +234,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
 
-                var cantPedidoProd = db.CantidadProductosPedido.SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
+                var cantPedidoProd =
+                    db.CantidadProductosPedido.SingleOrDefault(
+                        p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
 
                 //var cantPedidoProd = (from cpp in db.CantidadProductosPedido
                 //                      where cpp.Pedido.PedidoID == idPedido
@@ -244,11 +250,100 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
                 else
                 {
-                    throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" + idCantidadProductoPedido);
+                    throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" +
+                                              idCantidadProductoPedido);
                 }
                 return true;
             }
         }
 
+
+        public int AgregarCantidadPedido(int idPedido, int idProducto, int cantidad)
+        {
+            int ret = -1;
+
+            if (cantidad <= 0) throw new CustomException("Cantidad debe ser mayor que cero");
+            using (var db = new Persistencia())
+            {
+
+                try
+                {
+
+                    Producto producto = db.Productos.SingleOrDefault(p => p.ProductoID == idProducto && p.Activo == true);
+                    //si el producto no existe o no esta activo error
+                    if (producto == null)
+                        throw new CustomException("El producto id=" + idProducto +
+                                                  " no existe en la base de datos o no esta activo") {Key = "addItem"};
+
+                    Pedido pedido =
+                        db.Pedidos.Include(p => p.CantidadProductoPedidoList)
+                            .SingleOrDefault(p => p.PedidoID == idPedido && p.Activo == true);
+                    //si el pedido no existe o no esta activoerror
+                    if (pedido == null)
+                        throw new CustomException("El pedido id=" + idPedido +
+                                                  " no existe en la base de datos o no esta activo") {Key = "addItem"};
+
+                    //si el producto ya esta en algun item de la orden no dejo agregarlo de nuevo
+                    bool yaAgregado = db.CantidadProductosPedido
+                        .Any(c => c.Pedido.PedidoID == idPedido && c.Producto.ProductoID == idProducto);
+                    if (yaAgregado)
+                        throw new CustomException("El producto id=" + idProducto + " ya esta agregado en el pedido id =" +
+                                                  idPedido) {Key = "addItem"};
+
+
+                    CantidadProductoPedido newCantidadProductoPedido = new CantidadProductoPedido()
+                    {
+                        Activo = true,
+                        Cantidad = cantidad,
+                        Producto = producto,
+                        Pedido = pedido
+                    };
+                    pedido.CantidadProductoPedidoList.Add(newCantidadProductoPedido);
+
+                    db.SaveChanges();
+
+                    ret = newCantidadProductoPedido.CantidadProductoPedidoID;
+                }
+                catch (CustomException)
+                {
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    throw new CustomException("Error con AgregarCantidadPedido", e) {Key = "generalError"};
+                }
+            }
+            return ret;
+        }
+
+        public void Modificar(Pedido newPedido)
+        {
+            using (var db = new Persistencia())
+            {
+
+                try
+                {
+                    Pedido pedido = db.Pedidos.SingleOrDefault(p => p.PedidoID == newPedido.PedidoID);
+                    //si el pedido no existe o no esta activoerror
+                    if (pedido == null)
+                        throw new CustomException("El pedido id=" + newPedido.PedidoID +
+                                                  " no existe en la base de datos") {Key = "PedidoID"};
+                    pedido.Activo = newPedido.Activo;
+                    pedido.Aprobado = newPedido.Aprobado;
+                    pedido.Descripcion = newPedido.Descripcion;
+                    pedido.Fecha = newPedido.Fecha;
+                    db.SaveChanges();
+
+                }
+                catch (CustomException)
+                {
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    throw new CustomException("Error en Modificar", e) {Key = "generalError"};
+                }
+            }
+        }
     }
 }
