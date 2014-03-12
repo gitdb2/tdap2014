@@ -268,6 +268,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\notify.min.js" />
     <Content Include="Silverlight.js" />
     <Content Include="Views\Pedido\Delete.cshtml" />
     <Content Include="Web.config">
@@ -406,7 +407,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>1770</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

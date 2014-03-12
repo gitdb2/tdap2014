@@ -24,7 +24,9 @@
             @Html.LabelFor(model => model.Fecha)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Fecha)
+            @* @Html.EditorFor(model => model.Fecha)*@
+            @Html.TextBoxFor(model => model.Fecha, new { @Value = Model.Fecha.ToString("dd/MM/yyyy"), @class = "datepicker" })
+  
             @Html.ValidationMessageFor(model => model.Fecha)
         </div>
         <div class="editor-label">
@@ -34,7 +36,7 @@
             @Html.EditorFor(model => model.Aprobado)
             @Html.ValidationMessageFor(model => model.Aprobado)
         </div>
-         <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.Activo)
         </div>
         <div class="editor-field">
@@ -49,21 +51,34 @@
             @Html.HiddenFor(model => model.EjecutivoId)
             @Html.ValidationMessageFor(model => model.EjecutivoId)
         </div>
+        <p>
+            @Html.HiddenFor(model => model.PedidoID)
+            @Html.ValidationMessageFor(model => model.PedidoID)
+            <input type="submit" value="Modificar Datos Del pedido" />
+        </p>
+        <hr />
         <div class="editor-label">
-            @Html.LabelFor(model => model.ProductosDisponibles)
+            <label>
+                Orden (Las modificaciones se almacenan en el momento de realizarlas)</label>
+            <br/>
+
+            <label>Agregar Productos al pedido</label>
         </div>
         <div class="editor-field">
             @if (Model.ProductosDisponibles != null && Model.ProductosDisponibles.Any())
             {
 
                 <div>
-                    @Html.DropDownListFor(m => m.ProductosDisponibles,
-                                          Model.ProductosDisponibles.Select(item => new SelectListItem
-                                          {
-                                              Value = item.ProductoID.ToString(),
-                                              Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
-                                          }))
-                    <input type="button" value="agregar" onclick="agregar()" />
+                    @Html.DropDownList("prodDispo",
+                        Model.ProductosDisponibles.Where(p => p.Activo == true).Select(item => new SelectListItem
+                        {
+                            Value = item.ProductoID.ToString(),
+                            Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
+                        }))
+                    <input type="text" id="cantidadToAdd" value="1" />
+                    <input type="button" value="Agregar" onclick="agregar()" />
+                </div>
+                <div id="agregarContainer">
                 </div>
             }
             else
@@ -71,12 +86,13 @@
                 @("No hay Productos en el sistema.")
             }
         </div>
+     
         <div class="display-label">
-            <label>
-                Orden</label>
+            <label>Orden actual:</label>
+           
         </div>
         <div class="display-field">
-            Orden actual:<br />
+          
             <table id="order">
                 <tr>
                     <th>
@@ -85,9 +101,6 @@
                     <th>
                         Codigo Producto
                     </th>
-                   @* <th>
-                        Producto Activo
-                    </th>*@
                     <th>
                         Cantidad
                     </th>
@@ -95,87 +108,29 @@
                         Eliminar?
                     </th>
                 </tr>
-                @foreach (var item in Model.Pedido.CantidadProductoPedidoList)
+                @if (Model.Pedido != null)
                 {
-                    <tr class="order-line">
-                        <td>@item.Producto.Nombre
-                        </td>
-                        <td>@item.Producto.Codigo
-                        </td>
-                       @* <td>@(item.Activo ? "Si" : "No")
-                        </td>*@
-                        <td>
-                            <input type="text" id="cantidad_@item.CantidadProductoPedidoID" value="@item.Cantidad"/>
-                            &nbsp;<input type="button" onclick="modificarCantidad(@item.Pedido.PedidoID, @item.CantidadProductoPedidoID)" value='>'/>
-                        </td>
-                        <td>
-                            <input type="button" onclick="remover($(this), @item.Pedido.PedidoID, @item.CantidadProductoPedidoID)" value="Sacar"/>
-                        </td>
-                    </tr>
+                     foreach (var item in Model.Pedido.CantidadProductoPedidoList)
+                     {
+                         <tr class="order-line">
+                             <td>@item.Producto.Nombre
+                             </td>
+                             <td>@item.Producto.Codigo
+                             </td>
+                             <td>
+                                 <input type="hidden" name="Productos" value="@item.Producto.ProductoID"/>
+                                 <input type="text" class="Cantidades" id="cantidad_@item.CantidadProductoPedidoID" value="@item.Cantidad"/>
+                                 &nbsp;
+                                 <input type="button" onclick=" modificarCantidad(@item.Pedido.PedidoID, @item.CantidadProductoPedidoID) " value='>'/>
+                             </td>
+                             <td>
+                                 <input type="button" onclick=" remover($(this), @item.Pedido.PedidoID, @item.CantidadProductoPedidoID) " value="Sacar"/>
+                             </td>
+                         </tr>
+                     }
                 }
             </table>
         </div>
-        @* <div class="editor-label">
-            @Html.LabelFor(model => model.DistribuidorID)
-        </div>
-        <div class="editor-field">
-            @Html.DisplayFor(model => model.Pedido.Distribuidor.Nombre)
-             @if (Model.DistribuidoresDisponibles != null && Model.DistribuidoresDisponibles.Any())
-            {
-                @Html.DropDownListFor(m => m.DistribuidorID,
-                                     Model.DistribuidoresDisponibles.Select(item => new SelectListItem
-                                       {
-                                           Value = item.PerfilUsuarioID.ToString(),
-                                           Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")",
-                                           Selected = item.PerfilUsuarioID == Model.DistribuidorID
-
-                                       }))
-              
-               
-            }
-            else
-            {
-                @("No hay Distribuidores en el sistema.")
-            }
-          
-        
-          
-        </div>*@ @*<div class="editor-label">
-            @Html.LabelFor(model => model.ProductosDisponibles)
-        </div>
-        <div class="editor-field">
-            @if (Model.ProductosDisponibles != null && Model.ProductosDisponibles.Any())
-            {
-
-                <div>
-                    @Html.DropDownListFor(m => m.ProductosDisponibles,
-                                          Model.ProductosDisponibles.Select(item => new SelectListItem
-                                          {
-                                              Value = item.ProductoID.ToString(),
-                                              Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
-                                          }))
-                    <input type="button" value="agregar" onclick="agregar()" />
-                 
-                    
-                </div>
-                <div id="orden">
-                </div>
-            }
-            else
-            {
-                @("No hay Productos en el sistema.")
-            }
-        </div>*@
-        <p>
-            @Html.HiddenFor(model => model.DistribuidoresDisponibles)
-          
-            <input type="submit" value="Crear Pedido" />
-        </p>
-        <p>
-            @Html.HiddenFor(model => model.PedidoID)
-            @Html.ValidationMessageFor(model => model.PedidoID)
-            <input type="submit" value="Modificar" />
-        </p>
     </fieldset>
 }
 <div>
@@ -188,41 +143,91 @@
     }
 </style>
 @section Scripts {
-    <script>
+
+    <script type="text/javascript">
         function agregar() {
 
-            var $select = $("#ProductosDisponibles");
-            var $container = $("#orden");
+            var $select = $("#prodDispo");
+            var $container = $("#order");
+            var $existe = $container.find("input[name='Productos']").filter("input[value='" + $select.val() + "']");
+            var $cantidadToAdd = $("#cantidadToAdd");
 
-            var existe = $container.find("input[name='Productos']").filter("input[value='" + $select.val() + "']");
-
-            if (existe.length == 0) {
-                var $lineaNueve = $(
-                    "<div class=\"order-line\">" +
-                    "<input name=\"Productos\"  type=\"hidden\" value=\"" + $select.val() + "\" />" +
-                    "<label>" + $select.find('option:selected').text() + "</label>&nbsp;" +
-                    "<input name=\"Cantidades\" value = \"1\"/> &nbsp;" +
-                    "<input type=\"button\" onclick=\"eliminar($(this))\" value=\"Remover\"/>" +
-                    "</div>"
-                );
-                $container.append($lineaNueve);
-            } else {
-                existe.siblings().filter("input[name='Cantidades']").focus();
-                alert("ya esta agragado, buscalo");
+            if (!$.isNumeric($cantidadToAdd.val())) {
+               // alert("Debe ingresar un numero");
+                $cantidadToAdd.focus();
+                $cantidadToAdd.notify("Debe ingresar un número", "error");
+                return false;
             }
+
+            var valor = parseInt($cantidadToAdd.val());
+            if (valor < 1) {
+              //  alert("El valor ingresado debe ser mayor o igual a 1");
+                $cantidadToAdd.notify("El valor ingresado debe ser mayor o igual a 1", "error");
+                $cantidadToAdd.focus();
+                return false;
+            }
+
+            
+            if ($existe.length == 0) {
+              
+                var data = {
+                    idPedido: $("#PedidoID").val(),
+                    idProducto: $select.val(),
+                    cantidad: valor
+                };
+
+                $.post("AgregarItemPedidoCantidadProducto", data, function (response) {
+                    if (response.Ok) {
+
+                        var idProducto = response.IdProducto;
+                        var idItem = response.IdCantidadProductoPedido;
+                        var cantidad = response.Cantidad;
+                        var idPedido = response.IdPedido;
+                        var nombreProducto = response.NombreProducto;
+                        var codigoProducto = response.CodigoProducto;
+                        var $item = $(
+                            "<tr class=\"order-line\">"
+                            +"	<td>"+nombreProducto+"</td>"
+                            +"	<td>"+codigoProducto+"</td>"
+                            +"	<td>"
+                            +"		<input type=\"hidden\" name=\"Productos\" value=\""+idProducto+"\"/>"
+                            + "		<input type=\"text\" class=\"Cantidades\" id=\"cantidad_" + idItem + "\" value=\"" + cantidad + "\"/>"
+                            +"		&nbsp;"
+                            +"		<input type=\"button\" onclick=\"modificarCantidad("+idPedido+", "+idItem+")\" value='>'/>"
+                            +"	</td>"
+                            +"	<td>"
+                            +"		<input type=\"button\" onclick=\"remover($(this), "+idPedido+", "+idItem+")\" value=\"Sacar\"/>"
+                            +"	</td>"
+                            +"</tr>");
+
+                        $container.append($item);
+                        $cantidadToAdd.val("1");
+                    } else {
+                        $cantidadToAdd.notify(response.Message, "error");
+                        //alert(response.Message);
+                    }
+                }, "json");
+            } else {
+                $existe.siblings().filter(".Cantidades").focus().notify("Ya esta agragado", "error");
+             
+                //alert("ya esta agragado, buscalo");
+                return false;
+            }
+            return true;
         }
 
         function modificarCantidad(idPedido, idCantidadPedido) {
 
             var $valueInput = $("#cantidad_" + idCantidadPedido);
             if (!$.isNumeric($valueInput.val())) {
-                alert("El valor ingresado no es numerico");
+              //  alert("El valor ingresado no es numerico");
+                $valueInput.notify("El valor ingresado no es numerico", "error");
                 return;
             }
 
             var valor = parseInt($valueInput.val());
             if (valor < 1) {
-                alert("El valor ingresado debe ser mayor o igual a 1");
+                $valueInput.notify("El valor ingresado debe ser mayor o igual a 1", "error");
                 return;
             }
 
@@ -236,18 +241,12 @@
             $.post("ModificarPedidoCantidadProducto", data, function (response) {
                 if (response.Ok) {
                     $valueInput.val(response.Cantidad);
+                    $valueInput.notify("Valor modificado con Exito", "success");
                 } else {
-                    alert(response.Message);
+                    $valueInput.notify(response.Message, "error");
                 }
-                //{"IdCantidadProductoPedido":1,"Cantidad":2,"Borrado":false,"Ok":true,"Message":null}
             }, "json");
         };
-
-        //  http: //localhost:1770/Pedido/ModificarPedidoCantidadProducto?idPedido=1&idCantidadProductoPedido=1&delete=false&cantidad=2
-
-
-
-
 
         function remover($elem, idPedido, idCantidadPedido) {
 
@@ -267,6 +266,18 @@
             }, "json");
 
         }
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+              
+            });
+        });
+
     </script>
+    <script src="/Scripts/notify.min.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/jqueryval")
+   
+    
 }

@@ -3,6 +3,9 @@
     ViewBag.Title = "Create Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style type="text/css">.datepicker { }</style>
+<link rel="stylesheet" href="<%= Url.Content("~/Styles/jquery.ui.all.css") %>"  type="text/css" />
+
 <h2>
     Create Pedido</h2>
 @using (Html.BeginForm())
@@ -22,8 +25,9 @@
             @Html.LabelFor(model => model.Fecha)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Fecha)
-            @Html.ValidationMessageFor(model => model.Fecha)
+            @*@Html.EditorFor(model => model.Fecha)*@
+            @Html.TextBoxFor(model => model.Fecha, new { @Value = Model.Fecha.ToString("dd/MM/yyyy"), @class = "datepicker" })
+             @Html.ValidationMessageFor(model => model.Fecha)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Aprobado)
@@ -47,7 +51,7 @@
             @if (Model.DistribuidoresDisponibles != null && Model.DistribuidoresDisponibles.Any())
             {
                 @Html.DropDownListFor(m => m.DistribuidorID,
-                                     Model.DistribuidoresDisponibles.Select(item => new SelectListItem
+                                     Model.DistribuidoresDisponibles.Where(d=>d.Activo).Select(item => new SelectListItem
                                        {
                                            Value = item.PerfilUsuarioID.ToString(),
                                            Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")"
@@ -72,7 +76,7 @@
 
                 <div>
                     @Html.DropDownListFor(m => m.ProductosDisponibles,
-                                          Model.ProductosDisponibles.Select(item => new SelectListItem
+                                           Model.ProductosDisponibles.Where(d => d.Activo).Select(item => new SelectListItem
                                           {
                                               Value = item.ProductoID.ToString(),
                                               Text = item.Nombre.ToString() + "(" + item.Codigo + ")",
@@ -132,6 +136,15 @@
             $elem.parent().remove();
 
         }
+
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+
+            });
+        });
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

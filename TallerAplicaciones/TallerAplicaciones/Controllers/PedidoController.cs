@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -51,6 +52,7 @@ namespace TallerAplicaciones.Controllers
                 EjecutivoId = eject.PerfilUsuarioID,
                 DistribuidoresDisponibles = distribuidores,
                 ProductosDisponibles = productosDisponibles,
+                Fecha = DateTime.Now,
                 Aprobado = false,
                 Activo = true
 
@@ -124,14 +126,7 @@ namespace TallerAplicaciones.Controllers
         }
 
 
-        //
-        // GET: /Pedido/Edit/5
-
-        public ActionResult Edit(int idPedido)
-        {
-
-            return View(GetPedidoModelFromDB(idPedido));
-        }
+      
 
         private PedidoEditModel GetPedidoModelFromDB(int idPedido)
         {
@@ -154,26 +149,74 @@ namespace TallerAplicaciones.Controllers
                 Pedido = pedido,
             };
 
-            ret.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
-                .GetDistribuidoresConEmpresasDeEjecutivo(ret.EjecutivoId);
-            ret.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
-
+            LoadDistribuidoresYProductos(ret);
             return ret;
         }
 
-
-
-        public class ModificarCantidadPedidoJson
+        protected void LoadDistribuidoresYProductos(PedidoEditModel model)
         {
-            public int IdCantidadProductoPedido { get; set; }
-            public int Cantidad { get; set; }
-            public bool Borrado { get; set; }
+            model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
+              .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoId);
+            model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
+
+        }
+
+
+        public class BaseJson
+        {
             public bool Ok { get; set; }
             public string Message { get; set; }
         }
+        public class ModificarCantidadPedidoJson:BaseJson
+        {
+            public int IdPedido { get; set; }
+            public int IdCantidadProductoPedido { get; set; }
+            public int Cantidad { get; set; }
+            public bool Borrado { get; set; }
+        }
+
+        public class AddCantidadPedidoJson : ModificarCantidadPedidoJson
+        {
+         
+            public int IdProducto { get; set; }
+            public string NombreProducto { get; set; }
+            public string CodigoProducto { get; set; }
+        }
+
+
 
         [HttpPost]
-      //   [HttpGet]
+        public JsonResult AgregarItemPedidoCantidadProducto(int idPedido, int idProducto, int cantidad)
+        {
+            var ret = new AddCantidadPedidoJson()
+            {
+                IdPedido = idPedido,
+                IdProducto = idProducto,
+                Ok = false,
+                Message = "Inicializacion"
+            };
+            try
+            {
+                //retorna el id del pedido resultado de la insersion en la base de datos
+                int idCantidadProductoPedido = ManejadorPedido.GetInstance().AgregarCantidadPedido(idPedido, idProducto, cantidad);
+
+                var prod = ManejadorProducto.GetInstance().GetProducto(idProducto);
+
+                ret.CodigoProducto = prod.Codigo;
+                ret.NombreProducto = prod.Nombre;
+                ret.IdCantidadProductoPedido = idCantidadProductoPedido;
+                ret.Cantidad = cantidad;
+                ret.Ok = true;
+            }
+            catch (Exception e)
+            {
+                ret.Message = e.Message;
+                ret.Ok = false;
+            }
+            return Json(ret, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult ModificarPedidoCantidadProducto(int idPedido, int idCantidadProductoPedido,
             bool borrar, int cantidad)
         {
@@ -181,6 +224,7 @@ namespace TallerAplicaciones.Controllers
             var ret = new ModificarCantidadPedidoJson()
             {
                 IdCantidadProductoPedido = idCantidadProductoPedido,
+                IdPedido = idPedido,
                 Message = ""
             };
 
@@ -223,17 +267,25 @@ namespace TallerAplicaciones.Controllers
             return Json(ret,  JsonRequestBehavior.AllowGet);
         }
 
+        //
+        // GET: /Pedido/Edit/5
+        public ActionResult Edit(int idPedido)
+        {
+
+            return View(GetPedidoModelFromDB(idPedido));
+        }
 
         //
         // POST: /Pedido/Edit
-
         [HttpPost]
         public ActionResult Edit(PedidoEditModel model)
         {
 
-            if (!ModelState.IsValid) return View(model);
-
-
+            if (!ModelState.IsValid)
+            {
+                LoadDistribuidoresYProductos(model);
+                return View(model);
+            }
 
             try
             {
@@ -247,14 +299,11 @@ namespace TallerAplicaciones.Controllers
                     PedidoID = model.PedidoID,
                 };
 
-                int idEj = model.EjecutivoId;
-                int idDistrib = model.DistribuidorID;
-                List<int> idprods = model.Productos;
-                List<int> cantidades = model.Cantidades;
+              
 
 
-                throw new NotImplementedException();
-                //ManejadorPedido.GetInstance().Modificar(pedido, Otros Params);
+               
+                ManejadorPedido.GetInstance().Modificar(pedido);
 
 
                 return RedirectToAction("List");
