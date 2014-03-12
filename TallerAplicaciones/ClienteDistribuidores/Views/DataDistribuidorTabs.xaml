@@ -55,17 +55,29 @@
             <sdk:TabItem Header="Pedidos" x:Name="TabItemPedidos">
 
                 <Grid>
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
+                    <sdk:Label 
+                        MinHeight="25" 
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        FontWeight="Bold"
+                        Margin="0,5" 
+                        Content="Lista de Pedidos del distribuidor:"/>
+
                     <sdk:DataGrid
                         Grid.Column="0"
-                        Grid.Row="0" 
+                        Grid.Row="1"
+                        BorderBrush="Black"
                         x:Name="DataGridPedidos"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
@@ -93,9 +105,20 @@
                         </sdk:DataGrid.Columns>
                     </sdk:DataGrid>
 
+                    <sdk:Label 
+                        Grid.Column="0"
+                        Grid.Row="2" 
+                        MinHeight="25" 
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        FontWeight="Bold"
+                        Margin="0,5" 
+                        Content="Detalle del Pedido seleccionado:"/>
+
                     <sdk:DataGrid
                         Grid.Column="0"
-                        Grid.Row="1" 
+                        Grid.Row="3"
+                        BorderBrush="Black"
                         x:Name="DataGridProductosPedido"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top"
