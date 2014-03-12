@@ -69,5 +69,12 @@ namespace TallerAplicaciones
             return iProducto.ListarVideosProductoDTO(idProducto);
         }
 
+        [OperationContract]
+        public List<CantidadProductoPedidoDTO> ListarProductosPedido(int idPedido)
+        {
+            IPedido iPedido = ManejadorPedido.GetInstance();
+            return iPedido.ListarProductosPedidoDTO(idPedido);
+        }
+
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="CantidadProductoPedido.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="DTO\ArchivoDTO.cs" />
+    <Compile Include="DTO\CantidadProductoPedidoDTO.cs" />
     <Compile Include="DTO\PedidoDTO.cs" />
     <Compile Include="DTO\ProductoDTO.cs" />
     <Compile Include="DTO\ValorAtributoDTO.cs" />

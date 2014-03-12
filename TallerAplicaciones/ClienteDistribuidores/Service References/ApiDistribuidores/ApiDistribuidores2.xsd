@@ -66,9 +66,23 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ArchivoId" type="xs:int" />
       <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PathFileSystem" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArchivoDTO" nillable="true" type="tns:ArchivoDTO" />
+  <xs:complexType name="ArrayOfCantidadProductoPedidoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CantidadProductoPedidoDTO" nillable="true" type="tns:CantidadProductoPedidoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCantidadProductoPedidoDTO" nillable="true" type="tns:ArrayOfCantidadProductoPedidoDTO" />
+  <xs:complexType name="CantidadProductoPedidoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CantidadPedida" type="xs:int" />
+      <xs:element minOccurs="0" name="ProductoCodigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductoId" type="xs:int" />
+      <xs:element minOccurs="0" name="ProductoNombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CantidadProductoPedidoDTO" nillable="true" type="tns:CantidadProductoPedidoDTO" />
 </xs:schema>

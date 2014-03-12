@@ -17,13 +17,8 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
     public partial class DataDistribuidorTabs : Page
     {
 
-        public ObservableCollection<PedidoDTO> Pedidos;
-        public ObservableCollection<ProductoDTO> Productos;
-        public ObservableCollection<ValorAtributoDTO> AtributosProducto;
-
         public PlayList PlayListVideosProducto { get; set; }
         public PlayList PlayListImagenesProducto { get; set; }
-
         private DispatcherTimer _timer;
 
         public DataDistribuidorTabs()
@@ -49,7 +44,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 if (e.Result != null && e.Result.Any())
                 {
                     DataGridPedidos.ItemsSource = e.Result;
-                    Pedidos = e.Result;
                 }
             }
             catch (Exception err)
@@ -99,6 +93,37 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
+
+        private void DataGridPedidos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var pedidoSeleccionado = DataGridPedidos.SelectedItem as PedidoDTO;
+            if (pedidoSeleccionado != null)
+            {
+                BusyIndicatorPedidosTab.IsBusy = true;
+                var api = new ApiDistribuidoresClient();
+                api.ListarProductosPedidoCompleted += new EventHandler<ListarProductosPedidoCompletedEventArgs>(ListarProductosPedidoCompleted);
+                api.ListarProductosPedidoAsync(pedidoSeleccionado.PedidoId);
+            }
+        }
+
+        private void ListarProductosPedidoCompleted(object sender, ListarProductosPedidoCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    DataGridProductosPedido.ItemsSource = e.Result;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
         #endregion
 
         #region productos
@@ -117,7 +142,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 if (e.Result != null && e.Result.Any())
                 {
                     DataGridProductos.ItemsSource = e.Result;
-                    Productos = e.Result;
                     DataGridProductos.SelectedIndex = -1;
                 }
             }
@@ -159,7 +183,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 if (e.Result != null && e.Result.Any())
                 {
                     TreeViewCamposVariables.ItemsSource = e.Result;
-                    AtributosProducto = e.Result;
                 }
             }
             catch (Exception err)
@@ -302,6 +325,10 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         }
         #endregion
 
+      
+
+       
+        
     }
 }
 

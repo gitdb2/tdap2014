@@ -24,5 +24,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         bool CambiarEstadoPedido(int idPedido, bool nuevoEstado);
 
+        List<CantidadProductoPedidoDTO> ListarProductosPedidoDTO(int idPedido);
+
     }
 }

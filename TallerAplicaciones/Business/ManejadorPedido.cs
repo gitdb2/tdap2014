@@ -38,7 +38,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     .Include(p6 => p6.CantidadProductoPedidoList)
                     .ToList();
             }
-
         }
 
         public void Alta(Pedido pedido, int idDistribuidor, int idEjecutivo,
@@ -164,7 +163,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 using (var scope = new TransactionScope())
                 {
-
                     var pedido = db.Pedidos
                         .Include(p => p.CantidadProductoPedidoList)
                         .SingleOrDefault(p => p.PedidoID == idPedido && p.Activo == true);
@@ -184,20 +182,11 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         throw new CustomException(
                             "No se puede eliminar el item ya que el pedido debe tener al menos un elemento");
                     }
-
                    
                     var cantPedidoAEliminar =  db.CantidadProductosPedido
                                             .Include(p=>p.Pedido)
                                             .Include(p => p.Producto)
                                             .SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
-
-                
-                  
-
-                    //var cantPedidoProd = (from cpp in db.CantidadProductosPedido
-                    //    where cpp.Pedido.PedidoID == idPedido
-                    //          && cpp.CantidadProductoPedidoID == idCantidadProductoPedido
-                    //    select cpp).SingleOrDefault();
 
                     if (cantPedidoAEliminar != null)
                     {
@@ -211,14 +200,12 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         
                         db.SaveChanges();
                         scope.Complete();
-
                     }
                     else
                     {
                         throw new CustomException("No se pudo encontrar cantidad producto pedido con id=" +
                                                   idCantidadProductoPedido);
                     }
-                   
                 }
                 return true;   
             }
@@ -229,14 +216,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             if (cantidad <= 0) throw new CustomException("Cantidad debe ser mayor que cero");
             using (var db = new Persistencia())
             {
-
                 var cantPedidoProd = db.CantidadProductosPedido.SingleOrDefault(p => p.CantidadProductoPedidoID == idCantidadProductoPedido);
-
-                //var cantPedidoProd = (from cpp in db.CantidadProductosPedido
-                //                      where cpp.Pedido.PedidoID == idPedido
-                //                         && cpp.CantidadProductoPedidoID == idCantidadProductoPedido
-                //                      select cpp).SingleOrDefault();
-
                 if (cantPedidoProd != null)
                 {
                     cantPedidoProd.Cantidad = cantidad;
@@ -248,6 +228,34 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
                 return true;
             }
+        }
+
+        public List<CantidadProductoPedidoDTO> ListarProductosPedidoDTO(int idPedido)
+        {
+            var resultado = new List<CantidadProductoPedidoDTO>();
+            using (var db = new Persistencia())
+            {
+                Pedido elPedido = db.Pedidos
+                    .Where(p0 => p0.PedidoID == idPedido)
+                    .Include(p1 => p1.CantidadProductoPedidoList.Select(p2 => p2.Producto))
+                    .SingleOrDefault();
+                if (elPedido != null
+                    && elPedido.CantidadProductoPedidoList != null
+                    && elPedido.CantidadProductoPedidoList.Any())
+                {
+                    foreach (var cantidadProductoPedido in elPedido.CantidadProductoPedidoList)
+                    {
+                        resultado.Add(new CantidadProductoPedidoDTO()
+                        {
+                            ProductoId = cantidadProductoPedido.Producto.ProductoID,
+                            ProductoCodigo = cantidadProductoPedido.Producto.Codigo,
+                            ProductoNombre = cantidadProductoPedido.Producto.Nombre,
+                            CantidadPedida = cantidadProductoPedido.Cantidad
+                        });
+                    }
+                }
+            }
+            return resultado;
         }
 
     }

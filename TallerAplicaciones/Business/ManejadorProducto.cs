@@ -142,10 +142,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 if (productoDb != null)
                 {
                     productoDb.Archivos.Add(imagen);
-
                     db.SaveChanges();
                 }
-
             }
         }
 
@@ -164,7 +162,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                     db.SaveChanges();
                 }
-
             }
         }
 
@@ -257,7 +254,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     {
                         productoDb.Archivos = new List<Archivo>();
                     }
-                  
                 }
                 return productoDb;
             }
@@ -299,8 +295,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                            {
                                db.Archivos.Remove(arch);
                            }
-
-                           
                         }
 
                         if (productoUpdate.Archivos != null && productoUpdate.Archivos.Any())

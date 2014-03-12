@@ -49,6 +49,12 @@
   <wsdl:message name="ApiDistribuidores_ListarVideosProducto_OutputMessage">
     <wsdl:part name="parameters" element="ListarVideosProductoResponse" />
   </wsdl:message>
+  <wsdl:message name="ApiDistribuidores_ListarProductosPedido_InputMessage">
+    <wsdl:part name="parameters" element="ListarProductosPedido" />
+  </wsdl:message>
+  <wsdl:message name="ApiDistribuidores_ListarProductosPedido_OutputMessage">
+    <wsdl:part name="parameters" element="ListarProductosPedidoResponse" />
+  </wsdl:message>
   <wsdl:portType name="ApiDistribuidores">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="urn:ApiDistribuidores/Login" message="ApiDistribuidores_Login_InputMessage" />
@@ -77,6 +83,10 @@
     <wsdl:operation name="ListarVideosProducto">
       <wsdl:input wsaw:Action="urn:ApiDistribuidores/ListarVideosProducto" message="ApiDistribuidores_ListarVideosProducto_InputMessage" />
       <wsdl:output wsaw:Action="urn:ApiDistribuidores/ListarVideosProductoResponse" message="ApiDistribuidores_ListarVideosProducto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarProductosPedido">
+      <wsdl:input wsaw:Action="urn:ApiDistribuidores/ListarProductosPedido" message="ApiDistribuidores_ListarProductosPedido_InputMessage" />
+      <wsdl:output wsaw:Action="urn:ApiDistribuidores/ListarProductosPedidoResponse" message="ApiDistribuidores_ListarProductosPedido_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

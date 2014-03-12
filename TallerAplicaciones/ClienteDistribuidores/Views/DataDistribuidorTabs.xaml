@@ -54,32 +54,66 @@
             
             <sdk:TabItem Header="Pedidos" x:Name="TabItemPedidos">
 
-                <sdk:DataGrid
-                    x:Name="DataGridPedidos"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" 
-                    SelectionMode="Single"
-                    AutoGenerateColumns="False" 
-                    ColumnWidth="*" d:DataContext="{d:DesignInstance apiDistribuidores:PedidoDTO}">
-                    <sdk:DataGrid.Columns>
-                        <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding PedidoId}"/>
-                        <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
-                        <sdk:DataGridTextColumn Header="Fecha" IsReadOnly="True" Binding="{Binding Fecha}"/>
-                        <sdk:DataGridTextColumn Header="Ejecutivo de Cuenta" IsReadOnly="True" Binding="{Binding Ejecutivo}"/>
-                        <sdk:DataGridTemplateColumn Header="Aprobado">
-                            <sdk:DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox 
-                                    x:Name="AprobadoCambiarEstado" 
-                                    IsChecked="{Binding Aprobado}"
-                                    Tag="{Binding}" 
-                                    Click="AprobadoCambiarEstado_Click" />
-                                </DataTemplate>
-                            </sdk:DataGridTemplateColumn.CellTemplate>
-                        </sdk:DataGridTemplateColumn>
-                    </sdk:DataGrid.Columns>
-                </sdk:DataGrid>
-                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <sdk:DataGrid
+                        Grid.Column="0"
+                        Grid.Row="0" 
+                        x:Name="DataGridPedidos"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Top" 
+                        SelectionMode="Single"
+                        AutoGenerateColumns="False" 
+                        ColumnWidth="*" 
+                        d:DataContext="{d:DesignInstance apiDistribuidores:PedidoDTO}" 
+                        SelectionChanged="DataGridPedidos_SelectionChanged">
+                        <sdk:DataGrid.Columns>
+                            <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding PedidoId}"/>
+                            <sdk:DataGridTextColumn Header="Descripcion" IsReadOnly="True" Binding="{Binding Descripcion}"/>
+                            <sdk:DataGridTextColumn Header="Fecha" IsReadOnly="True" Binding="{Binding Fecha}"/>
+                            <sdk:DataGridTextColumn Header="Ejecutivo de Cuenta" IsReadOnly="True" Binding="{Binding Ejecutivo}"/>
+                            <sdk:DataGridTemplateColumn Header="Aprobado">
+                                <sdk:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                        x:Name="AprobadoCambiarEstado" 
+                                        IsChecked="{Binding Aprobado}"
+                                        Tag="{Binding}" 
+                                        Click="AprobadoCambiarEstado_Click" />
+                                    </DataTemplate>
+                                </sdk:DataGridTemplateColumn.CellTemplate>
+                            </sdk:DataGridTemplateColumn>
+                        </sdk:DataGrid.Columns>
+                    </sdk:DataGrid>
+
+                    <sdk:DataGrid
+                        Grid.Column="0"
+                        Grid.Row="1" 
+                        x:Name="DataGridProductosPedido"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Top"
+                        SelectionMode="Single"
+                        AutoGenerateColumns="False" 
+                        ColumnWidth="*" 
+                        d:DataContext="{d:DesignInstance apiDistribuidores:CantidadProductoPedidoDTO}" 
+                        >
+                        <sdk:DataGrid.Columns>
+                            <sdk:DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding ProductoId}"/>
+                            <sdk:DataGridTextColumn Header="Nombre" IsReadOnly="True" Binding="{Binding ProductoNombre}"/>
+                            <sdk:DataGridTextColumn Header="Codigo" IsReadOnly="True" Binding="{Binding ProductoCodigo}"/>
+                            <sdk:DataGridTextColumn Header="Cantidad Pedida" IsReadOnly="True" Binding="{Binding CantidadPedida}"/>
+                        </sdk:DataGrid.Columns>
+                    </sdk:DataGrid>
+
+                </Grid>
+
             </sdk:TabItem>
 
             <sdk:TabItem Header="Productos" x:Name="TabItemProductos">
