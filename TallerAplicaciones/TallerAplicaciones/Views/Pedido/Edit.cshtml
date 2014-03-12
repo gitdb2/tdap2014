@@ -56,8 +56,13 @@
             @Html.ValidationMessageFor(model => model.PedidoID)
             <input type="submit" value="Modificar Datos Del pedido" />
         </p>
+        <hr />
         <div class="editor-label">
-            @Html.LabelFor(model => model.ProductosDisponibles)
+            <label>
+                Orden (Las modificaciones se almacenan en el momento de realizarlas)</label>
+            <br/>
+
+            <label>Agregar Productos al pedido</label>
         </div>
         <div class="editor-field">
             @if (Model.ProductosDisponibles != null && Model.ProductosDisponibles.Any())
@@ -81,13 +86,13 @@
                 @("No hay Productos en el sistema.")
             }
         </div>
-        <hr />
+     
         <div class="display-label">
-            <label>
-                Orden (Las modificaciones se almacenan en el momento de realizarlas)</label>
+            <label>Orden actual:</label>
+           
         </div>
         <div class="display-field">
-            Orden actual:<br />
+          
             <table id="order">
                 <tr>
                     <th>
