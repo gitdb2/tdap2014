@@ -62,6 +62,7 @@
     <Compile Include="Exceptions\CustomExceptions.cs" />
     <Compile Include="Foto.cs" />
     <Compile Include="IVisitor.cs" />
+    <Compile Include="UserRole.cs" />
     <Compile Include="Visitor\IVisitorHtmlAtributo.cs" />
     <Compile Include="PerfilUsuario.cs" />
     <Compile Include="Producto.cs" />

@@ -165,6 +165,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
     <Compile Include="SilverlightFaultBehavior.cs" />
     <Content Include="ApiDistribuidores.svc" />
     <Content Include="ClientAccessPolicy.xml">

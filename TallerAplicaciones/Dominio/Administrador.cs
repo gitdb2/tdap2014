@@ -17,7 +17,12 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         public override int GetRol()
         {
-          return 0;
+            return (int)GetRolEnum();
+        }
+
+        public override UserRole GetRolEnum()
+        {
+            return UserRole.Administrador;
         }
     }
 }

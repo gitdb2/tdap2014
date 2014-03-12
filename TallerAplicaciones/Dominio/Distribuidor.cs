@@ -15,7 +15,12 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         }
         public override int GetRol()
         {
-            return 2;
+            return (int)GetRolEnum();
+        }
+
+        public override UserRole GetRolEnum()
+        {
+            return UserRole.Distribuidor;
         }
 
         public EmpresaDistribuidora Empresa { get; set; }

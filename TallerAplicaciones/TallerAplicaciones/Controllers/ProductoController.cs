@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
@@ -15,7 +16,7 @@ namespace TallerAplicaciones.Controllers
     {
         //
         // GET: /Producto/
-
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Index()
         {
             return View();
