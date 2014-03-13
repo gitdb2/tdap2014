@@ -197,7 +197,7 @@
                     <Grid
                         Grid.Row="3"
                         Grid.Column="0"
-                        d:DataContext="{d:DesignInstance temp:ValorAtributoFake}">
+                        d:DataContext="{d:DesignInstance apiDistribuidores:ValorAtributoDTO}">
                         
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -206,7 +206,9 @@
                         <Grid.Resources>
 
                             <sdk:HierarchicalDataTemplate x:Name="SubTemplate">
-                                <TextBlock Text="{Binding Path=ValorString}" d:DataContext="{d:DesignInstance temp:Valor}">
+                                <TextBlock 
+                                    Text="{Binding Path=ValorString}" 
+                                    d:DataContext="{d:DesignInstance apiDistribuidores:ValorDTO}">
                                 </TextBlock>
                             </sdk:HierarchicalDataTemplate>
 
