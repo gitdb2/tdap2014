@@ -8,10 +8,12 @@ namespace TallerAplicaciones.Controllers
 {
     public class HomeController : Controller
     {
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
+            log.InfoFormat("Index de Home");
             return View();
         }
 

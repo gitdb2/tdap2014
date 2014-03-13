@@ -16,6 +16,10 @@ namespace TallerAplicaciones.Controllers
     //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+  
+
         //
         // GET: /Account/Login
 
@@ -42,11 +46,13 @@ namespace TallerAplicaciones.Controllers
                 {
 
                     Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+                    log.InfoFormat("Logueo correcto");
                     return RedirectToLocal(returnUrl);
                 }    
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Usuario y/o Password invalido o Usuario inactivo");
+            log.ErrorFormat("Usuario y/o Password invalido o Usuario inactivo");
             return View(model);
         }
 
@@ -92,8 +98,8 @@ namespace TallerAplicaciones.Controllers
                     AltaUsuario(model);
 
                     //Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
-             
 
+                    //log.InfoFormat("Logueo correcto");
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
