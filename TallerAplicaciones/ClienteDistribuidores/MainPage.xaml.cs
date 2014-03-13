@@ -38,15 +38,30 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         {
             try
             {
-                if (e.Result.LoginOk)
+                var mensaje = "";
+                var error = false;
+                if (e.Result != null)
                 {
-                    Controlador.GetInstance().GuardarLoginActual(LoginActual);
-                    this.Content = new DataDistribuidorTabs();
+                    if (e.Result.LoginOk)
+                    {
+                        Controlador.GetInstance().GuardarLoginActual(LoginActual);
+                        this.Content = new DataDistribuidorTabs();
+                    }
+                    else
+                    {
+                        mensaje = e.Result.Mensaje;
+                        error = true;
+                    }
                 }
                 else
                 {
+                    mensaje = "Error desdonocido, contacte al Administrador";
+                    error = true;
+                }
+                if (error)
+                {
                     ValidationSummaryLogin.Errors.Clear();
-                    ValidationSummaryLogin.Errors.Add(new ValidationSummaryItem(e.Result.Mensaje));
+                    ValidationSummaryLogin.Errors.Add(new ValidationSummaryItem(mensaje));    
                 }
             }
             catch (Exception err)
