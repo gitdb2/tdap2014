@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using System.Transactions;
@@ -216,6 +217,21 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+        public Usuario ObtenerUsuarioDistribuidor(string login)
+        {
+            Usuario res = null;
+            using (var db = new Persistencia())
+            {
+                var dist = db.PerfilesUsuario.OfType<Distribuidor>()
+                    .Include(x => x.Usuario)
+                    .SingleOrDefault(p => p.Usuario.Login == login);
+                if (dist != null)
+                {
+                    res = dist.Usuario;
+                }
+            }
+            return res;
+        }
 
         public void UpdateCompany(int idPerfil, int idNewCompany)
         {

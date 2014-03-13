@@ -38,10 +38,15 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         {
             try
             {
-                if (e.Result)
+                if (e.Result.LoginOk)
                 {
                     Controlador.GetInstance().GuardarLoginActual(LoginActual);
                     this.Content = new DataDistribuidorTabs();
+                }
+                else
+                {
+                    ValidationSummaryLogin.Errors.Clear();
+                    ValidationSummaryLogin.Errors.Add(new ValidationSummaryItem(e.Result.Mensaje));
                 }
             }
             catch (Exception err)

@@ -17,6 +17,52 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultadoLoginDTO", Namespace="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DT" +
+        "O")]
+    public partial class ResultadoLoginDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private bool LoginOkField;
+        
+        private string MensajeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool LoginOk {
+            get {
+                return this.LoginOkField;
+            }
+            set {
+                if ((this.LoginOkField.Equals(value) != true)) {
+                    this.LoginOkField = value;
+                    this.RaisePropertyChanged("LoginOk");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Mensaje {
+            get {
+                return this.MensajeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MensajeField, value) != true)) {
+                    this.MensajeField = value;
+                    this.RaisePropertyChanged("Mensaje");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PedidoDTO", Namespace="http://schemas.datacontract.org/2004/07/uy.edu.ort.taller.aplicaciones.dominio.DT" +
         "O")]
     public partial class PedidoDTO : object, System.ComponentModel.INotifyPropertyChanged {
@@ -403,7 +449,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:ApiDistribuidores/Login", ReplyAction="urn:ApiDistribuidores/LoginResponse")]
         System.IAsyncResult BeginLogin(string login, string password, System.AsyncCallback callback, object asyncState);
         
-        bool EndLogin(System.IAsyncResult result);
+        uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO EndLogin(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:ApiDistribuidores/ListarPedidosDistribuidor", ReplyAction="urn:ApiDistribuidores/ListarPedidosDistribuidorResponse")]
         System.IAsyncResult BeginListarPedidosDistribuidor(string loginDistribuidor, System.AsyncCallback callback, object asyncState);
@@ -456,10 +502,10 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
             this.results = results;
         }
         
-        public bool Result {
+        public uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO)(this.results[0]));
             }
         }
     }
@@ -728,7 +774,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.EndLogin(System.IAsyncResult result) {
+        uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores.EndLogin(System.IAsyncResult result) {
             return base.Channel.EndLogin(result);
         }
         
@@ -739,7 +785,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
         }
         
         private object[] OnEndLogin(System.IAsyncResult result) {
-            bool retVal = ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).EndLogin(result);
+            uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO retVal = ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ApiDistribuidores)(this)).EndLogin(result);
             return new object[] {
                     retVal};
         }
@@ -1176,9 +1222,9 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores
                 return _result;
             }
             
-            public bool EndLogin(System.IAsyncResult result) {
+            public uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO EndLogin(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("Login", _args, result)));
+                uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO _result = ((uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO)(base.EndInvoke("Login", _args, result)));
                 return _result;
             }
             
