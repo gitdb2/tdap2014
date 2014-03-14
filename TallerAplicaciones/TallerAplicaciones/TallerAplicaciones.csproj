@@ -408,9 +408,10 @@
     <Content Include="Views\Pedido\Detalle.cshtml" />
     <Content Include="Views\Pedido\Create.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
-    <Content Include="Views\Reportes\Productos.cshtml" />  
+    <Content Include="Views\Reportes\Productos.cshtml" />
     <Content Include="Views\Reportes\TopProductos.cshtml" />
-</ItemGroup>
+    <Content Include="Views\Reportes\Logs.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
