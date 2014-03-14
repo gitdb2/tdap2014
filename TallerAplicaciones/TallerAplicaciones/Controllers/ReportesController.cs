@@ -10,15 +10,23 @@ namespace TallerAplicaciones.Controllers
 {
     public class ReportesController : Controller
     {
-        //
-        // GET: /Reportes/
 
         [AllowAnonymous]
         public ActionResult Productos()
         {
             var model = new ReporteProductosModel
             {
-                Productos = ManejadorProducto.GetInstance().ReporteProductos()
+                Productos = ManejadorProducto.GetInstance().ReporteProductos(0)
+            };
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult TopProductos()
+        {
+            var model = new ReporteTopProductosModel
+            {
+                TopProductos = ManejadorProducto.GetInstance().ReporteProductos(5)
             };
             return View(model);
         }

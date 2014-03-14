@@ -365,15 +365,25 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
-        public List<CantidadProductoPedido> ReporteProductos()
+        /// <summary>
+        /// maxResultados indica la cantidad de items que devuelve el metodo
+        /// si maxResultados == 0 se devuelven todos
+        /// </summary>
+        /// <param name="maxResultados"></param>
+        /// <returns></returns>
+        public List<CantidadProductoPedido> ReporteProductos(int maxResultados)
         {
             var resultado = new List<CantidadProductoPedido>();
             using (var db = new Persistencia())
             {
+                if (maxResultados <= 0)
+                    maxResultados = db.CantidadProductosPedido.Count();
+
                 resultado = db.CantidadProductosPedido
                     .Include("Producto")
                     .Where(x => x.Activo)
                     .OrderByDescending(y => y.Cantidad)
+                    .Take(maxResultados)
                     .ToList();
             }
             return resultado;
