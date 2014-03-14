@@ -40,11 +40,18 @@
     </li>
     
     
-     <li class="four">
+    <li class="four">
         <h5>Usuarios</h5>
         @Html.ActionLink("Crear", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerusuarioLink" })
 
         @Html.ActionLink("Listar", "List", "Account", routeValues: null, htmlAttributes: new { id = "listartusuarioLink" })
+
+    </li>
+    
+      <li class="five">
+        <h5>Reportes</h5>
+        @Html.ActionLink("Logs", "Logs", "Reportes", routeValues: null, htmlAttributes: new { id = "reporteLogsLink" })
+        @Html.ActionLink("Pedidos", "Pedidos", "Reportes", routeValues: null, htmlAttributes: new { id = "reportePedidosLink" })
 
     </li>
 </ol>

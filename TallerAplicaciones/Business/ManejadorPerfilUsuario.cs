@@ -319,6 +319,49 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 return db.PerfilesUsuario.Include("Usuario").ToList();
             }
         }
+
+
+        public List<Distribuidor> GetDistribuidores()
+        {
+            using (var db = new Persistencia())
+            {
+                try
+                {
+                    var distribuidores = db.PerfilesUsuario.OfType<Distribuidor>()
+                                .Include(d => d.Empresa)
+                                .Include(d => d.Usuario)
+                                .ToList();
+                    return distribuidores;
+                }
+                catch (Exception)
+                {
+
+                    return new List<Distribuidor>();
+                }
+            }
+        }
+
+
+        public List<EjecutivoDeCuenta> GetEjecutivos()
+        {
+            using (var db = new Persistencia())
+            {
+                try
+                {
+                    var distribuidores = db.PerfilesUsuario.OfType<EjecutivoDeCuenta>()
+                                .Include(d => d.Usuario)
+                                .ToList();
+                    return distribuidores;
+                }
+                catch (Exception)
+                {
+
+                    return new List<EjecutivoDeCuenta>();
+                }
+            }
+        } 
+
+
     }
 }
 

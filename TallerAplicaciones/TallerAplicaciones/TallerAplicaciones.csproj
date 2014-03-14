@@ -38,7 +38,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -169,9 +170,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Models\ReportesModel.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
     <Compile Include="logs\HttpContextUserNameProvider.cs" />
-    <Compile Include="Models\ReportesModel.cs" />
     <Compile Include="SilverlightFaultBehavior.cs" />
     <Content Include="ApiDistribuidores.svc" />
     <Content Include="ClientAccessPolicy.xml">
@@ -387,6 +389,9 @@
     <Content Include="Views\Producto\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="settings.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -403,8 +408,11 @@
     <Content Include="Views\Empresa\Edit.cshtml" />
     <Content Include="Views\Pedido\Detalle.cshtml" />
     <Content Include="Views\Pedido\Create.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Reportes\Productos.cshtml" />
     <Content Include="Views\Reportes\TopProductos.cshtml" />
+    <Content Include="Views\Reportes\Logs.cshtml" />
+    <Content Include="Views\Reportes\Pedidos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
