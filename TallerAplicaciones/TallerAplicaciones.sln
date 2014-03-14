@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Busine
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utiles", "Utiles\Utiles.csproj", "{724D61E3-1370-4B40-923F-222A119C23AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{A933C2BF-DE00-47E8-B1FF-8D4CE441CB06}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{0DF6BD7D-09D6-494D-B025-9FBD03968488}"
 EndProject
 Global
@@ -45,10 +43,6 @@ Global
 		{724D61E3-1370-4B40-923F-222A119C23AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{724D61E3-1370-4B40-923F-222A119C23AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{724D61E3-1370-4B40-923F-222A119C23AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A933C2BF-DE00-47E8-B1FF-8D4CE441CB06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A933C2BF-DE00-47E8-B1FF-8D4CE441CB06}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A933C2BF-DE00-47E8-B1FF-8D4CE441CB06}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A933C2BF-DE00-47E8-B1FF-8D4CE441CB06}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DF6BD7D-09D6-494D-B025-9FBD03968488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DF6BD7D-09D6-494D-B025-9FBD03968488}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DF6BD7D-09D6-494D-B025-9FBD03968488}.Release|Any CPU.ActiveCfg = Release|Any CPU

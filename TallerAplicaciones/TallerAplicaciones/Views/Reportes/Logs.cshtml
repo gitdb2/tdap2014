@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Reporte de Logs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TallerAplicaciones.Models.ReporteLogsModel
+<h2>
+    Reporte de Logs</h2>
+<div class="filtros">
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.ValidationSummary(true)
+        </div>
+        @Html.LabelFor(model => model.FechaDesde)
+        @Html.TextBoxFor(model => model.FechaDesde, new { @Value = Model.FechaDesde.ToString("dd/MM/yyyy"), @class = "datepicker" })
+        @Html.ValidationMessageFor(model => model.FechaDesde)
+
+        @Html.LabelFor(model => model.FechaHasta)
+        @Html.TextBoxFor(model => model.FechaHasta, new { @Value = Model.FechaHasta.ToString("dd/MM/yyyy"), @class = "datepicker" })
+        @Html.ValidationMessageFor(model => model.FechaHasta)
+    
+        <input type="submit" value="Fltrar" />
+    }
+</div>
+<table>
+    <tr>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Hora
+        </th>
+        <th>
+            Login
+        </th>
+    </tr>
+    @{
+        if (Model.Logs != null && Model.Logs.Any())
+        {
+            foreach (var item in Model.Logs)
+            {
+        <tr>
+            <td>@item.Date.ToString("yyyy MMMM dd")
+            </td>
+            <td>@item.Date.ToString("hh:mm:ss")
+            </td>
+            <td>@item.Login
+            </td>
+        </tr>
+            }
+        }
+        else
+        {
+        <tr>
+            <td colspan="2">
+                No se encontraron resultados.
+            </td>
+        </tr>
+        }
+    }
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+        
+    </script>
+}
