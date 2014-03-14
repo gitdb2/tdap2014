@@ -2,46 +2,52 @@
     ViewBag.Title = "Top 5 de Productos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @using Microsoft.Ajax.Utilities
 @model TallerAplicaciones.Models.ReporteTopProductosModel
-
-<h2>Top 5 de Productos</h2>
-<table>
-    <tr>
-        <th>
-            Nombre
-        </th>
-        <th>
-            Codigo
-        </th>
-        <th>
-            Descripcion
-        </th>
-        <th>
-            Activo
-        </th>
-        <th>
-            Cantidad de Pedidos
-        </th>
-    </tr>
-    @foreach (var item in Model.TopProductos)
-    {
-        <tr>
-            <td>@item.Producto.Nombre
-            </td>
-            <td>@item.Producto.Codigo
-            </td>
-            <td>@item.Producto.Descripcion
-            </td>
-            <td>@(item.Producto.Activo ? "Si" : "No")
-            </td>
-            <td>@item.Cantidad
-            </td>
-        </tr>
-    }
-</table>
-
+<h2>
+    Top 5 de Productos</h2>
+<div class="contenedor">
+    <div class="left">
+        <table>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Codigo
+                </th>
+                <th>
+                    Descripcion
+                </th>
+                <th>
+                    Activo
+                </th>
+                <th>
+                    Cantidad de Pedidos
+                </th>
+            </tr>
+            @foreach (var item in Model.TopProductos)
+            {
+                <tr>
+                    <td>@item.Producto.Nombre
+                    </td>
+                    <td>@item.Producto.Codigo
+                    </td>
+                    <td>@item.Producto.Descripcion
+                    </td>
+                    <td>@(item.Producto.Activo ? "Si" : "No")
+                    </td>
+                    <td>@item.Cantidad
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="right">
+        <div id="pieChartHolder">
+        </div>
+    </div>
+</div>
 @{
     var valores = "[";
     var etiquetas = "[";
@@ -60,8 +66,6 @@
     valores += "]";
     etiquetas += "]";
 }
-
-<div id="pieChartHolder"></div>
 @section Scripts {
     <script type="text/javascript">
 
@@ -70,7 +74,6 @@
 
         $(document).ready(function () {
             var r = Raphael("pieChartHolder"),
-            //pie = r.piechart(320, 240, 100, [50, 30, 20], {legend: ["%%", "%%", "%%"], legendpos: "west" });
             pie = r.piechart(320, 240, 100, valoresArray, { legend: etiquetasArray, legendpos: "west" });
             r.text(320, 100, "Top 5 de Productos mas pedidos").attr({ font: "20px sans-serif" });
 
