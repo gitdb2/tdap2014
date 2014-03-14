@@ -70,6 +70,26 @@ namespace TallerAplicaciones.Models
 
     }
 
+    public class ReportePedidoModel
+    {
+        [Required]
+        [Display(Name = "Fecha desde")]
+        public DateTime FechaDesde { get; set; }
+
+        [Required]
+        [Display(Name = "Fecha hasta")]
+        public DateTime FechaHasta { get; set; }
+
+
+        public int EjecutivoId { get; set; }
+        public int DistribuidorId { get; set;}
+
+        public List<Pedido> Pedidos { get; set; }
+
+        public List<PerfilUsuario> Perfiles { get; set; }
+       
+
+    }
 
 
 }

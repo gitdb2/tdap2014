@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
@@ -42,6 +44,38 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
             }
 
+        }
+
+    
+        public List<Pedido> GetPedidos(DateTime fromDate, DateTime toDate, int idDistribuidor, int idEjecuutivo)
+        {
+            using (var db = new Persistencia())
+            {
+
+                var query = db.Pedidos
+                    .Include(p => p.Ejecutivo)
+                    .Include(p2 => p2.Ejecutivo.Usuario)
+                    .Include(p3 => p3.Distribuidor)
+                    .Include(p4 => p4.Distribuidor.Usuario)
+                    .Include(p5 => p5.Distribuidor.Empresa)
+                    .Include(p6 => p6.CantidadProductoPedidoList)
+                    .Include(p7 => p7.CantidadProductoPedidoList.Select(t => t.Producto))
+                    .Where(p => p.Fecha >= fromDate && p.Fecha <= toDate);
+
+            
+
+                if (idDistribuidor > 0)
+                {
+                   query = query.Where(p => p.Distribuidor.PerfilUsuarioID == idDistribuidor);
+                }
+                if (idEjecuutivo > 0)
+                {
+                    query = query.Where(p => p.Ejecutivo.PerfilUsuarioID == idEjecuutivo);
+                }
+                   
+
+                return query.ToList();
+            }
         }
     }
 }

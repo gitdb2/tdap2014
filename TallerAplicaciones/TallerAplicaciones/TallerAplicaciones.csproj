@@ -411,6 +411,7 @@
     <Content Include="Views\Reportes\Productos.cshtml" />
     <Content Include="Views\Reportes\TopProductos.cshtml" />
     <Content Include="Views\Reportes\Logs.cshtml" />
+    <Content Include="Views\Reportes\Pedidos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
