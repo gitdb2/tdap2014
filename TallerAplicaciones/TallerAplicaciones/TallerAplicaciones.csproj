@@ -38,8 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="log4net">
       <HintPath>libs\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -170,10 +169,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
-    <Compile Include="Models\ReportesModel.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
     <Compile Include="logs\HttpContextUserNameProvider.cs" />
+    <Compile Include="Models\ReportesModel.cs" />
     <Compile Include="SilverlightFaultBehavior.cs" />
     <Content Include="ApiDistribuidores.svc" />
     <Content Include="ClientAccessPolicy.xml">
@@ -262,9 +260,8 @@
     <Content Include="ClienteDistribuidoresTestPage.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="libs\log4net.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Scripts\g.pie.js" />
+    <Content Include="Scripts\g.raphael.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -281,6 +278,8 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\notify.min.js" />
+    <Content Include="Scripts\raphael-min.js" />
+    <Content Include="Scripts\raphael.js" />
     <Content Include="Silverlight.js" />
     <Content Include="Views\Pedido\Delete.cshtml" />
     <Content Include="Web.config">
@@ -388,9 +387,6 @@
     <Content Include="Views\Producto\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="settings.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -407,10 +403,9 @@
     <Content Include="Views\Empresa\Edit.cshtml" />
     <Content Include="Views\Pedido\Detalle.cshtml" />
     <Content Include="Views\Pedido\Create.cshtml" />
-    <Content Include="Views\Error\AccessDenied.cshtml" />
-    <Content Include="Views\Reportes\Productos.cshtml" />  
+    <Content Include="Views\Reportes\Productos.cshtml" />
     <Content Include="Views\Reportes\TopProductos.cshtml" />
-</ItemGroup>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
