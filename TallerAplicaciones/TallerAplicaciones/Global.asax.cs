@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using log4net;
 using TallerAplicaciones.Filters;
+using TallerAplicaciones.logs;
 using uy.edu.ort.taller.aplicaciones.negocio;
 using WebMatrix.WebData;
 
@@ -18,6 +22,7 @@ namespace TallerAplicaciones
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static ILog log;
         protected void Application_Start()
         {
             //para que inicialice la base de datos
@@ -28,6 +33,17 @@ namespace TallerAplicaciones
 
             if (!WebSecurity.Initialized)
                 WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuario", "UsuarioID", "Login", autoCreateTables: true);
+
+            //FileInfo conf = new FileInfo("log4net.config");
+            //bool exists = conf.Exists;
+            //log4net.Config.XmlConfigurator.Configure(conf);
+            log4net.Config.XmlConfigurator.Configure();
+            log4net.GlobalContext.Properties["user"] = new HttpContextUserNameProvider();
+
+            //log4net.GlobalContext.Properties["user"] = "System";
+            log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+            log.Info("mierda");
 
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);

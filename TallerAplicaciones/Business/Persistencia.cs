@@ -56,6 +56,26 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 context.Database.Create();
             }
             context.Database.ExecuteSqlCommand("ALTER TABLE Producto ADD UNIQUE (Codigo) ");
+
+     
+          
+            try
+            {
+                context.Database.ExecuteSqlCommand("CREATE TABLE [dbo].[Log] ("
+                                                   + "[Id] [int] IDENTITY (1, 1) NOT NULL,"
+                                                   + "[Date] [datetime] NOT NULL,"
+                                                   + "[Login] [varchar] (255) NOT NULL,"
+                                                   + "[Thread] [varchar] (255) NOT NULL,"
+                                                   + "[Level] [varchar] (50) NOT NULL,"
+                                                   + "[Logger] [varchar] (255) NOT NULL,"
+                                                   + "[Message] [varchar] (4000) NOT NULL,"
+                                                   + "[Exception] [varchar] (2000) NULL)");
+            }
+            catch (Exception)
+            {
+            }
+
+
         }
     }
 

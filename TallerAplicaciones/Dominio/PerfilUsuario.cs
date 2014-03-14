@@ -19,6 +19,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public bool Activo { get; set; }
 
         public abstract int GetRol();
+        public abstract UserRole GetRolEnum();
 
     }
 }

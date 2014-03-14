@@ -4,18 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.negocio;
-
+ 
 namespace TallerAplicaciones.Controllers
 {
+    [CustomAuthorize]
     public class ProductoController : Controller
     {
         //
         // GET: /Producto/
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             return View();
