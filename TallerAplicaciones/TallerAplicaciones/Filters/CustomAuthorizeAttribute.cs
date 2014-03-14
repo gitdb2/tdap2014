@@ -18,21 +18,20 @@ namespace TallerAplicaciones.Filters
       
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-
+            //chequea si no tiene annotation AllowAnonymous
             if (!filterContext.ActionDescriptor.IsDefined
                       (typeof(AllowAnonymousAttribute), true) &&
                 !filterContext.ActionDescriptor.ControllerDescriptor.IsDefined
                  (typeof(AllowAnonymousAttribute), true))
             {
 
-
+                //En la sesion debe estar el login, de lo contrario de fuera que el usuario se loguee de nuevo
                 var httpContext = filterContext.HttpContext;
                 if (filterContext.HttpContext.Session == null ||
                     filterContext.HttpContext.Session["login"] == null)
                 {
 
                   
-                    //System.Web.HttpContext.Current.Application.Remove(System.Web.HttpContext.Current.User.Identity.Name);
                     filterContext.Result = new HttpUnauthorizedResult("Session perdida");
                     FormsAuthentication.SignOut();
                     HttpContext.Current.User =
@@ -40,6 +39,7 @@ namespace TallerAplicaciones.Filters
                     return;
                 }
 
+                //si esta la cookie de identificacion, voy a chequear los permisos de acceso
                 if (filterContext.HttpContext.Request.IsAuthenticated)
                 {
 
@@ -49,11 +49,16 @@ namespace TallerAplicaciones.Filters
 
                     var perfil = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(username);
 
-                    //var session = httpContext.Session;
+                
                     //usuario no existe, por lo que no tiene permiso
                     if (perfil == null || perfil.Activo == false)
                     {
-                        base.OnAuthorization(filterContext); //returns to login url
+                        //base.OnAuthorization(filterContext); //returns to login url
+                        //return;
+                        filterContext.Result = new HttpUnauthorizedResult("Session perdida");
+                        FormsAuthentication.SignOut();
+                        HttpContext.Current.User =
+                            new GenericPrincipal(new GenericIdentity(string.Empty), null);
                         return;
                     }
 
@@ -74,8 +79,6 @@ namespace TallerAplicaciones.Filters
                     if (this.Roles == null || this.Roles.Trim().Length == 0 || IsInRole(perfil, CleanRoles()))
                         return;
 
-
-                    //filterContext.Result = new HttpStatusCodeResult(403, "Ud no tiene permiso para acceder a esta pagina. Solo los " + this.Roles +" pueden hacerlo.");
 
                     if (httpContext.Session != null)
                     {
