@@ -29,11 +29,13 @@ namespace uy.edu.ort.taller.aplicaciones.dominio.Exceptions
         {
         }
     }
+
     [Serializable]
     public class CustomException : Exception
     {
 
         public string Key { get; set; }
+
         public CustomException()
         {
         }
@@ -52,7 +54,6 @@ namespace uy.edu.ort.taller.aplicaciones.dominio.Exceptions
             : base(info, context)
         {
         }
-
 
     }
 }

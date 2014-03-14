@@ -152,29 +152,6 @@ namespace TallerAplicaciones.Controllers
         // TODO
         // esto esta muy mal hecho
         // hay que arreglarlo
-//        private int ObtenerRolSegunPerfilUsuario(PerfilUsuario perfil)
-//        {
-//            if (perfil is Administrador)
-//            {
-//                return 0;
-//            } 
-//            else if (perfil is EjecutivoDeCuenta)
-//            {
-//                return 1;
-//            }
-//            else if (perfil is Distribuidor)
-//            {
-//                return 2;
-//            }
-//            else
-//            {
-//                throw new ArgumentException("Tipo de usuario invalido");
-//            }
-//        }
-
-        // TODO
-        // esto esta muy mal hecho
-        // hay que arreglarlo
         private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int rolId)
         {
             switch (rolId)

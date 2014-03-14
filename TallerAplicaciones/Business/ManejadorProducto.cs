@@ -365,5 +365,18 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
+        public List<CantidadProductoPedido> ReporteProductos()
+        {
+            var resultado = new List<CantidadProductoPedido>();
+            using (var db = new Persistencia())
+            {
+                resultado = db.CantidadProductosPedido
+                    .Include("Producto")
+                    .OrderByDescending(y => y.Cantidad)
+                    .ToList();
+            }
+            return resultado;
+        }
+
     }
 }

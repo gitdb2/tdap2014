@@ -64,6 +64,10 @@
                 <Button Width="100" Content="Login" Name="BtnLogin" Click="BtnLogin_Click" />
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+                <sdk:ValidationSummary x:Name="ValidationSummaryLogin"></sdk:ValidationSummary>
+            </StackPanel>
+
         </StackPanel>
 
     </Grid>

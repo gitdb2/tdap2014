@@ -92,8 +92,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Temp\Valor.cs" />
-    <Compile Include="Temp\ValorAtributoFake.cs" />
     <Compile Include="Views\DataDistribuidorTabs.xaml.cs">
       <DependentUpon>DataDistribuidorTabs.xaml</DependentUpon>
     </Compile>
@@ -148,6 +146,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ProductoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ValorAtributoDTO.datasource">

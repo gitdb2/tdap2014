@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Reporte de Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model TallerAplicaciones.Models.ReporteProductosModel
+
+<h2>Reporte de Productos</h2>
+<table>
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Codigo
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Activo
+        </th>
+        <th>
+            Cantidad de Pedidos
+        </th>
+    </tr>
+    @foreach (var item in Model.Productos)
+    {
+        <tr>
+            <td>@item.Producto.Nombre
+            </td>
+            <td>@item.Producto.Codigo
+            </td>
+            <td>@item.Producto.Descripcion
+            </td>
+            <td>@(item.Producto.Activo ? "Si" : "No")
+            </td>
+            <td>@item.Cantidad
+            </td>
+        </tr>
+    }
+</table>

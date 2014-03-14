@@ -55,6 +55,7 @@
     <Compile Include="DTO\CantidadProductoPedidoDTO.cs" />
     <Compile Include="DTO\PedidoDTO.cs" />
     <Compile Include="DTO\ProductoDTO.cs" />
+    <Compile Include="DTO\ResultadoLoginDTO.cs" />
     <Compile Include="DTO\ValorAtributoDTO.cs" />
     <Compile Include="DTO\ValorDTO.cs" />
     <Compile Include="EjecutivoDeCuenta.cs" />

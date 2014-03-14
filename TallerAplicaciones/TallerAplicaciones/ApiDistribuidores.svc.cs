@@ -20,11 +20,28 @@ namespace TallerAplicaciones
     {
 
         [OperationContract]
-        public bool Login(string login, string password)
+        public ResultadoLoginDTO Login(string login, string password)
         {
             IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
-            var usuario = iPerfilUsuario.ObtenerUsuario(login);
-            return usuario != null && usuario.Activo && WebSecurity.Login(login, password);
+            var resultadoLogin = new ResultadoLoginDTO() { LoginOk = false, Mensaje = "" };
+            var usuarioDistribuidor = iPerfilUsuario.ObtenerUsuarioDistribuidor(login);
+            if (usuarioDistribuidor != null && usuarioDistribuidor.Activo)
+            {
+                if (WebSecurity.Login(login, password))
+                {
+                    resultadoLogin.Mensaje = "Login OK";
+                    resultadoLogin.LoginOk = true;
+                }
+                else
+                {
+                    resultadoLogin.Mensaje = "Usuario y/o Password incorrecto";
+                }
+            }
+            else
+            {
+                resultadoLogin.Mensaje = "No existe tal Distribuidor";
+            }
+            return resultadoLogin;
         }
 
         [OperationContract]
