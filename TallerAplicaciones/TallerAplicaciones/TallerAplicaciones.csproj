@@ -165,6 +165,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Models\ReportesModel.cs" />
     <Compile Include="SilverlightFaultBehavior.cs" />
     <Content Include="ApiDistribuidores.svc" />
     <Content Include="ClientAccessPolicy.xml">
@@ -392,6 +394,7 @@
     <Content Include="Views\Empresa\Edit.cshtml" />
     <Content Include="Views\Pedido\Detalle.cshtml" />
     <Content Include="Views\Pedido\Create.cshtml" />
+    <Content Include="Views\Reportes\Productos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
