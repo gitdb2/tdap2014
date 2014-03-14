@@ -409,6 +409,7 @@
     <Content Include="Views\Pedido\Create.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Reportes\Productos.cshtml" />  
+    <Content Include="Views\Reportes\TopProductos.cshtml" />
 </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

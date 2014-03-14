@@ -42,8 +42,18 @@ namespace TallerAplicaciones.Models
 
     public class ReporteProductosModel
     {
+
         [Display(Name = "Productos")]
         public List<CantidadProductoPedido> Productos { get; set; }
+
+    }
+
+    public class ReporteTopProductosModel
+    {
+
+        [Display(Name = "Top 5 de Productos")]
+        public List<CantidadProductoPedido> TopProductos { get; set; }
+
     }
 
 }
