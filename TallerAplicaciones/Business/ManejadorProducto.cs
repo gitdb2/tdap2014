@@ -372,6 +372,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 resultado = db.CantidadProductosPedido
                     .Include("Producto")
+                    .Where(x => x.Activo)
                     .OrderByDescending(y => y.Cantidad)
                     .ToList();
             }
