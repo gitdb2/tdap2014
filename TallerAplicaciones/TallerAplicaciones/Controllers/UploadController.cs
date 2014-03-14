@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Filters;
 
 namespace TallerAplicaciones.Controllers
 {
@@ -11,7 +12,7 @@ namespace TallerAplicaciones.Controllers
     {
         public bool Foto { get; set; }
     }
-
+    [CustomAuthorize]
     public class UploadController : Controller
     {
         // GET: /Upload

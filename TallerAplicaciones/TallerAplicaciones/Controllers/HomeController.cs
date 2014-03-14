@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Filters;
 
 namespace TallerAplicaciones.Controllers
 {
+    [CustomAuthorize]
     public class HomeController : Controller
     {
         private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

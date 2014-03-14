@@ -1,0 +1,150 @@
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: admin - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: admin - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: <log4net.Error>Exception rendering object type [TallerAplicaciones.logs.HttpContextUserNameProvider]<stackTrace>System.NullReferenceException: Referencia a objeto no establecida como instancia de un objeto.
+   en WebMatrix.WebData.WebSecurity.get_CurrentUserName()
+   en TallerAplicaciones.logs.HttpContextUserNameProvider.ToString() en C:\vssolutions\ORT\tdap2014\TallerAplicaciones\TallerAplicaciones\logs\HttpContextUserNameProvider.cs:línea 13
+   en log4net.ObjectRenderer.DefaultRenderer.RenderObject(RendererMap rendererMap, Object obj, TextWriter writer)
+   en log4net.ObjectRenderer.RendererMap.FindAndRender(Object obj, TextWriter writer)</stackTrace></log4net.Error> - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user:  - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user:  - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: admin - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user:  - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user:  - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user:  - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user:  - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: admin - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: admin - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: admin - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: admin - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246 (official)
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: (null) - DotNetOpenAuth - Reporting will use isolated storage with scope: User, Domain, Assembly
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: - - TallerAplicaciones.MvcApplication - mierda
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.AccountController - Logueo correcto
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home
+%ate{dd MM yyyy HH:mm:ss,fff} INFO  - user: ej1 - TallerAplicaciones.Controllers.HomeController - Index de Home

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
@@ -11,6 +12,7 @@ using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
 {
+    [CustomAuthorize]
     public class EmpresaController : Controller
     {
         //

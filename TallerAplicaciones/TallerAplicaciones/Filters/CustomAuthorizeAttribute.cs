@@ -3,118 +3,122 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.negocio;
+using System.Security.Principal;
 
 namespace TallerAplicaciones.Filters
 {
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
-        //protected override bool AuthorizeCore(HttpContextBase httpContext)
-        //{
-        //    if (!httpContext.User.Identity.IsAuthenticated)
-        //    {
-        //        // no user is authenticated => no need to go any further
-        //        return false;
-
-        //    }
-
-
-        //    // at this stage we have an authenticated user
-        //    string username = httpContext.User.Identity.Name;
-
-        //    var perfil = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(username);
-
-        //    var session = httpContext.Session;
-        //    //usuario no existe, por lo que no tiene permiso
-        //    if (perfil == null || perfil.Activo == false) return false;
-
-        //    //if (perfil.GetRol() == (int) UserRole.EjecutivoDeCuenta)
-        //    //{
-        //    //    session
-        //    //}
-
-        //    if (this.Roles == null || this.Roles.Trim().Length == 0)
-        //        return true;
-        //    if (IsInRole(perfil, CleanRoles()))
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        throw new UnauthorizedAccessException("No tiene permiso para acceder a esa pagina.");
-
-        //    }
-        //}
-
-
-
+      
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (filterContext.HttpContext.Request.IsAuthenticated)
+
+            if (!filterContext.ActionDescriptor.IsDefined
+                      (typeof(AllowAnonymousAttribute), true) &&
+                !filterContext.ActionDescriptor.ControllerDescriptor.IsDefined
+                 (typeof(AllowAnonymousAttribute), true))
             {
 
+
                 var httpContext = filterContext.HttpContext;
-
-                string username = httpContext.User.Identity.Name;
-
-                var perfil = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(username);
-
-                //var session = httpContext.Session;
-                //usuario no existe, por lo que no tiene permiso
-                if (perfil == null || perfil.Activo == false)
+                if (filterContext.HttpContext.Session == null ||
+                    filterContext.HttpContext.Session["login"] == null)
                 {
-                    base.OnAuthorization(filterContext); //returns to login url
+
+                  
+                    //System.Web.HttpContext.Current.Application.Remove(System.Web.HttpContext.Current.User.Identity.Name);
+                    filterContext.Result = new HttpUnauthorizedResult("Session perdida");
+                    FormsAuthentication.SignOut();
+                    HttpContext.Current.User =
+                        new GenericPrincipal(new GenericIdentity(string.Empty), null);
                     return;
                 }
 
-                if (this.Roles == null || this.Roles.Trim().Length == 0 || IsInRole(perfil, CleanRoles()))
-                    return;
-
-
-                //filterContext.Result = new HttpStatusCodeResult(403, "Ud no tiene permiso para acceder a esta pagina. Solo los " + this.Roles +" pueden hacerlo.");
-
-                if (httpContext.Session != null)
+                if (filterContext.HttpContext.Request.IsAuthenticated)
                 {
 
 
-                    httpContext.Session["errorMessage"] =
-                        "Ud no tiene permiso para acceder a esta pagina. Solo los usuarios: " + this.Roles +
-                        " pueden hacerlo.";
-                    filterContext.Result = new RedirectToRouteResult(new
-                        RouteValueDictionary
-                        (new
+
+                    string username = httpContext.User.Identity.Name;
+
+                    var perfil = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(username);
+
+                    //var session = httpContext.Session;
+                    //usuario no existe, por lo que no tiene permiso
+                    if (perfil == null || perfil.Activo == false)
+                    {
+                        base.OnAuthorization(filterContext); //returns to login url
+                        return;
+                    }
+
+
+                    if (filterContext.HttpContext != null && filterContext.HttpContext.Session != null)
+                    {
+                        if (filterContext.HttpContext.Session["perfil"] == null)
                         {
-                            controller = "Error",
-                            action = "AccessDenied"
+                            filterContext.HttpContext.Session["perfil"] = perfil;
+                        }
+
+                        if (filterContext.HttpContext.Session["login"] == null)
+                        {
+                            filterContext.HttpContext.Session["login"] = username;
+                        }
+                    }
+
+                    if (this.Roles == null || this.Roles.Trim().Length == 0 || IsInRole(perfil, CleanRoles()))
+                        return;
 
 
-                        }));
+                    //filterContext.Result = new HttpStatusCodeResult(403, "Ud no tiene permiso para acceder a esta pagina. Solo los " + this.Roles +" pueden hacerlo.");
+
+                    if (httpContext.Session != null)
+                    {
+
+
+                        httpContext.Session["errorMessage"] =
+                            "Ud no tiene permiso para acceder a esta pagina. Solo los usuarios: " + this.Roles +
+                            " pueden hacerlo.";
+                        filterContext.Result = new RedirectToRouteResult(new
+                            RouteValueDictionary
+                            (new
+                            {
+                                controller = "Error",
+                                action = "AccessDenied"
+
+
+                            }));
+                    }
+                    else
+                    {
+                        filterContext.Result = new RedirectToRouteResult(new
+                       RouteValueDictionary
+                       (new
+                       {
+                           controller = "Error",
+                           action = "AccessDenied",
+                           message = "No tienes acceso a ese recurso"
+
+
+                       }));
+                    }
+
+
+
+
                 }
                 else
                 {
-                    filterContext.Result = new RedirectToRouteResult(new
-                   RouteValueDictionary
-                   (new
-                   {
-                       controller = "Error",
-                       action = "AccessDenied",
-                       message="No tienes acceso a ese recurso"
-
-
-                   }));
+                    Console.Out.WriteLine("ccccccccccc");
+                    base.OnAuthorization(filterContext);
                 }
-
-
-
-
             }
-            else
-            {
-                base.OnAuthorization(filterContext);
-            }
+
         }
 
 

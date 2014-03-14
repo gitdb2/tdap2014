@@ -9,9 +9,10 @@ using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.negocio;
-
+ 
 namespace TallerAplicaciones.Controllers
 {
+    [CustomAuthorize]
     public class ProductoController : Controller
     {
         //
