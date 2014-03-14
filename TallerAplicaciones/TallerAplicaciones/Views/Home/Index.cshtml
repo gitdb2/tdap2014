@@ -18,40 +18,37 @@
         </div>
     </section>
 }
-<h3>We suggest the following:</h3>
+<h3>
+    We suggest the following:</h3>
 <ol class="round">
     <li class="one">
-        <h5>Pedidos</h5>
+        <h5>
+            Pedidos</h5>
         @Html.ActionLink("Pedidos", "Index", "Pedido", routeValues: null, htmlAttributes: new { id = "pedidosLink" })
-
     </li>
-
     <li class="two">
-        <h5>Productos</h5>
+        <h5>
+            Productos</h5>
         @Html.ActionLink("Productos", "Index", "Producto", routeValues: null, htmlAttributes: new { id = "productoLink" })
     </li>
-
     <li class="three">
-        <h5>Empresas</h5>
+        <h5>
+            Empresas</h5>
         @Html.ActionLink("Crear Empresas", "Create", "Empresa", routeValues: null, htmlAttributes: new { id = "createEmpresaLink" })
-
         @Html.ActionLink("Empresas", "List", "Empresa", routeValues: null, htmlAttributes: new { id = "empresasLink" })
-
     </li>
-    
-    
     <li class="four">
-        <h5>Usuarios</h5>
+        <h5>
+            Usuarios</h5>
         @Html.ActionLink("Crear", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerusuarioLink" })
-
         @Html.ActionLink("Listar", "List", "Account", routeValues: null, htmlAttributes: new { id = "listartusuarioLink" })
-
     </li>
-    
-      <li class="five">
-        <h5>Reportes</h5>
+    <li class="five">
+        <h5>
+            Reportes</h5>
         @Html.ActionLink("Logs", "Logs", "Reportes", routeValues: null, htmlAttributes: new { id = "reporteLogsLink" })
         @Html.ActionLink("Pedidos", "Pedidos", "Reportes", routeValues: null, htmlAttributes: new { id = "reportePedidosLink" })
-
+        @Html.ActionLink("TopProductos", "TopProductos", "Reportes", routeValues: null, htmlAttributes: new { id = "topProducotsLink" })
+        @Html.ActionLink("Productos", "Productos", "Reportes", routeValues: null, htmlAttributes: new { id = "producotsLink" })
     </li>
 </ol>

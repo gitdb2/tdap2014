@@ -6,8 +6,9 @@
 @model TallerAplicaciones.Models.ReporteTopProductosModel
 <h2>
     Top 5 de Productos</h2>
-<div class="contenedor">
-    <div class="left">
+<table class="contenedor">
+    <tr>
+    <td >
         <table>
             <tr>
                 <th>
@@ -42,12 +43,13 @@
                 </tr>
             }
         </table>
-    </div>
-    <div class="right">
+    </td>
+    <td >
         <div id="pieChartHolder">
         </div>
-    </div>
-</div>
+    </td>
+  
+</table>
 @{
     var valores = "[";
     var etiquetas = "[";
@@ -75,7 +77,7 @@
         $(document).ready(function () {
             var r = Raphael("pieChartHolder"),
             pie = r.piechart(320, 240, 100, valoresArray, { legend: etiquetasArray, legendpos: "west" });
-            r.text(320, 100, "Top 5 de Productos mas pedidos").attr({ font: "20px sans-serif" });
+            r.text(320, 100, "").attr({ font: "20px sans-serif" });
 
             pie.hover(function () {
                 this.sector.stop();
