@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.negocio;
@@ -82,7 +83,7 @@ namespace TallerAplicaciones.Controllers
 
             return View(model);
         }
-
+        //-------------------------------------------------------------------
         public ActionResult Pedidos()
         {
 
@@ -100,7 +101,7 @@ namespace TallerAplicaciones.Controllers
             };
 
 
-           
+
             var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidores();
             var listaDist = new List<SelectListItem>
             {
@@ -169,7 +170,6 @@ namespace TallerAplicaciones.Controllers
             //si los ids de distribuidor o ejecutivo son -1 entonces se asume que son filtros
             if (ModelState.IsValid)
             {
-
                 if (model.FechaDesde > model.FechaHasta)
                 {
                     var tmp = model.FechaDesde;
@@ -234,11 +234,138 @@ namespace TallerAplicaciones.Controllers
                         Text =
                             ejec.Usuario.Login.ToString() + "(" + ejec.Nombre + " " + ejec.Apellido + ")",
                         Selected = model.EjecutivoId == ejec.PerfilUsuarioID
-                        
+
                     });
                 }
             }
             ViewBag.Ejecutivos = listaEjec;
+
+
+            return View(model);
+        }
+
+        //-------------------------------------------------------------------
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
+        public ActionResult PedidosEjecutivo()
+        {
+
+            var now = DateTime.Now;
+            var fromDate = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
+            var toDate = now + new TimeSpan(12, 59, 59);
+
+            var ejecutivo = (PerfilUsuario)Session["perfil"];
+
+            var orderBy = ManejadorReporte.Orderby.Fecha;
+            var ordenDir = ManejadorReporte.OrdenDir.Desc;
+
+            var model = new ReporteEjecutivoPedidoModel()
+            {
+                FechaDesde = fromDate,
+                FechaHasta = toDate,
+                DistribuidorId = -1,
+                EjecutivoId = ejecutivo.PerfilUsuarioID,
+                OrdenBy = (int)orderBy,
+                OrdenDir = (int)ordenDir,
+
+                Pedidos = new List<Pedido>()
+            };
+            model.Pedidos = ManejadorReporte.GetInstance()
+                 .GetPedidos(model.FechaDesde, model.FechaHasta,
+                              model.DistribuidorId, model.EjecutivoId,
+                              orderBy, ordenDir);
+
+
+            var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(ejecutivo.PerfilUsuarioID);
+            var listaDist = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Selecctione un Distribuidor",
+                    Value = "-1",
+                    Selected = true
+                }
+            };
+            if (distribuidores != null && distribuidores.Any())
+            {
+                foreach (var dist in distribuidores)
+                {
+
+                    var item = new SelectListItem()
+                    {
+                        Value = dist.PerfilUsuarioID.ToString(),
+                        Text =
+                            dist.Usuario.Login.ToString() + "(" + dist.Nombre + " " + dist.Apellido + " - " +
+                            dist.Empresa.Nombre + ")"
+
+                    };
+                    listaDist.Add(item);
+                }
+            }
+            ViewBag.Distribuidores = listaDist;
+
+            return View(model);
+        }
+
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
+        [HttpPost]
+        public ActionResult PedidosEjecutivo(ReporteEjecutivoPedidoModel model)
+        {
+
+            var ejecutivo = (PerfilUsuario)Session["perfil"];
+
+            model.EjecutivoId = ejecutivo.PerfilUsuarioID;
+            //si los ids de distribuidor o ejecutivo son -1 entonces se asume que son filtros
+            if (ModelState.IsValid)
+            {
+                if (model.FechaDesde > model.FechaHasta)
+                {
+                    var tmp = model.FechaDesde;
+                    model.FechaDesde = model.FechaHasta;
+                    model.FechaHasta = tmp;
+                }
+
+                var orderBy = (ManejadorReporte.Orderby)model.OrdenBy;
+                var orderDir = (ManejadorReporte.OrdenDir)model.OrdenDir;
+
+                model.Pedidos = ManejadorReporte.GetInstance()
+                    .GetPedidos(model.FechaDesde, model.FechaHasta,
+                                 model.DistribuidorId, model.EjecutivoId,
+                                 orderBy, orderDir);
+            }
+            else
+            {
+                model.Pedidos = new List<Pedido>();
+            }
+
+            var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(ejecutivo.PerfilUsuarioID);
+
+            var listaDist = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Selecctione un Distribuidor",
+                    Value = "-1",
+                    Selected = model.DistribuidorId == -1
+                }
+            };
+            if (distribuidores != null && distribuidores.Any())
+            {
+                foreach (var dist in distribuidores)
+                {
+
+                    var item = new SelectListItem()
+                    {
+                        Value = dist.PerfilUsuarioID.ToString(),
+                        Text =
+                            dist.Usuario.Login.ToString() + "(" + dist.Nombre + " " + dist.Apellido + " - " +
+                            dist.Empresa.Nombre + ")",
+                        Selected = model.DistribuidorId == dist.PerfilUsuarioID
+
+                    };
+                    listaDist.Add(item);
+                }
+            }
+            ViewBag.Distribuidores = listaDist;
 
 
             return View(model);

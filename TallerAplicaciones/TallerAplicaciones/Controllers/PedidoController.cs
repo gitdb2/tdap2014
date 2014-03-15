@@ -37,8 +37,7 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-
-
+    
         //
         // GET: /Pedido/Create
         [AllowAnonymous]
