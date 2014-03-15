@@ -142,13 +142,13 @@
                 '</div>'));
         }
 
-        function removerValorAtributoSimple($elem, idProducto, idValorAtributoSimple) {
+        function removerValorAtributo($elem, idProducto, idValorAtributo) {
             var data = {
                 idProducto: idProducto,
-                idValorAtributoSimple: idValorAtributoSimple
+                idValorAtributo: idValorAtributo
             };
 
-            $.post("RemoverValorAtributoSimple", data, function (response) {
+            $.post("RemoverValorAtributo", data, function (response) {
                 if (response.Ok) {
                     $elem.parent().parent().remove();
                 } else {
@@ -173,13 +173,13 @@
             }, "json");
         }
 
-        function removerValorAtributoSimple($elem, idProducto, nuevoValor) {
+        function agregarValorAtributoSimple($elem, idProducto, nuevoValor) {
             var data = {
                 idProducto: idProducto,
                 nuevoValor: nuevoValor
             };
 
-            $.post("RemoverValorAtributoSimple", data, function (response) {
+            $.post("AgregarValorAtributoSimple", data, function (response) {
                 if (response.Ok) {
                     $elem.parent().parent().remove();
                 } else {
@@ -187,7 +187,6 @@
                 }
             }, "json");
         }
-
 
     </script>
     @Scripts.Render("~/bundles/jqueryval")

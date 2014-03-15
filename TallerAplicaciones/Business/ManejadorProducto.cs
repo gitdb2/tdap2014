@@ -633,7 +633,7 @@ private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Pro
             return resultado;
         }
 
-        public bool RemoverValorAtributoSimple(int idProducto, int idValorAtributoSimple)
+        public bool RemoverValorAtributo(int idProducto, int idValorAtributo)
         {
             var resultadoOk = false;
             using (var db = new Persistencia())
@@ -644,13 +644,13 @@ private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Pro
 
                 if (producto != null && producto.ValoresSeleccionados != null)
                 {
-                    var valorSimple =
+                    var valorAtributo =
                         db.ValoresAtributos
-                        .SingleOrDefault(v0 => v0.ValorAtributoID == idValorAtributoSimple);
-                    if (valorSimple != null)
+                        .SingleOrDefault(v0 => v0.ValorAtributoID == idValorAtributo);
+                    if (valorAtributo != null)
                     {
-                        producto.ValoresSeleccionados.Remove(valorSimple);
-                        db.ValoresAtributos.Remove(valorSimple);
+                        producto.ValoresSeleccionados.Remove(valorAtributo);
+                        db.ValoresAtributos.Remove(valorAtributo);
                         db.SaveChanges();
                         resultadoOk = true;
                     }
