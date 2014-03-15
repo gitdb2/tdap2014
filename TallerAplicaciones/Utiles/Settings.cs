@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace uy.edu.ort.taller.aplicaciones.utiles
 {
@@ -28,6 +29,14 @@ namespace uy.edu.ort.taller.aplicaciones.utiles
             return config.Get(key, defval);
         }
 
+        /// <summary>
+        /// invocar con Server.MapPath("~")+
+        /// </summary>
+        /// <param name="homeRoot"></param>
+        public void Init(string homeRoot)
+        {
+            config = new Properties(Path.Combine(homeRoot, "settings.properties"));
+        }
 
     }
 }

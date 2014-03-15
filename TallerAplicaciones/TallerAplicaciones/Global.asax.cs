@@ -12,6 +12,7 @@ using log4net;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.logs;
 using uy.edu.ort.taller.aplicaciones.negocio;
+using uy.edu.ort.taller.aplicaciones.utiles;
 using WebMatrix.WebData;
 
 namespace TallerAplicaciones
@@ -23,8 +24,12 @@ namespace TallerAplicaciones
     public class MvcApplication : System.Web.HttpApplication
     {
         private static ILog log;
+
         protected void Application_Start()
         {
+
+            Settings.GetInstance().Init(Server.MapPath("~"));
+            
             //para que inicialice la base de datos
             using (var db = new Persistencia())
             {

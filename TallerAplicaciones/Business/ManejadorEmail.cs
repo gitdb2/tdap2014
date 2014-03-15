@@ -11,6 +11,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 {
     public class ManejadorEmail
     {
+
         #region singleton
 
         private static ManejadorEmail instance = new ManejadorEmail();
@@ -82,6 +83,31 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
+        private string GenerarCuerpoEmail(Pedido p)
+        {
+            var stringBuilder = new StringBuilder();
+            if (p.CantidadProductoPedidoList.Any())
+            {
+                stringBuilder.Append("Ejecutivo de Cuentas que realizo el Pedido:").Append(p.Ejecutivo.Nombre).Append("\n");
+                stringBuilder.Append("Identificador del Pedido: ").Append(p.PedidoID).Append("\n");
+                stringBuilder.Append("Descripcion del Pedido: ").Append(p.Descripcion).Append("\n");
+                stringBuilder.Append("Fecha que se realizo el Pedido: ").Append(p.Fecha.ToString(FormatoFecha)).Append("\n");
+                stringBuilder.Append("Estado del Pedido: ").Append(p.Aprobado ? "Aprobado" : "No Aprobado").Append("\n");
+                stringBuilder.Append("\n").Append("Productos del Pedido: ").Append("\n");
+                foreach (var cpp in p.CantidadProductoPedidoList)
+                {
+                    stringBuilder.Append("Producto: ").Append(cpp.Producto.Nombre);
+                    stringBuilder.Append(", Cantidad: ").Append(cpp.Cantidad).Append("\n");
+                }
+            }
+            else
+            {
+                stringBuilder.Append("No hay Productos en el Pedido.").Append("\n").Append("\n");
+                stringBuilder.Append("Ocurrio un error al generar este email, contactese con el Administrador.");
+            }
+            return stringBuilder.ToString();
+        }
+
         private void IntentarCargarVariablesEnvioMail()
         {
             _emailRemitente = CargarVariableString("mail.remitente.direccion");
@@ -96,8 +122,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         private string CargarVariableString(string clave)
         {
-            string valorVariable = null;
-            valorVariable = Settings.GetInstance().GetProperty(clave);
+            string valorVariable = Settings.GetInstance().GetProperty(clave);
             if (valorVariable == null || valorVariable.Trim().Equals(""))
             {
                 throw new ArgumentException("El valor de la variable " + clave + " no puede ser vacia");
@@ -125,32 +150,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 throw new ArgumentException("El valor de la variable " + clave + " debe ser true o false");
             }
             return resultado;
-        }
-
-
-        private string GenerarCuerpoEmail(Pedido p)
-        {
-            var stringBuilder = new StringBuilder();
-            if (p.CantidadProductoPedidoList.Any())
-            {
-                stringBuilder.Append("Ejecutivo de Cuentas que realizo el Pedido:").Append(p.Ejecutivo.Nombre).Append("\n");
-                stringBuilder.Append("Identificador del Pedido: ").Append(p.PedidoID).Append("\n");
-                stringBuilder.Append("Descripcion del Pedido: ").Append(p.Descripcion).Append("\n");
-                stringBuilder.Append("Fecha que se realizo el Pedido: ").Append(p.Fecha.ToString(FormatoFecha)).Append("\n");
-                stringBuilder.Append("Estado del Pedido: ").Append(p.Aprobado ? "Aprobado" : "No Aprobado").Append("\n");
-                stringBuilder.Append("\n").Append("Productos del Pedido: ").Append("\n");
-                foreach (var cpp in p.CantidadProductoPedidoList)
-                {
-                    stringBuilder.Append("Producto: ").Append(cpp.Producto.Nombre);
-                    stringBuilder.Append(", Cantidad: ").Append(cpp.Cantidad).Append("\n");
-                }
-            }
-            else
-            {
-                stringBuilder.Append("No hay Productos en el Pedido.").Append("\n").Append("\n");
-                stringBuilder.Append("Ocurrio un error al generar este email, contactese con el Administrador.");
-            }
-            return stringBuilder.ToString();
         }
 
     }
