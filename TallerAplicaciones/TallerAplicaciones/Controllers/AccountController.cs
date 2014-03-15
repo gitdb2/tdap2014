@@ -73,7 +73,8 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Account/Register
 
-        [CustomAuthorize(Roles = "Administrador")]
+        //===>>[CustomAuthorize(Roles = "Administrador")]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             var model = new RegisterModel();
@@ -85,7 +86,8 @@ namespace TallerAplicaciones.Controllers
         // POST: /Account/Register
 
         [HttpPost]
-        [CustomAuthorize(Roles = "Administrador")]
+        //===>>[CustomAuthorize(Roles = "Administrador")]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {

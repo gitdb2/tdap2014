@@ -52,6 +52,16 @@ namespace TallerAplicaciones.Models
         /// </summary>
         public List<int> DeleteFiles { get; set; }
 
+        //==> Datos de atributos para editar <==
+        [Display(Name = "Lista de Atributos Simples")]
+        public List<AtributoSimple> ListaDeAtributosSimple { get; set; }
+        
+        [Display(Name = "Lista de Atributos Combo")]
+        public List<AtributoSimple> ListaDeAtributosCombo { get; set; }
+        
+        [Display(Name = "Lista de Atributos Multiseleccion")]
+        public List<AtributoSimple> ListaDeAtributosMoltiseleccion { get; set; }
+        
         //==> Para obtener atributos a mostrar <==
         [Display(Name = "Atributos")]
         public List<Atributo> ListaDeAtributos { get; set; }
@@ -68,6 +78,9 @@ namespace TallerAplicaciones.Models
 
         [Display(Name = "Valores Atributo Multi")]
         public List<string> ValorAtributoMulti { get; set; }
+
+        
+
     }
 
     public class DeleteProductModel
