@@ -94,7 +94,7 @@ namespace TallerAplicaciones.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
-                    WebSecurity.Login(model.UserName, model.Password);
+                  //  WebSecurity.Login(model.UserName, model.Password);
 
                     AltaUsuario(model);
 
