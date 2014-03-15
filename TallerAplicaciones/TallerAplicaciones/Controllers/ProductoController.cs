@@ -58,14 +58,14 @@ namespace TallerAplicaciones.Controllers
                 IAtributo iAtributo = ManejadorAtributo.GetInstance();
                 List<Atributo> listaAtributos = iAtributo.GetAtributosActivos();
 
-                model = new ProductoConArchivosSubmitModel() {ListaDeAtributos = listaAtributos};
+                model = new ProductoConArchivosSubmitModel() { ListaDeAtributos = listaAtributos };
             }
             catch (Exception e)
             {
                 ModelState.AddModelError("", "ERROR");
             }
             return View(model);
-      
+
         }
 
         // POST: /Producto/Create
@@ -107,8 +107,8 @@ namespace TallerAplicaciones.Controllers
                 videoList = GetArchivosAndSaveFiles(model, producto, true);
 
 
-                 ManejadorProducto.GetInstance().AltaProducto(producto, model.IdAtributoSimple, model.ValorAtributoSimple, model.ValorAtributoCombo, model.ValorAtributoMulti);
-                 
+                ManejadorProducto.GetInstance().AltaProducto(producto, model.IdAtributoSimple, model.ValorAtributoSimple, model.ValorAtributoCombo, model.ValorAtributoMulti);
+
 
                 return RedirectToAction("List");
             }
@@ -165,7 +165,7 @@ namespace TallerAplicaciones.Controllers
                         return false;
                     }
                 }
-               
+
             }
 
             return ret;
@@ -178,51 +178,30 @@ namespace TallerAplicaciones.Controllers
         public ActionResult Edit(int idProducto)
         {
 
-            return View(GetProductoConArchivosSubmitModelFromDB(idProducto));
+
+          
+
+            IAtributo iAtributo = ManejadorAtributo.GetInstance();
+            var model = GetProductoConArchivosSubmitModelFromDB(idProducto);
+
+            model.ListaDeAtributos = iAtributo.GetAtributosActivos();
+
+
+            return View(model);
         }
 
-        private ProductoConArchivosSubmitModel GetProductoConArchivosSubmitModelFromDB(int idProducto)
-        {
-            var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
-            List<ValorAtributo> listaValorAtributosSimple = null;
-            List<ValorAtributo> listaValorAtributosCombo = null;
-            List<ValorAtributo> listaValorAtributosMoltiseleccion = null;
-            if (producto == null)
-            {
-                throw new Exception("El producto id " + idProducto + " no existe");
-            }
-            else
-            {
-                listaValorAtributosSimple = ManejadorProducto.GetInstance().GetListaValorAtributosSimple(producto.ValoresSeleccionados);
-                listaValorAtributosCombo = ManejadorProducto.GetInstance().GetListaValorAtributosCombo(producto.ValoresSeleccionados);
-                listaValorAtributosMoltiseleccion = ManejadorProducto.GetInstance().GetListaValorAtributosMultiseleccion(producto.ValoresSeleccionados);
-            }
-
-
-            return new ProductoConArchivosSubmitModel
-            {
-                Activo = producto.Activo,
-                Producto = producto,
-                Descripcion = producto.Descripcion,
-                Nombre = producto.Nombre,
-                Codigo = producto.Codigo,
-                ProductoID = producto.ProductoID,
-
-                ListaValorAtributosSimple = listaValorAtributosSimple,
-                ListaValorAtributosCombo = listaValorAtributosCombo,
-                ListaValorAtributosMoltiseleccion = listaValorAtributosMoltiseleccion
-            };
-        }
-
-
+      
         //
-        // POST: /Producto/Edit/5
-
+        // POST: /Producto/Edit
         [HttpPost]
         public ActionResult Edit(ProductoConArchivosSubmitModel model)
         {
 
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+
+                return View(model);
+            }
 
 
             if (!CheckFileExtension(model.Fotos, new List<String> { "png", "jpg" }))
@@ -304,6 +283,39 @@ namespace TallerAplicaciones.Controllers
             return View(errorModel);
 
 
+        }
+
+
+        private ProductoConArchivosSubmitModel GetProductoConArchivosSubmitModelFromDB(int idProducto)
+        {
+            var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
+            var listaValorAtributosSimple = new List<ValorAtributo>();
+            var listaValorAtributosCombo = new List<ValorAtributo>();
+            var listaValorAtributosMoltiseleccion = new List<ValorAtributo>();
+            if (producto == null)
+            {
+                throw new Exception("El producto id " + idProducto + " no existe");
+            }
+
+            listaValorAtributosSimple           = ManejadorProducto.GetInstance().GetListaValorAtributosSimple(producto.ValoresSeleccionados);
+            listaValorAtributosCombo            = ManejadorProducto.GetInstance().GetListaValorAtributosCombo(producto.ValoresSeleccionados);
+            listaValorAtributosMoltiseleccion   = ManejadorProducto.GetInstance().GetListaValorAtributosMultiseleccion(producto.ValoresSeleccionados);
+
+
+            var model = new ProductoConArchivosSubmitModel
+            {
+                Activo = producto.Activo,
+                Producto = producto,
+                Descripcion = producto.Descripcion,
+                Nombre = producto.Nombre,
+                Codigo = producto.Codigo,
+                ProductoID = producto.ProductoID,
+
+                ListaValorAtributosSimple = listaValorAtributosSimple,
+                ListaValorAtributosCombo = listaValorAtributosCombo,
+                ListaValorAtributosMoltiseleccion = listaValorAtributosMoltiseleccion
+            };
+            return model;
         }
 
         //
