@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.dominio.DTO;
@@ -32,13 +33,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 {
                     ///////////////////////////////////////////////////////////
                     List<ValorAtributo> aRetornar = new List<ValorAtributo>();
-                 
+
                     int i = 0;
                     foreach (var idAtrib in idAtributoSimple)
                     {
                         //AtributoSimple atributo = (AtributoSimple)iAtributo.GetAtributo(idAtrib);
                         AtributoSimple atributo = db.Atributos.OfType<AtributoSimple>().SingleOrDefault(a => a.AtributoID == idAtrib);
- 
+
                         var valorAtributo = new ValorAtributoSimple()
                         {
                             Valor = valorAtributoSimple[i],
@@ -58,7 +59,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                         //ValorPredefinido valorPredefinido = iAtributo.GetValorPredefinido(idValor);
                         ValorPredefinido valorPredefinido = db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
-                        
+
                         var listaValorPredefinido = new List<ValorPredefinido>();
                         listaValorPredefinido.Add(valorPredefinido);
                         var ValorAtributo = new ValorAtributoCombo()
@@ -87,7 +88,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         };
                         aRetornar.Add(ValorAtributo);
                     }
-           
+
                     producto.ValoresSeleccionados = aRetornar;
                     ///////////////////////////////////////////////////////////
 
@@ -109,7 +110,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         }
 
-        
         public bool BajaProducto(int idProducto)
         {
             using (var db = new Persistencia())
@@ -160,8 +160,97 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
-        //TODO
         public List<ValorAtributoDTO> ListarAtributosProductoDTO(int idProducto)
+        {
+            var resultado = new List<ValorAtributoDTO>();
+            using (var db = new Persistencia())
+            {
+                Producto producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados)
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                if (producto != null)
+                {
+                    resultado.AddRange(ObtenerValoresSimplesDTO(producto));
+                    resultado.AddRange(ObtenerValoresComboDTO(producto));
+                }
+            }
+            return resultado;
+        }
+
+        private List<ValorAtributoDTO> ObtenerValoresSimplesDTO(Producto producto)
+        {
+            List<ValorAtributoDTO> resultado = new List<ValorAtributoDTO>();
+            List<ValorAtributoSimple> valoresSimples = ObtenerValoresSimples(producto);
+            using (var db = new Persistencia())
+            {
+            }
+            return resultado;
+        }
+
+        private List<ValorAtributoSimple> ObtenerValoresSimples(Producto producto)
+        {
+            List<ValorAtributoSimple> resultado = new List<ValorAtributoSimple>();
+            List<int> ids = ObtenerIdsAtributoSimple(producto);
+            using (var db = new Persistencia())
+            {
+                return db.ValoresAtributos
+                    .OfType<ValorAtributoSimple>()
+                    .Where(v0 => ids.Contains(v0.ValorAtributoID))
+                    .Include(v1 => v1.Atributo)
+                    .ToList();
+            }    
+        }
+
+        private List<int> ObtenerIdsAtributoSimple(Producto producto)
+        {
+            var resultado = new List<int>();
+            foreach (var valor in producto.ValoresSeleccionados.OfType<ValorAtributoSimple>())
+            {
+                resultado.Add(valor.ValorAtributoID);
+            }
+            return resultado;
+        }
+
+        private List<ValorAtributoDTO> ObtenerValoresComboDTO(Producto producto)
+        {
+            List<ValorAtributoDTO> resultado = new List<ValorAtributoDTO>();
+            List<ValorAtributoCombo> valoresSimples = ObtenerValoresCombo(producto);
+            using (var db = new Persistencia())
+            {
+
+            }
+            return resultado;
+        }
+
+        private List<ValorAtributoCombo> ObtenerValoresCombo(Producto producto)
+        {
+            List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
+            List<int> ids = ObtenerIdsAtributoCombo(producto);
+            using (var db = new Persistencia())
+            {
+                listaCombo = db.ValoresAtributos
+                    .OfType<ValorAtributoCombo>()
+                    .Where(v0 => ids.Contains(v0.ValorAtributoID))
+                    .Include(v1 => v1.Valores)
+                    .Include(v2 => v2.Atributo)
+                    .ToList();
+            }
+            return listaCombo;
+        }
+
+        private List<int> ObtenerIdsAtributoCombo(Producto producto)
+        {
+            var resultado = new List<int>();
+            foreach (var valor in producto.ValoresSeleccionados.OfType<ValorAtributoCombo>())
+            {
+                resultado.Add(valor.ValorAtributoID);
+            }
+            return resultado;
+        }
+
+        //TODO
+        public List<ValorAtributoDTO> ListarAtributosProductoDTO_deprecated(int idProducto)
         {
             //dummy porque no hay valores de atributo aun
             var resultado = new List<ValorAtributoDTO>();
@@ -345,21 +434,21 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                         if (productoDb.Archivos == null)
                         {
-                            productoDb.Archivos  = new List<Archivo>();
+                            productoDb.Archivos = new List<Archivo>();
                         }
 
-                        if (productoDb.Archivos.Any() && filesToDelete!=null && filesToDelete.Any())
+                        if (productoDb.Archivos.Any() && filesToDelete != null && filesToDelete.Any())
                         {
-                           productoDb.Archivos.RemoveAll(a => filesToDelete.Contains(a.ArchivoID));
+                            productoDb.Archivos.RemoveAll(a => filesToDelete.Contains(a.ArchivoID));
 
-                           var archivosABorrar   =  db.Archivos
-                                                  .Where(a => filesToDelete.Contains(a.ArchivoID))
-                                                  .ToList();
+                            var archivosABorrar = db.Archivos
+                                                   .Where(a => filesToDelete.Contains(a.ArchivoID))
+                                                   .ToList();
 
-                           foreach (var arch in archivosABorrar)
-                           {
-                               db.Archivos.Remove(arch);
-                           }
+                            foreach (var arch in archivosABorrar)
+                            {
+                                db.Archivos.Remove(arch);
+                            }
                         }
 
                         if (productoUpdate.Archivos != null && productoUpdate.Archivos.Any())
@@ -376,7 +465,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         }
                         else
                         {
-                            throw new CustomException(message){Key = key};
+                            throw new CustomException(message) { Key = key };
                         }
                     }
                 }
@@ -385,7 +474,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 if (e.InnerException.InnerException.Message.Contains("UNIQUE KEY"))
                 {
-                    throw new ValorDuplicadoException("El codigo >"+productoUpdate.Codigo+"< ya existe", e);
+                    throw new ValorDuplicadoException("El codigo >" + productoUpdate.Codigo + "< ya existe", e);
                 }
 
                 throw;
@@ -456,3 +545,4 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
     }
 }
+
