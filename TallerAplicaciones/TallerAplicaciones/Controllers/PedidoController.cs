@@ -37,7 +37,7 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-    
+
         //
         // GET: /Pedido/Create
         [AllowAnonymous]
@@ -127,7 +127,7 @@ namespace TallerAplicaciones.Controllers
         }
 
 
-      
+
 
         private PedidoEditModel GetPedidoModelFromDB(int idPedido)
         {
@@ -168,7 +168,7 @@ namespace TallerAplicaciones.Controllers
             public bool Ok { get; set; }
             public string Message { get; set; }
         }
-        public class ModificarCantidadPedidoJson:BaseJson
+        public class ModificarCantidadPedidoJson : BaseJson
         {
             public int IdPedido { get; set; }
             public int IdCantidadProductoPedido { get; set; }
@@ -178,7 +178,7 @@ namespace TallerAplicaciones.Controllers
 
         public class AddCantidadPedidoJson : ModificarCantidadPedidoJson
         {
-         
+
             public int IdProducto { get; set; }
             public string NombreProducto { get; set; }
             public string CodigoProducto { get; set; }
@@ -257,7 +257,7 @@ namespace TallerAplicaciones.Controllers
                     {
                         ret.Ok = ManejadorPedido.GetInstance().UpdateCantidadProductoPedido(idPedido, idCantidadProductoPedido, cantidad);
                         ret.Cantidad = cantidad;
-                    } 
+                    }
                     catch (Exception e)
                     {
                         ret.Message = e.Message;
@@ -265,7 +265,7 @@ namespace TallerAplicaciones.Controllers
                     }
                 }
             }
-            return Json(ret,  JsonRequestBehavior.AllowGet);
+            return Json(ret, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -300,10 +300,10 @@ namespace TallerAplicaciones.Controllers
                     PedidoID = model.PedidoID,
                 };
 
-              
 
 
-               
+
+
                 ManejadorPedido.GetInstance().Modificar(pedido);
 
 
@@ -359,10 +359,24 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Detalle(int idPedido)
         {
-            return View(ManejadorPedido.GetInstance().GetPedido(idPedido));
+            var ejec = (PerfilUsuario) Session["perfil"];
+            var pedido = ManejadorPedido.GetInstance().GetPedido(idPedido);
+
+            if (ejec.PerfilUsuarioID == pedido.Ejecutivo.PerfilUsuarioID)
+            {
+                ViewBag.Ok = true;
+                return View(pedido);
+            }
+            else
+            {
+                ViewBag.Ok = false;
+                ViewBag.Error = "El pedido no es de una empresa tuya. Sorry no robes..";
+                return View();
+
+            }
         }
 
     }

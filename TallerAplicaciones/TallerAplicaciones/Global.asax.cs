@@ -31,9 +31,17 @@ namespace TallerAplicaciones
             {
                 db.Productos.ToList();
 
-                if (db.PerfilesUsuario.OfType<Administrador>().Any(p=>p.Activo))
+              
+            }
+
+            if (!WebSecurity.Initialized)
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuario", "UsuarioID", "Login", autoCreateTables: true);
+
+            using (var db = new Persistencia())
+            {
+                if (!db.PerfilesUsuario.OfType<Administrador>().Any(p => p.Activo))
                 {
-                    WebSecurity.CreateUserAndAccount("admin", "admin", propertyValues: new { Activo = true });
+                    WebSecurity.CreateUserAndAccount("admin", "admin", propertyValues: new {Activo = true});
 
                     var perfil = new Administrador()
                     {
@@ -45,10 +53,6 @@ namespace TallerAplicaciones
                     ManejadorPerfilUsuario.GetInstance().AltaPerfilUsuario(perfil, "admin");
                 }
             }
-
-            if (!WebSecurity.Initialized)
-                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuario", "UsuarioID", "Login", autoCreateTables: true);
-
             //FileInfo conf = new FileInfo("log4net.config");
             //bool exists = conf.Exists;
             //log4net.Config.XmlConfigurator.Configure(conf);
