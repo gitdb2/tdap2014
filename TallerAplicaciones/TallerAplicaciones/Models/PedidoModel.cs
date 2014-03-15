@@ -18,12 +18,15 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Aprobado")]
         public bool Aprobado { get; set; }
+
         [Required]
         [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
+
         [Required]
         [Display(Name = "Fecha")]
         public DateTime Fecha { get; set; }
+
         [Required]
         [Display(Name = "Activo")]
         public bool Activo { get; set; }
