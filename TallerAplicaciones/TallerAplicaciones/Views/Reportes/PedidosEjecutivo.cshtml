@@ -131,9 +131,13 @@
 {
     <script type="text/javascript">
         function openDetalle(idPedido) {
-            $(function () {
+            $("#dialog").load("/Pedido/Detalle?idPedido=" + idPedido + " #contenido", function () {
                 $("#dialog").dialog({
                     modal: true,
+                    maxWidth: 600,
+                    maxHeight: 500,
+                    width: 600,
+                    height: 500,
                     buttons: {
                         Ok: function () {
                             $(this).dialog("close");
@@ -142,6 +146,7 @@
                 });
             });
         }
+
 
         $(document).ready(function () {
             $(".datepicker").datepicker({

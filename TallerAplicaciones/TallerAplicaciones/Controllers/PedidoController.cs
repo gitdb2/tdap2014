@@ -355,6 +355,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
+        [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
         public ActionResult Detalle(int idPedido)
         {
             var ejec = (PerfilUsuario)Session[Constants.SESSION_PERFIL];
