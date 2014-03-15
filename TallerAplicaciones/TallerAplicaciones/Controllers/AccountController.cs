@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
@@ -45,9 +46,22 @@ namespace TallerAplicaciones.Controllers
             {
                 if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
+                    
                     Session[Constants.SESSION_LOGIN] = model.UserName;
 
-                    Session[Constants.SESSION_PERFIL] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+                    var perfil = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+
+                    Session[Constants.SESSION_PERFIL] = perfil;
+                    if (perfil.GetRolEnum() == UserRole.Distribuidor)
+                    {
+                        FormsAuthentication.SignOut();
+                        HttpContext.User =
+                        new GenericPrincipal(new GenericIdentity(string.Empty), null);
+
+                        ModelState.AddModelError("", "Este Sistema es solo para Administradores y Ejecutivos de cuenta");
+                        return  View(model);
+                    }
+                    
                     log.InfoFormat("Logueo correcto");
                     return RedirectToLocal(returnUrl);
                 }    
