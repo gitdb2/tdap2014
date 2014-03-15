@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 
 namespace TallerAplicaciones.Controllers
 {
@@ -13,8 +14,8 @@ namespace TallerAplicaciones.Controllers
         {
             Response.StatusCode = 403;
 
-            ViewData["message"] =   Session["errorMessage"]??(
-                    Request.Params["message"] ?? "Acceso no permitido");
+            ViewData[Constants.REQUEST__MESSAGE] = Session[Constants.SESSION_ERROR_MESSAGE] ?? (
+                    Request.Params[Constants.REQUEST__MESSAGE] ?? "Acceso no permitido");
             return View();
         }
 

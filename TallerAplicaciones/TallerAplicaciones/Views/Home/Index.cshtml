@@ -1,4 +1,5 @@
 ﻿@using uy.edu.ort.taller.aplicaciones.dominio
+@using uy.edu.ort.taller.aplicaciones.dominio.Constants
 @{
     ViewBag.Title = "Home Page";
 }
@@ -51,9 +52,15 @@
         @Html.ActionLink("Pedidos", "Pedidos", "Reportes", routeValues: null, htmlAttributes: new { id = "reportePedidosLink" })
         @Html.ActionLink("TopProductos", "TopProductos", "Reportes", routeValues: null, htmlAttributes: new { id = "topProducotsLink" })
         @Html.ActionLink("Productos", "Productos", "Reportes", routeValues: null, htmlAttributes: new { id = "producotsLink" })
-        @if (Session["perfil"] != null && ((PerfilUsuario)Session["perfil"]).GetRolEnum() == UserRole.EjecutivoDeCuenta)
+        @if (Session[Constants.SESSION_PERFIL] != null && ((PerfilUsuario)Session[Constants.SESSION_PERFIL]).GetRolEnum() == UserRole.EjecutivoDeCuenta)
         {
-            @Html.ActionLink("PedidosEjecutivo (precisa ser ejecutivo)", "PedidosEjecutivo", "Reportes", routeValues: null, htmlAttributes: new { id = "pedidosEjecutivoLink" })
+            @Html.ActionLink("Pedidos de Ejecutivo", "PedidosEjecutivo", "Reportes", routeValues: null, htmlAttributes: new { id = "pedidosEjecutivoLink" })
         }
+    </li>
+      <li class="six">
+        <h5>
+            Atributos</h5>
+        @Html.ActionLink("Crear", "Create", "Atributo", routeValues: null, htmlAttributes: new { id = "crearatibutoLink" })
+        @Html.ActionLink("Listar", "List", "Atributo", routeValues: null, htmlAttributes: new { id = "listartatributoLink" })
     </li>
 </ol>

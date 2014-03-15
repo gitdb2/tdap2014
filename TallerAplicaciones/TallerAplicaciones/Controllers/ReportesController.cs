@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
@@ -253,7 +254,7 @@ namespace TallerAplicaciones.Controllers
             var fromDate = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
             var toDate = now + new TimeSpan(12, 59, 59);
 
-            var ejecutivo = (PerfilUsuario)Session["perfil"];
+            var ejecutivo = (PerfilUsuario)Session[Constants.SESSION_PERFIL];
 
             var orderBy = ManejadorReporte.Orderby.Fecha;
             var ordenDir = ManejadorReporte.OrdenDir.Desc;
@@ -280,7 +281,7 @@ namespace TallerAplicaciones.Controllers
             {
                 new SelectListItem
                 {
-                    Text = "Selecctione un Distribuidor",
+                    Text = "Todos los Distribuidores",
                     Value = "-1",
                     Selected = true
                 }
@@ -311,7 +312,7 @@ namespace TallerAplicaciones.Controllers
         public ActionResult PedidosEjecutivo(ReporteEjecutivoPedidoModel model)
         {
 
-            var ejecutivo = (PerfilUsuario)Session["perfil"];
+            var ejecutivo = (PerfilUsuario)Session[Constants.SESSION_PERFIL];
 
             model.EjecutivoId = ejecutivo.PerfilUsuarioID;
             //si los ids de distribuidor o ejecutivo son -1 entonces se asume que son filtros
@@ -343,7 +344,7 @@ namespace TallerAplicaciones.Controllers
             {
                 new SelectListItem
                 {
-                    Text = "Selecctione un Distribuidor",
+                    Text = "Todos los Distribuidores",
                     Value = "-1",
                     Selected = model.DistribuidorId == -1
                 }

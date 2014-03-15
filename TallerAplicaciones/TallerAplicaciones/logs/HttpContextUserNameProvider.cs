@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using WebMatrix.WebData;
 
 namespace TallerAplicaciones.logs
@@ -11,21 +12,11 @@ namespace TallerAplicaciones.logs
         public override string ToString()
         {
             HttpContext context = HttpContext.Current;
-            if (context != null && context.Session != null && context.Session["login"] != null)
+            if (context != null && context.Session != null && context.Session[Constants.SESSION_LOGIN] != null)
             {
-                return (string)context.Session["login"];
+                return (string)context.Session[Constants.SESSION_LOGIN];
             }
 
-            //if (WebSecurity.CurrentUserId != null)
-            //{
-            //    return WebSecurity.CurrentUserId.ToString();
-            //}
-
-            //HttpContext context = HttpContext.Current;
-            //if (context != null && context.User != null && context.User.Identity.IsAuthenticated)
-            //{
-                //return context.User.Identity.Name;
-            //}
             return "-";
         }
     }

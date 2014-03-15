@@ -883,7 +883,7 @@ tr.pager td
     top: 0;
 }
 
-.radio {
+.radio input {
     width: auto !important;
     
 }

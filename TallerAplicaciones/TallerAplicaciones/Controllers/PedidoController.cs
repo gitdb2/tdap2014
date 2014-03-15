@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
@@ -43,7 +44,7 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            var eject = (EjecutivoDeCuenta)Session["Perfil"];
+            var eject = (EjecutivoDeCuenta)Session[Constants.SESSION_PERFIL];
 
             var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(eject.PerfilUsuarioID);
             var productosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
@@ -74,12 +75,14 @@ namespace TallerAplicaciones.Controllers
 
             try
             {
+                var timespan = DateTime.Now.TimeOfDay;
+               
                 var pedido = new Pedido()
                 {
                     Activo = true,
                     Aprobado = model.Aprobado,
                     Descripcion = model.Descripcion,
-                    Fecha = model.Fecha
+                    Fecha = model.Fecha + timespan
                 };
 
                 try
@@ -122,7 +125,7 @@ namespace TallerAplicaciones.Controllers
             };
 
             model.ProductosDisponibles = new List<Producto>();
-            model.EjecutivoDeCuenta = (EjecutivoDeCuenta)Session["Perfil"];
+            model.EjecutivoDeCuenta = (EjecutivoDeCuenta)Session[Constants.SESSION_PERFIL];
 
             model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
                 .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoDeCuenta.PerfilUsuarioID);
@@ -289,11 +292,12 @@ namespace TallerAplicaciones.Controllers
             try
             {
 
+                var timespan = DateTime.Now.TimeOfDay;
                 var pedido = new Pedido()
                 {
                     Aprobado = model.Aprobado,
                     Descripcion = model.Descripcion,
-                    Fecha = model.Fecha,
+                    Fecha = model.Fecha + timespan,
                     Activo = model.Activo,
                     PedidoID = model.PedidoID,
                 };
@@ -353,7 +357,7 @@ namespace TallerAplicaciones.Controllers
         [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Detalle(int idPedido)
         {
-            var ejec = (PerfilUsuario) Session["perfil"];
+            var ejec = (PerfilUsuario)Session[Constants.SESSION_PERFIL];
             var pedido = ManejadorPedido.GetInstance().GetPedido(idPedido);
 
             if (ejec.PerfilUsuarioID == pedido.Ejecutivo.PerfilUsuarioID)

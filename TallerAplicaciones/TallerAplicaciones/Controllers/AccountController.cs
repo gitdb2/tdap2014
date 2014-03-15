@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.Web.WebPages.OAuth;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using WebMatrix.WebData;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
@@ -44,9 +45,9 @@ namespace TallerAplicaciones.Controllers
             {
                 if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
-                    Session["login"] = model.UserName;
+                    Session[Constants.SESSION_LOGIN] = model.UserName;
 
-                    Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+                    Session[Constants.SESSION_PERFIL] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
                     log.InfoFormat("Logueo correcto");
                     return RedirectToLocal(returnUrl);
                 }    
