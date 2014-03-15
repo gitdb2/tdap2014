@@ -65,6 +65,7 @@
     <Compile Include="IVisitor.cs" />
     <Compile Include="LogInfo.cs" />
     <Compile Include="UserRole.cs" />
+	<Compile Include="ValoresJson.cs" />
     <Compile Include="Visitor\IVisitorHtmlAtributo.cs" />
     <Compile Include="PerfilUsuario.cs" />
     <Compile Include="Producto.cs" />

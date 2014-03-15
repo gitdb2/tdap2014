@@ -10,7 +10,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         public string Valor { get; set; }
 
-        ValorAtributoSimple()
+        public ValorAtributoSimple()
             : base()
         { 
         

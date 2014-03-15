@@ -13,6 +13,7 @@ using TallerAplicaciones.Filters;
 using TallerAplicaciones.logs;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.negocio;
+using uy.edu.ort.taller.aplicaciones.utiles;
 using WebMatrix.WebData;
 
 namespace TallerAplicaciones
@@ -24,8 +25,13 @@ namespace TallerAplicaciones
     public class MvcApplication : System.Web.HttpApplication
     {
         private static ILog log;
+
         protected void Application_Start()
         {
+
+            //para que quede bien seteada la ruta al archivo settings.properties
+            Settings.GetInstance().Init(Server.MapPath("~"));
+
             //para que inicialice la base de datos
             using (var db = new Persistencia())
             {
@@ -34,15 +40,16 @@ namespace TallerAplicaciones
               
             }
 
+            //creo la conexion a la base
             if (!WebSecurity.Initialized)
                 WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Usuario", "UsuarioID", "Login", autoCreateTables: true);
 
+            //se crea el usuario admin con rol Administrador si no existe
             using (var db = new Persistencia())
             {
-                if (!db.PerfilesUsuario.OfType<Administrador>().Any(p => p.Activo))
+                if (!db.PerfilesUsuario.OfType<Administrador>().Any(p=>p.Activo))
                 {
-                    WebSecurity.CreateUserAndAccount("admin", "admin", propertyValues: new {Activo = true});
-
+                    WebSecurity.CreateUserAndAccount("admin", "admin", propertyValues: new { Activo = true });
                     var perfil = new Administrador()
                     {
                         Nombre = "admin",
@@ -53,16 +60,11 @@ namespace TallerAplicaciones
                     ManejadorPerfilUsuario.GetInstance().AltaPerfilUsuario(perfil, "admin");
                 }
             }
-            //FileInfo conf = new FileInfo("log4net.config");
-            //bool exists = conf.Exists;
-            //log4net.Config.XmlConfigurator.Configure(conf);
+
+            //inicializo el log
             log4net.Config.XmlConfigurator.Configure();
             log4net.GlobalContext.Properties["user"] = new HttpContextUserNameProvider();
-
-            //log4net.GlobalContext.Properties["user"] = "System";
             log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-            log.Info("mierda");
 
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);

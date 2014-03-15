@@ -17,9 +17,8 @@ namespace TallerAplicaciones.Controllers
     //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        
         private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-  
 
         //
         // GET: /Account/Login

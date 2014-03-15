@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
+using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
@@ -50,7 +52,19 @@ namespace TallerAplicaciones.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            return View();
+            ProductoConArchivosSubmitModel model = null;
+            try
+            {
+                IAtributo iAtributo = ManejadorAtributo.GetInstance();
+                List<Atributo> listaAtributos = iAtributo.GetAtributosActivos();
+                model = new ProductoConArchivosSubmitModel() {ListaDeAtributos = listaAtributos};
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", "ERROR");
+            }
+            return View(model);
+      
         }
 
         // POST: /Producto/Create
@@ -92,8 +106,8 @@ namespace TallerAplicaciones.Controllers
                 videoList = GetArchivosAndSaveFiles(model, producto, true);
 
 
-                ManejadorProducto.GetInstance().AltaProducto(producto);
-
+                 ManejadorProducto.GetInstance().AltaProducto(producto, model.IdAtributoSimple, model.ValorAtributoSimple, model.ValorAtributoCombo, model.ValorAtributoMulti);
+                 
 
                 return RedirectToAction("List");
             }
@@ -117,6 +131,7 @@ namespace TallerAplicaciones.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
 
         private bool CheckFileExtension(IEnumerable<HttpPostedFileBase> archivos, List<string> extensiones)
         {
@@ -154,7 +169,6 @@ namespace TallerAplicaciones.Controllers
 
             return ret;
         }
-
 
 
         //
@@ -288,7 +302,6 @@ namespace TallerAplicaciones.Controllers
 
         [HttpPost]
         public ActionResult Delete(int idProducto, DeleteProductModel model)
-        //int id, FormCollection collection)
         {
 
             //var model = new DeleteProductModel {id = id};
