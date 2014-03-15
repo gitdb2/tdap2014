@@ -35,6 +35,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         private string _emailAsunto;
         private int _puertoServidor;
         private int _timeoutEnvioServidor;
+        private bool _ssl;
 
         public void NotificarDistribuidoresPorMail(Pedido pedido)
         {
@@ -66,7 +67,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 Host = _nombreServidor,
                 Port = _puertoServidor,
-                EnableSsl = true,
+                EnableSsl = _ssl,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 Credentials = new NetworkCredential(fromAddress.Address, _emailRemitentePassword),
                 Timeout = _timeoutEnvioServidor
@@ -90,6 +91,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             _emailAsunto = CargarVariableString("mail.asunto");
             _puertoServidor = CargarVariableNumerica("mail.servidor.puerto");
             _timeoutEnvioServidor = CargarVariableNumerica("mail.servidor.envio.timeout");
+            _ssl = CargarVariableBoolean("mail.servidor.ssl");
         }
 
         private string CargarVariableString(string clave)
@@ -113,6 +115,18 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
             return resultado;
         }
+
+        private bool CargarVariableBoolean(string clave)
+        {
+            string valorVariable = CargarVariableString(clave);
+            bool resultado;
+            if (!bool.TryParse(valorVariable, out resultado))
+            {
+                throw new ArgumentException("El valor de la variable " + clave + " debe ser true o false");
+            }
+            return resultado;
+        }
+
 
         private string GenerarCuerpoEmail(Pedido p)
         {
