@@ -51,13 +51,13 @@ namespace TallerAplicaciones.Models
 
         //==> Datos de atributos para editar <==
         [Display(Name = "Lista de Atributos Simples")]
-        public List<ValorAtributo> ListaValorAtributosSimple { get; set; }
+        public List<ValorAtributoSimple> ListaValorAtributosSimple { get; set; }
         
         [Display(Name = "Lista de Atributos Combo")]
-        public List<ValorAtributo> ListaValorAtributosCombo { get; set; }
+        public List<ValorAtributoCombo> ListaValorAtributosCombo { get; set; }
         
-        [Display(Name = "Lista de Atributos Multiseleccion")]
-        public List<ValorAtributo> ListaValorAtributosMoltiseleccion { get; set; }
+        //[Display(Name = "Lista de Atributos Multiseleccion")]
+        //public List<ValorAtributo> ListaValorAtributosMoltiseleccion { get; set; }
         
         //==> Para obtener atributos a mostrar <==
         [Display(Name = "Atributos")]

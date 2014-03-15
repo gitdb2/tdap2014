@@ -80,7 +80,7 @@ namespace TallerAplicaciones.Controllers
             var videoList = new List<Archivo>();
             var fotoList = new List<Archivo>();
 
-
+            //check de extensiones de archivos
             if (!CheckFileExtension(model.Fotos, new List<String> { "png", "jpg" }))
             {
                 ModelState.AddModelError("Fotos", "Solo se permiten Fotos .jpg o .png");
@@ -100,14 +100,16 @@ namespace TallerAplicaciones.Controllers
                     Descripcion = model.Descripcion,
                     Nombre = model.Nombre,
                     Activo = true,
-                    Archivos = new List<Archivo>()
+                    Archivos = new List<Archivo>()//archivos a cargar en GetArchivosAndSaveFiles
                 };
 
                 fotoList = GetArchivosAndSaveFiles(model, producto, false);
                 videoList = GetArchivosAndSaveFiles(model, producto, true);
 
 
-                ManejadorProducto.GetInstance().AltaProducto(producto, model.IdAtributoSimple, model.ValorAtributoSimple, model.ValorAtributoCombo, model.ValorAtributoMulti);
+                ManejadorProducto.GetInstance().AltaProducto(producto,
+                    model.IdAtributoSimple, model.ValorAtributoSimple,
+                    model.ValorAtributoCombo, model.ValorAtributoMulti);
 
 
                 return RedirectToAction("List");
@@ -177,20 +179,12 @@ namespace TallerAplicaciones.Controllers
 
         public ActionResult Edit(int idProducto)
         {
-
-
-          
-
-            IAtributo iAtributo = ManejadorAtributo.GetInstance();
             var model = GetProductoConArchivosSubmitModelFromDB(idProducto);
-
-            model.ListaDeAtributos = iAtributo.GetAtributosActivos();
-
-
+          
             return View(model);
         }
 
-      
+
         //
         // POST: /Producto/Edit
         [HttpPost]
@@ -203,7 +197,7 @@ namespace TallerAplicaciones.Controllers
                 return View(model);
             }
 
-
+            //chequeo de archivos
             if (!CheckFileExtension(model.Fotos, new List<String> { "png", "jpg" }))
             {
                 ModelState.AddModelError("Fotos", "Solo se permiten Fotos .jpg o .png");
@@ -220,8 +214,6 @@ namespace TallerAplicaciones.Controllers
                 ? model.DeleteFiles
                 : new List<int>();
 
-
-
             var videoList = new List<Archivo>();
             var fotoList = new List<Archivo>();
 
@@ -235,7 +227,7 @@ namespace TallerAplicaciones.Controllers
                     Nombre = model.Nombre,
                     Activo = model.Activo,
                     ProductoID = model.ProductoID,
-                    Archivos = new List<Archivo>()
+                    Archivos = new List<Archivo>()//archivos  a cargar en GetArchivosAndSaveFiles
                 };
 
                 fotoList = GetArchivosAndSaveFiles(model, producto, false);
@@ -280,6 +272,7 @@ namespace TallerAplicaciones.Controllers
             errorModel.Codigo = model.Codigo;
             errorModel.Nombre = model.Nombre;
             errorModel.ProductoID = model.ProductoID;
+
             return View(errorModel);
 
 
@@ -289,18 +282,16 @@ namespace TallerAplicaciones.Controllers
         private ProductoConArchivosSubmitModel GetProductoConArchivosSubmitModelFromDB(int idProducto)
         {
             var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
-            var listaValorAtributosSimple = new List<ValorAtributo>();
-            var listaValorAtributosCombo = new List<ValorAtributo>();
-            var listaValorAtributosMoltiseleccion = new List<ValorAtributo>();
+
             if (producto == null)
             {
                 throw new Exception("El producto id " + idProducto + " no existe");
             }
 
-            listaValorAtributosSimple           = ManejadorProducto.GetInstance().GetListaValorAtributosSimple(producto.ValoresSeleccionados);
-            listaValorAtributosCombo            = ManejadorProducto.GetInstance().GetListaValorAtributosCombo(producto.ValoresSeleccionados);
-            listaValorAtributosMoltiseleccion   = ManejadorProducto.GetInstance().GetListaValorAtributosMultiseleccion(producto.ValoresSeleccionados);
 
+            var simples = ManejadorProducto.GetInstance().ObtenerValoresSimples(producto);
+            var combos = ManejadorProducto.GetInstance().ObtenerValoresCombo(producto);
+            var atributosDisponibles = ManejadorAtributo.GetInstance().GetAtributosActivos();
 
             var model = new ProductoConArchivosSubmitModel
             {
@@ -310,10 +301,9 @@ namespace TallerAplicaciones.Controllers
                 Nombre = producto.Nombre,
                 Codigo = producto.Codigo,
                 ProductoID = producto.ProductoID,
-
-                ListaValorAtributosSimple = listaValorAtributosSimple,
-                ListaValorAtributosCombo = listaValorAtributosCombo,
-                ListaValorAtributosMoltiseleccion = listaValorAtributosMoltiseleccion
+                ListaValorAtributosCombo = combos,
+                ListaValorAtributosSimple = simples,
+                ListaDeAtributos = atributosDisponibles
             };
             return model;
         }

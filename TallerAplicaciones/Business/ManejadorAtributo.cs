@@ -66,32 +66,30 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public List<Atributo> GetValorAtributoActivos()
-        {
-            using (var db = new Persistencia())
-            {
-                var atribCombos = db.Atributos.OfType<AtributoCombo>().Include("Valores").Where(a => a.Activo == true).ToList();
-
-                var atribSimple = db.Atributos.OfType<AtributoSimple>().Cast<Atributo>().Where(a => a.Activo == true).ToList();
-
-                return atribCombos.Union(atribSimple).ToList();
-
-            }
-        }
+     
 
 
         public List<Atributo> GetAtributosActivos()
         {
             using (var db = new Persistencia())
             {
-                var atribCombos = db.Atributos.OfType<AtributoCombo>().Include("Valores").Where(a => a.Activo == true).ToList();
+                var atribCombos = db.Atributos
+                                    .OfType<AtributoCombo>()
+                                    .Include("Valores")
+                                    .Where(a => a.Activo == true).ToList();
 
-                var atribSimple = db.Atributos.OfType<AtributoSimple>().Cast<Atributo>().Where(a => a.Activo == true).ToList();
+                var atribSimple = db.Atributos
+                                    .OfType<AtributoSimple>()
+                                    .Cast<Atributo>()
+                                    .Where(a => a.Activo == true).ToList();
 
                 return atribCombos.Union(atribSimple).ToList();
 
             }
         }
+
+
+
 
         public Atributo GetAtributo(int idAtributo)
         {
