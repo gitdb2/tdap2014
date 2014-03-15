@@ -9,6 +9,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
     {
 
         public int ValorAtributoID { get; set; }
+
         public Atributo Atributo { get; set; }
         
     }

@@ -277,6 +277,37 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return listaCombo;
         }
 
+private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Producto producto)
+        {
+            Dictionary<Atributo, List<ValorPredefinido>> resultado = new Dictionary<Atributo, List<ValorPredefinido>>();
+            List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
+            List<int> ids = ObtenerIdsAtributoCombo(producto);
+            using (var db = new Persistencia())
+            {
+                listaCombo = db.ValoresAtributos
+                    .OfType<ValorAtributoCombo>()
+                    .Where(v0 => ids.Contains(v0.ValorAtributoID))
+                    .Include(v1 => v1.Valores)
+                    .Include(v2 => v2.Atributo)
+                    .ToList();
+
+                foreach (var valorAtributoCombo in listaCombo)
+                {
+                    if (resultado.ContainsKey(valorAtributoCombo.Atributo))
+                    {
+                        resultado[valorAtributoCombo.Atributo].AddRange(valorAtributoCombo.Valores);
+                    }
+                    else
+                    {
+                        var listaComboMapa = new List<ValorPredefinido>();
+                        listaComboMapa.AddRange(valorAtributoCombo.Valores);
+                        resultado.Add(valorAtributoCombo.Atributo, listaComboMapa);
+                    }
+                }
+            }
+            return resultado;
+        }
+
         private List<int> ObtenerIdsAtributoCombo(Producto producto)
         {
             var resultado = new List<int>();
