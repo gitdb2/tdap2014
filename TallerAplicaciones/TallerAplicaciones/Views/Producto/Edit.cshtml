@@ -177,16 +177,26 @@
             var data = {
                 idProducto: idProducto,
                 nuevoValor: nuevoValor
-            };
+            };  
 
             $.post("AgregarValorAtributoSimple", data, function (response) {
                 if (response.Ok) {
-                    $elem.parent().parent().remove();
+                    //TODO ver
+                    //$elem.parent().parent().remove();
                 } else {
                     alert(response.Message);
                 }
             }, "json");
         }
+
+        function modificarValorCombo(idProducto, idAtributo, idValorAtributo) {
+            var data = {
+                idProducto: idProducto,
+                idAtributo: idAtributo,
+                idValorAtributo: idValorAtributo
+            };
+        }
+
 
     </script>
     @Scripts.Render("~/bundles/jqueryval")
