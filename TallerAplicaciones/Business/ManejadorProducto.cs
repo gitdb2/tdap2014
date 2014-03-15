@@ -466,5 +466,28 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
+
+        public List<ValorAtributo> GetListaValorAtributosSimple(List<ValorAtributo> list)
+        {
+            List<ValorAtributo> aRetornar = new List<ValorAtributo>();
+            foreach (var valAtrib in list)
+            {
+                if (valAtrib.Atributo.DataCombo == false)
+                {
+                    aRetornar.Add(valAtrib);
+                }
+            }
+            throw new NotImplementedException();
+        }
+
+        public List<ValorAtributo> GetListaValorAtributosCombo(List<ValorAtributo> list)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ValorAtributo> GetListaValorAtributosMultiseleccion(List<ValorAtributo> list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -392,9 +392,9 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="settings.properties">
+    <Content Include="settings.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\Upload\Upload.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />

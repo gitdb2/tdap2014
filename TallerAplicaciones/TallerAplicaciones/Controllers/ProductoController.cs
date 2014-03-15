@@ -184,7 +184,19 @@ namespace TallerAplicaciones.Controllers
         private ProductoConArchivosSubmitModel GetProductoConArchivosSubmitModelFromDB(int idProducto)
         {
             var producto = ManejadorProducto.GetInstance().GetProducto(idProducto);
-            if (producto == null) throw new Exception("El producto id " + idProducto + " no existe");
+            List<ValorAtributo> listaValorAtributosSimple = null;
+            List<ValorAtributo> listaValorAtributosCombo = null;
+            List<ValorAtributo> listaValorAtributosMoltiseleccion = null;
+            if (producto == null)
+            {
+                throw new Exception("El producto id " + idProducto + " no existe");
+            }
+            else
+            {
+                listaValorAtributosSimple = ManejadorProducto.GetInstance().GetListaValorAtributosSimple(producto.ValoresSeleccionados);
+                listaValorAtributosCombo = ManejadorProducto.GetInstance().GetListaValorAtributosCombo(producto.ValoresSeleccionados);
+                listaValorAtributosMoltiseleccion = ManejadorProducto.GetInstance().GetListaValorAtributosMultiseleccion(producto.ValoresSeleccionados);
+            }
 
 
             return new ProductoConArchivosSubmitModel
@@ -194,11 +206,11 @@ namespace TallerAplicaciones.Controllers
                 Descripcion = producto.Descripcion,
                 Nombre = producto.Nombre,
                 Codigo = producto.Codigo,
-                ProductoID = producto.ProductoID
+                ProductoID = producto.ProductoID,
 
-                //ListaDeAtributosSimple,
-                //ListaDeAtributosCombo,
-                //ListaDeAtributosMoltiseleccion
+                ListaValorAtributosSimple = listaValorAtributosSimple,
+                ListaValorAtributosCombo = listaValorAtributosCombo,
+                ListaValorAtributosMoltiseleccion = listaValorAtributosMoltiseleccion
             };
         }
 
