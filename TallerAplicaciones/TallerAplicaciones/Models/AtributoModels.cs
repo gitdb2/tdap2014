@@ -16,6 +16,10 @@ namespace TallerAplicaciones.Models
         public bool DataCombo { get; set; }
 
         [Required]
+        [Display(Name = "Multiseleccion")]
+        public bool MultiSeleccion { get; set; }
+
+        [Required]
         [Display(Name = "Valores")]
         public List<String> Valores { get; set; }
     }

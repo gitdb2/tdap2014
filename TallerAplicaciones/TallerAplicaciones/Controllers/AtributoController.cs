@@ -59,7 +59,7 @@ namespace TallerAplicaciones.Controllers
                         DataCombo = model.DataCombo,
                         Valores = ValoresPredefinidosAtributos(model.Valores),
                         Activo = true,
-                        EsSeleccionMultiple = model.DataCombo
+                        EsSeleccionMultiple = model.MultiSeleccion
                     });
                 }
                 else
@@ -192,6 +192,47 @@ namespace TallerAplicaciones.Controllers
             }
         }
 
+
+        [HttpPost]
+        public JsonResult ObtenerValoresAtributos(int valorIdAtributo)
+        {
+
+            var ret = new ValoresAtributoJson();
+            try
+            {
+                IAtributo iAtributo = ManejadorAtributo.GetInstance();
+                Atributo atributo = iAtributo.GetAtributo(valorIdAtributo);
+                ret.idAtributo = atributo.AtributoID;
+                ret.nombreAtributo = atributo.Nombre;
+                ret.esCombo = atributo.DataCombo;
+                if (atributo.DataCombo)
+                {
+                    atributo = iAtributo.GetAtributoCombo(valorIdAtributo);
+                    ret.esMultiselec = atributo.EsMultiseleccion();
+                    ret.litaValores = atributo.ListaDeValoresActivosDeAtributo();
+                }
+                ret.Ok = true;
+                ret.Message = atributo.Nombre;
+            }
+            catch (Exception e)
+            {
+                ret.Ok = false;
+                ret.Message = e.Message;
+            }
+            return Json(ret);
+        }
+
+
+        public class ValoresAtributoJson
+        {
+            public int idAtributo { get; set; }
+            public String nombreAtributo { get; set; }
+            public bool esCombo { get; set; }
+            public bool esMultiselec { get; set; }
+            public List<ValoresJson> litaValores { get; set; }
+            public bool Ok { get; set; }
+            public string Message { get; set; }
+        }
 
     }
 }

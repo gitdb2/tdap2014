@@ -45,9 +45,28 @@
                 <label for="Videos">Videos:</label>
                 @Html.TextBoxFor(model => model.Videos, new { type = "file" })
                 &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">[+]</a>
-                 @Html.ValidationMessageFor(model => model.Videos)
+                @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
+        
+        <hr/>
+
+        <div class="editor-label">
+            @Html.Label("Atributos")
+        </div>
+        <div class="editor-field">
+            <select id="tipoAtributo" style="height: 34px; width: 163px;">
+                @foreach (var atributo in Model.ListaDeAtributos)
+                {
+                    <option value = "@atributo.AtributoID" >@(atributo.Nombre)</option>
+                }
+            </select>
+            <input class="editor" type="button" value="Agregar Valores" onclick="obtenerValoresAtributo()"/>
+        </div>
+        
+        <div id="idValorAtributo"></div>
+        
+              
         <p>
             <input type="submit" value="Crear Producto" />
         </p>
@@ -66,6 +85,65 @@
                 '<a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a>' +
                 '</div>'));
         }
+
+
+        function obtenerValoresAtributo() {
+            var valorIdAtributo = $("#tipoAtributo").val();
+
+            var data = {
+                valorIdAtributo: valorIdAtributo,
+            };
+
+            $.post("../Atributo/ObtenerValoresAtributos", data, function(response) {
+                if (response.Ok) {
+                    if (response.esCombo == false) {
+                        printHTMLAtributoSimple(response);
+                    } else {
+                        if (response.esMultiselec == true) {
+                            printHTMLAtributoMultiselecion(response);
+                        } else {
+                            printHTMLAtributoCombo(response);
+                        }
+                    }
+                } else {
+                    alert(response.Message);
+                }
+
+                //{"nombreAtributo":"combo2","esCombo":true,"esMultiselec":true,"litaValores":["c2valor1","c2valor2"],"Ok":true,"Message":"combo2"}
+            }, "json");
+        }
+
+        function printHTMLAtributoSimple(response) {
+            HttpSimple = '<div><p><table><tr><td><label > Atributo: &nbsp;' + response.nombreAtributo + '  </label></td><td><label >Valor:&nbsp;</label></td><td><input type="text" value="" name="ValorAtributoSimple" /><input  type="hidden" value="' + response.idAtributo + '" name="IdAtributoSimple"/></td></tr></table>' +
+                ' <a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a> </li> </p></div>';
+            $("#idValorAtributo").append(HttpSimple);
+        }
+
+        function printHTMLAtributoCombo(response) {
+
+            HtmlMulti = "<div><p><table>	<tr><td><label > Atributo: &nbsp;" + response.nombreAtributo + "</label></td>	<td><label >Valores:&nbsp;</label></td><td>	<select name=\"ValorAtributoCombo\">";
+
+            for (var i = 0; i < response.litaValores.length; i++) {
+                HtmlMulti += "<option  value=\"" + response.idAtributo + "|" + response.litaValores[i].id + "\"> " + response.litaValores[i].valor + " </option> ";
+            }
+            HtmlMulti += "</select></td></tr></table><a href=\"javascript:void(0)\" onclick=\"$(this).parent().remove()\">[x]</a></p></div>";
+            $("#idValorAtributo").append(HtmlMulti);
+
+            
+        }
+
+        function printHTMLAtributoMultiselecion(response) {
+
+            HtmlMulti = "<div><p><table>	<tr><td><label > Atributo: &nbsp;" + response.nombreAtributo + "</label></td>	<td><label >Valores:&nbsp;</label></td><td>	<select multiple name=\"ValorAtributoMulti\">;";
+
+            for (var i = 0; i < response.litaValores.length; i++) {
+                HtmlMulti += "<option  value=\"" + response.idAtributo + "|" + response.litaValores[i].id + "\"> " + response.litaValores[i].valor + " </option> ";
+            }
+            HtmlMulti += "</select></td></tr></table><a href=\"javascript:void(0)\" onclick=\"$(this).parent().remove()\">[x]</a></p></div>";
+            $("#idValorAtributo").append(HtmlMulti);
+
+        }
+
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

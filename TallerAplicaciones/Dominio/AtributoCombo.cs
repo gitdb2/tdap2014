@@ -22,5 +22,31 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         {
             visitor.Visit(this);
         }
+
+        public override bool EsMultiseleccion()
+        {
+            return EsSeleccionMultiple;
+        }
+
+        public override List<ValoresJson> ListaDeValoresActivosDeAtributo()
+        {
+            List<ValoresJson> aRetornar = new List<ValoresJson>();
+            if (Valores != null)
+            {
+                foreach (var valorPredefinido in Valores)
+                {
+                    if (valorPredefinido.Activo)
+                    {
+                        aRetornar.Add(new ValoresJson()
+                        {
+                            id = valorPredefinido.ValorPredefinidoID, 
+                            valor = valorPredefinido.Valor 
+                        });
+                    }
+                }
+            }
+            return aRetornar;
+        }
+
     }
 }

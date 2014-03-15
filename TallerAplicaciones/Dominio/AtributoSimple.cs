@@ -7,6 +7,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 {
     public class AtributoSimple : Atributo
     {
+        public ValorAtributo Valor { get; set; }
 
         public AtributoSimple()
             : base()
@@ -17,6 +18,16 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public override void Accept(IVisitorHtmlAtributo visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override bool EsMultiseleccion()
+        {
+            return false;
+        }
+
+        public override List<ValoresJson> ListaDeValoresActivosDeAtributo()
+        {
+            return null;
         }
     }
 }
