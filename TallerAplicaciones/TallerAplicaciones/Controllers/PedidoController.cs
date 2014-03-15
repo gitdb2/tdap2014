@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
@@ -37,12 +38,13 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
+
         //
         // GET: /Pedido/Create
         [AllowAnonymous]
         public ActionResult Create()
         {
-            var eject = (EjecutivoDeCuenta)Session["Perfil"];
+            var eject = (EjecutivoDeCuenta)Session[Constants.SESSION_PERFIL];
 
             var distribuidores = ManejadorPerfilUsuario.GetInstance().GetDistribuidoresConEmpresasDeEjecutivo(eject.PerfilUsuarioID);
             var productosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
@@ -73,12 +75,14 @@ namespace TallerAplicaciones.Controllers
 
             try
             {
+                var timespan = DateTime.Now.TimeOfDay;
+               
                 var pedido = new Pedido()
                 {
                     Activo = true,
                     Aprobado = model.Aprobado,
                     Descripcion = model.Descripcion,
-                    Fecha = model.Fecha
+                    Fecha = model.Fecha + timespan
                 };
 
                 try
@@ -121,13 +125,16 @@ namespace TallerAplicaciones.Controllers
             };
 
             model.ProductosDisponibles = new List<Producto>();
-            model.EjecutivoDeCuenta = (EjecutivoDeCuenta)Session["Perfil"];
+            model.EjecutivoDeCuenta = (EjecutivoDeCuenta)Session[Constants.SESSION_PERFIL];
 
             model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
                 .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoDeCuenta.PerfilUsuarioID);
             model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
             return model;
         }
+
+
+
 
         private PedidoEditModel GetPedidoModelFromDB(int idPedido)
         {
@@ -166,8 +173,7 @@ namespace TallerAplicaciones.Controllers
             public bool Ok { get; set; }
             public string Message { get; set; }
         }
-
-        public class ModificarCantidadPedidoJson:BaseJson
+        public class ModificarCantidadPedidoJson : BaseJson
         {
             public int IdPedido { get; set; }
             public int IdCantidadProductoPedido { get; set; }
@@ -177,6 +183,7 @@ namespace TallerAplicaciones.Controllers
 
         public class AddCantidadPedidoJson : ModificarCantidadPedidoJson
         {
+
             public int IdProducto { get; set; }
             public string NombreProducto { get; set; }
             public string CodigoProducto { get; set; }
@@ -252,7 +259,7 @@ namespace TallerAplicaciones.Controllers
                     {
                         ret.Ok = ManejadorPedido.GetInstance().UpdateCantidadProductoPedido(idPedido, idCantidadProductoPedido, cantidad);
                         ret.Cantidad = cantidad;
-                    } 
+                    }
                     catch (Exception e)
                     {
                         ret.Message = e.Message;
@@ -260,7 +267,7 @@ namespace TallerAplicaciones.Controllers
                     }
                 }
             }
-            return Json(ret,  JsonRequestBehavior.AllowGet);
+            return Json(ret, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -285,11 +292,12 @@ namespace TallerAplicaciones.Controllers
             try
             {
 
+                var timespan = DateTime.Now.TimeOfDay;
                 var pedido = new Pedido()
                 {
                     Aprobado = model.Aprobado,
                     Descripcion = model.Descripcion,
-                    Fecha = model.Fecha,
+                    Fecha = model.Fecha + timespan,
                     Activo = model.Activo,
                     PedidoID = model.PedidoID,
                 };
@@ -346,9 +354,25 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
+        [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
         public ActionResult Detalle(int idPedido)
         {
-            return View(ManejadorPedido.GetInstance().GetPedido(idPedido));
+            var ejec = (PerfilUsuario)Session[Constants.SESSION_PERFIL];
+            var pedido = ManejadorPedido.GetInstance().GetPedido(idPedido);
+
+            if (ejec.PerfilUsuarioID == pedido.Ejecutivo.PerfilUsuarioID)
+            {
+                ViewBag.Ok = true;
+                return View(pedido);
+            }
+            else
+            {
+                ViewBag.Ok = false;
+                ViewBag.Error = "El pedido no es de una empresa tuya. Sorry no robes..";
+                return View();
+
+            }
         }
 
     }

@@ -1,101 +1,105 @@
-﻿@model uy.edu.ort.taller.aplicaciones.dominio.Pedido
+﻿@using System.Web.UI.WebControls
+@model uy.edu.ort.taller.aplicaciones.dominio.Pedido
 @{
     ViewBag.Title = "Detalle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    Detalle pedido</h2>
-    <div class="display-label">
-        @Html.Label("Id Pedido")
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.PedidoID)
-    </div>
-    @*<legend>Pedido</legend>*@
-    <div class="display-label">
-        @Html.Label("Ejecutivo")
-    </div>
-    <div class="display-field">
-        @{ string nombreEjec = Model.Ejecutivo.Nombre + " " + Model.Ejecutivo.Apellido;}
-        @nombreEjec
-    </div>
-    <div class="display-label">
-        @Html.Label("Empresa")
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Distribuidor.Empresa.Nombre)
-    </div>
-    <div class="display-label">
-        @Html.Label("Distribuidor")
-    </div>
-<div class="display-field">
-     @{ string nombreDist = Model.Distribuidor.Nombre + " " + Model.Distribuidor.Apellido;}
-        @nombreDist
-   
-</div>
-    <div class="display-label">
-        @Html.Label("Fecha")
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Fecha)
-    </div>
-    <div class="display-label">
-        @Html.Label("Descripcion")
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Descripcion)
-    </div>
-    <div class="display-label">
-        @Html.Label("Aprobado")
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Aprobado)
-    </div>
-    <div class="display-label">
-        @Html.Label("Activo")
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Activo)
-    </div>
-    <div class="display-label">
-        @Html.Label("Orden")
-    </div>
-    <div class="display-field">
-        <table>
-            <tr>
-                <th>
-                    Producto
-                </th>
-                <th>
-                    Codigo Producto
-                </th>
-                <th>
-                    Descripcion
-                </th>
-                <th>
-                    Producto Activo
-                </th>
-                <th>
-                    Cantidad
-                </th>
-            </tr>
-            @foreach (var item in Model.CantidadProductoPedidoList)
-            {
+<div id="contenido">
+    <h2>
+        Detalle pedido</h2>
+    @if ((bool)ViewBag.Ok)
+    {
+        <div class="display-label">
+            @Html.Label("Id Pedido")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.PedidoID)
+        </div>
+        <div class="display-label">
+            @Html.Label("Ejecutivo")
+        </div>
+        <div class="display-field">
+            @{ string nombreEjec = Model.Ejecutivo.Nombre + " " + Model.Ejecutivo.Apellido; }
+            @nombreEjec
+        </div>
+        <div class="display-label">
+            @Html.Label("Empresa")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Distribuidor.Empresa.Nombre)
+        </div>
+        <div class="display-label">
+            @Html.Label("Distribuidor")
+        </div>
+        <div class="display-field">
+            @{ string nombreDist = Model.Distribuidor.Nombre + " " + Model.Distribuidor.Apellido; }
+            @nombreDist
+        </div>
+        <div class="display-label">
+            @Html.Label("Fecha")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Fecha)
+        </div>
+        <div class="display-label">
+            @Html.Label("Descripcion")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Descripcion)
+        </div>
+        <div class="display-label">
+            @Html.Label("Aprobado")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Aprobado)
+        </div>
+        <div class="display-label">
+            @Html.Label("Activo")
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Activo)
+        </div>
+        <div class="display-label">
+            @Html.Label("Orden")
+        </div>
+        <div class="display-field">
+            <table>
                 <tr>
-                    <td>@item.Producto.Nombre
-                    </td>
-                    <td>@item.Producto.Codigo
-                    </td>
-                    <td>@item.Producto.Descripcion
-                    </td>
-                    <td>@(item.Producto.Activo ? "Si" : "No")
-                    </td>
-                    <td>@(item.Cantidad)
-                    </td>
+                    <th>
+                        Producto
+                    </th>
+                    <th>
+                        Codigo Producto
+                    </th>
+                    <th>
+                        Descripcion
+                    </th>
+                    <th>
+                        Cantidad
+                    </th>
                 </tr>
-            }
-        </table>
-    </div>
+                @foreach (var item in Model.CantidadProductoPedidoList)
+                {
+                    <tr>
+                        <td>@item.Producto.Nombre
+                        </td>
+                        <td>@item.Producto.Codigo
+                        </td>
+                        <td>@item.Producto.Descripcion
+                        </td>
+                        <td>@(item.Cantidad)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <h1 class="error">
+            @ViewBag.Error</h1>
+    }
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PedidoID }) |
     @Html.ActionLink("Back to List", "List")

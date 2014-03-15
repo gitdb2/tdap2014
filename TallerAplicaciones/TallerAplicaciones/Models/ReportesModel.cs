@@ -82,14 +82,20 @@ namespace TallerAplicaciones.Models
 
 
         public int EjecutivoId { get; set; }
-        public int DistribuidorId { get; set;}
+        public int DistribuidorId { get; set; }
 
         public List<Pedido> Pedidos { get; set; }
 
         public List<PerfilUsuario> Perfiles { get; set; }
-       
+
 
     }
 
-
+    public class ReporteEjecutivoPedidoModel : ReportePedidoModel
+    {
+        [Display(Name = "Direccion del Orden")]
+        public int OrdenDir { get; set; }
+        [Display(Name = "Ordenar por")]
+        public int OrdenBy { get; set; }
+    }
 }

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using uy.edu.ort.taller.aplicaciones.negocio;
 using System.Security.Principal;
 
@@ -28,7 +29,7 @@ namespace TallerAplicaciones.Filters
                 //En la sesion debe estar el login, de lo contrario de fuera que el usuario se loguee de nuevo
                 var httpContext = filterContext.HttpContext;
                 if (filterContext.HttpContext.Session == null ||
-                    filterContext.HttpContext.Session["login"] == null)
+                    filterContext.HttpContext.Session[Constants.SESSION_LOGIN] == null)
                 {
 
                   
@@ -65,14 +66,14 @@ namespace TallerAplicaciones.Filters
 
                     if (filterContext.HttpContext != null && filterContext.HttpContext.Session != null)
                     {
-                        if (filterContext.HttpContext.Session["perfil"] == null)
+                        if (filterContext.HttpContext.Session[Constants.SESSION_PERFIL] == null)
                         {
-                            filterContext.HttpContext.Session["perfil"] = perfil;
+                            filterContext.HttpContext.Session[Constants.SESSION_PERFIL] = perfil;
                         }
 
-                        if (filterContext.HttpContext.Session["login"] == null)
+                        if (filterContext.HttpContext.Session[Constants.SESSION_LOGIN] == null)
                         {
-                            filterContext.HttpContext.Session["login"] = username;
+                            filterContext.HttpContext.Session[Constants.SESSION_LOGIN] = username;
                         }
                     }
 
@@ -84,7 +85,7 @@ namespace TallerAplicaciones.Filters
                     {
 
 
-                        httpContext.Session["errorMessage"] =
+                        httpContext.Session[Constants.SESSION_ERROR_MESSAGE] =
                             "Ud no tiene permiso para acceder a esta pagina. Solo los usuarios: " + this.Roles +
                             " pueden hacerlo.";
                         filterContext.Result = new RedirectToRouteResult(new

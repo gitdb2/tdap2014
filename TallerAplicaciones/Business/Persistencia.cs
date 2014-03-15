@@ -39,6 +39,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         public DbSet<CantidadProductoPedido> CantidadProductosPedido { get; set; }
 
+        public DbSet<ValorAtributo> ValoresAtributos { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

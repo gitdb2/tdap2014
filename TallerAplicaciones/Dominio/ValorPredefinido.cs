@@ -18,7 +18,6 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         public ValorPredefinido(string valor, bool p)
         {
-            // TODO: Complete member initialization
             this.Valor = valor;
             this.Activo = p;
         }

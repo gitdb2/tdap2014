@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Security.Principal;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.Web.WebPages.OAuth;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using WebMatrix.WebData;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
@@ -44,9 +46,22 @@ namespace TallerAplicaciones.Controllers
             {
                 if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
-                    Session["login"] = model.UserName;
+                    
+                    Session[Constants.SESSION_LOGIN] = model.UserName;
 
-                    Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+                    var perfil = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+
+                    Session[Constants.SESSION_PERFIL] = perfil;
+                    if (perfil.GetRolEnum() == UserRole.Distribuidor)
+                    {
+                        FormsAuthentication.SignOut();
+                        HttpContext.User =
+                        new GenericPrincipal(new GenericIdentity(string.Empty), null);
+
+                        ModelState.AddModelError("", "Este Sistema es solo para Administradores y Ejecutivos de cuenta");
+                        return  View(model);
+                    }
+                    
                     log.InfoFormat("Logueo correcto");
                     return RedirectToLocal(returnUrl);
                 }    
@@ -72,8 +87,7 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Account/Register
 
-        //===>>[CustomAuthorize(Roles = "Administrador")]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Register()
         {
             var model = new RegisterModel();
@@ -85,8 +99,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Account/Register
 
         [HttpPost]
-        //===>>[CustomAuthorize(Roles = "Administrador")]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
