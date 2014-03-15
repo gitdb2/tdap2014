@@ -170,6 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Models\ReportePedidoEjecutivoModel.cs" />
     <Compile Include="Models\ReportesModel.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
@@ -392,9 +393,9 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="settings.properties">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="settings.properties">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\Upload\Upload.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />
@@ -413,6 +414,7 @@
     <Content Include="Views\Reportes\TopProductos.cshtml" />
     <Content Include="Views\Reportes\Logs.cshtml" />
     <Content Include="Views\Reportes\Pedidos.cshtml" />
+    <Content Include="Views\Reportes\PedidosEjecutivo.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

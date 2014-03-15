@@ -36,6 +36,8 @@ namespace TallerAplicaciones
             using (var db = new Persistencia())
             {
                 db.Productos.ToList();
+
+              
             }
 
             //creo la conexion a la base

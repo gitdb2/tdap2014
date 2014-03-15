@@ -7,7 +7,7 @@ using TallerAplicaciones.Filters;
 
 namespace TallerAplicaciones.Controllers
 {
-    [CustomAuthorize]
+    [CustomAuthorize(Roles = "Administrador, EjecutivoDeCuenta")]
     public class HomeController : Controller
     {
         private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

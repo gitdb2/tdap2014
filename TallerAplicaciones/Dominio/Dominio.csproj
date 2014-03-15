@@ -50,6 +50,7 @@
     <Compile Include="AtributoCombo.cs" />
     <Compile Include="AtributoSimple.cs" />
     <Compile Include="CantidadProductoPedido.cs" />
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="DTO\ArchivoDTO.cs" />
     <Compile Include="DTO\CantidadProductoPedidoDTO.cs" />

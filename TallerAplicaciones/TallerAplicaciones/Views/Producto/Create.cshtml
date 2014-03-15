@@ -34,23 +34,23 @@
         </div>
         <div class="editor-field Fotos">
             <div>
-                <label for="fotos">Fotos:</label>
+                <label for="fotos">
+                    Fotos:</label>
                 @Html.TextBoxFor(model => model.Fotos, new { type = "file" })
                 &nbsp;<a href="javascript:void(0)" onclick="addNew('Fotos')">[+]</a>
-                 @Html.ValidationMessageFor(model => model.Fotos)
+                @Html.ValidationMessageFor(model => model.Fotos)
             </div>
         </div>
         <div class="editor-field Videos">
             <div>
-                <label for="Videos">Videos:</label>
+                <label for="Videos">
+                    Videos:</label>
                 @Html.TextBoxFor(model => model.Videos, new { type = "file" })
                 &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">[+]</a>
                 @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
-        
-        <hr/>
-
+        <hr />
         <div class="editor-label">
             @Html.Label("Atributos")
         </div>
@@ -61,12 +61,10 @@
                     <option value = "@atributo.AtributoID" >@(atributo.Nombre)</option>
                 }
             </select>
-            <input class="editor" type="button" value="Agregar Valores" onclick="obtenerValoresAtributo()"/>
+            <input class="editor" type="button" value="Agregar Valores" onclick="obtenerValoresAtributo()" />
         </div>
-        
-        <div id="idValorAtributo"></div>
-        
-              
+        <div id="idValorAtributo">
+        </div>
         <p>
             <input type="submit" value="Crear Producto" />
         </p>
@@ -108,8 +106,6 @@
                 } else {
                     alert(response.Message);
                 }
-
-                //{"nombreAtributo":"combo2","esCombo":true,"esMultiselec":true,"litaValores":["c2valor1","c2valor2"],"Ok":true,"Message":"combo2"}
             }, "json");
         }
 

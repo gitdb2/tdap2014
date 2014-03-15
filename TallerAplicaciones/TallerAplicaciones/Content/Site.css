@@ -882,3 +882,8 @@ tr.pager td
     position: absolute;
     top: 0;
 }
+
+.radio input {
+    width: auto !important;
+    
+}

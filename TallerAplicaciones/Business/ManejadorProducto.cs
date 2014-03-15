@@ -35,60 +35,72 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     List<ValorAtributo> aRetornar = new List<ValorAtributo>();
 
                     int i = 0;
-                    foreach (var idAtrib in idAtributoSimple)
+                    if ((idAtributoSimple != null) && (idAtributoSimple.Any()))
                     {
-                        //AtributoSimple atributo = (AtributoSimple)iAtributo.GetAtributo(idAtrib);
-                        AtributoSimple atributo = db.Atributos.OfType<AtributoSimple>().SingleOrDefault(a => a.AtributoID == idAtrib);
-
-                        var valorAtributo = new ValorAtributoSimple()
+                        foreach (var idAtrib in idAtributoSimple)
                         {
-                            Valor = valorAtributoSimple[i],
-                            Atributo = atributo
-                        };
-                        aRetornar.Add(valorAtributo);
-                        i++;
+                            //AtributoSimple atributo = (AtributoSimple)iAtributo.GetAtributo(idAtrib);
+                            AtributoSimple atributo = db.Atributos.OfType<AtributoSimple>().SingleOrDefault(a => a.AtributoID == idAtrib);
+
+                            var valorAtributo = new ValorAtributoSimple()
+                            {
+                                Valor = valorAtributoSimple[i],
+                                Atributo = atributo
+                            };
+                            aRetornar.Add(valorAtributo);
+                            i++;
+                        }
                     }
-                    foreach (var idYValor in valorAtributoCombo)
+                    if ((valorAtributoCombo != null) && (valorAtributoCombo.Any()))
                     {
-                        string[] idAtributo = idYValor.Split(new char[] { '|' });
-                        int idAtrib = Convert.ToInt16(idAtributo[0]);
-                        int idValor = Convert.ToInt16(idAtributo[1]);
-
-                        //AtributoCombo atributo = (AtributoCombo)iAtributo.GetAtributo(idAtrib);
-                        AtributoCombo atributo = db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
-
-                        //ValorPredefinido valorPredefinido = iAtributo.GetValorPredefinido(idValor);
-                        ValorPredefinido valorPredefinido = db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
-
-                        var listaValorPredefinido = new List<ValorPredefinido>();
-                        listaValorPredefinido.Add(valorPredefinido);
-                        var ValorAtributo = new ValorAtributoCombo()
+                        foreach (var idYValor in valorAtributoCombo)
                         {
-                            Atributo = atributo,
-                            Valores = listaValorPredefinido
-                        };
-                        aRetornar.Add(ValorAtributo);
+                            string[] idAtributo = idYValor.Split(new char[] { '|' });
+                            int idAtrib = Convert.ToInt16(idAtributo[0]);
+                            int idValor = Convert.ToInt16(idAtributo[1]);
+
+                            //AtributoCombo atributo = (AtributoCombo)iAtributo.GetAtributo(idAtrib);
+                            AtributoCombo atributo =
+                                db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
+
+                            //ValorPredefinido valorPredefinido = iAtributo.GetValorPredefinido(idValor);
+                            ValorPredefinido valorPredefinido =
+                                db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
+
+                            var listaValorPredefinido = new List<ValorPredefinido>();
+                            listaValorPredefinido.Add(valorPredefinido);
+                            var ValorAtributo = new ValorAtributoCombo()
+                            {
+                                Atributo = atributo,
+                                Valores = listaValorPredefinido
+                            };
+                            aRetornar.Add(ValorAtributo);
+                        }
                     }
-                    foreach (var idYValor in valorAtributoMulti)
+                    if ((valorAtributoMulti != null) && (valorAtributoMulti.Any()))
                     {
-                        string[] idAtributo = idYValor.Split(new char[] { '|' });
-                        int idAtrib = Convert.ToInt16(idAtributo[0]);
-                        int idValor = Convert.ToInt16(idAtributo[1]);
-                        //AtributoCombo atributo = (AtributoCombo)iAtributo.GetAtributo(idAtrib);
-                        AtributoCombo atributo = db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
-
-                        //ValorPredefinido valorPredefinido = iAtributo.GetValorPredefinido(idValor);
-                        ValorPredefinido valorPredefinido = db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
-                        var listaValorPredefinido = new List<ValorPredefinido>();
-                        listaValorPredefinido.Add(valorPredefinido);
-                        var ValorAtributo = new ValorAtributoCombo()
+                        foreach (var idYValor in valorAtributoMulti)
                         {
-                            Atributo = atributo,
-                            Valores = listaValorPredefinido
-                        };
-                        aRetornar.Add(ValorAtributo);
-                    }
+                            string[] idAtributo = idYValor.Split(new char[] { '|' });
+                            int idAtrib = Convert.ToInt16(idAtributo[0]);
+                            int idValor = Convert.ToInt16(idAtributo[1]);
+                            //AtributoCombo atributo = (AtributoCombo)iAtributo.GetAtributo(idAtrib);
+                            AtributoCombo atributo =
+                                db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
 
+                            //ValorPredefinido valorPredefinido = iAtributo.GetValorPredefinido(idValor);
+                            ValorPredefinido valorPredefinido =
+                                db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
+                            var listaValorPredefinido = new List<ValorPredefinido>();
+                            listaValorPredefinido.Add(valorPredefinido);
+                            var ValorAtributo = new ValorAtributoCombo()
+                            {
+                                Atributo = atributo,
+                                Valores = listaValorPredefinido
+                            };
+                            aRetornar.Add(ValorAtributo);
+                        }
+                    }
                     producto.ValoresSeleccionados = aRetornar;
                     ///////////////////////////////////////////////////////////
 
@@ -109,6 +121,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
 
         }
+
 
         public bool BajaProducto(int idProducto)
         {
@@ -160,6 +173,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
+        //TODO
         public List<ValorAtributoDTO> ListarAtributosProductoDTO(int idProducto)
         {
             var resultado = new List<ValorAtributoDTO>();
@@ -189,7 +203,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     ValorAtributoDTO vdto = new ValorAtributoDTO();
                     vdto.Nombre = valorAtributoSimple.Atributo.Nombre;
                     vdto.Valores = new List<ValorDTO>();
-                    vdto.Valores.Add(new ValorDTO(){ ValorString = valorAtributoSimple.Valor });
+                    vdto.Valores.Add(new ValorDTO() { ValorString = valorAtributoSimple.Valor });
                     resultado.Add(vdto);
                 }
             }
@@ -207,7 +221,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     .Where(v0 => ids.Contains(v0.ValorAtributoID))
                     .Include(v1 => v1.Atributo)
                     .ToList();
-            }    
+            }
         }
 
         private List<int> ObtenerIdsAtributoSimple(Producto producto)
@@ -567,4 +581,3 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
     }
 }
-
