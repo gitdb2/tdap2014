@@ -7,7 +7,13 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 {
     public enum UserRole
     {
-        Administrador = 0, EjecutivoDeCuenta = 1, Distribuidor=2
+        
+        Administrador = 0,
+        
+        EjecutivoDeCuenta = 1,
+        
+        Distribuidor = 2
+
     }
 
 }

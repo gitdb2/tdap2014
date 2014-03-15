@@ -113,7 +113,7 @@ namespace TallerAplicaciones.Controllers
             PerfilUsuario perfil = null;
             switch (model.Rol)
             {
-                case 0:
+                case (int) UserRole.Administrador:
                     perfil= new Administrador()
                     {
                         Nombre = model.Nombre,
@@ -123,7 +123,8 @@ namespace TallerAplicaciones.Controllers
                     };
                     iPerfil.AltaPerfilUsuario(perfil, model.UserName);
                     break;
-                case 1:
+
+                case (int) UserRole.EjecutivoDeCuenta:
                     perfil = new EjecutivoDeCuenta()
                     {
                         Nombre = model.Nombre,
@@ -133,7 +134,8 @@ namespace TallerAplicaciones.Controllers
                      };
                     iPerfil.AltaPerfilUsuario((EjecutivoDeCuenta) perfil, model.UserName, model.EmpresasSeleccionadas);
                     break;
-                case 2:
+
+                case (int) UserRole.Distribuidor:
                     perfil = new Distribuidor()
                     {
                         Nombre = model.Nombre,
@@ -143,32 +145,12 @@ namespace TallerAplicaciones.Controllers
                     };
                     iPerfil.AltaPerfilUsuario((Distribuidor) perfil, model.EmpresaDelDistribuidor, model.UserName);
                     break;
-                default:
-                    throw new ArgumentException("Tipo de usuario invalido");
-            }
-           
-        }
 
-      
-        // TODO
-        // esto esta muy mal hecho
-        // hay que arreglarlo
-        private PerfilUsuario ObtenerPerfilUsuarioSegunRol(int rolId)
-        {
-            switch (rolId)
-            {
-                case 0:
-                    return new Administrador();
-                case 1:
-                    return new EjecutivoDeCuenta();
-                case 2:
-                    return new Distribuidor();
                 default:
                     throw new ArgumentException("Tipo de usuario invalido");
             }
         }
 
-      
         //
         // GET: /Account/List
 
@@ -200,17 +182,15 @@ namespace TallerAplicaciones.Controllers
                 IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
                 PerfilUsuario perfil = iPerfilUsuario.ObtenerPerfil(idPerfilUsuario);
 
-                if (perfil.GetRol() == 2)
+                if (perfil.GetRol() == (int) UserRole.Distribuidor)
                 {
                     return RedirectToActionPermanent("ModifyDistribuidor", new { idDistrib = idPerfilUsuario });
                 }
                 
-                if (perfil.GetRol() == 1)
+                if (perfil.GetRol() == (int) UserRole.EjecutivoDeCuenta)
                 {
                     return RedirectToActionPermanent("ModifyEjecutivo", new { idDistrib = idPerfilUsuario });
                 }
-                    
-                  
                 
                 model = new ModificarUsuarioModel() { 
                     PerfilUsuarioID = idPerfilUsuario,
@@ -241,7 +221,7 @@ namespace TallerAplicaciones.Controllers
                 try
                 {
                     IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
-                    PerfilUsuario perfilUsuario = ObtenerPerfilUsuarioSegunRol(model.Rol);
+                    PerfilUsuario perfilUsuario = iPerfilUsuario.ObtenerPerfilUsuarioSegunRol(model.Rol);
                     perfilUsuario.PerfilUsuarioID = model.PerfilUsuarioID;
                     perfilUsuario.Nombre = model.Nombre;
                     perfilUsuario.Apellido = model.Apellido;
@@ -374,8 +354,6 @@ namespace TallerAplicaciones.Controllers
             throw new NotImplementedException();
         }
 
-
-
         [CustomAuthorize(Roles = "Administrador")]
         public ActionResult ModifyDistribuidor(int idDistrib)
         {
@@ -396,7 +374,6 @@ namespace TallerAplicaciones.Controllers
 
             return View(model);
         }
-
 
         [HttpPost]
         [CustomAuthorize(Roles = "Administrador")]
@@ -455,8 +432,8 @@ namespace TallerAplicaciones.Controllers
 
             ManejadorPerfilUsuario.GetInstance().ModificarPerfilUsuario(dist, model.EmpresasSeleccionadas);
 
-
             return RedirectToAction("List");
         }
+
     }
 }

@@ -352,6 +352,24 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return GetDistribuidores().Where(d => d.Empresa.EmpresaDistribuidoraID == empresaDistribuidoraId).ToList();
         }
 
+        public PerfilUsuario ObtenerPerfilUsuarioSegunRol(int rolId)
+        {
+            switch (rolId)
+            {
+                case (int) UserRole.Administrador:
+                    return new Administrador();
+                
+                case (int) UserRole.EjecutivoDeCuenta:
+                    return new EjecutivoDeCuenta();
+
+                case (int) UserRole.Distribuidor:
+                    return new Distribuidor();
+                
+                default:
+                    throw new ArgumentException("Tipo de usuario invalido");
+            }
+        }
+
     }
 }
 
