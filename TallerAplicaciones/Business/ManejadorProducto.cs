@@ -182,8 +182,16 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             List<ValorAtributoDTO> resultado = new List<ValorAtributoDTO>();
             List<ValorAtributoSimple> valoresSimples = ObtenerValoresSimples(producto);
-            using (var db = new Persistencia())
+            if (valoresSimples.Any())
             {
+                foreach (var valorAtributoSimple in valoresSimples)
+                {
+                    ValorAtributoDTO vdto = new ValorAtributoDTO();
+                    vdto.Nombre = valorAtributoSimple.Atributo.Nombre;
+                    vdto.Valores = new List<ValorDTO>();
+                    vdto.Valores.Add(new ValorDTO(){ ValorString = valorAtributoSimple.Valor });
+                    resultado.Add(vdto);
+                }
             }
             return resultado;
         }
@@ -215,10 +223,24 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         private List<ValorAtributoDTO> ObtenerValoresComboDTO(Producto producto)
         {
             List<ValorAtributoDTO> resultado = new List<ValorAtributoDTO>();
-            List<ValorAtributoCombo> valoresSimples = ObtenerValoresCombo(producto);
-            using (var db = new Persistencia())
+            List<ValorAtributoCombo> valoresCombo = ObtenerValoresCombo(producto);
+            if (valoresCombo.Any())
             {
-
+                foreach (var valorAtributoCombo in valoresCombo)
+                {
+                    ValorAtributoDTO vdto = new ValorAtributoDTO();
+                    vdto.Nombre = valorAtributoCombo.Atributo.Nombre;
+                    vdto.Valores = new List<ValorDTO>();
+                    if (valorAtributoCombo.Valores.Any())
+                    {
+                        foreach (var valorPredefinido in valorAtributoCombo.Valores)
+                        {
+                            if (valorPredefinido.Activo)
+                                vdto.Valores.Add(new ValorDTO() { ValorString = valorPredefinido.Valor });
+                        }
+                    }
+                    resultado.Add(vdto);
+                }
             }
             return resultado;
         }
