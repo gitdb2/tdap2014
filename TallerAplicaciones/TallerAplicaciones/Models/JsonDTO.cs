@@ -27,7 +27,7 @@ namespace TallerAplicaciones.Models
         public string CodigoProducto { get; set; }
     }
 
-    public class RemoverValorAtributoSimple : BaseJson
+    public class RemoverValorAtributoSimpleJson : BaseJson
     {
         public int ProductoId { get; set; }
         public int ValorAtributoId { get; set; }

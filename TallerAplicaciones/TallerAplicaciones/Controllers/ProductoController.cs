@@ -402,8 +402,25 @@ namespace TallerAplicaciones.Controllers
         [HttpPost]
         public JsonResult RemoverValorAtributoSimple(int idProducto, int idValorAtributoSimple)
         {
-            var resultadoOK = ManejadorProducto.GetInstance().RemoverValorAtributoSimple(idProducto, idValorAtributoSimple);
-            return null;
+            var resJson = new RemoverValorAtributoSimpleJson()
+            {
+                Message = "",
+                Ok = false,
+                ProductoId = idProducto,
+                ValorAtributoId = idValorAtributoSimple
+            };
+            try
+            {
+                var resultadoOK = ManejadorProducto.GetInstance().RemoverValorAtributoSimple(idProducto, idValorAtributoSimple);
+                resJson.Ok = resultadoOK;
+                resJson.Message = resultadoOK ? "Se elimino el atributo" : "Ocurrio un error al borrar el valor";
+            }
+            catch (Exception ex)
+            {
+                resJson.Ok = false;
+                resJson.Message = "Ocurrio un error al borrar el valor";
+            }
+            return Json(resJson, JsonRequestBehavior.AllowGet);
         }
 
     }
