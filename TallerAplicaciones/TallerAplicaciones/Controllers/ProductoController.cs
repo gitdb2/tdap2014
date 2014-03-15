@@ -180,7 +180,7 @@ namespace TallerAplicaciones.Controllers
         public ActionResult Edit(int idProducto)
         {
             var model = GetProductoConArchivosSubmitModelFromDB(idProducto);
-          
+
             return View(model);
         }
 
@@ -234,7 +234,16 @@ namespace TallerAplicaciones.Controllers
                 videoList = GetArchivosAndSaveFiles(model, producto, true);
 
 
-                ManejadorProducto.GetInstance().Modificar(producto, filesToDelete);
+                var idAtributoSimpleToAdd = new List<int>();
+                var valorAtributoSimpleToAdd = new List<string>();
+                var valorAtributoComboToAdd = new List<string>();
+                var valorAtributoMultiToAdd = new List<string>();
+
+                ManejadorProducto.GetInstance().Modificar(producto, filesToDelete,
+                    idAtributoSimpleToAdd,
+                    valorAtributoSimpleToAdd,
+                    valorAtributoComboToAdd,
+                    valorAtributoMultiToAdd);
 
 
                 return RedirectToAction("List");

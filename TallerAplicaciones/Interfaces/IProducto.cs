@@ -15,7 +15,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         bool BajaProducto(int idProducto);
 
-        void Modificar(Producto productoUpdate, List<int> filesToDelete);
+        //void Modificar(Producto productoUpdate, List<int> filesToDelete);
 
         List<Producto> ListarProductos();
 
