@@ -93,19 +93,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 {
                     case Orderby.Distribuidor:
                         query = (dir == OrdenDir.Asc)
-                            ? query.OrderBy(p => p.Distribuidor.Usuario.Login)
-                            : query.OrderByDescending(p => p.Distribuidor.Usuario.Login);
+                            ? query.OrderBy(p => p.Distribuidor.Usuario.Login).ThenBy(p => p.PedidoID)
+                            : query.OrderByDescending(p => p.Distribuidor.Usuario.Login).ThenBy(p => p.PedidoID);
                         break;
                     case Orderby.Estado:
                         query = (dir == OrdenDir.Asc)
-                            ? query.OrderBy(p => p.Aprobado)
-                            : query.OrderByDescending(p => p.Aprobado);
+                            ? query.OrderBy(p => p.Aprobado).ThenBy(p => p.PedidoID)
+                            : query.OrderByDescending(p => p.Aprobado).ThenBy(p => p.PedidoID);
+                        
                         break;
                     default:
                         query = (dir == OrdenDir.Asc)
-                            ? query.OrderBy(p => p.Fecha)
-                            : query.OrderByDescending(p => p.Fecha);
+                            ? query.OrderBy(p => p.Fecha).ThenBy(p => p.PedidoID)
+                            : query.OrderByDescending(p => p.Fecha).ThenByDescending(p => p.PedidoID);
                         break;
+            
+                   
                 }
                 return query.ToList();
             }
