@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using TallerAplicaciones.Models;
@@ -53,8 +54,8 @@ namespace TallerAplicaciones.Controllers
             try
             {
                 IAtributo iAtributo = ManejadorAtributo.GetInstance();
-                List<Atributo> listaAtributos = iAtributo.GetAtributos();
-                model.ListaDeAtributos = listaAtributos;
+                List<Atributo> listaAtributos = iAtributo.GetAtributosActivos();
+                model = new ProductoConArchivosSubmitModel() {ListaDeAtributos = listaAtributos};
             }
             catch (Exception e)
             {
@@ -92,7 +93,7 @@ namespace TallerAplicaciones.Controllers
                 videoList = GetArchivosAndSaveFiles(model, producto, true);
 
 
-                 ManejadorProducto.GetInstance().AltaProducto(producto);
+                 ManejadorProducto.GetInstance().AltaProducto(producto, model.IdAtributoSimple, model.ValorAtributoSimple, model.ValorAtributoCombo, model.ValorAtributoMulti);
                  
 
                 return RedirectToAction("List");
@@ -118,7 +119,9 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-        
+       
+
+       
         //
         // GET: /Producto/Edit/5
 

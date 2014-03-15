@@ -56,6 +56,18 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Atributos")]
         public List<Atributo> ListaDeAtributos { get; set; }
 
+        //==> Datos de los atributos del producto <==
+        [Display(Name = "Id de Atributos Simples")]
+        public List<int> IdAtributoSimple { get; set; }
+
+        [Display(Name = "Valor Simple Nombre")]
+        public List<string> ValorAtributoSimple { get; set; }
+        
+        [Display(Name = "Valores Atributos Combo")]
+        public List<string> ValorAtributoCombo { get; set; }
+
+        [Display(Name = "Valores Atributo Multi")]
+        public List<string> ValorAtributoMulti { get; set; }
     }
 
     public class DeleteProductModel
@@ -64,6 +76,8 @@ namespace TallerAplicaciones.Models
         public int IdProducto { get; set; }
 
     }
+
+
 
 
 }

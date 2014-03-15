@@ -41,8 +41,17 @@
                     @Html.RadioButtonFor(model => model.DataCombo, true, new { @onclick = "toggle(this)" }) 
                 </td>
             </tr>
+            <tr id="dos" style="display:none">
+                <td>
+                    <label > Multiceleccion</label>
+                </td>
+                <td>
+                    @Html.CheckBoxFor(model => model.MultiSeleccion, new {id = "dos"})
+                </td>
+            </tr>
         </table>
         <br/>
+
         <div id="uno" style="display:none">
             <form class="editor-label" id="form" name="form" method="post">
                 <li id="rut1' + nextinput + '">Valor:&nbsp;<input type="text" size="20" id="campo' + nextinput + '"&nbsp; name="Valores" &nbsp; /> <a href="#" onclick="borrarLinea($(this));">Eliminar valor</a> </li> 
@@ -59,7 +68,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "List")
 </div>
 
 @section Scripts {
@@ -77,9 +86,11 @@
         function toggle(elemento) {
             if (elemento.value == "False") {
                 document.getElementById("uno").style.display = "none";
+                document.getElementById("dos").style.display = "none";
               
             } else {
-                    document.getElementById("uno").style.display = "block";
+                document.getElementById("uno").style.display = "block";
+                document.getElementById("dos").style.display = "block";
             }
         }
 

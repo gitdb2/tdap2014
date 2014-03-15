@@ -10,7 +10,8 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
     public interface IProducto
     {
 
-        void AltaProducto(Producto producto);
+        void AltaProducto(Producto producto, List<int> idAtributoSimple, List<string> valorAtributoSimple,
+            List<string> valorAtributoCombo, List<string> valorAtributoMulti);
 
         bool BajaProducto(int idProducto);
 

@@ -22,12 +22,76 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-        public void AltaProducto(Producto producto)
+        public void AltaProducto(Producto producto, List<int> idAtributoSimple, List<string> valorAtributoSimple, List<string> valorAtributoCombo, List<string> valorAtributoMulti)
         {
             try
             {
+                //producto.ValoresSeleccionados = ParserAtributosModel(idAtributoSimple, valorAtributoSimple, valorAtributoCombo, valorAtributoMulti);
+
                 using (var db = new Persistencia())
                 {
+                    ///////////////////////////////////////////////////////////
+                    List<ValorAtributo> aRetornar = new List<ValorAtributo>();
+                 
+                    int i = 0;
+                    foreach (var idAtrib in idAtributoSimple)
+                    {
+                        //AtributoSimple atributo = (AtributoSimple)iAtributo.GetAtributo(idAtrib);
+                        AtributoSimple atributo = db.Atributos.OfType<AtributoSimple>().SingleOrDefault(a => a.AtributoID == idAtrib);
+ 
+                        var valorAtributo = new ValorAtributoSimple()
+                        {
+                            Valor = valorAtributoSimple[i],
+                            Atributo = atributo
+                        };
+                        aRetornar.Add(valorAtributo);
+                        i++;
+                    }
+                    foreach (var idYValor in valorAtributoCombo)
+                    {
+                        string[] idAtributo = idYValor.Split(new char[] { '|' });
+                        int idAtrib = Convert.ToInt16(idAtributo[0]);
+                        int idValor = Convert.ToInt16(idAtributo[1]);
+
+                        //AtributoCombo atributo = (AtributoCombo)iAtributo.GetAtributo(idAtrib);
+                        AtributoCombo atributo = db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
+
+                        //ValorPredefinido valorPredefinido = iAtributo.GetValorPredefinido(idValor);
+                        ValorPredefinido valorPredefinido = db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
+                        
+                        var listaValorPredefinido = new List<ValorPredefinido>();
+                        listaValorPredefinido.Add(valorPredefinido);
+                        var ValorAtributo = new ValorAtributoCombo()
+                        {
+                            Atributo = atributo,
+                            Valores = listaValorPredefinido
+                        };
+                        aRetornar.Add(ValorAtributo);
+                    }
+                    foreach (var idYValor in valorAtributoMulti)
+                    {
+                        string[] idAtributo = idYValor.Split(new char[] { '|' });
+                        int idAtrib = Convert.ToInt16(idAtributo[0]);
+                        int idValor = Convert.ToInt16(idAtributo[1]);
+                        //AtributoCombo atributo = (AtributoCombo)iAtributo.GetAtributo(idAtrib);
+                        AtributoCombo atributo = db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
+
+                        //ValorPredefinido valorPredefinido = iAtributo.GetValorPredefinido(idValor);
+                        ValorPredefinido valorPredefinido = db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
+                        var listaValorPredefinido = new List<ValorPredefinido>();
+                        listaValorPredefinido.Add(valorPredefinido);
+                        var ValorAtributo = new ValorAtributoCombo()
+                        {
+                            Atributo = atributo,
+                            Valores = listaValorPredefinido
+                        };
+                        aRetornar.Add(ValorAtributo);
+                    }
+           
+                    producto.ValoresSeleccionados = aRetornar;
+                    ///////////////////////////////////////////////////////////
+
+
                     db.Productos.Add(producto);
                     db.SaveChanges();
                 }
@@ -45,6 +109,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         }
 
+        
         public bool BajaProducto(int idProducto)
         {
             using (var db = new Persistencia())

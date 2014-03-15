@@ -15,6 +15,8 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public bool DataCombo { get; set; }
 
         public abstract void Accept(IVisitorHtmlAtributo visitor);
+        public abstract bool EsMultiseleccion();
+        public abstract List<ValoresJson> ListaDeValoresActivosDeAtributo();
     }
 }
 

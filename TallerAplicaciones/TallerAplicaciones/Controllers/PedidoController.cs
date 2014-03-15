@@ -173,7 +173,6 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-      //   [HttpGet]
         public JsonResult ModificarPedidoCantidadProducto(int idPedido, int idCantidadProductoPedido,
             bool borrar, int cantidad)
         {

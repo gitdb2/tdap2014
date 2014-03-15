@@ -16,6 +16,8 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         List<Atributo> GetAtributos();
 
+        List<Atributo> GetAtributosActivos();
+
         Atributo GetAtributo(int idAtributo);
 
         AtributoCombo GetAtributoCombo(int idAtributo);
@@ -25,5 +27,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
         void EditarAtributoCombo(int idAtributo, bool Activo, string nuevoNombre, bool dataCombo, List<int> listaABorrar, List<String> valoresNuevos);
 
 
+
+        ValorPredefinido GetValorPredefinido(int idValor);
     }
 }
