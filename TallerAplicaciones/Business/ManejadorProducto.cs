@@ -237,20 +237,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         private List<ValorAtributoDTO> ObtenerValoresComboDTO(Producto producto)
         {
             List<ValorAtributoDTO> resultado = new List<ValorAtributoDTO>();
-            List<ValorAtributoCombo> valoresCombo = ObtenerValoresCombo(producto);
-            if (valoresCombo.Any())
+            Dictionary<Atributo, List<ValorPredefinido>> mapaCombos = ObtenerMapaValoresCombo(producto);
+            if (mapaCombos.Any())
             {
-                foreach (var valorAtributoCombo in valoresCombo)
+                foreach (KeyValuePair<Atributo, List<ValorPredefinido>> combo in mapaCombos)
                 {
                     ValorAtributoDTO vdto = new ValorAtributoDTO();
-                    vdto.Nombre = valorAtributoCombo.Atributo.Nombre;
+                    vdto.Nombre = combo.Key.Nombre;
                     vdto.Valores = new List<ValorDTO>();
-                    if (valorAtributoCombo.Valores.Any())
+                    if (combo.Value.Any())
                     {
-                        foreach (var valorPredefinido in valorAtributoCombo.Valores)
+                        foreach (var valorPredefinido in combo.Value)
                         {
-                            if (valorPredefinido.Activo)
-                                vdto.Valores.Add(new ValorDTO() { ValorString = valorPredefinido.Valor });
+                            vdto.Valores.Add(new ValorDTO()
+                            {
+                                ValorString = valorPredefinido.Valor
+                            });
                         }
                     }
                     resultado.Add(vdto);
@@ -259,8 +261,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
-        private List<ValorAtributoCombo> ObtenerValoresCombo(Producto producto)
+        private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Producto producto)
         {
+            Dictionary<Atributo, List<ValorPredefinido>> resultado = new Dictionary<Atributo, List<ValorPredefinido>>();
             List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
             List<int> ids = ObtenerIdsAtributoCombo(producto);
             using (var db = new Persistencia())
@@ -271,8 +274,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     .Include(v1 => v1.Valores)
                     .Include(v2 => v2.Atributo)
                     .ToList();
+
+                foreach (var valorAtributoCombo in listaCombo)
+                {
+                    if (resultado.ContainsKey(valorAtributoCombo.Atributo))
+                    {
+                        resultado[valorAtributoCombo.Atributo].AddRange(valorAtributoCombo.Valores);
+                    }
+                    else
+                    {
+                        var listaComboMapa = new List<ValorPredefinido>();
+                        listaComboMapa.AddRange(valorAtributoCombo.Valores);
+                        resultado.Add(valorAtributoCombo.Atributo, listaComboMapa);
+                    }
+                }
             }
-            return listaCombo;
+            return resultado;
         }
 
         private List<int> ObtenerIdsAtributoCombo(Producto producto)
@@ -282,45 +299,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 resultado.Add(valor.ValorAtributoID);
             }
-            return resultado;
-        }
-
-        //TODO
-        public List<ValorAtributoDTO> ListarAtributosProductoDTO_deprecated(int idProducto)
-        {
-            //dummy porque no hay valores de atributo aun
-            var resultado = new List<ValorAtributoDTO>();
-
-            ValorAtributoDTO va1 = new ValorAtributoDTO() { Nombre = "atributo1" };
-            ValorAtributoDTO va2 = new ValorAtributoDTO() { Nombre = "atributo2" };
-            ValorAtributoDTO va3 = new ValorAtributoDTO() { Nombre = "atributo2" };
-
-            List<ValorDTO> v1 = new List<ValorDTO>();
-            v1.Add(new ValorDTO() { ValorString = "aaaaa" });
-            v1.Add(new ValorDTO() { ValorString = "bbbbb" });
-            v1.Add(new ValorDTO() { ValorString = "ggggg" });
-            v1.Add(new ValorDTO() { ValorString = "hhhhh" });
-
-            List<ValorDTO> v2 = new List<ValorDTO>();
-            v2.Add(new ValorDTO() { ValorString = "ccccc" });
-            v2.Add(new ValorDTO() { ValorString = "ddddd" });
-            v2.Add(new ValorDTO() { ValorString = "xxxxx" });
-            v2.Add(new ValorDTO() { ValorString = "yyyyy" });
-
-            List<ValorDTO> v3 = new List<ValorDTO>();
-            v3.Add(new ValorDTO() { ValorString = "eeeee" });
-            v3.Add(new ValorDTO() { ValorString = "fffff" });
-            v3.Add(new ValorDTO() { ValorString = "vvvvv" });
-            v3.Add(new ValorDTO() { ValorString = "ttttt" });
-
-            va1.Valores = v1;
-            va2.Valores = v2;
-            va3.Valores = v3;
-
-            resultado.Add(va1);
-            resultado.Add(va2);
-            resultado.Add(va3);
-
             return resultado;
         }
 

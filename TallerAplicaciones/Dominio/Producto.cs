@@ -23,6 +23,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public string Descripcion { get; set; }
 
         public List<ValorAtributo> ValoresSeleccionados { get; set; }
+
         public List<Archivo> Archivos { get; set; }
 
         public bool Activo { get; set; }
