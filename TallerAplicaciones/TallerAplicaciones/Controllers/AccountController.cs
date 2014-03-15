@@ -94,12 +94,7 @@ namespace TallerAplicaciones.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
-                    WebSecurity.Login(model.UserName, model.Password);
-
                     AltaUsuario(model);
-
-
-                   
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -107,7 +102,6 @@ namespace TallerAplicaciones.Controllers
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
