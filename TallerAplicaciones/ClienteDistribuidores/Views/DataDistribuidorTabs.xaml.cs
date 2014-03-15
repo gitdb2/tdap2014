@@ -180,6 +180,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
         {
             try
             {
+                TreeViewCamposVariables.ItemsSource = null;
                 if (e.Result != null && e.Result.Any())
                 {
                     TreeViewCamposVariables.ItemsSource = e.Result;
