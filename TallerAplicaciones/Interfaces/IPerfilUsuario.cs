@@ -27,5 +27,7 @@ namespace uy.edu.ort.taller.aplicaciones.interfaces
 
         void AltaPerfilUsuario(EjecutivoDeCuenta ejecutivoDeCuenta, string login, List<int> empresas);
 
+        PerfilUsuario ObtenerPerfilUsuarioSegunRol(int rolId);
+
     }
 }

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivoEnum.cs" />
+    <Compile Include="ManejadorEmail.cs" />
     <Compile Include="ManejadorReporte.cs" />
     <Compile Include="ManejadorAtributo.cs" />
     <Compile Include="ManejadorPedido.cs" />

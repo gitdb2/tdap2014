@@ -16,6 +16,9 @@ namespace TallerAplicaciones.Controllers
     [CustomAuthorize]
     public class PedidoController : Controller
     {
+
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //
         // GET: /Pedido/
         public ActionResult Index()
@@ -23,21 +26,16 @@ namespace TallerAplicaciones.Controllers
             return View();
         }
 
-
-
         [AllowAnonymous]
         public ActionResult List()
         {
             var model = new PedidoListModel
             {
-
                 Pedidos = ManejadorPedido.GetInstance().ListarPedidos()
             };
 
             return View(model);
         }
-
-
 
         //
         // GET: /Pedido/Create
@@ -57,9 +55,7 @@ namespace TallerAplicaciones.Controllers
                 Fecha = DateTime.Now,
                 Aprobado = false,
                 Activo = true
-
             };
-
 
             return View(model);
         }
@@ -85,9 +81,15 @@ namespace TallerAplicaciones.Controllers
                     Fecha = model.Fecha
                 };
 
-
-                ManejadorPedido.GetInstance().Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
-
+                try
+                {
+                    ManejadorPedido.GetInstance()
+                        .Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
+                }
+                catch (EnvioMailException envioMailException)
+                {
+                    log.Error(envioMailException);
+                }
 
                 return RedirectToAction("List");
             }
@@ -127,9 +129,6 @@ namespace TallerAplicaciones.Controllers
             return model;
         }
 
-
-      
-
         private PedidoEditModel GetPedidoModelFromDB(int idPedido)
         {
 
@@ -160,15 +159,14 @@ namespace TallerAplicaciones.Controllers
             model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
               .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoId);
             model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
-
         }
-
 
         public class BaseJson
         {
             public bool Ok { get; set; }
             public string Message { get; set; }
         }
+
         public class ModificarCantidadPedidoJson:BaseJson
         {
             public int IdPedido { get; set; }
@@ -179,13 +177,10 @@ namespace TallerAplicaciones.Controllers
 
         public class AddCantidadPedidoJson : ModificarCantidadPedidoJson
         {
-         
             public int IdProducto { get; set; }
             public string NombreProducto { get; set; }
             public string CodigoProducto { get; set; }
         }
-
-
 
         [HttpPost]
         public JsonResult AgregarItemPedidoCantidadProducto(int idPedido, int idProducto, int cantidad)
@@ -230,7 +225,6 @@ namespace TallerAplicaciones.Controllers
                 Message = ""
             };
 
-
             if (borrar)
             {
                 try
@@ -273,7 +267,6 @@ namespace TallerAplicaciones.Controllers
         // GET: /Pedido/Edit/5
         public ActionResult Edit(int idPedido)
         {
-
             return View(GetPedidoModelFromDB(idPedido));
         }
 
@@ -300,13 +293,8 @@ namespace TallerAplicaciones.Controllers
                     Activo = model.Activo,
                     PedidoID = model.PedidoID,
                 };
-
-              
-
-
                
                 ManejadorPedido.GetInstance().Modificar(pedido);
-
 
                 return RedirectToAction("List");
             }
@@ -328,8 +316,6 @@ namespace TallerAplicaciones.Controllers
             //errorModel.Nombre = model.Nombre;
             //errorModel.ProductoID = model.ProductoID;
             return View(errorModel);
-
-
         }
 
         //
@@ -360,13 +346,11 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-
         public ActionResult Detalle(int idPedido)
         {
             return View(ManejadorPedido.GetInstance().GetPedido(idPedido));
         }
 
     }
-
 
 }

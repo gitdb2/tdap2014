@@ -103,7 +103,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     .Include(p => p.Empresa)
                     .Include(p => p.Usuario)
                     .SingleOrDefault(p => p.PerfilUsuarioID == idDistribuidor);
-               
             }
         }
 
@@ -146,7 +145,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 return empresa;
             }
         }
-
 
         public void AltaPerfilUsuario(Distribuidor perfil, int idEmpresa, string login)
         {
@@ -257,7 +255,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 return db.PerfilesUsuario.OfType<EjecutivoDeCuenta>()
                     .Include(p => p.Usuario)
                     .SingleOrDefault(p => p.PerfilUsuarioID == idDistrib);
-               
             }
         }
 
@@ -265,7 +262,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             using (var db = new Persistencia())
             {
-               
 
                 EjecutivoDeCuenta dbejec = db.PerfilesUsuario.Include("Usuario")
                                              .OfType<EjecutivoDeCuenta>()
@@ -293,7 +289,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     empresa.Ejecutivo = dbejec;
                 }
 
-
                 dbejec.Nombre = perfil.Nombre;
                 dbejec.Apellido = perfil.Apellido;
                 dbejec.Email = perfil.Email;
@@ -301,16 +296,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 dbejec.Usuario.Activo = perfil.Activo;
 
                 }
-
-
                 db.SaveChanges();
-                
             }
-
-          
         }
-
-
 
         public List<PerfilUsuario> ListarUsuarios()
         {
@@ -319,7 +307,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 return db.PerfilesUsuario.Include("Usuario").ToList();
             }
         }
-
 
         public List<Distribuidor> GetDistribuidores()
         {
@@ -341,7 +328,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-
         public List<EjecutivoDeCuenta> GetEjecutivos()
         {
             using (var db = new Persistencia())
@@ -359,8 +345,30 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     return new List<EjecutivoDeCuenta>();
                 }
             }
-        } 
+        }
 
+        public List<Distribuidor> ObtenerDistribuidoresDeEmpresa(int empresaDistribuidoraId)
+        {
+            return GetDistribuidores().Where(d => d.Empresa.EmpresaDistribuidoraID == empresaDistribuidoraId).ToList();
+        }
+
+        public PerfilUsuario ObtenerPerfilUsuarioSegunRol(int rolId)
+        {
+            switch (rolId)
+            {
+                case (int) UserRole.Administrador:
+                    return new Administrador();
+                
+                case (int) UserRole.EjecutivoDeCuenta:
+                    return new EjecutivoDeCuenta();
+
+                case (int) UserRole.Distribuidor:
+                    return new Distribuidor();
+                
+                default:
+                    throw new ArgumentException("Tipo de usuario invalido");
+            }
+        }
 
     }
 }

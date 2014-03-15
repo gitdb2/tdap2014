@@ -33,19 +33,16 @@ namespace TallerAplicaciones.Models
     {
         [Display(Name = "Productos")]
         public List<Producto> Productos { get; set; }
-
     }
-
 
     public class ProductoConArchivosSubmitModel : ProductoModel
     {
 
-
         [Display(Name = "Fotos")]
         public List<HttpPostedFileBase> Fotos { get; set; }
+
         [Display(Name = "Videos")]
         public List<HttpPostedFileBase> Videos { get; set; }
-
 
         /// <summary>
         /// lista de ids de archivosa borrar
@@ -87,10 +84,6 @@ namespace TallerAplicaciones.Models
     {
         [Required]
         public int IdProducto { get; set; }
-
     }
-
-
-
 
 }

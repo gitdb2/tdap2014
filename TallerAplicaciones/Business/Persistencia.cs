@@ -10,14 +10,15 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 {
     public class Persistencia : DbContext
     {
-        static Persistencia(){
-             Database.SetInitializer<Persistencia>(new PersistenciaInitializer());
+        static Persistencia()
+        {
+            Database.SetInitializer<Persistencia>(new PersistenciaInitializer());
         }
 
         public Persistencia()
             : base("DefaultConnection")
         {
-           
+
         }
 
         public DbSet<PerfilUsuario> PerfilesUsuario { get; set; }
@@ -31,7 +32,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         public DbSet<ValorPredefinido> ValoresPredefinidos { get; set; }
 
         public DbSet<Usuario> Usuarios { get; set; }
+
         public DbSet<Pedido> Pedidos { get; set; }
+
         public DbSet<Archivo> Archivos { get; set; }
 
         public DbSet<CantidadProductoPedido> CantidadProductosPedido { get; set; }
@@ -40,7 +43,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-       
+
     }
 
     public class PersistenciaInitializer : IDatabaseInitializer<Persistencia>
@@ -51,14 +54,14 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 context.Database.Delete();
             }
+
             if (!context.Database.Exists())
             {
                 context.Database.Create();
             }
+
             context.Database.ExecuteSqlCommand("ALTER TABLE Producto ADD UNIQUE (Codigo) ");
 
-     
-          
             try
             {
                 context.Database.ExecuteSqlCommand("CREATE TABLE [dbo].[Log] ("
@@ -71,10 +74,10 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                                                    + "[Message] [varchar] (4000) NOT NULL,"
                                                    + "[Exception] [varchar] (2000) NULL)");
             }
-            catch (Exception)
+            catch (Exception oculta)
             {
+                //si esto revienta que pasa?
             }
-
 
         }
     }

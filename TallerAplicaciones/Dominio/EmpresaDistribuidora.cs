@@ -7,6 +7,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 {
     public class EmpresaDistribuidora
     {
+
         public EmpresaDistribuidora()
         {
             Activo = true;

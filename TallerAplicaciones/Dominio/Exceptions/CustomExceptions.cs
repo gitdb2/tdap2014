@@ -7,7 +7,7 @@ using System.Text;
 namespace uy.edu.ort.taller.aplicaciones.dominio.Exceptions
 {
     [Serializable]
-    public class ValorDuplicadoException :Exception
+    public class ValorDuplicadoException : Exception
     {
 
         public ValorDuplicadoException()
@@ -25,6 +25,30 @@ namespace uy.edu.ort.taller.aplicaciones.dominio.Exceptions
         }
 
         protected ValorDuplicadoException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
+    }
+
+    [Serializable]
+    public class EnvioMailException : Exception
+    {
+         public EnvioMailException()
+        {
+        }
+
+        public EnvioMailException(string message)
+            : base(message)
+        {
+        }
+
+        public EnvioMailException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+        protected EnvioMailException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

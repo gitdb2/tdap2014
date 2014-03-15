@@ -11,8 +11,6 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         public EjecutivoDeCuenta()
             : base()
         {}
-   
-
 
         public override int GetRol()
         {
@@ -24,10 +22,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
             return UserRole.EjecutivoDeCuenta;
         }
 
-//        public List<EmpresaDistribuidora> Empresas { get; set; }
         public List<Pedido> Pedidos { get; set; }
-
-
      
     }
 }
