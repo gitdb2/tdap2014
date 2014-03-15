@@ -11,6 +11,7 @@ using System.Web.Routing;
 using log4net;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.logs;
+using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.negocio;
 using WebMatrix.WebData;
 
@@ -29,6 +30,20 @@ namespace TallerAplicaciones
             using (var db = new Persistencia())
             {
                 db.Productos.ToList();
+
+                if (db.PerfilesUsuario.OfType<Administrador>().Any(p=>p.Activo))
+                {
+                    WebSecurity.CreateUserAndAccount("admin", "admin", propertyValues: new { Activo = true });
+
+                    var perfil = new Administrador()
+                    {
+                        Nombre = "admin",
+                        Apellido = "admin",
+                        Activo = true,
+                        Email = ""
+                    };
+                    ManejadorPerfilUsuario.GetInstance().AltaPerfilUsuario(perfil, "admin");
+                }
             }
 
             if (!WebSecurity.Initialized)

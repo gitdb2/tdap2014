@@ -393,9 +393,9 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="settings.properties">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="settings.properties">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\Upload\Upload.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />
@@ -430,7 +430,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>1770</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

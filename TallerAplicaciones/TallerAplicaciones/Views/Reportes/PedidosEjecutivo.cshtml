@@ -40,7 +40,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.OrdenBy)
         </div>
-        <div class="editor-field">
+        <div class="editor-field radio">
             @Html.RadioButtonFor(model => model.OrdenBy, ((int)ManejadorReporte.Orderby.Distribuidor))
             @ManejadorReporte.Orderby.Distribuidor
             @Html.RadioButtonFor(model => model.OrdenBy, ((int)ManejadorReporte.Orderby.Estado))
@@ -52,7 +52,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.OrdenDir)
         </div>
-        <div class="editor-field">
+        <div class="editor-field radio">
             @Html.RadioButtonFor(model => model.OrdenDir, ((int)ManejadorReporte.OrdenDir.Desc))
             Descendente
             @Html.RadioButtonFor(model => model.OrdenDir, ((int)ManejadorReporte.OrdenDir.Asc))
@@ -125,10 +125,23 @@
         }
     }
 </table>
+<div id="dialog" title="Detalle Pedido" style="display: none;">
+</div>
 @section scripts
 {
     <script type="text/javascript">
-
+        function openDetalle(idPedido) {
+            $(function () {
+                $("#dialog").dialog({
+                    modal: true,
+                    buttons: {
+                        Ok: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        }
 
         $(document).ready(function () {
             $(".datepicker").datepicker({
