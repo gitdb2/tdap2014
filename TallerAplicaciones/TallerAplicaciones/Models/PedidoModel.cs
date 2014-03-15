@@ -122,8 +122,51 @@ namespace TallerAplicaciones.Models
 
     }
 
-    public class PedidoEditModel : PedidoCreateModel
+
+    public class PedidoEditModelPost
     {
+        [Required]
+        [Display(Name = "Id del Pedido")]
+        public int PedidoID { get; set; }
+
+        [Required]
+        [Display(Name = "Aprobado")]
+        public bool Aprobado { get; set; }
+        [Required]
+        [Display(Name = "Descripcion")]
+        public string Descripcion { get; set; }
+        [Required]
+        [Display(Name = "Fecha")]
+        public DateTime Fecha { get; set; }
+        [Required]
+        [Display(Name = "Activo")]
+        public bool Activo { get; set; }
+
+        [Required]
+        [Display(Name = "Ejecutivo de cuenta")]
+        public int EjecutivoId { get; set; }
+
+        [Required]
+        [Display(Name = "Distribuidor")]
+        public int DistribuidorID { get; set; }
+    }
+
+    public class PedidoEditModel : PedidoEditModelPost
+    {
+
+        public PedidoEditModel()
+        {
+            DistribuidoresDisponibles = new List<Distribuidor>();
+            ProductosDisponibles = new List<Producto>();
+          
+        }
+
+        public List<Distribuidor> DistribuidoresDisponibles { get; set; }
+        
+        public List<Producto> ProductosDisponibles { get; set; }
+
+        public EjecutivoDeCuenta EjecutivoDeCuenta { get; set; }
+
         public Pedido Pedido { get; set; }
         
     }

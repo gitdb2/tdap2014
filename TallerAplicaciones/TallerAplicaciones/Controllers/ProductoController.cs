@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
@@ -13,11 +14,12 @@ using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
 {
+    [CustomAuthorize]
     public class ProductoController : Controller
     {
         //
         // GET: /Producto/
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             return View();
@@ -73,10 +75,21 @@ namespace TallerAplicaciones.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
-        
+
             var videoList = new List<Archivo>();
             var fotoList = new List<Archivo>();
-  
+
+
+            if (!CheckFileExtension(model.Fotos, new List<String> { "png", "jpg" }))
+            {
+                ModelState.AddModelError("Fotos", "Solo se permiten Fotos .jpg o .png");
+                return View(model);
+            }
+            if (!CheckFileExtension(model.Videos, new List<String> { "wmv" }))
+            {
+                ModelState.AddModelError("Videos", "Solo se permiten Videos .wmv");
+                return View(model);
+            }
 
             try
             {
@@ -119,9 +132,45 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-       
 
-       
+        private bool CheckFileExtension(IEnumerable<HttpPostedFileBase> archivos, List<string> extensiones)
+        {
+            var ret = true;
+            foreach (var file in archivos)
+            {
+                if (file != null)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    if (fileName != null)
+                    {
+                        var extension = Path.GetExtension(file.FileName);
+                        if (extension != null && extension.Length > 2)
+                        {
+                            extension = extension.Replace(".", "");
+
+                            ret = extensiones.Contains(extension) && ret;
+                            if (ret == false)
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+               
+            }
+
+            return ret;
+        }
+
+
         //
         // GET: /Producto/Edit/5
 
@@ -145,7 +194,7 @@ namespace TallerAplicaciones.Controllers
                 Nombre = producto.Nombre,
                 Codigo = producto.Codigo,
                 ProductoID = producto.ProductoID
-            }; 
+            };
         }
 
 
@@ -158,7 +207,18 @@ namespace TallerAplicaciones.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
-          
+
+            if (!CheckFileExtension(model.Fotos, new List<String> { "png", "jpg" }))
+            {
+                ModelState.AddModelError("Fotos", "Solo se permiten Fotos .jpg o .png");
+                return View(model);
+            }
+            if (!CheckFileExtension(model.Videos, new List<String> { "wmv" }))
+            {
+                ModelState.AddModelError("Videos", "Solo se permiten Videos .wmv");
+                return View(model);
+            }
+
 
             var filesToDelete = (model.DeleteFiles != null && model.DeleteFiles.Any())
                 ? model.DeleteFiles
@@ -185,7 +245,7 @@ namespace TallerAplicaciones.Controllers
                 fotoList = GetArchivosAndSaveFiles(model, producto, false);
                 videoList = GetArchivosAndSaveFiles(model, producto, true);
 
-                
+
                 ManejadorProducto.GetInstance().Modificar(producto, filesToDelete);
 
 
@@ -194,7 +254,7 @@ namespace TallerAplicaciones.Controllers
             catch (ValorDuplicadoException ex)
             {
 
-               
+
 
                 ModelState.AddModelError("Codigo", ex.Message);
 
@@ -242,7 +302,6 @@ namespace TallerAplicaciones.Controllers
 
         [HttpPost]
         public ActionResult Delete(int idProducto, DeleteProductModel model)
-            //int id, FormCollection collection)
         {
 
             //var model = new DeleteProductModel {id = id};
@@ -307,14 +366,14 @@ namespace TallerAplicaciones.Controllers
                         }
                         else
                         {
-                          archivo = new Foto();  
+                            archivo = new Foto();
                         }
-                        
-                        archivo.Url = "/" + defaultFolder+"/"+tipo+"/" + fsName;
+
+                        archivo.Url = "/" + defaultFolder + "/" + tipo + "/" + fsName;
                         archivo.PathFileSystem = path;
                         archivo.Nombre = fileName;
                         archivo.Activo = true;
-                   
+
                         producto.Archivos.Add(archivo);
                         fileList.Add(archivo);
                         file.SaveAs(path);

@@ -14,7 +14,5 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         Inactivo,
         [Description("Activos e inactivos")]
         Todos
-
-
     }
 }

@@ -86,14 +86,12 @@
     <Compile Include="Interfaces\IControlador.cs" />
     <Compile Include="Logica\Controlador.cs" />
     <Compile Include="Logica\LoginUsuario.cs" />
-    <Compile Include="Logica\Utils.cs" />
+    <Compile Include="Logica\PlayList.cs" />
     <Compile Include="Service References\ApiDistribuidores\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Temp\Valor.cs" />
-    <Compile Include="Temp\ValorAtributoFake.cs" />
     <Compile Include="Views\DataDistribuidorTabs.xaml.cs">
       <DependentUpon>DataDistribuidorTabs.xaml</DependentUpon>
     </Compile>
@@ -138,10 +136,19 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ArchivoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.CantidadProductoPedidoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.PedidoDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ProductoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ResultadoLoginDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ApiDistribuidores\uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores.ValorAtributoDTO.datasource">

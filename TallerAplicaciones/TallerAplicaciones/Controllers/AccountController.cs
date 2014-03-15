@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Transactions;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.Web.WebPages.OAuth;
@@ -12,10 +13,14 @@ using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
 {
-    [Authorize]
+    [CustomAuthorize]
     //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+  
+
         //
         // GET: /Account/Login
 
@@ -40,13 +45,16 @@ namespace TallerAplicaciones.Controllers
             {
                 if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
+                    Session["login"] = model.UserName;
 
                     Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
+                    log.InfoFormat("Logueo correcto");
                     return RedirectToLocal(returnUrl);
                 }    
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Usuario y/o Password invalido o Usuario inactivo");
+            log.ErrorFormat("Usuario y/o Password invalido o Usuario inactivo");
             return View(model);
         }
 
@@ -65,7 +73,7 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Account/Register
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Register()
         {
             var model = new RegisterModel();
@@ -77,7 +85,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Account/Register
 
         [HttpPost]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
@@ -91,9 +99,8 @@ namespace TallerAplicaciones.Controllers
 
                     AltaUsuario(model);
 
-                    //Session["Perfil"] = ManejadorPerfilUsuario.GetInstance().GetPerfilUsuarioByLogin(model.UserName);
-             
 
+                   
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -149,29 +156,7 @@ namespace TallerAplicaciones.Controllers
            
         }
 
-        // TODO
-        // esto esta muy mal hecho
-        // hay que arreglarlo
-//        private int ObtenerRolSegunPerfilUsuario(PerfilUsuario perfil)
-//        {
-//            if (perfil is Administrador)
-//            {
-//                return 0;
-//            } 
-//            else if (perfil is EjecutivoDeCuenta)
-//            {
-//                return 1;
-//            }
-//            else if (perfil is Distribuidor)
-//            {
-//                return 2;
-//            }
-//            else
-//            {
-//                throw new ArgumentException("Tipo de usuario invalido");
-//            }
-//        }
-
+      
         // TODO
         // esto esta muy mal hecho
         // hay que arreglarlo
@@ -190,38 +175,11 @@ namespace TallerAplicaciones.Controllers
             }
         }
 
-        //
-        // POST: /Account/Disassociate
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Disassociate(string provider, string providerUserId)
-        {
-            string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);
-            ManageMessageId ? message = null;
-
-            // Only disassociate the account if the currently logged in user is the owner
-            if (ownerAccount == User.Identity.Name)
-            {
-                // Use a transaction to prevent the user from deleting their last login credential
-                using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
-                {
-                    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-                    if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)
-                    {
-                        OAuthWebSecurity.DeleteAccount(provider, providerUserId);
-                        scope.Complete();
-                        message = ManageMessageId.RemoveLoginSuccess;
-                    }
-                }
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
+      
         //
         // GET: /Account/List
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult List()
         {
             UsuarioListModel model = null;
@@ -240,7 +198,7 @@ namespace TallerAplicaciones.Controllers
         //
         // GET: /Account/Modify
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Modify(int idPerfilUsuario)
         {
             ModificarUsuarioModel model = null;
@@ -282,7 +240,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Account/Modify
 
         [HttpPost]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Modify(ModificarUsuarioModel model)
         {
             if (ModelState.IsValid)
@@ -425,7 +383,7 @@ namespace TallerAplicaciones.Controllers
 
 
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult ModifyDistribuidor(int idDistrib)
         {
             Distribuidor dist = ManejadorPerfilUsuario.GetInstance().FindDistribuidor(idDistrib);
@@ -448,7 +406,7 @@ namespace TallerAplicaciones.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
          public ActionResult ModifyDistribuidor(RegisterModel model)
         {
             Distribuidor dist = ManejadorPerfilUsuario.GetInstance().FindDistribuidor(model.idPerfil);
@@ -467,7 +425,7 @@ namespace TallerAplicaciones.Controllers
            return RedirectToAction("List");
         }
 
-        [AllowAnonymous]
+         [CustomAuthorize(Roles = "Administrador")]
         public ActionResult ModifyEjecutivo(int idDistrib)
         {
             EjecutivoDeCuenta ejec = ManejadorPerfilUsuario.GetInstance().FindEjecutivo(idDistrib);
@@ -489,7 +447,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult ModifyEjecutivo(RegisterModel model)
         {
             EjecutivoDeCuenta dist = ManejadorPerfilUsuario.GetInstance().FindEjecutivo(model.idPerfil);

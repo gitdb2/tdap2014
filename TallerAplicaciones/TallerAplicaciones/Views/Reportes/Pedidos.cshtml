@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Reporte de Pedidos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using uy.edu.ort.taller.aplicaciones.dominio
+@model TallerAplicaciones.Models.ReportePedidoModel
+<h2>
+    Reporte de Pedidos</h2>
+<div class="filtros">
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.ValidationSummary(true)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaDesde)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.FechaDesde, new { @Value = Model.FechaDesde.ToString("dd/MM/yyyy"), @class = "datepicker" })
+            @Html.ValidationMessageFor(model => model.FechaDesde)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaHasta)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.FechaHasta, new { @Value = Model.FechaHasta.ToString("dd/MM/yyyy"), @class = "datepicker" })
+            @Html.ValidationMessageFor(model => model.FechaHasta)
+        </div>
+       
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DistribuidorId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(m => m.DistribuidorId, (IEnumerable<SelectListItem>)ViewBag.Distribuidores)
+            @Html.ValidationMessageFor(model => model.DistribuidorId)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EjecutivoId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(m => m.EjecutivoId, (IEnumerable<SelectListItem>)ViewBag.Ejecutivos)
+            @Html.ValidationMessageFor(model => model.EjecutivoId)
+        </div>
+        
+        <input type="submit" value="Fltrar" />
+    }
+</div>
+<table>
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Distribuidor
+        </th>
+        <th>
+            Empresa
+        </th>
+        <th>
+            Ejecutivo
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Cant items
+        </th>
+        <th>
+            Activo
+        </th>
+        <th>
+            Aprobado
+        </th>
+    </tr>
+    @{
+        if (Model.Pedidos != null && Model.Pedidos.Any())
+        {
+            foreach (var item in Model.Pedidos)
+            {
+        <tr>
+            <td>@item.PedidoID
+            </td>
+            <td>@item.Fecha.ToString("yyyy MMMM dd")
+            </td>
+            <td>@item.Distribuidor.Usuario.Login
+            </td>
+            <td>@item.Distribuidor.Empresa.Nombre
+            </td>
+            <td>@item.Ejecutivo.Usuario.Login
+            </td>
+            <td>@item.Descripcion
+            </td>
+            <td>@item.CantidadProductoPedidoList.Count
+            </td>
+            <td>@(item.Activo ? "Si" : "No")
+            </td>
+            <td>@(item.Aprobado ? "Si" : "No")
+            </td>
+        </tr>
+            }
+        }
+        else
+        {
+        <tr>
+            <td colspan="12">
+                No se encontraron resultados.
+            </td>
+        </tr>
+        }
+    }
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+        
+    </script>
+}

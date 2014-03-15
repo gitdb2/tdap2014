@@ -10,21 +10,24 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
 
         public EjecutivoDeCuenta()
             : base()
-        {
+        {}
+   
 
-        }
+
         public override int GetRol()
         {
-            return 1;
+            return (int)GetRolEnum();
+        }
+
+        public override UserRole GetRolEnum()
+        {
+            return UserRole.EjecutivoDeCuenta;
         }
 
 //        public List<EmpresaDistribuidora> Empresas { get; set; }
         public List<Pedido> Pedidos { get; set; }
 
 
-        public void AsignarEmpresas(List<EmpresaDistribuidora> empresas)
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }

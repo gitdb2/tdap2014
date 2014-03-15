@@ -22,11 +22,5 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
         void GuardarLoginActual(LoginUsuario loginActual);
 
-        List<ValorAtributoFake> ObtenerAtributosProducto(int idProductoSeleccionado);
-
-        List<string> ObtenerVideosProducto(int productoFakeId);
-
-        List<string> ObtenerImagenesProducto(int productoFakeId);
-
     }
 }

@@ -44,9 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivoEnum.cs" />
- 	<Compile Include="ManejadorAtributo.cs" />
+    <Compile Include="ManejadorReporte.cs" />
+    <Compile Include="ManejadorAtributo.cs" />
     <Compile Include="ManejadorPedido.cs" />
-    <Compile Include="ManejadorArchivos.cs" />
     <Compile Include="ManejadorEmpresaDistribuidora.cs" />
     <Compile Include="ManejadorProducto.cs" />
     <Compile Include="ManejadorPerfilUsuario.cs" />

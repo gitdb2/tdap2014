@@ -20,11 +20,28 @@ namespace TallerAplicaciones
     {
 
         [OperationContract]
-        public bool Login(string login, string password)
+        public ResultadoLoginDTO Login(string login, string password)
         {
             IPerfilUsuario iPerfilUsuario = ManejadorPerfilUsuario.GetInstance();
-            var usuario = iPerfilUsuario.ObtenerUsuario(login);
-            return usuario != null && usuario.Activo && WebSecurity.Login(login, password);
+            var resultadoLogin = new ResultadoLoginDTO() { LoginOk = false, Mensaje = "" };
+            var usuarioDistribuidor = iPerfilUsuario.ObtenerUsuarioDistribuidor(login);
+            if (usuarioDistribuidor != null && usuarioDistribuidor.Activo)
+            {
+                if (WebSecurity.Login(login, password))
+                {
+                    resultadoLogin.Mensaje = "Login OK";
+                    resultadoLogin.LoginOk = true;
+                }
+                else
+                {
+                    resultadoLogin.Mensaje = "Usuario y/o Password incorrecto";
+                }
+            }
+            else
+            {
+                resultadoLogin.Mensaje = "No existe tal Distribuidor";
+            }
+            return resultadoLogin;
         }
 
         [OperationContract]
@@ -53,6 +70,27 @@ namespace TallerAplicaciones
         {
             IProducto iProducto = ManejadorProducto.GetInstance();
             return iProducto.ListarAtributosProductoDTO(idProducto);
+        }
+
+        [OperationContract]
+        public List<ArchivoDTO> ListarImagenesProducto(int idProducto)
+        {
+            IProducto iProducto = ManejadorProducto.GetInstance();
+            return iProducto.ListarImagenesProductoDTO(idProducto);
+        }
+
+        [OperationContract]
+        public List<ArchivoDTO> ListarVideosProducto(int idProducto)
+        {
+            IProducto iProducto = ManejadorProducto.GetInstance();
+            return iProducto.ListarVideosProductoDTO(idProducto);
+        }
+
+        [OperationContract]
+        public List<CantidadProductoPedidoDTO> ListarProductosPedido(int idPedido)
+        {
+            IPedido iPedido = ManejadorPedido.GetInstance();
+            return iPedido.ListarProductosPedidoDTO(idPedido);
         }
 
     }

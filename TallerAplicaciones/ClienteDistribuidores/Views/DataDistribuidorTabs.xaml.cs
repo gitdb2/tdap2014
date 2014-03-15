@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Windows;
+using System.Windows.Browser;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using uy.edu.ort.taller.aplicaciones.clientedistribuidores.ApiDistribuidores;
+using uy.edu.ort.taller.aplicaciones.clientedistribuidores.Logica;
 
 namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 {
     public partial class DataDistribuidorTabs : Page
     {
 
-        public ObservableCollection<PedidoDTO> Pedidos;
-        public ObservableCollection<ProductoDTO> Productos;
-        public ObservableCollection<ValorAtributoDTO> AtributosProducto;
-
-        public Dictionary<string, int> PlayListVideosProducto { get; set; }
-        public Dictionary<string, int> PlayListImagenesProducto { get; set; }
+        public PlayList PlayListVideosProducto { get; set; }
+        public PlayList PlayListImagenesProducto { get; set; }
         private DispatcherTimer _timer;
 
         public DataDistribuidorTabs()
@@ -28,7 +28,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             RefrescarProductosAsync();
         }
 
-        #region refrescar pedidos
+        #region pedidos
         private void RefrescarPedidosAsync()
         {
             BusyIndicatorPedidosTab.IsBusy = true;
@@ -44,7 +44,6 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 if (e.Result != null && e.Result.Any())
                 {
                     DataGridPedidos.ItemsSource = e.Result;
-                    Pedidos = e.Result;
                 }
             }
             catch (Exception err)
@@ -56,74 +55,7 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
-        #endregion
 
-        #region refrescar productos
-        private void RefrescarProductosAsync()
-        {
-            BusyIndicatorPedidosTab.IsBusy = true;
-            var api = new ApiDistribuidoresClient();
-            api.ListarProductosCompleted += new EventHandler<ListarProductosCompletedEventArgs>(ListarProductosCompleted);
-            api.ListarProductosAsync();
-        }
-
-        private void ListarProductosCompleted(object sender, ListarProductosCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Result != null && e.Result.Any())
-                {
-                    DataGridProductos.ItemsSource = e.Result;
-                    Productos = e.Result;
-                    DataGridProductos.SelectedIndex = -1;
-                }
-            }
-            catch (Exception err)
-            {
-                new ErrorWindow(err).Show();
-            }
-            finally
-            {
-                BusyIndicatorPedidosTab.IsBusy = false;
-            }
-        }
-        #endregion
-
-        #region refrescar atributos producto
-        private void RefrescarArbolAtributosAsync()
-        {
-            var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
-            if (productoSeleccionado != null)
-            {
-                var api = new ApiDistribuidoresClient();
-                api.ListarAtributosProductoCompleted += new EventHandler<ListarAtributosProductoCompletedEventArgs>(ListarAtributosProductoCompleted);
-                api.ListarAtributosProductoAsync(productoSeleccionado.ProductoId);
-                BusyIndicatorPedidosTab.IsBusy = true;
-            }
-        }
-
-        private void ListarAtributosProductoCompleted(object sender, ListarAtributosProductoCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Result != null && e.Result.Any())
-                {
-                    TreeViewCamposVariables.ItemsSource = e.Result;
-                    AtributosProducto = e.Result;
-                }
-            }
-            catch (Exception err)
-            {
-                new ErrorWindow(err).Show();
-            }
-            finally
-            {
-                BusyIndicatorPedidosTab.IsBusy = false;
-            }
-        }
-        #endregion
-
-        #region cambiar estado pedido
         private void AprobadoCambiarEstado_Click(object sender, RoutedEventArgs e)
         {
             var chkBox = sender as CheckBox;
@@ -134,12 +66,12 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 CambiarEstadoPedido(pedidoSeleccionado, aprobado);
             }
         }
-        
+
         private void CambiarEstadoPedido(PedidoDTO pedidoSeleccionado, bool nuevoEstado)
         {
             BusyIndicatorPedidosTab.IsBusy = true;
             var api = new ApiDistribuidoresClient();
-            api.CambiarEstadoPedidoCompleted+= new EventHandler<CambiarEstadoPedidoCompletedEventArgs>(CambiarEstadoPedidoCompleted);
+            api.CambiarEstadoPedidoCompleted += new EventHandler<CambiarEstadoPedidoCompletedEventArgs>(CambiarEstadoPedidoCompleted);
             api.CambiarEstadoPedidoAsync(pedidoSeleccionado.PedidoId, nuevoEstado);
         }
 
@@ -161,55 +93,147 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
                 BusyIndicatorPedidosTab.IsBusy = false;
             }
         }
+
+        private void DataGridPedidos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var pedidoSeleccionado = DataGridPedidos.SelectedItem as PedidoDTO;
+            if (pedidoSeleccionado != null)
+            {
+                BusyIndicatorPedidosTab.IsBusy = true;
+                var api = new ApiDistribuidoresClient();
+                api.ListarProductosPedidoCompleted += new EventHandler<ListarProductosPedidoCompletedEventArgs>(ListarProductosPedidoCompleted);
+                api.ListarProductosPedidoAsync(pedidoSeleccionado.PedidoId);
+            }
+        }
+
+        private void ListarProductosPedidoCompleted(object sender, ListarProductosPedidoCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    DataGridProductosPedido.ItemsSource = e.Result;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
         #endregion
+
+        #region productos
+        private void RefrescarProductosAsync()
+        {
+            BusyIndicatorPedidosTab.IsBusy = true;
+            var api = new ApiDistribuidoresClient();
+            api.ListarProductosCompleted += new EventHandler<ListarProductosCompletedEventArgs>(ListarProductosCompleted);
+            api.ListarProductosAsync();
+        }
+
+        private void ListarProductosCompleted(object sender, ListarProductosCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    DataGridProductos.ItemsSource = e.Result;
+                    DataGridProductos.SelectedIndex = -1;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
 
         private void DataGridProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefrescarArbolAtributosAsync();
-            RefrescarVideosProducto();
-            RefrescarImagenesProducto();
+            RefrescarImagenesProductoAsync();
+            RefrescarVideosProductoAsync();
         }
+        #endregion
 
-        private void RefrescarImagenesProducto()
+        #region atributos producto
+        private void RefrescarArbolAtributosAsync()
         {
-            //var productoFakeSeleccionado = (ProductoFake)DataGridProductos.SelectedItem;
-            //if (productoFakeSeleccionado != null)
-            //{
-            //    IControlador iControlador = Controlador.GetInstance();
-            //    var imagenesProducto = iControlador.ObtenerImagenesProducto(productoFakeSeleccionado.ProductoFakeId);
-            //    PlayListImagenesProducto = GenerarPlayList(imagenesProducto);
-            //    IniciarSlideShowImagenesProducto();
-            //}
-        }
-
-        private void RefrescarVideosProducto()
-        {
-            //var productoFakeSeleccionado = (ProductoFake)DataGridProductos.SelectedItem;
-            //if (productoFakeSeleccionado != null)
-            //{
-            //    IControlador iControlador = Controlador.GetInstance();
-            //    var videosProducto = iControlador.ObtenerVideosProducto(productoFakeSeleccionado.ProductoFakeId);
-            //    VideosProducto.AutoPlay = true;
-            //    PlayListVideosProducto = GenerarPlayList(videosProducto);
-            //    SetearSiguienteVideo();
-            //}
-        }
-
-        private Dictionary<string, int> GenerarPlayList(List<string> origen)
-        {
-            var playList = new Dictionary<string, int>();
-            if (origen.Any())
+            var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
+            if (productoSeleccionado != null)
             {
-                foreach (var item in origen)
+                var api = new ApiDistribuidoresClient();
+                api.ListarAtributosProductoCompleted += new EventHandler<ListarAtributosProductoCompletedEventArgs>(ListarAtributosProductoCompleted);
+                api.ListarAtributosProductoAsync(productoSeleccionado.ProductoId);
+                BusyIndicatorPedidosTab.IsBusy = true;
+            }
+        }
+
+        private void ListarAtributosProductoCompleted(object sender, ListarAtributosProductoCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
                 {
-                    playList.Add(item, 0);
+                    TreeViewCamposVariables.ItemsSource = e.Result;
                 }
             }
-            return playList;
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
+        #endregion
+
+        #region imagenes producto
+        private void RefrescarImagenesProductoAsync()
+        {
+            DetenerSlideShowImagenesProducto();
+            var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
+            if (productoSeleccionado != null)
+            {
+                var api = new ApiDistribuidoresClient();
+                api.ListarImagenesProductoCompleted += new EventHandler<ListarImagenesProductoCompletedEventArgs>(ListarImagenesProductoCompleted);
+                api.ListarImagenesProductoAsync(productoSeleccionado.ProductoId);
+                BusyIndicatorPedidosTab.IsBusy = true;
+            }
+        }
+
+        private void ListarImagenesProductoCompleted(object sender, ListarImagenesProductoCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    PlayListImagenesProducto = new PlayList();
+                    PlayListImagenesProducto.CargarPlayList(e.Result);
+                    IniciarSlideShowImagenesProducto();
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
         }
 
         private void IniciarSlideShowImagenesProducto()
         {
+            DetenerSlideShowImagenesProducto();
             SetearSiguienteImagen();
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(3000);
@@ -219,53 +243,79 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
 
         private void DetenerSlideShowImagenesProducto()
         {
-            if (_timer != null) 
+            if (_timer != null)
                 _timer.Stop();
+            ImagenesProducto.Source = null;
         }
 
         private void SetearSiguienteImagen()
         {
-            var siguienteImagen = ElementoPlayListMenosMostrado(PlayListImagenesProducto);
+            var siguienteImagen = PlayListImagenesProducto.SiguienteElemento();
             if (siguienteImagen != null)
             {
-                PlayListImagenesProducto[siguienteImagen]++;
-                ImagenesProducto.Source = new BitmapImage(new Uri(siguienteImagen));
+                ImagenesProducto.Source = new BitmapImage(new Uri(siguienteImagen.Url));
             }
+        }
+        #endregion
+
+        #region videos producto
+        private void RefrescarVideosProductoAsync()
+        {
+            DetenerSlideShowVideosProducto();
+            var productoSeleccionado = (ProductoDTO)DataGridProductos.SelectedItem;
+            if (productoSeleccionado != null)
+            {
+                var api = new ApiDistribuidoresClient();
+                api.ListarVideosProductoCompleted += new EventHandler<ListarVideosProductoCompletedEventArgs>(ListarVideosProductoCompleted);
+                api.ListarVideosProductoAsync(productoSeleccionado.ProductoId);
+                BusyIndicatorPedidosTab.IsBusy = true;
+            }
+        }
+
+        private void ListarVideosProductoCompleted(object sender, ListarVideosProductoCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result != null && e.Result.Any())
+                {
+                    PlayListVideosProducto = new PlayList();
+                    PlayListVideosProducto.CargarPlayList(e.Result);
+                    SetearSiguienteVideo();
+                    VideosProducto.AutoPlay = true;
+                }
+            }
+            catch (Exception err)
+            {
+                new ErrorWindow(err).Show();
+            }
+            finally
+            {
+                BusyIndicatorPedidosTab.IsBusy = false;
+            }
+        }
+
+        private void DetenerSlideShowVideosProducto()
+        {
+            VideosProducto.Stop();
+            VideosProducto.Source = null;
         }
 
         private void SetearSiguienteVideo()
         {
-            var siguienteVideo = ElementoPlayListMenosMostrado(PlayListVideosProducto);
+            var siguienteVideo = PlayListVideosProducto.SiguienteElemento();
             if (siguienteVideo != null)
             {
-                PlayListVideosProducto[siguienteVideo]++;
-                VideosProducto.Source = new Uri(siguienteVideo);    
+                VideosProducto.Source = new Uri(siguienteVideo.Url);    
             }
-        }
-
-        private string ElementoPlayListMenosMostrado(Dictionary<string, int> playList)
-        {
-            int minVeces = Int16.MaxValue;
-            string elementoMinVecesMostrado = null;
-            if (playList != null)
-            {
-                foreach (var par in playList)
-                {
-                    if (par.Value <= minVeces)
-                    {
-                        minVeces = par.Value;
-                        elementoMinVecesMostrado = par.Key;
-                    }
-                }
-            }
-            return elementoMinVecesMostrado;
         }
 
         private void VideosProducto_OnMediaEnded(object sender, RoutedEventArgs e)
         {
             SetearSiguienteVideo();
         }
+        #endregion
 
+        #region sesion
         private void BtnCerrarSesion_OnClick(object sender, RoutedEventArgs e)
         {
             DetenerSlideShowImagenesProducto();
@@ -273,8 +323,10 @@ namespace uy.edu.ort.taller.aplicaciones.clientedistribuidores
             iControlador.CerrarSesion();
             Content = new MainPage();
         }
+        #endregion
 
     }
 }
+
 
 

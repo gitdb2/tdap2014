@@ -58,6 +58,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ListarImagenesProducto">
+      <soap12:operation soapAction="urn:ApiDistribuidores/ListarImagenesProducto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarVideosProducto">
+      <soap12:operation soapAction="urn:ApiDistribuidores/ListarVideosProducto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarProductosPedido">
+      <soap12:operation soapAction="urn:ApiDistribuidores/ListarProductosPedido" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ApiDistribuidores">
     <wsdl:port name="CustomBinding_ApiDistribuidores" binding="tns:CustomBinding_ApiDistribuidores">
