@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Metadata.Edm;
 using System.Linq;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.dominio.DTO;
@@ -632,28 +633,31 @@ private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Pro
             return resultado;
         }
 
-
-        public List<ValorAtributo> GetListaValorAtributosSimple(List<ValorAtributo> list)
+        public bool RemoverValorAtributoSimple(int idProducto, int idValorAtributoSimple)
         {
-            List<ValorAtributo> aRetornar = new List<ValorAtributo>();
-            foreach (var valAtrib in list)
+            var resultadoOk = false;
+            using (var db = new Persistencia())
             {
-                if (valAtrib.Atributo.DataCombo == false)
+                var producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados)
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                if (producto != null && producto.ValoresSeleccionados != null)
                 {
-                    aRetornar.Add(valAtrib);
+                    var valorSimple =
+                        db.ValoresAtributos
+                        .SingleOrDefault(v0 => v0.ValorAtributoID == idValorAtributoSimple);
+                    if (valorSimple != null)
+                    {
+                        producto.ValoresSeleccionados.Remove(valorSimple);
+                        db.ValoresAtributos.Remove(valorSimple);
+                        db.SaveChanges();
+                        resultadoOk = true;
+                    }
                 }
             }
-            throw new NotImplementedException();
+            return resultadoOk;
         }
 
-        public List<ValorAtributo> GetListaValorAtributosCombo(List<ValorAtributo> list)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ValorAtributo> GetListaValorAtributosMultiseleccion(List<ValorAtributo> list)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

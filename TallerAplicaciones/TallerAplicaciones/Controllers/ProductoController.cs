@@ -25,15 +25,6 @@ namespace TallerAplicaciones.Controllers
             return View();
         }
 
-        //
-        // GET: /Producto/Details/5
-
-        //        public ActionResult Details(int id)
-        //        {
-        //            return View();
-        //        }
-
-
         [AllowAnonymous]
         public ActionResult List()
         {
@@ -41,11 +32,8 @@ namespace TallerAplicaciones.Controllers
             {
                 Productos = ManejadorProducto.GetInstance().ListarProductos()
             };
-
             return View(model);
         }
-
-
 
         //
         // GET: /Producto/Create
@@ -409,6 +397,13 @@ namespace TallerAplicaciones.Controllers
                 }
             }
             return fileList;
+        }
+
+        [HttpPost]
+        public JsonResult RemoverValorAtributoSimple(int idProducto, int idValorAtributoSimple)
+        {
+            var resultadoOK = ManejadorProducto.GetInstance().RemoverValorAtributoSimple(idProducto, idValorAtributoSimple);
+            return null;
         }
 
     }
