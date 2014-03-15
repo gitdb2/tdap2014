@@ -16,6 +16,9 @@ namespace TallerAplicaciones.Controllers
     [CustomAuthorize]
     public class PedidoController : Controller
     {
+
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //
         // GET: /Pedido/
         public ActionResult Index()
@@ -52,9 +55,7 @@ namespace TallerAplicaciones.Controllers
                 Fecha = DateTime.Now,
                 Aprobado = false,
                 Activo = true
-
             };
-
 
             return View(model);
         }
@@ -80,7 +81,16 @@ namespace TallerAplicaciones.Controllers
                     Fecha = model.Fecha
                 };
 
-                ManejadorPedido.GetInstance().Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
+                try
+                {
+                    ManejadorPedido.GetInstance()
+                        .Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
+                }
+                catch (Exception ex)
+                {
+                    //la excepcion la puede tirar el envio de mails luego de creado el pedido
+                    log.Error(ex);
+                }
 
                 return RedirectToAction("List");
             }

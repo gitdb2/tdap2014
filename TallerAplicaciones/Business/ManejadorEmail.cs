@@ -28,11 +28,18 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         private const string FormatoFecha = "yyyy-MM-dd H:mm";
 
+        private string _emailRemitente;
+        private string _emailRemitentePassword;
+        private string _nombreRemitente;
+        private string _nombreServidor;
+        private string _emailAsunto;
+        private int _puertoServidor;
+        private int _timeoutEnvioServidor;
+
         public void NotificarDistribuidoresPorMail(Pedido pedido)
         {
-            List<Distribuidor> destinatarios = ManejadorPerfilUsuario
-                .GetInstance()
-                .ObtenerDistribuidoresDeEmpresa(pedido.Distribuidor.Empresa.EmpresaDistribuidoraID);
+            IntentarCargarVariablesEnvioMail();
+            List<Distribuidor> destinatarios = ManejadorPerfilUsuario.GetInstance().ObtenerDistribuidoresDeEmpresa(pedido.Distribuidor.Empresa.EmpresaDistribuidoraID);
             EnviarMails(destinatarios, pedido);
         }
 
@@ -47,39 +54,64 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         private void EnviarMail(Distribuidor distribuidor, string cuerpoEmail)
         {
-            var emailRemitente = Settings.GetInstance().GetProperty("mail.remitente.direccion");
-            var emailRemitentePassword = Settings.GetInstance().GetProperty("mail.remitente.password");
-            var nombreRemitente = Settings.GetInstance().GetProperty("mail.remitente.nombre");
-            var nombreServidor = Settings.GetInstance().GetProperty("mail.servidor.direccion");
-            var puertoServidor = Settings.GetInstance().GetProperty("mail.servidor.puerto");
-            var timeoutEnvioServidor = Settings.GetInstance().GetProperty("mail.servidor.envio.timeout", "20000");
-            var emailAsunto = Settings.GetInstance().GetProperty("mail.asunto");
-
-            var fromAddress = new MailAddress(emailRemitente, nombreRemitente);
+            var fromAddress = new MailAddress(_emailRemitente, _nombreRemitente);
             var toAddress = new MailAddress(distribuidor.Email, distribuidor.Nombre + " " + distribuidor.Apellido);
 
             var bodyBuilder = new StringBuilder();
-            bodyBuilder.Append("Sr Distribuidor ").Append(distribuidor.Nombre).Append("\n\n");
+            bodyBuilder.Append("Sr. Distribuidor ").Append(distribuidor.Nombre).Append(" ").Append(distribuidor.Apellido).Append("\n\n");
             bodyBuilder.Append("A continuacion detallamos el Pedido que acaba de realizarse.").Append("\n\n");
             bodyBuilder.Append(cuerpoEmail);
 
             var smtp = new SmtpClient
             {
-                Host = nombreServidor,
-                Port = Int16.Parse(puertoServidor),
+                Host = _nombreServidor,
+                Port = _puertoServidor,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential(fromAddress.Address, emailRemitentePassword),
-                Timeout = Int16.Parse(timeoutEnvioServidor)
+                Credentials = new NetworkCredential(fromAddress.Address, _emailRemitentePassword),
+                Timeout = _timeoutEnvioServidor
             };
             using (var message = new MailMessage(fromAddress, toAddress)
             {
-                Subject = emailAsunto,
+                Subject = _emailAsunto,
                 Body = bodyBuilder.ToString()
             })
             {
                 smtp.Send(message);
             }
+        }
+
+        private void IntentarCargarVariablesEnvioMail()
+        {
+            _emailRemitente = CargarVariableString("mail.remitente.direccion");
+            _emailRemitentePassword = CargarVariableString("mail.remitente.password");
+            _nombreRemitente = CargarVariableString("mail.remitente.nombre");
+            _nombreServidor = CargarVariableString("mail.servidor.direccion");
+            _emailAsunto = CargarVariableString("mail.asunto");
+            _puertoServidor = CargarVariableNumerica("mail.servidor.puerto");
+            _timeoutEnvioServidor = CargarVariableNumerica("mail.servidor.envio.timeout");
+        }
+
+        private string CargarVariableString(string clave)
+        {
+            string valorVariable = null;
+            valorVariable = Settings.GetInstance().GetProperty(clave);
+            if (valorVariable == null || valorVariable.Trim().Equals(""))
+            {
+                throw new ArgumentException("El valor de la variable " + clave + " no puede ser vacia");
+            }
+            return valorVariable;
+        }
+
+        private int CargarVariableNumerica(string clave)
+        {
+            string valorVariable = CargarVariableString(clave);
+            int resultado;
+            if (!int.TryParse(valorVariable, out resultado))
+            {
+                throw new ArgumentException("El valor de la variable " + clave + " debe ser numerico");
+            }
+            return resultado;
         }
 
         private string GenerarCuerpoEmail(Pedido p)
