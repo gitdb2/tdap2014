@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.utiles;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
 {
@@ -46,10 +47,16 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
         private void EnviarMail(Distribuidor distribuidor, string cuerpoEmail)
         {
-            var fromAddress = new MailAddress("tallerdisenoort2014@gmail.com", "Sistema de Alta de Pedidos");
-            var toAddress = new MailAddress(distribuidor.Email, "Destinatario Mail Taller");
-            const string fromPassword = "112233taller";
-            const string subject = "Notificacion de Alta de Pedido";
+            var emailRemitente = Settings.GetInstance().GetProperty("mail.remitente.direccion");
+            var emailRemitentePassword = Settings.GetInstance().GetProperty("mail.remitente.password");
+            var nombreRemitente = Settings.GetInstance().GetProperty("mail.remitente.nombre");
+            var nombreServidor = Settings.GetInstance().GetProperty("mail.servidor.direccion");
+            var puertoServidor = Settings.GetInstance().GetProperty("mail.servidor.puerto");
+            var timeoutEnvioServidor = Settings.GetInstance().GetProperty("mail.servidor.envio.timeout", "20000");
+            var emailAsunto = Settings.GetInstance().GetProperty("mail.asunto");
+
+            var fromAddress = new MailAddress(emailRemitente, nombreRemitente);
+            var toAddress = new MailAddress(distribuidor.Email, distribuidor.Nombre + " " + distribuidor.Apellido);
 
             var bodyBuilder = new StringBuilder();
             bodyBuilder.Append("Sr Distribuidor ").Append(distribuidor.Nombre).Append("\n\n");
@@ -58,16 +65,16 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
             var smtp = new SmtpClient
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
+                Host = nombreServidor,
+                Port = Int16.Parse(puertoServidor),
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
-                Timeout = 20000
+                Credentials = new NetworkCredential(fromAddress.Address, emailRemitentePassword),
+                Timeout = Int16.Parse(timeoutEnvioServidor)
             };
             using (var message = new MailMessage(fromAddress, toAddress)
             {
-                Subject = subject,
+                Subject = emailAsunto,
                 Body = bodyBuilder.ToString()
             })
             {
