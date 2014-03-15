@@ -23,21 +23,16 @@ namespace TallerAplicaciones.Controllers
             return View();
         }
 
-
-
         [AllowAnonymous]
         public ActionResult List()
         {
             var model = new PedidoListModel
             {
-
                 Pedidos = ManejadorPedido.GetInstance().ListarPedidos()
             };
 
             return View(model);
         }
-
-
 
         //
         // GET: /Pedido/Create
@@ -85,9 +80,7 @@ namespace TallerAplicaciones.Controllers
                     Fecha = model.Fecha
                 };
 
-
                 ManejadorPedido.GetInstance().Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
-
 
                 return RedirectToAction("List");
             }

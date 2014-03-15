@@ -79,8 +79,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                 db.Pedidos.Add(pedido);
                 db.SaveChanges();
+                NotificarDistribuidores(pedido);
             }
+        }
 
+        private static void NotificarDistribuidores(Pedido nuevoPedido)
+        {
+            ManejadorEmail.GetInstance().NotificarDistribuidoresPorMail(nuevoPedido);
         }
 
         public Pedido GetPedido(int idPedido)
