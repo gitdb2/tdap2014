@@ -87,10 +87,9 @@ namespace TallerAplicaciones.Controllers
                     ManejadorPedido.GetInstance()
                         .Alta(pedido, model.DistribuidorID, model.EjecutivoId, model.Productos, model.Cantidades);
                 }
-                catch (Exception ex)
+                catch (EnvioMailException envioMailException)
                 {
-                    //la excepcion la puede tirar el envio de mails luego de creado el pedido
-                    log.Error(ex);
+                    log.Error(envioMailException);
                 }
 
                 return RedirectToAction("List");
@@ -164,9 +163,7 @@ namespace TallerAplicaciones.Controllers
             model.DistribuidoresDisponibles = ManejadorPerfilUsuario.GetInstance()
               .GetDistribuidoresConEmpresasDeEjecutivo(model.EjecutivoId);
             model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
-
         }
-
 
         public class BaseJson
         {
@@ -188,8 +185,6 @@ namespace TallerAplicaciones.Controllers
             public string NombreProducto { get; set; }
             public string CodigoProducto { get; set; }
         }
-
-
 
         [HttpPost]
         public JsonResult AgregarItemPedidoCantidadProducto(int idPedido, int idProducto, int cantidad)
@@ -234,7 +229,6 @@ namespace TallerAplicaciones.Controllers
                 Message = ""
             };
 
-
             if (borrar)
             {
                 try
@@ -277,7 +271,6 @@ namespace TallerAplicaciones.Controllers
         // GET: /Pedido/Edit/5
         public ActionResult Edit(int idPedido)
         {
-
             return View(GetPedidoModelFromDB(idPedido));
         }
 
@@ -304,13 +297,8 @@ namespace TallerAplicaciones.Controllers
                     Activo = model.Activo,
                     PedidoID = model.PedidoID,
                 };
-
-
-
-
-
+               
                 ManejadorPedido.GetInstance().Modificar(pedido);
-
 
                 return RedirectToAction("List");
             }
@@ -332,8 +320,6 @@ namespace TallerAplicaciones.Controllers
             //errorModel.Nombre = model.Nombre;
             //errorModel.ProductoID = model.ProductoID;
             return View(errorModel);
-
-
         }
 
         //
@@ -385,6 +371,5 @@ namespace TallerAplicaciones.Controllers
         }
 
     }
-
 
 }

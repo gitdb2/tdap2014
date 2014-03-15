@@ -57,6 +57,7 @@ namespace TallerAplicaciones.Controllers
             {
                 IAtributo iAtributo = ManejadorAtributo.GetInstance();
                 List<Atributo> listaAtributos = iAtributo.GetAtributosActivos();
+
                 model = new ProductoConArchivosSubmitModel() {ListaDeAtributos = listaAtributos};
             }
             catch (Exception e)
@@ -194,6 +195,10 @@ namespace TallerAplicaciones.Controllers
                 Nombre = producto.Nombre,
                 Codigo = producto.Codigo,
                 ProductoID = producto.ProductoID
+
+                //ListaDeAtributosSimple,
+                //ListaDeAtributosCombo,
+                //ListaDeAtributosMoltiseleccion
             };
         }
 

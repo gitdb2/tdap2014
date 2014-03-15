@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.utiles;
 
 namespace uy.edu.ort.taller.aplicaciones.negocio
@@ -125,7 +126,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             string valorVariable = Settings.GetInstance().GetProperty(clave);
             if (valorVariable == null || valorVariable.Trim().Equals(""))
             {
-                throw new ArgumentException("El valor de la variable " + clave + " no puede ser vacia");
+                throw new EnvioMailException("El valor de la variable " + clave + " no puede ser vacia");
             }
             return valorVariable;
         }
@@ -136,7 +137,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             int resultado;
             if (!int.TryParse(valorVariable, out resultado))
             {
-                throw new ArgumentException("El valor de la variable " + clave + " debe ser numerico");
+                throw new EnvioMailException("El valor de la variable " + clave + " debe ser numerico");
             }
             return resultado;
         }
@@ -147,7 +148,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             bool resultado;
             if (!bool.TryParse(valorVariable, out resultado))
             {
-                throw new ArgumentException("El valor de la variable " + clave + " debe ser true o false");
+                throw new EnvioMailException("El valor de la variable " + clave + " debe ser true o false");
             }
             return resultado;
         }
