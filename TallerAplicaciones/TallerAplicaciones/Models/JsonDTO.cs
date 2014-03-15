@@ -33,4 +33,17 @@ namespace TallerAplicaciones.Models
         public int ValorAtributoId { get; set; }
     }
 
+    public class EditarValorAtributoSimpleJson : BaseJson
+    {
+        public int ValorAtributoId { get; set; }
+        public string NuevoValor { get; set; }
+    }
+
+    public class AgregarValorAtributoSimpleJson : BaseJson
+    {
+        public int ProductoId { get; set; }
+        public int AtributoId { get; set; }
+        public string NuevoValor { get; set; }
+    }
+
 }

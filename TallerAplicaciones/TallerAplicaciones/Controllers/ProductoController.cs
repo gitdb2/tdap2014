@@ -402,6 +402,7 @@ namespace TallerAplicaciones.Controllers
         [HttpPost]
         public JsonResult RemoverValorAtributoSimple(int idProducto, int idValorAtributoSimple)
         {
+            var errorString = "Ocurrio un error al borrar el valor";
             var resJson = new RemoverValorAtributoSimpleJson()
             {
                 Message = "",
@@ -413,12 +414,63 @@ namespace TallerAplicaciones.Controllers
             {
                 var resultadoOK = ManejadorProducto.GetInstance().RemoverValorAtributoSimple(idProducto, idValorAtributoSimple);
                 resJson.Ok = resultadoOK;
-                resJson.Message = resultadoOK ? "Se elimino el atributo" : "Ocurrio un error al borrar el valor";
+                resJson.Message = resultadoOK ? "Se elimino el atributo" : errorString;
             }
             catch (Exception ex)
             {
                 resJson.Ok = false;
-                resJson.Message = "Ocurrio un error al borrar el valor";
+                resJson.Message = errorString;
+            }
+            return Json(resJson, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult EditarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
+        {
+            var errorString = "Ocurrio un error al editar el valor";
+            var resJson = new EditarValorAtributoSimpleJson()
+            {
+                Message = "",
+                Ok = false,
+                ValorAtributoId = idValorAtributoSimple,
+                NuevoValor = nuevoValor
+            };
+            try
+            {
+                var resultadoOK = ManejadorProducto.GetInstance().EditarValorAtributoSimple(idValorAtributoSimple, nuevoValor);
+                resJson.Ok = resultadoOK;
+                resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
+            }
+            catch (Exception ex)
+            {
+                resJson.Ok = false;
+                resJson.Message = errorString;
+            }
+            return Json(resJson, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
+        {
+            var errorString = "Ocurrio un error al agregar el valor";
+            var resJson = new AgregarValorAtributoSimpleJson()
+            {
+                Message = "",
+                Ok = false,
+                ProductoId = idProducto,
+                AtributoId = idAtributoSimple,
+                NuevoValor = nuevoValor
+            };
+            try
+            {
+                var resultadoOK = ManejadorProducto.GetInstance().AgregarValorAtributoSimple(idProducto, idAtributoSimple, nuevoValor);
+                resJson.Ok = resultadoOK;
+                resJson.Message = resultadoOK ? "Se agrego el atributo" : errorString;
+            }
+            catch (Exception ex)
+            {
+                resJson.Ok = false;
+                resJson.Message = errorString;
             }
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }

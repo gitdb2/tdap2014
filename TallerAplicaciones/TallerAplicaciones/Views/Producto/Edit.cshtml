@@ -143,7 +143,6 @@
         }
 
         function removerValorAtributoSimple($elem, idProducto, idValorAtributoSimple) {
-
             var data = {
                 idProducto: idProducto,
                 idValorAtributoSimple: idValorAtributoSimple
@@ -156,8 +155,39 @@
                     alert(response.Message);
                 }
             }, "json");
-
         }
+
+        function editarValorAtributoSimple($elem, idValorAtributoSimple, nuevoValor) {
+            var data = {
+                idValorAtributoSimple: idValorAtributoSimple,
+                nuevoValor : nuevoValor
+            };
+
+            $.post("EditarValorAtributoSimple", data, function (response) {
+                if (response.Ok) {
+                    //TODO ver que hace
+                    //mandar al listado con el nuevo valor
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
+        }
+
+        function removerValorAtributoSimple($elem, idProducto, nuevoValor) {
+            var data = {
+                idProducto: idProducto,
+                nuevoValor: nuevoValor
+            };
+
+            $.post("RemoverValorAtributoSimple", data, function (response) {
+                if (response.Ok) {
+                    $elem.parent().parent().remove();
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
+        }
+
 
     </script>
     @Scripts.Render("~/bundles/jqueryval")
