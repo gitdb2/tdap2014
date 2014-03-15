@@ -277,7 +277,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return listaCombo;
         }
 
-private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Producto producto)
+        private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Producto producto)
         {
             Dictionary<Atributo, List<ValorPredefinido>> resultado = new Dictionary<Atributo, List<ValorPredefinido>>();
             List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
