@@ -441,13 +441,14 @@ namespace TallerAplicaciones.Controllers
                 Message = "",
                 Ok = false,
                 ValorAtributoId = idValorAtributoSimple,
-                NuevoValor = nuevoValor
+                NuevoValor = null
             };
             try
             {
                 var resultadoOK = ManejadorProducto.GetInstance().ModificarValorAtributoSimple(idValorAtributoSimple, nuevoValor);
                 resJson.Ok = resultadoOK;
                 resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
+                resJson.NuevoValor = nuevoValor;
             }
             catch (Exception ex)
             {

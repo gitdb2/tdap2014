@@ -763,6 +763,10 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             ValorAtributoSimple resultado = null;
             using (var db = new Persistencia())
             {
+                
+                if (AtributoYaEstaAsociado(idProducto, idAtributoSimple))
+                    throw new AtributoYaEstaAsociadoException("El Producto ya tiene un Atributo de ese tipo");
+                
                 var producto = db.Productos
                     .Include(p0 => p0.ValoresSeleccionados)
                     .SingleOrDefault(p1 => p1.ProductoID == idProducto);
@@ -772,7 +776,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     if (producto.ValoresSeleccionados == null)
                         producto.ValoresSeleccionados = new List<ValorAtributo>();
 
-                    var atributo = db.Atributos.FirstOrDefault(a0 => a0.AtributoID == idAtributoSimple);
+                    var atributo = db.Atributos.SingleOrDefault(a0 => a0.AtributoID == idAtributoSimple);
 
                     ValorAtributoSimple nuevoValorAtributoSimple = new ValorAtributoSimple()
                     {
@@ -788,6 +792,26 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 }
             }
             return resultado;
+        }
+
+        private bool AtributoYaEstaAsociado(int idProducto, int idAtributo)
+        {
+            using (var db = new Persistencia())
+            {
+                var producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados.Select(p2 => p2.Atributo))
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                if (producto != null)
+                {
+                    foreach (var val in producto.ValoresSeleccionados)
+                    {
+                        if (val.Atributo.AtributoID == idAtributo)
+                            return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public ValorAtributoCombo AgregarValorAtributoCombo(int idProducto, int idAtributo, List<int> listaIdValorPredefinido)
@@ -822,7 +846,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         if (valorPredefinido != null)
                         {
                             nuevo.Valores.Add(valorPredefinido);
-
                         }
                     }
                     producto.ValoresSeleccionados.Add(nuevo);

@@ -153,7 +153,6 @@
             var $cantidadToAdd = $("#cantidadToAdd");
 
             if (!$.isNumeric($cantidadToAdd.val())) {
-               // alert("Debe ingresar un numero");
                 $cantidadToAdd.focus();
                 $cantidadToAdd.notify("Debe ingresar un número", "error");
                 return false;
@@ -161,12 +160,10 @@
 
             var valor = parseInt($cantidadToAdd.val());
             if (valor < 1) {
-              //  alert("El valor ingresado debe ser mayor o igual a 1");
                 $cantidadToAdd.notify("El valor ingresado debe ser mayor o igual a 1", "error");
                 $cantidadToAdd.focus();
                 return false;
             }
-
             
             if ($existe.length == 0) {
               

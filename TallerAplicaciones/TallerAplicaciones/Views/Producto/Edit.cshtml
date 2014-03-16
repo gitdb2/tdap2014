@@ -260,46 +260,33 @@
                 idProducto: idProducto,
                 idValorAtributo: idValorAtributo
             };
-
-            $.post("RemoverValorAtributo", data, function (response) {
+            $.post("RemoverValorAtributo", data, function(response) {
                 if (response.Ok) {
                     $elem.parent().parent().remove();
                 } else {
-                    alert(response.Message);
+                    $elem.notify(response.Message, "error");
                 }
             }, "json");
         }
 
-        function editarValorAtributoSimple($elem, idValorAtributoSimple, nuevoValor) {
+        function modificarValorSimple(idProducto, idValorAtributoSimple) {
+            if ($("#valorSimple_" + idValorAtributoSimple).val().length == 0) {
+                $("#valorSimple_" + idValorAtributoSimple).focus();
+                $("#valorSimple_" + idValorAtributoSimple).notify("Debe ingresar un valor", "error");
+                return false;
+            }
+
             var data = {
                 idValorAtributoSimple: idValorAtributoSimple,
-                nuevoValor : nuevoValor
+                nuevoValor: $("#valorSimple_" + idValorAtributoSimple).val()
             };
 
-            $.post("ModificarValorAtributoSimple", data, function (response) {
+            $.post("ModificarValorAtributoSimple", data, function(response) {
                 if (response.Ok) {
-                    //TODO ver que hace
-                    //mandar al listado con el nuevo valor
+                    $("#valorSimple_" + idValorAtributoSimple).val(response.NuevoValor);
+                    $("#valorSimple_" + idValorAtributoSimple).notify(response.Message, "ok");
                 } else {
-                    alert(response.Message);
-                }
-            }, "json");
-        }
-
-
-
-        function agregarValorAtributoSimple($elem, idProducto, nuevoValor) {
-            var data = {
-                idProducto: idProducto,
-                nuevoValor: nuevoValor
-            };  
-
-            $.post("AgregarValorAtributoSimple", data, function (response) {
-                if (response.Ok) {
-                    //TODO ver
-                    //$elem.parent().parent().remove();
-                } else {
-                    alert(response.Message);
+                    $("#valorSimple_" + idValorAtributoSimple).notify(response.Message, "error");
                 }
             }, "json");
         }
@@ -310,7 +297,7 @@
                 idValorAtributo: idValorAtributo
             };
 
-            $.post("ModificarValorCombo", data, function (response) {
+            $.post("ModificarValorCombo", data, function(response) {
                 if (response.Ok) {
                     //TODO ver
                     //$elem.parent().parent().remove();
@@ -325,11 +312,11 @@
                 idProducto: idProducto,
                 listaIdValorAtributo: idValorAtributo
             };
-           
-           //TODO
-           //$("#comboValueMulti_" + idValorAtributo)
 
-            $.post("ModificarValorCombo", data, function (response) {
+            //TODO
+            //$("#comboValueMulti_" + idValorAtributo)
+
+            $.post("ModificarValorCombo", data, function(response) {
                 if (response.Ok) {
                     //TODO ver
                     //$elem.parent().parent().remove();
@@ -344,11 +331,11 @@
                 idProducto: idProducto,
                 listaIdValorAtributo: idValorAtributo
             };
-           
-           //TODO
-           //$("#comboValueMulti_" + idValorAtributo)
 
-            $.post("AgregarValorComboMulti", data, function (response) {
+            //TODO
+            //$("#comboValueMulti_" + idValorAtributo)
+
+            $.post("AgregarValorComboMulti", data, function(response) {
                 if (response.Ok) {
                     //TODO ver
                     //$elem.parent().parent().remove();
@@ -358,9 +345,6 @@
             }, "json");
         }
 
-
-
-       
         function renderAtributo() {
             var idAtributo = $("#atributoSelect").val();
 
@@ -371,11 +355,9 @@
             $.post("../Atributo/ObtenerValoresAtributos", data, function(response) {
                 if (response.Ok) {
                     if (response.esCombo == false) {
-                            printHTMLAtributoSimple(response);
+                        printHTMLAtributoSimple(response);
                     } else {
-                       
-                            printHTMLAtributoCombo(response, response.esMultiselec);
-                        
+                    	printHTMLAtributoCombo(response, response.esMultiselec);
                     }
                 } else {
                     alert(response.Message);
@@ -383,52 +365,52 @@
             }, "json");
         }
 
-      function printHTMLAtributoSimple(response) {
-             
-            var html =  '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
-                        '<input placeholder="Valor" id="tempItemToAdd" idatrib="'+response.idAtributo+'" type="text" value="" />' +
-                        '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>'+
-                        '</div>';
+        function printHTMLAtributoSimple(response) {
+            var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
+                '<input placeholder="Valor" id="tempItemToAdd" idatrib="' + response.idAtributo + '" type="text" value="" />' +
+                '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>' +
+                '</div>';
             $("#agregarContainer").html(html);
         }
 
+        function agregarValorAtributoSimple() {
+            if ($("#tempItemToAdd").val().length == 0) {
+                $("#tempItemToAdd").focus();
+                $("#tempItemToAdd").notify("Debe ingresar un valor", "error");
+                return false;
+            }
+            var data = {
+                idProducto: $("#ProductoID").val(),
+                idAtributoSimple: $("#tempItemToAdd").attr("idatrib"),
+                nuevoValor: $("#tempItemToAdd").val()
+            };
+            $.post("AgregarValorAtributoSimple", data, function(response) {
+                if (response.Ok) {
+                    renderSimple($("#atributosTable"), response);
+                } else {
+                    $("#atributosTable").notify(response.Message, "error");
+                }
+            }, "json");
+        }
 
+        function renderSimple($container, response) {
+            var html = '<tr class="atributo-line">'
+                + '<td>' + response.NombreAtributo + '</td>'
+                + '<td>'
+                + '<input type="text" value="' + response.NuevoValor + '" id="valorSimple_' + response.ValorAtributoId + '" class="valorSimple">'
+                + '</td>'
+                + '<td>'
+                + '<input type="button" value="&gt;" onclick="modificarValorSimple(' + response.ProductoId + ',' + response.ValorAtributoId + ')">'
+                + '</td>'
+                + '<td>'
+                + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),' + response.ProductoId + ',' + response.ValorAtributoId + ') ">'
+                + '</td>'
+                + '</tr>';
+            $container.append(html);
+        }
+		
 
-    function agregarValorAtributoSimple() {
-
-        var nuevoValor = $("#tempItemToAdd").val();
-        var idAtributoSimple = $("#tempItemToAdd").attr("idatrib");
-        var idProducto = $("#ProductoID").val();
-       // llama ajax
-        var response = {
-            Ok:true,
-            Message:"",
-            ProductoId: 42,
-            AtributoId: 4,
-            ValorAtributoId: 333,
-            NombreAtributo: "reputo",
-            NuevoValor: "valor dado de alta"
-        };
-        renderSimple($("#atributosTable"), response);
-    }
-
-    function renderSimple($container, response) {
-        var html = '<tr class="atributo-line">'
-            + '<td>'+response.NombreAtributo+'</td>'
-            + '<td>'
-            +'<input type="text" atributoId="'+response.AtributoId+'" value="'+response.NuevoValor+'" id="valorSimple_'+response.ValorAtributoId+'" class="valorSimple">'
-            + '</td>'
-            + '<td>'
-            + '<input type="button" value="&gt;" onclick="modificarValorSimple('+response.ProductoId+','+response.ValorAtributoId+')">'
-            + '</td>'
-            + '<td>'
-            + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),'+response.ProductoId+','+response.ValorAtributoId+') ">'
-            + '</td>'
-            + '</tr>';
-        $container.append(html);
-    }
-
-    function printHTMLAtributoCombo(response, multi) {
+		function printHTMLAtributoCombo(response, multi) {
         var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
                 '<select  id="tempItemToAdd" idatrib="' + response.idAtributo + '" '+(multi? ' multiple="multiple "': '' )+'>';
 
@@ -512,8 +494,7 @@
          $container.append(html);
     }
 
-
-
     </script>
+    <script src="/Scripts/notify.min.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }

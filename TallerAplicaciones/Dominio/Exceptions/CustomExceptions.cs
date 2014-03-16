@@ -55,6 +55,31 @@ namespace uy.edu.ort.taller.aplicaciones.dominio.Exceptions
     }
 
     [Serializable]
+    public class AtributoYaEstaAsociadoException : Exception
+    {
+
+        public AtributoYaEstaAsociadoException()
+        {
+        }
+
+        public AtributoYaEstaAsociadoException(string message)
+            : base(message)
+        {
+        }
+
+        public AtributoYaEstaAsociadoException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+        protected AtributoYaEstaAsociadoException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
+    }
+
+    [Serializable]
     public class CustomException : Exception
     {
 
