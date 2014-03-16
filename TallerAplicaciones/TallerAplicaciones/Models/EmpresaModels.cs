@@ -19,10 +19,10 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Activo")]
         public bool Activo { get; set; }
+
         [Required]
         [Display(Name = "Id de Empresa")]
         public int EmpresaId { get; set; }
-
     }
 
     public class EmpresaListModel
@@ -35,8 +35,6 @@ namespace TallerAplicaciones.Models
     {
         [Required]
         public int IdEmpresa { get; set; }
-
     }
-
 
 }
