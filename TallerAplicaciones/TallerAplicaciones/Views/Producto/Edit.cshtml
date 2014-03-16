@@ -390,7 +390,7 @@
                     if (response.Ok) {
                         renderSimple($("#atributosTable"), response);
                     } else {
-                        $("#atributosTable").notify(response.Message, "error");
+                         check.elem.notify(response.Message, "error");
                     }
                 }, "json");
             } else {
@@ -461,7 +461,7 @@
 		            if (response.Ok) {
 		                renderCombo($("#atributosTable"), metadata, response);
 		            } else {
-		                $("#atributosTable").notify(response.Message, "error");
+		                 check.elem.notify(response.Message, "error");
 		            }
 		        }, "json");
 	 		} else {
