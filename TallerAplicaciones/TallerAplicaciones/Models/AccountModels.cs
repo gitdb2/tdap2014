@@ -52,6 +52,7 @@ namespace TallerAplicaciones.Models
         }
 
         public PerfilUsuario PerfilUsuario { get; set; }
+
         public int idPerfil { get; set; }
 
         public bool Activo { get; set; }
