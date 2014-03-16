@@ -51,7 +51,9 @@ namespace TallerAplicaciones.Models
     public class EditarValorAtributoComboJson : BaseJson
     {
         public int ProductoId { get; set; }
-        public List<int> ListaValorAtributoId { get; set; }
+        public int AtributoId { get; set; }
+        public int ValorAtributoId { get; set; }
+        public List<int> ListaValorPredefinidoId { get; set; }
     }
 
     public class AgregarValorAtributoComboJson : BaseJson

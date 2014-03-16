@@ -183,7 +183,6 @@
                         var multiple = multi ? "multiple" : "";
                         var atributo = (AtributoCombo)Model.ListaDeAtributos.Single(a => a.AtributoID == item.Atributo.AtributoID);
 
-
                         if (multi)
                         {
                             baseType += "Multi";
@@ -291,51 +290,13 @@
             }, "json");
         }
 
-        function modificarValorCombo(idProducto, idValorAtributo) {
+        function modificarValorCombo(idProducto, idAtributo, idValorAtributo) {
             var data = {
                 idProducto: idProducto,
                 idValorAtributo: idValorAtributo
             };
 
             $.post("ModificarValorCombo", data, function(response) {
-                if (response.Ok) {
-                    //TODO ver
-                    //$elem.parent().parent().remove();
-                } else {
-                    alert(response.Message);
-                }
-            }, "json");
-        }
-
-        function modificarValorComboMulti(idProducto, idValorAtributo) {
-            var data = {
-                idProducto: idProducto,
-                listaIdValorAtributo: idValorAtributo
-            };
-
-            //TODO
-            //$("#comboValueMulti_" + idValorAtributo)
-
-            $.post("ModificarValorCombo", data, function(response) {
-                if (response.Ok) {
-                    //TODO ver
-                    //$elem.parent().parent().remove();
-                } else {
-                    alert(response.Message);
-                }
-            }, "json");
-        }
-
-        function agregarValorComboMulti($elem, idProducto, idValorAtributo) {
-            var data = {
-                idProducto: idProducto,
-                listaIdValorAtributo: idValorAtributo
-            };
-
-            //TODO
-            //$("#comboValueMulti_" + idValorAtributo)
-
-            $.post("AgregarValorComboMulti", data, function(response) {
                 if (response.Ok) {
                     //TODO ver
                     //$elem.parent().parent().remove();
@@ -408,7 +369,6 @@
                 + '</tr>';
             $container.append(html);
         }
-		
 
 		function printHTMLAtributoCombo(response, multi) {
             var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
@@ -427,7 +387,6 @@
         }
     
         function agregarValorCombo (multi) {
-
             var $select = $("#tempItemToAdd");
             var metadata = $select.data("metadata");
 
@@ -455,7 +414,7 @@
                     $("#atributosTable").notify(response.Message, "error");
                 }
             }, "json");
-        }
+         }
 
 	     function renderCombo($container, metadata, response) {
     
@@ -478,6 +437,7 @@
                 html += "<option value=\""+ idVal + "\" "+ selected +"> " 
                                 + metadata.litaValores[i].valor + " (A)</option> ";
              }
+
              html+= '</td>'
                     + '<td>'
                     + '<input type="button" value="&gt;" onclick="modificarValorComboMulti (5, 3, 7) ">'
