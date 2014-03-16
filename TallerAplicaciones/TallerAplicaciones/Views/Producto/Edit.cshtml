@@ -404,7 +404,7 @@
             var html = '<tr class="atributo-line">'
                 + '<td>' + response.NombreAtributo + '</td>'
                 + '<td>'
-                + '<input type="text" value="' + response.NuevoValor + '" id="valorSimple_' + response.ValorAtributoId + '" class="valorSimple">'
+                + '<input type="text" atributoId="'+response.AtributoId +'" value="' + response.NuevoValor + '" id="valorSimple_' + response.ValorAtributoId + '" class="valorSimple">'
                 + '</td>'
                 + '<td>'
                 + '<input type="button" value="&gt;" onclick="modificarValorSimple(' + response.ProductoId + ',' + response.ValorAtributoId + ')">'
