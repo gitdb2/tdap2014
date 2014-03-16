@@ -521,11 +521,11 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        public JsonResult AgregarValorAtributoCombo(int idProducto, int idValorAtributo)
+        public JsonResult AgregarValorAtributoCombo(int idProducto, int idAtributo, int idValorPredefinido)
         {
             List<int> listaIdValorAtributo = new List<int>();
-            listaIdValorAtributo.Add(idValorAtributo);
-            return AgregarValorAtributoComboMulti(idProducto, listaIdValorAtributo);
+            listaIdValorAtributo.Add(idValorPredefinido);
+            return AgregarValorAtributoComboMulti(idProducto, idAtributo, listaIdValorAtributo);
         }
 
         [HttpPost]
