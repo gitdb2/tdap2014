@@ -688,7 +688,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
                 var producto = db.Productos
-                    .Include(p0 => p0.ValoresSeleccionados)
+                    .Include(p0 => p0.ValoresSeleccionados.Select(p2 => p2.Atributo))
                     .SingleOrDefault(p1 => p1.ProductoID == idProducto);
 
                 if (producto != null && producto.ValoresSeleccionados != null)
@@ -696,9 +696,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     var valorAtributo =
                         db.ValoresAtributos
                         .SingleOrDefault(v0 => v0.ValorAtributoID == idValorAtributo);
+
                     if (valorAtributo != null)
                     {
                         producto.ValoresSeleccionados.Remove(valorAtributo);
+
+                        if (valorAtributo.GetType()  == typeof (ValorAtributoCombo))
+                        {
+                            var valorAtributoCombo =
+                            db.ValoresAtributos
+                            .OfType<ValorAtributoCombo>()
+                            .Include(a => a.Valores)
+                            .SingleOrDefault(v0 => v0.ValorAtributoID == idValorAtributo);                              
+
+                            valorAtributoCombo.Valores.Clear();
+                        }
+
                         db.ValoresAtributos.Remove(valorAtributo);
                         db.SaveChanges();
                         resultadoOk = true;
