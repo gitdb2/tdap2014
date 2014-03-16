@@ -25,7 +25,7 @@ input[type="checkbox"].gallerySelection {
 }
 
 
-.addItem select {
+.addItem select , .atributo-line select{
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #E2E2E2;
     color: #333333;
@@ -34,3 +34,4 @@ input[type="checkbox"].gallerySelection {
     padding: 5px;
     width: 300px;
 }
+
