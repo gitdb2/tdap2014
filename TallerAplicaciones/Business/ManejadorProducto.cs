@@ -772,7 +772,38 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         producto.ValoresSeleccionados = new List<ValorAtributo>();
 
                     var atributo = db.Atributos.FirstOrDefault(a0 => a0.AtributoID == idAtributoSimple);
+
                     producto.ValoresSeleccionados.Add(new ValorAtributoSimple() { Atributo = atributo, Valor = nuevoValor });
+                    
+                    db.SaveChanges();
+                    resultadoOk = true;
+                }
+            }
+            return resultadoOk;
+        }
+
+        public bool AgregarValorAtributoCombo(int idProducto, List<int> listaIdValorAtributo)
+        {
+            var resultadoOk = false;
+            using (var db = new Persistencia())
+            {
+                var producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados)
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                if (producto != null)
+                {
+                    foreach (var idValorAtributo in listaIdValorAtributo)
+                    {
+                        var valorAtributo =
+                            db.ValoresAtributos
+                            .SingleOrDefault(v => v.ValorAtributoID == idValorAtributo);
+
+                        if (valorAtributo != null)
+                        {
+                            producto.ValoresSeleccionados.Add(valorAtributo);
+                        }
+                    }
                     db.SaveChanges();
                     resultadoOk = true;
                 }

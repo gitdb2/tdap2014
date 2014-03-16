@@ -351,6 +351,25 @@
             }, "json");
         }
 
+        function agregarValorComboMulti($elem, idProducto, idValorAtributo) {
+            var data = {
+                idProducto: idProducto,
+                listaIdValorAtributo: idValorAtributo
+            };
+           
+           //TODO
+           //$("#comboValueMulti_" + idValorAtributo)
+
+            $.post("AgregarValorComboMulti", data, function (response) {
+                if (response.Ok) {
+                    //TODO ver
+                    //$elem.parent().parent().remove();
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
+        }
+
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -433,32 +433,6 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        public JsonResult AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
-        {
-            var errorString = "Ocurrio un error al agregar el valor";
-            var resJson = new AgregarValorAtributoSimpleJson()
-            {
-                Message = "",
-                Ok = false,
-                ProductoId = idProducto,
-                AtributoId = idAtributoSimple,
-                NuevoValor = nuevoValor
-            };
-            try
-            {
-                var resultadoOK = ManejadorProducto.GetInstance().AgregarValorAtributoSimple(idProducto, idAtributoSimple, nuevoValor);
-                resJson.Ok = resultadoOK;
-                resJson.Message = resultadoOK ? "Se agrego el atributo" : errorString;
-            }
-            catch (Exception ex)
-            {
-                resJson.Ok = false;
-                resJson.Message = errorString;
-            }
-            return Json(resJson, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
         public JsonResult ModificarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
         {
             var errorString = "Ocurrio un error al editar el valor";
@@ -495,7 +469,7 @@ namespace TallerAplicaciones.Controllers
         public JsonResult ModificarValorComboMulti(int idProducto, List<int> listaIdValorAtributo)
         {
             var errorString = "Ocurrio un error al editar el atributo";
-            var resJson = new EditarValorAtributoComboMultiJson()
+            var resJson = new EditarValorAtributoComboJson()
             {
                 Message = "",
                 Ok = false,
@@ -505,6 +479,65 @@ namespace TallerAplicaciones.Controllers
             try
             {
                 var resultadoOK = ManejadorProducto.GetInstance().ModificarValorAtributoCombo(idProducto, listaIdValorAtributo);
+                resJson.Ok = resultadoOK;
+                resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
+            }
+            catch (Exception ex)
+            {
+                resJson.Ok = false;
+                resJson.Message = errorString;
+            }
+            return Json(resJson, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
+        {
+            var errorString = "Ocurrio un error al agregar el valor";
+            var resJson = new AgregarValorAtributoSimpleJson()
+            {
+                Message = "",
+                Ok = false,
+                ProductoId = idProducto,
+                AtributoId = idAtributoSimple,
+                NuevoValor = nuevoValor
+            };
+            try
+            {
+                var resultadoOK = ManejadorProducto.GetInstance().AgregarValorAtributoSimple(idProducto, idAtributoSimple, nuevoValor);
+                resJson.Ok = resultadoOK;
+                resJson.Message = resultadoOK ? "Se agrego el atributo" : errorString;
+            }
+            catch (Exception ex)
+            {
+                resJson.Ok = false;
+                resJson.Message = errorString;
+            }
+            return Json(resJson, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AgregarValorAtributoCombo(int idProducto, int idValorAtributo)
+        {
+            List<int> listaIdValorAtributo = new List<int>();
+            listaIdValorAtributo.Add(idValorAtributo);
+            AgregarValorAtributoComboMulti(idProducto, listaIdValorAtributo);
+        }
+
+        [HttpPost]
+        public JsonResult AgregarValorAtributoComboMulti(int idProducto, List<int> listaIdValorAtributo)
+        {
+            var errorString = "Ocurrio un error al editar el atributo";
+            var resJson = new AgregarValorAtributoComboJson()
+            {
+                Message = "",
+                Ok = false,
+                ProductoId = idProducto,
+                ListaValorAtributoId = listaIdValorAtributo
+            };
+            try
+            {
+                var resultadoOK = ManejadorProducto.GetInstance().AgregarValorAtributoCombo(idProducto, listaIdValorAtributo);
                 resJson.Ok = resultadoOK;
                 resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
             }
