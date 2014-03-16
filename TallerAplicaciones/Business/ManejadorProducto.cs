@@ -822,7 +822,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         if (valorPredefinido != null)
                         {
                             nuevo.Valores.Add(valorPredefinido);
-
                         }
                     }
                     producto.ValoresSeleccionados.Add(nuevo);

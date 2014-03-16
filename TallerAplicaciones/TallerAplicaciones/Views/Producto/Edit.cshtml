@@ -286,8 +286,6 @@
             }, "json");
         }
 
-
-
         function agregarValorAtributoSimple($elem, idProducto, nuevoValor) {
             var data = {
                 idProducto: idProducto,
@@ -357,9 +355,6 @@
                 }
             }, "json");
         }
-
-
-
        
         function renderAtributo() {
             var idAtributo = $("#atributoSelect").val();
@@ -385,45 +380,49 @@
             }, "json");
         }
 
-      function printHTMLAtributoSimple(response) {
-             
-            var html =  '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
-                        '<input placeholder="Valor" idatrib="'+response.idAtributo+'" type="text" value="" />' +
-                        '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>'+
-                        '</div>';
-            $("#agregarContainer").html(html);
+        function printHTMLAtributoSimple(response) {
+           var html =  '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
+                       '<input placeholder="Valor" id="tempItemToAdd" idatrib="'+response.idAtributo+'" type="text" value="" />' +
+                       '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>'+
+                       '</div>';
+           $("#agregarContainer").html(html);
         }
 
+        function agregarValorAtributoSimple() {
+            var nuevoValor = $("#tempItemToAdd").val();
+            var idAtributoSimple = $("#tempItemToAdd").attr("idatrib");
+            var idProducto = $("#ProductoID").val();
 
-
-    function agregarValorAtributoSimple( idProducto,  idAtributoSimple, nuevoValor) {
-            var response = {
-                Ok:true,
-                Message:"",
-                ProductoId: 42,
-                AtributoId: 4,
-                ValorAtributoId: 333,
-                NombreAtributo: "reputo",
-                NuevoValor: "valor dado de alta"
+            var data = {
+                idProducto : idProducto,
+                idAtributoSimple : idAtributoSimple,
+                nuevoValor : nuevoValor
             };
-            renderSimple($("#atributosTable"), response);
+
+            $.post("AgregarValorAtributoSimple", data, function (response) {
+                if (response.Ok) {
+                    renderSimple($("#atributosTable"), response );
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
         }
 
-    function renderSimple($container, response) {
-        var html = '<tr class="atributo-line">'
-            + '<td>'+response.NombreAtributo+'</td>'
-            + '<td>'
-            +'<input type="text" value="'+response.NuevoValor+'" id="valorSimple_'+response.ValorAtributoId+'" class="valorSimple">'
-            + '</td>'
-            + '<td>'
-            + '<input type="button" value="&gt;" onclick="modificarValorSimple('+response.ProductoId+','+response.ValorAtributoId+')">'
-            + '</td>'
-            + '<td>'
-            + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),'+response.ProductoId+','+response.ValorAtributoId+') ">'
-            + '</td>'
-            + '</tr>';
-        $container.append(html);
-    }
+        function renderSimple($container, response) {
+            var html = '<tr class="atributo-line">'
+                + '<td>'+response.NombreAtributo+'</td>'
+                + '<td>'
+                +'<input type="text" value="'+response.NuevoValor+'" id="valorSimple_'+response.ValorAtributoId+'" class="valorSimple">'
+                + '</td>'
+                + '<td>'
+                + '<input type="button" value="&gt;" onclick="modificarValorSimple('+response.ProductoId+','+response.ValorAtributoId+')">'
+                + '</td>'
+                + '<td>'
+                + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),'+response.ProductoId+','+response.ValorAtributoId+') ">'
+                + '</td>'
+                + '</tr>';
+            $container.append(html);
+        }
 
      function renderComoMulti($container, response) {
         var html = '<tr class="atributo-line">'
@@ -444,8 +443,6 @@
             + '</tr>';
         $container.append(html);
     }
-
-
 
     </script>
     @Scripts.Render("~/bundles/jqueryval")
