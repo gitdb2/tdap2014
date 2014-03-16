@@ -357,7 +357,7 @@
                     if (response.esCombo == false) {
                         printHTMLAtributoSimple(response);
                     } else {
-                    	printHTMLAtributoCombo(response, response.esMultiselec);
+                        printHTMLAtributoCombo(response, response.esMultiselec);
                     }
                 } else {
                     alert(response.Message);
@@ -368,29 +368,36 @@
         function printHTMLAtributoSimple(response) {
             var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
                 '<input placeholder="Valor" id="tempItemToAdd" idatrib="' + response.idAtributo + '" type="text" value="" />' +
-                '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>' +
+                '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple('+response.idAtributo+')"/>' +
                 '</div>';
             $("#agregarContainer").html(html);
         }
 
-        function agregarValorAtributoSimple() {
-            if ($("#tempItemToAdd").val().length == 0) {
+        function agregarValorAtributoSimple(idAtributo) {
+            if ($.trim($("#tempItemToAdd").val()).length == 0) {
                 $("#tempItemToAdd").focus();
                 $("#tempItemToAdd").notify("Debe ingresar un valor", "error");
                 return false;
             }
-            var data = {
-                idProducto: $("#ProductoID").val(),
-                idAtributoSimple: $("#tempItemToAdd").attr("idatrib"),
-                nuevoValor: $("#tempItemToAdd").val()
-            };
-            $.post("AgregarValorAtributoSimple", data, function(response) {
-                if (response.Ok) {
-                    renderSimple($("#atributosTable"), response);
-                } else {
-                    $("#atributosTable").notify(response.Message, "error");
-                }
-            }, "json");
+            var check = checkExiste($("#atributosTable"), idAtributo);
+            if (check.OK) {
+                var data = {
+                        idProducto: $("#ProductoID").val(),
+                        idAtributoSimple: $("#tempItemToAdd").attr("idatrib"),
+                        nuevoValor: $("#tempItemToAdd").val()
+                    };
+                 $.post("AgregarValorAtributoSimple", data, function(response) {
+                    if (response.Ok) {
+                        renderSimple($("#atributosTable"), response);
+                    } else {
+                        $("#atributosTable").notify(response.Message, "error");
+                    }
+                }, "json");
+            } else {
+                check.elem.notify(check.message, "error");
+            }
+
+          
         }
 
         function renderSimple($container, response) {
@@ -408,82 +415,92 @@
                 + '</tr>';
             $container.append(html);
         }
-		
 
-		function printHTMLAtributoCombo(response, multi) {
-        var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
-                '<select  id="tempItemToAdd" idatrib="' + response.idAtributo + '" '+(multi? ' multiple="multiple "': '' )+'>';
+        ////COMBOS
+        function printHTMLAtributoCombo(response, multi) {
+            var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
+                '<select  id="tempItemToAdd" idatrib="' + response.idAtributo + '" ' + (multi ? ' multiple="multiple "' : '') + '>';
 
-        for (var i = 0; i < response.litaValores.length; i++) {
-            html += "<option value=\""+ response.litaValores[i].id + "\" "+(i==0? " selected ":"")+"> " 
+            for (var i = 0; i < response.litaValores.length; i++) {
+                html += "<option value=\"" + response.litaValores[i].id + "\" " + (i == 0 ? " selected " : "") + "> "
                     + response.litaValores[i].valor + " </option> ";
-        }
-            
-        html+= '</select>' +
-                '<input type="button" value="Agregar" onclick="agregarValorCombo('+multi+')"/>'+
+            }
+
+            html += '</select>' +
+                '<input type="button" value="Agregar" onclick="agregarValorCombo(' + multi + ')"/>' +
                 '</div>';
-        $("#agregarContainer").html(html);
-        $("#tempItemToAdd").data("metadata", response);
-    }
-    
-    function agregarValorCombo(multi) {
-        var $select = $("#tempItemToAdd");
-        var metadata = $select.data("metadata");
-
-        var selectedValues = "";
-
-        if (multi) {
-            selectedValues = $select.val();
-        } else {
-            selectedValues = new Array($select.val()); 
+            $("#agregarContainer").html(html);
+            $("#tempItemToAdd").data("metadata", response);
         }
-        selectedValues = selectedValues.map(Number);//trasforma a array de int
 
-        var idAtributo = $("#tempItemToAdd").attr("idatrib");
-        var idProducto = $("#ProductoID").val();
+        function agregarValorCombo(multi) {
+            var $select = $("#tempItemToAdd");
+            var metadata = $select.data("metadata");
 
-         //llama ajax
+            var selectedValues = "";
 
-        checkExiste($("#atributosTable"), idAtributo);
- 
-        var response = {
-            Ok:true,
-            Message:"",
-            ProductoId: idProducto,
-            AtributoId: idAtributo,
-            ListaValorPredefinidoId: selectedValues,
-            NombreAtributo: "atributo "+ idAtributo
-        };
-        
-         renderCombo($("#atributosTable"), metadata, response);
+            if (multi) {
+                selectedValues = $select.val();
+            } else {
+                selectedValues = new Array($select.val());
+            }
+            selectedValues = selectedValues.map(Number); //trasforma a array de int
 
-    }
-    function checkExiste($container, valorIdAtributo)
-        {
-           
+            var idAtributo = $("#tempItemToAdd").attr("idatrib");
+            var idProducto = $("#ProductoID").val();
+
+            //llama ajax
+
+
+            var check = checkExiste($("#atributosTable"), idAtributo);
+            if (check.OK) {
+                var response = {
+                    Ok: true,
+                    Message: "",
+                    ProductoId: idProducto,
+                    AtributoId: idAtributo,
+                    ListaValorPredefinidoId: selectedValues,
+                    NombreAtributo: "atributo " + idAtributo
+                };
+
+                renderCombo($("#atributosTable"), metadata, response);
+            } else {
+                check.elem.notify(check.message, "error");
+            }
         }
-     function renderCombo($container, metadata, response) {
-    
-         var multiple = metadata.esMultiselec;
-         var multiText = multiple ? "Multi" : "";
-         var className = "valorCombo" + multiText;
-         var idCombo = className + "_" + response.AtributoId;
-         var nombre = "combo" + multiText;
 
-         var html = '<tr class="atributo-line">'
-             + '<td>combo multi</td>'
-             + '<td>'
-             + '<select atributoId="'+response.AtributoId+'" name="' + nombre + '" ' + (multiple ? "multiple" : "") + ' id="' + idCombo + '" class="' + className + '">';
+        function checkExiste($container, idAtributo) {
+
+            var $atributosEncontrados = $("#atributosTable").find("[atributoid=" + idAtributo + "]");
+            if ($atributosEncontrados.length == 0) {
+                return { OK: true, message:"", elem:$atributosEncontrados };
+            }
+            return { OK: false, message:"El atributo ya Existe en el Producto", elem:$atributosEncontrados };
+
+        }
+
+        function renderCombo($container, metadata, response) {
+
+            var multiple = metadata.esMultiselec;
+            var multiText = multiple ? "Multi" : "";
+            var className = "valorCombo" + multiText;
+            var idCombo = className + "_" + response.AtributoId;
+            var nombre = "combo" + multiText;
+
+            var html = '<tr class="atributo-line">'
+                + '<td>'+metadata.nombreAtributo+'</td>'
+                + '<td>'
+                + '<select atributoId="' + response.AtributoId + '" name="' + nombre + '" ' + (multiple ? "multiple" : "") + ' id="' + idCombo + '" class="' + className + '">';
 
 
-         for (var i = 0; i < metadata.litaValores.length; i++) {
-             var idVal = metadata.litaValores[i].id;
-             var selected = $.inArray(idVal, response.ListaValorPredefinidoId) >=0  ? " selected='selected' ": "" ;
+            for (var i = 0; i < metadata.litaValores.length; i++) {
+                var idVal = metadata.litaValores[i].id;
+                var selected = $.inArray(idVal, response.ListaValorPredefinidoId) >= 0 ? " selected='selected' " : "";
 
-            html += "<option value=\""+ idVal + "\" "+ selected +"> " 
-                            + metadata.litaValores[i].valor + " (A)</option> ";
-         }
-        html+= '</td>'
+                html += "<option value=\"" + idVal + "\" " + selected + "> "
+                    + metadata.litaValores[i].valor + " (A)</option> ";
+            }
+            html += '</td>'
                 + '<td>'
                 + '<input type="button" value="&gt;" onclick="modificarValorComboMulti (5, 3, 7) ">'
                 + '</td>'
@@ -491,8 +508,8 @@
                 + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this), 5, 7) ">'
                 + '</td>'
                 + '</tr>';
-         $container.append(html);
-    }
+            $container.append(html);
+        }
 
     </script>
     <script src="/Scripts/notify.min.js" type="text/javascript"></script>
