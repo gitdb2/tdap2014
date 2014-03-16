@@ -76,9 +76,6 @@
 @section Scripts {
     <script>
         function addNew(name) {
-
-            var accept = (name == "Fotos") ? ".jpg" : ".wmv";
-
             $("." + name).append($('<div><input type="file" value="" name="' + name + '" />' +
                 '<a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a>' +
                 '</div>'));

@@ -18,3 +18,8 @@ input[type="checkbox"].gallerySelection {
 .valorSimple {
     
 }
+
+.addItem {
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+}
