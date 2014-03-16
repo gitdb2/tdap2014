@@ -401,6 +401,12 @@ namespace TallerAplicaciones.Controllers
             return fileList;
         }
 
+        /// <summary>
+        /// aplica para valor simple, combo y combomulti
+        /// </summary>
+        /// <param name="idProducto"></param>
+        /// <param name="idValorAtributo"></param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult RemoverValorAtributo(int idProducto, int idValorAtributo)
         {
@@ -480,17 +486,25 @@ namespace TallerAplicaciones.Controllers
         [HttpPost]
         public JsonResult ModificarValorCombo(int idProducto, int idValorAtributo)
         {
+            var listaIdValorAtributo = new List<int>();
+            listaIdValorAtributo.Add(idValorAtributo);
+            return ModificarValorComboMulti(idProducto, listaIdValorAtributo);
+        }
+
+        [HttpPost]
+        public JsonResult ModificarValorComboMulti(int idProducto, List<int> listaIdValorAtributo)
+        {
             var errorString = "Ocurrio un error al editar el valor";
-            var resJson = new EditarValorAtributoComboJson()
+            var resJson = new EditarValorAtributoComboMultiJson()
             {
                 Message = "",
                 Ok = false,
                 ProductoId = idProducto,
-                ValorAtributoId = idValorAtributo
+                ListaValorAtributoId = listaIdValorAtributo
             };
             try
             {
-                var resultadoOK = ManejadorProducto.GetInstance().EditarValorAtributoCombo(idProducto, idValorAtributo);
+                var resultadoOK = ManejadorProducto.GetInstance().EditarValorAtributoCombo(idProducto, listaIdValorAtributo);
                 resJson.Ok = resultadoOK;
                 resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
             }
@@ -501,6 +515,9 @@ namespace TallerAplicaciones.Controllers
             }
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
+
+
+
 
     }
 

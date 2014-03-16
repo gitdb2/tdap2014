@@ -676,6 +676,12 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
+        /// <summary>
+        /// aplica para valor simple, combo y combomulti
+        /// </summary>
+        /// <param name="idProducto"></param>
+        /// <param name="idValorAtributo"></param>
+        /// <returns></returns>
         public bool RemoverValorAtributo(int idProducto, int idValorAtributo)
         {
             var resultadoOk = false;
@@ -744,7 +750,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultadoOk;          
         }
 
-        public bool EditarValorAtributoCombo(int idProducto, int idValorAtributo)
+        public bool EditarValorAtributoCombo(int idProducto, List<int> listaIdValorAtributo)
         {
             var resultadoOk = false;
             using (var db = new Persistencia())
@@ -753,16 +759,22 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     .Include(p0 => p0.ValoresSeleccionados)
                     .SingleOrDefault(p1 => p1.ProductoID == idProducto);
 
-                var valorAtributo =
-                    db.ValoresAtributos
-                    .SingleOrDefault(v => v.ValorAtributoID == idValorAtributo);
-
-                if (producto != null && valorAtributo != null)
+                if (producto != null)
                 {
                     producto.ValoresSeleccionados.Clear();
-                    producto.ValoresSeleccionados.Add(valorAtributo);
+                    foreach (var idValorAtributo in listaIdValorAtributo)
+                    {
+                        var valorAtributo =
+                            db.ValoresAtributos
+                            .SingleOrDefault(v => v.ValorAtributoID == idValorAtributo);
+
+                        if (valorAtributo != null)
+                        {
+                            producto.ValoresSeleccionados.Add(valorAtributo);
+                        }
+                    }
                     db.SaveChanges();
-                    resultadoOk = true;
+                    resultadoOk = true;    
                 }
             }
             return resultadoOk;
