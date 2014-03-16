@@ -284,7 +284,7 @@
             $.post("ModificarValorAtributoSimple", data, function(response) {
                 if (response.Ok) {
                     $("#valorSimple_" + idValorAtributoSimple).val(response.NuevoValor);
-                    $("#valorSimple_" + idValorAtributoSimple).notify(response.Message, "ok");
+                    $("#valorSimple_" + idValorAtributoSimple).notify(response.Message,  "success");
                 } else {
                     $("#valorSimple_" + idValorAtributoSimple).notify(response.Message, "error");
                 }
@@ -310,9 +310,10 @@
             };
             $.post("ModificarValorCombo", data, function(response) {
                 if (response.Ok) {
-                    alert(response.Message);
+                    actualizarValoresCombo(response);
                 } else {
-                    alert(response.Message);
+                    var $atributosEncontrados = $("#atributosTable").find("[atributoid=" + response.AtributoId + "]");
+                    $atributosEncontrados.notify(response.Message, "error");
                 }
             }, "json");
         }
@@ -500,7 +501,8 @@
 				}
 				
 			});
-		}
+            $select.notify(response.Message,  "success");
+        }
 
         $(document).ready(function () {
             //para que la lista de int llegue bien al controller
