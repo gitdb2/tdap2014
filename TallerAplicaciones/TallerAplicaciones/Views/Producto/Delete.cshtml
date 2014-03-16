@@ -7,16 +7,15 @@
 
 <h2>Borrar Producto</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Seguro queres borrarlo?</h3>
 <fieldset>
-    <legend>Delete Product</legend>
+    <legend>Borrar producto</legend>
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
         @Html.HiddenFor(m => m.IdProducto)
         <input type="submit" value="Borrar Producto id @Model.IdProducto" /> |
         @Html.ValidationMessageFor(model => model.IdProducto)
-
-        @Html.ActionLink("Back to List", "List")
+        @Html.ActionLink("Volver", "List")
     </p>
 }

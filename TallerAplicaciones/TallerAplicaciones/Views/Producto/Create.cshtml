@@ -3,8 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model TallerAplicaciones.Models.ProductoConArchivosSubmitModel
-<h2>
-    Crear Producto</h2>
+
+<h2>Crear Producto</h2>
+
 @using (Html.BeginForm("Create", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
@@ -71,7 +72,7 @@
     </fieldset>
 }
 <div>
-    @Html.ActionLink("Back to Index", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
 @section Scripts {
     <script>
@@ -80,7 +81,6 @@
                 '<a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a>' +
                 '</div>'));
         }
-
 
         function obtenerValoresAtributo() {
             var valorIdAtributo = $("#tipoAtributo").val();
@@ -121,8 +121,6 @@
             }
             HtmlMulti += "</select></td></tr></table><a href=\"javascript:void(0)\" onclick=\"$(this).parent().remove()\">[x]</a></p></div>";
             $("#idValorAtributo").append(HtmlMulti);
-
-            
         }
 
         function printHTMLAtributoMultiselecion(response) {

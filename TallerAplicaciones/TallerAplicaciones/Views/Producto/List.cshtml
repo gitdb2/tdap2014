@@ -3,11 +3,11 @@
 @using uy.edu.ort.taller.aplicaciones.utiles.Formatters
 @model TallerAplicaciones.Models.ProductoListModel
 @{
-    ViewBag.Title = "Lista de Productos";
+    ViewBag.Title = "Listar Productos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    List</h2>
+
+<h2>Listar Productos</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -62,9 +62,8 @@
 </table>
 
 <div>
-    @Html.ActionLink("Back to Index", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
-
 
 @section Scripts {
     <script>
@@ -75,8 +74,6 @@
        function openVideo(elem){
                     window.open(elem.attr("data"));
       }
-    
-
 
     </script>
     @Scripts.Render("~/bundles/jqueryval")
