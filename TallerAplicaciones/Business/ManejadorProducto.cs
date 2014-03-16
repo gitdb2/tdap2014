@@ -708,7 +708,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultadoOk;
         }
 
-        public bool EditarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
+        public bool ModificarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
         {
             var resultadoOk = false;
             using (var db = new Persistencia())
@@ -727,30 +727,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultadoOk;
         }
 
-        public bool AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
-        {
-            var resultadoOk = false;
-            using (var db = new Persistencia())
-            {
-                var producto = db.Productos
-                    .Include(p0 => p0.ValoresSeleccionados)
-                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
-
-                if (producto != null)
-                {
-                    if (producto.ValoresSeleccionados == null)
-                        producto.ValoresSeleccionados = new List<ValorAtributo>();
-
-                    var atributo = db.Atributos.FirstOrDefault(a0 => a0.AtributoID == idAtributoSimple);
-                    producto.ValoresSeleccionados.Add(new ValorAtributoSimple() {Atributo = atributo, Valor = nuevoValor});
-                    db.SaveChanges();
-                    resultadoOk = true;
-                }
-            }
-            return resultadoOk;          
-        }
-
-        public bool EditarValorAtributoCombo(int idProducto, List<int> listaIdValorAtributo)
+        public bool ModificarValorAtributoCombo(int idProducto, List<int> listaIdValorAtributo)
         {
             var resultadoOk = false;
             using (var db = new Persistencia())
@@ -774,7 +751,30 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                         }
                     }
                     db.SaveChanges();
-                    resultadoOk = true;    
+                    resultadoOk = true;
+                }
+            }
+            return resultadoOk;
+        }
+
+        public bool AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
+        {
+            var resultadoOk = false;
+            using (var db = new Persistencia())
+            {
+                var producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados)
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                if (producto != null)
+                {
+                    if (producto.ValoresSeleccionados == null)
+                        producto.ValoresSeleccionados = new List<ValorAtributo>();
+
+                    var atributo = db.Atributos.FirstOrDefault(a0 => a0.AtributoID == idAtributoSimple);
+                    producto.ValoresSeleccionados.Add(new ValorAtributoSimple() { Atributo = atributo, Valor = nuevoValor });
+                    db.SaveChanges();
+                    resultadoOk = true;
                 }
             }
             return resultadoOk;

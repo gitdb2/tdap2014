@@ -433,31 +433,6 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
-        {
-            var errorString = "Ocurrio un error al editar el valor";
-            var resJson = new EditarValorAtributoSimpleJson()
-            {
-                Message = "",
-                Ok = false,
-                ValorAtributoId = idValorAtributoSimple,
-                NuevoValor = nuevoValor
-            };
-            try
-            {
-                var resultadoOK = ManejadorProducto.GetInstance().EditarValorAtributoSimple(idValorAtributoSimple, nuevoValor);
-                resJson.Ok = resultadoOK;
-                resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
-            }
-            catch (Exception ex)
-            {
-                resJson.Ok = false;
-                resJson.Message = errorString;
-            }
-            return Json(resJson, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
         public JsonResult AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
         {
             var errorString = "Ocurrio un error al agregar el valor";
@@ -484,27 +459,19 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        public JsonResult ModificarValorCombo(int idProducto, int idValorAtributo)
-        {
-            var listaIdValorAtributo = new List<int>();
-            listaIdValorAtributo.Add(idValorAtributo);
-            return ModificarValorComboMulti(idProducto, listaIdValorAtributo);
-        }
-
-        [HttpPost]
-        public JsonResult ModificarValorComboMulti(int idProducto, List<int> listaIdValorAtributo)
+        public JsonResult ModificarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
         {
             var errorString = "Ocurrio un error al editar el valor";
-            var resJson = new EditarValorAtributoComboMultiJson()
+            var resJson = new EditarValorAtributoSimpleJson()
             {
                 Message = "",
                 Ok = false,
-                ProductoId = idProducto,
-                ListaValorAtributoId = listaIdValorAtributo
+                ValorAtributoId = idValorAtributoSimple,
+                NuevoValor = nuevoValor
             };
             try
             {
-                var resultadoOK = ManejadorProducto.GetInstance().EditarValorAtributoCombo(idProducto, listaIdValorAtributo);
+                var resultadoOK = ManejadorProducto.GetInstance().ModificarValorAtributoSimple(idValorAtributoSimple, nuevoValor);
                 resJson.Ok = resultadoOK;
                 resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
             }
@@ -516,8 +483,38 @@ namespace TallerAplicaciones.Controllers
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult ModificarValorCombo(int idProducto, int idValorAtributo)
+        {
+            var listaIdValorAtributo = new List<int>();
+            listaIdValorAtributo.Add(idValorAtributo);
+            return ModificarValorComboMulti(idProducto, listaIdValorAtributo);
+        }
 
-
+        [HttpPost]
+        public JsonResult ModificarValorComboMulti(int idProducto, List<int> listaIdValorAtributo)
+        {
+            var errorString = "Ocurrio un error al editar el atributo";
+            var resJson = new EditarValorAtributoComboMultiJson()
+            {
+                Message = "",
+                Ok = false,
+                ProductoId = idProducto,
+                ListaValorAtributoId = listaIdValorAtributo
+            };
+            try
+            {
+                var resultadoOK = ManejadorProducto.GetInstance().ModificarValorAtributoCombo(idProducto, listaIdValorAtributo);
+                resJson.Ok = resultadoOK;
+                resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
+            }
+            catch (Exception ex)
+            {
+                resJson.Ok = false;
+                resJson.Message = errorString;
+            }
+            return Json(resJson, JsonRequestBehavior.AllowGet);
+        }
 
     }
 
