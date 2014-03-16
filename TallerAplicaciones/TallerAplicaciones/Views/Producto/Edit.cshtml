@@ -180,7 +180,6 @@
                         var multi = item.Atributo.EsMultiseleccion();
                         var javascriptModificar = "modificarValorCombo";
                         var baseType = "valorCombo";
-                        var multiple = multi ? "multiple" : "";
                         var atributo = (AtributoCombo)Model.ListaDeAtributos.Single(a => a.AtributoID == item.Atributo.AtributoID);
 
 
@@ -188,6 +187,10 @@
                         {
                             baseType += "Multi";
                             javascriptModificar += "Multi";
+                        }
+                        else
+                        {
+                            javascriptModificar += "Simple";
                         }
                        
                     <tr class="atributo-line">
@@ -291,29 +294,31 @@
             }, "json");
         }
 
-        function modificarValorCombo(idProducto, idAtributo, idValorAtributo) {
-            
+        function modificarValorComboMulti(idProducto, idAtributo, idValorAtributo) {
+            var seleccionados = $("#valorComboMulti_" + idAtributo).val();
+            modificarValorCombo(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
         }
 
-        function modificarValorComboMulti(idProducto, idAtributo, idValorAtributo) {
+        function modificarValorComboSimple(idProducto, idAtributo, idValorAtributo) {
+            var seleccionados = new Array($("#valorCombo_" + idAtributo).val());
+            modificarValorCombo(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
+        }
+
+        function modificarValorCombo(idProducto, idAtributo, idValorAtributo, listaElementos) {
             var data = {
                 idProducto: idProducto,
-                listaIdValorAtributo: idValorAtributo
+                idAtributo: idAtributo,
+                idValorAtributo: idValorAtributo,
+                listaIdValorAtributo: listaElementos
             };
-
-            //TODO
-            //$("#comboValueMulti_" + idValorAtributo)
-
             $.post("ModificarValorCombo", data, function(response) {
                 if (response.Ok) {
-                    //TODO ver
-                    //$elem.parent().parent().remove();
+                    alert(response.Message);
                 } else {
                     alert(response.Message);
                 }
             }, "json");
         }
-
        
         function renderAtributo() {
             var idAtributo = $("#atributoSelect").val();
@@ -366,8 +371,6 @@
             } else {
                 check.elem.notify(check.message, "error");
             }
-
-          
         }
 
         function renderSimple($container, response) {
@@ -439,14 +442,12 @@
 		    }
         }
 
-     function checkExiste($container, idAtributo) {
-
+        function checkExiste($container, idAtributo) {
             var $atributosEncontrados = $("#atributosTable").find("[atributoid=" + idAtributo + "]");
             if ($atributosEncontrados.length == 0) {
                 return { OK: true, message:"", elem:$atributosEncontrados };
             }
             return { OK: false, message:"El atributo ya Existe en el Producto", elem:$atributosEncontrados };
-
         }
 
         function renderCombo($container, metadata, response) {
@@ -457,11 +458,12 @@
             var idCombo = className + "_" + response.AtributoId;
             var nombre = "combo" + multiText;
 
+            var nombreFuncionModificar = "modificarValorCombo" + multiText;
+
             var html = '<tr class="atributo-line">'
                 + '<td>'+metadata.nombreAtributo+'</td>'
                 + '<td>'
                 + '<select atributoId="' + response.AtributoId + '" name="' + nombre + '" ' + (multiple ? "multiple" : "") + ' id="' + idCombo + '" class="' + className + '">';
-
 
             for (var i = 0; i < metadata.litaValores.length; i++) {
                 var idVal = metadata.litaValores[i].id;
@@ -472,7 +474,7 @@
             }
             html += '</td>'
                 + '<td>'
-                + '<input type="button" value="&gt;" onclick="modificarValorComboMulti (5, 3, 7) ">'
+                + '<input type="button" value="&gt;" onclick="'+nombreFuncionModificar+'('+response.idProducto+', '+response.idAtributo +', '+response.idValorAtributo+') ">'
                 + '</td>'
                 + '<td>'
                 + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this), 5, 7) ">'

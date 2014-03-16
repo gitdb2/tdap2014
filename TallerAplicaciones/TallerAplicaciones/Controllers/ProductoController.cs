@@ -459,15 +459,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        public JsonResult ModificarValorCombo(int idProducto, int idValorAtributo)
-        {
-            var listaIdValorAtributo = new List<int>();
-            listaIdValorAtributo.Add(idValorAtributo);
-            return ModificarValorComboMulti(idProducto, listaIdValorAtributo);
-        }
-
-        [HttpPost]
-        public JsonResult ModificarValorComboMulti(int idProducto, List<int> listaIdValorAtributo)
+        public JsonResult ModificarValorCombo(int idProducto, int idAtributo, int idValorAtributo, List<int> listaIdValorAtributo)
         {
             var errorString = "Ocurrio un error al editar el atributo";
             var resJson = new EditarValorAtributoComboJson()
@@ -475,7 +467,9 @@ namespace TallerAplicaciones.Controllers
                 Message = "",
                 Ok = false,
                 ProductoId = idProducto,
-                ListaValorAtributoId = listaIdValorAtributo
+                AtributoId = idAtributo,
+                ValorAtributoId = idValorAtributo,
+                ListaValorPredefinidoId = listaIdValorAtributo
             };
             try
             {
