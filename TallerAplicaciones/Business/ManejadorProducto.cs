@@ -258,8 +258,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
             return resultado;
         }
-
-
+        
         public List<ValorAtributoCombo> ObtenerValoresCombo(Producto producto)
         {
             List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
