@@ -130,8 +130,10 @@ namespace TallerAplicaciones.Controllers
             catch (Exception e)
             {
                 ModelState.AddModelError("", e.Message);
+               
             }
             // If we got this far, something failed, redisplay form
+            model.ListaDeAtributos = ManejadorAtributo.GetInstance().GetAtributosActivos();
             return View(model);
         }
 

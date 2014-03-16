@@ -31,8 +31,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         {
             try
             {
-                //producto.ValoresSeleccionados = ParserAtributosModel(idAtributoSimple, valorAtributoSimple, valorAtributoCombo, valorAtributoMulti);
-
+              
                 using (var db = new Persistencia())
                 {
                     ///////////////////////////////////////////////////////////
@@ -79,30 +78,52 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                             aRetornar.Add(valorAtributo);
                         }
                     }
+
+
                     if ((valorAtributoMulti != null) && (valorAtributoMulti.Any()))
                     {
+                        var armadoDictionary = new Dictionary<int, List<int>>();
+
                         foreach (var idYValor in valorAtributoMulti)
                         {
-                            string[] idAtributo = idYValor.Split(new char[] { '|' });
+                            string[] idAtributo = idYValor.Split(new char[] {'|'});
                             int idAtrib = Convert.ToInt16(idAtributo[0]);
                             int idValor = Convert.ToInt16(idAtributo[1]);
-                            AtributoCombo atributo =
-                                db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
+                            
+                            if (!armadoDictionary.ContainsKey(idAtrib)){
+                              armadoDictionary.Add(idAtrib, new List<int>());
+                            }
 
-                            ValorPredefinido valorPredefinido =
-                                db.ValoresPredefinidos.SingleOrDefault(a => a.ValorPredefinidoID == idValor);
+                            armadoDictionary[idAtrib].Add(idValor);
+                        }
 
-                            var listaValorPredefinido = new List<ValorPredefinido>();
-                            listaValorPredefinido.Add(valorPredefinido);
+
+                        foreach (var keyValue in armadoDictionary)
+                        {
+
+                            AtributoCombo atributo = db.Atributos
+                                                       .OfType<AtributoCombo>()
+                                                       .SingleOrDefault(a => a.AtributoID == keyValue.Key);
 
                             var valorAtributo = new ValorAtributoCombo()
                             {
                                 Atributo = atributo,
-                                Valores = listaValorPredefinido
+                                Valores = new List<ValorPredefinido>()
                             };
+                          
+
+                            foreach (var idValor in keyValue.Value)
+                            {
+                                ValorPredefinido valorPredefinido = db.ValoresPredefinidos
+                                                                        .SingleOrDefault(a => a.ValorPredefinidoID == idValor);
+
+                                valorAtributo.Valores.Add(valorPredefinido);
+                            }
+                            
                             aRetornar.Add(valorAtributo);
                         }
                     }
+
                     producto.ValoresSeleccionados = aRetornar;
                     ///////////////////////////////////////////////////////////
 
@@ -236,45 +257,58 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
+     
+        public List<ValorAtributoCombo> ObtenerValoresCombo(Producto producto)
+        {
+            List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
+            //List<int> ids = ObtenerIdsAtributoCombo(producto);
+            using (var db = new Persistencia())
+            {
+
+                foreach (var id in ObtenerIdsAtributoCombo(producto))
+                {
+                    var val = db.ValoresAtributos.OfType<ValorAtributoCombo>()
+                        .Include(v1 => v1.Valores)
+                        .Include(v2 => v2.Atributo).Single(v => v.ValorAtributoID == id);
+
+                    listaCombo.Add(val);
+                }
+
+                //listaCombo = db.ValoresAtributos
+                //    .OfType<ValorAtributoCombo>()
+                //    .Where(v0 => ids.Contains(v0.ValorAtributoID))
+                //    .Include(v1 => v1.Valores)
+                //    .Include(v2 => v2.Atributo)
+                //    .ToList();
+            }
+            return listaCombo;
+        }
+
         private List<ValorAtributoDTO> ObtenerValoresComboDTO(Producto producto)
         {
             List<ValorAtributoDTO> resultado = new List<ValorAtributoDTO>();
-            List<ValorAtributoCombo> valoresCombo = ObtenerValoresCombo(producto);
-            if (valoresCombo.Any())
+            Dictionary<Atributo, List<ValorPredefinido>> mapaCombos = ObtenerMapaValoresCombo(producto);
+            if (mapaCombos.Any())
             {
-                foreach (var valorAtributoCombo in valoresCombo)
+                foreach (KeyValuePair<Atributo, List<ValorPredefinido>> combo in mapaCombos)
                 {
                     ValorAtributoDTO vdto = new ValorAtributoDTO();
-                    vdto.Nombre = valorAtributoCombo.Atributo.Nombre;
+                    vdto.Nombre = combo.Key.Nombre;
                     vdto.Valores = new List<ValorDTO>();
-                    if (valorAtributoCombo.Valores.Any())
+                    if (combo.Value.Any())
                     {
-                        foreach (var valorPredefinido in valorAtributoCombo.Valores)
+                        foreach (var valorPredefinido in combo.Value)
                         {
-                            if (valorPredefinido.Activo)
-                                vdto.Valores.Add(new ValorDTO() { ValorString = valorPredefinido.Valor });
+                            vdto.Valores.Add(new ValorDTO()
+                            {
+                                ValorString = valorPredefinido.Valor
+                            });
                         }
                     }
                     resultado.Add(vdto);
                 }
             }
             return resultado;
-        }
-
-        public List<ValorAtributoCombo> ObtenerValoresCombo(Producto producto)
-        {
-            List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
-            List<int> ids = ObtenerIdsAtributoCombo(producto);
-            using (var db = new Persistencia())
-            {
-                listaCombo = db.ValoresAtributos
-                    .OfType<ValorAtributoCombo>()
-                    .Where(v0 => ids.Contains(v0.ValorAtributoID))
-                    .Include(v1 => v1.Valores)
-                    .Include(v2 => v2.Atributo)
-                    .ToList();
-            }
-            return listaCombo;
         }
 
         private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Producto producto)
@@ -472,7 +506,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 var productoDb = db.Productos
                                     .Include(p=>p.Archivos)
-                                    .Include(p1=>p1.ValoresSeleccionados.Select(v=>v.Atributo))
+                                    .Include(p1 => p1.ValoresSeleccionados.Select(v => v.Atributo))
                                     .SingleOrDefault(p2 => p2.ProductoID == idProducto);
                 if (productoDb != null)
                 {
@@ -482,8 +516,17 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     }
                     if (productoDb.ValoresSeleccionados == null)
                     {
-                        productoDb.ValoresSeleccionados =  new List<ValorAtributo>();
+                        productoDb.ValoresSeleccionados = new List<ValorAtributo>();
                     }
+                    //else
+                    //{
+                    //    foreach (var valor in productoDb.ValoresSeleccionados)
+                    //    {
+                    //        valor.Atributo = db.ValoresAtributos
+                    //                .Where(v=>v.ValorAtributoID == valor.ValorAtributoID)
+                    //                .Select(v=> v.Atributo).Single();
+                    //    }
+                    //}
                 }
                 return productoDb;
             }

@@ -206,7 +206,7 @@
                                          atributo.Valores.Select(option => new SelectListItem
                                          {
                                              Value = option.ValorPredefinidoID.ToString(),
-                                             Text = option.Valor.ToString(),
+                                             Text = option.Valor.ToString() + "("+ (option.Activo? "A" : "I") + ")",
                                              Selected = item.Valores.Select(v => v.ValorPredefinidoID).ToList().Contains(option.ValorPredefinidoID) ? true : false
                                          }), new {@class = baseType, @id = (baseType + "_" + item.ValorAtributoID)})
                                  }
@@ -218,7 +218,7 @@
                                              Value = option.ValorPredefinidoID.ToString(),
                                              Text = option.Valor.ToString(),
                                              Selected = item.Valores.Select(v => v.ValorPredefinidoID).ToList().Contains(option.ValorPredefinidoID) ? true : false
-                                         }), new { @class = baseType, @id = (baseType + "_" + item.ValorAtributoID) })
+                                         }), new { @class = baseType, @id = (baseType + "_" + item.ValorAtributoID),  })
                                  }
                              </td>
                              <td>
