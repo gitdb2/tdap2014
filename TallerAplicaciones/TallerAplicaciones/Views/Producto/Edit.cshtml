@@ -42,8 +42,8 @@
             @Html.ValidationMessageFor(model => model.Activo)
         </div>
         <div class="editor-label">
-            <label for="Videos">Fotos:</label>
-           
+            <label for="Videos">
+                Fotos:</label>
             Fotos Almacenadas (Seleccione para eliminar)
         </div>
         <div class="editor-field">
@@ -53,32 +53,28 @@
                     {
                         foreach (var item in Model.Producto.Archivos.OfType<Foto>())
                         {
-                            @Html.Raw("<li>") 
+                    @Html.Raw("<li>") 
                             item.Accept(formatter);
                             Output.Write(formatter.Html);
-                            @Html.Raw("</li>") 
+                    @Html.Raw("</li>") 
                         }
                     }
                 }
             </ul>
         </div>
-         <div class="editor-label">
+        <div class="editor-label">
             Subir Fotos
         </div>
-          <div class="editor-field Fotos">
+        <div class="editor-field Fotos">
             <div>
-              
                 @Html.TextBoxFor(model => model.Fotos, new { type = "file" })
                 &nbsp;<a href="javascript:void(0)" onclick="addNew('Fotos')">[+]</a>
-                 @Html.ValidationMessageFor(model => model.Fotos)
+                @Html.ValidationMessageFor(model => model.Fotos)
             </div>
         </div>
-      
-
-        
         <div class="editor-label">
-            <label for="Videos">Videos:</label>
-            
+            <label for="Videos">
+                Videos:</label>
             Videos Almacenadas (Seleccione para eliminar)
         </div>
         <div class="editor-field">
@@ -88,47 +84,47 @@
                     {
                         foreach (var item in Model.Producto.Archivos.OfType<Video>())
                         {
-                            @Html.Raw("<li>")
+                    @Html.Raw("<li>")
                             item.Accept(formatter);
                             Output.Write(formatter.Html);
-                            @Html.Raw("</li>")
+                    @Html.Raw("</li>")
                         }
                     }
                 }
             </ul>
         </div>
-         <div class="editor-label">
+        <div class="editor-label">
             Subir Videos
         </div>
-          <div class="editor-field Videos">
+        <div class="editor-field Videos">
             <div>
-               
                 @Html.TextBoxFor(model => model.Videos, new { type = "file" })
                 &nbsp;<a href="javascript:void(0)" onclick="addNew('Videos')">[+]</a>
-                 @Html.ValidationMessageFor(model => model.Videos)
+                @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
-        
-        <hr/>
+        <hr />
         <div class="editor-label">
             <label>
                 Atributos Variables (Las modificaciones se almacenan en el momento de realizarlas)</label>
-            <br/>
-
-            <label>Agregar Atributos al producto</label>
+            <br />
+            <label>
+                Agregar Atributos al producto</label>
         </div>
         <div class="editor-field">
             @if (Model.ListaDeAtributos != null && Model.ListaDeAtributos.Any(a => a.Activo))
             {
                 <div>
                     @Html.DropDownList("atribDisponibles",
-                         Model.ListaDeAtributos.Where(p => p.Activo == true).Select(item => new SelectListItem
+                        Model.ListaDeAtributos.Where(p => p.Activo == true).Select(item => new SelectListItem
                         {
                             Value = item.AtributoID.ToString(),
                             Text = item.Nombre.ToString()
-                        }))
-                    <input type="button" value="Agregar" onclick="renderAtributo()" />
+                        }), new { @id = "atributoSelect" })
+                    <input type="button" value="Crear" onclick="renderAtributo()" />
                 </div>
+                <div>
+                    Item a agregar:</div>
                 <div id="agregarContainer">
                 </div>
             }
@@ -137,13 +133,12 @@
                 @("No hay Atributos en el sistema.")
             }
         </div>
-     
         <div class="display-label">
-            <label>Atributos actual:</label>
+            <label>
+                Atributos actuales:</label>
         </div>
         <div class="display-field">
-          
-            <table id="atributos">
+            <table id="atributosTable">
                 <tr>
                     <th>
                         Nombre
@@ -161,24 +156,23 @@
                 @if (Model.ListaValorAtributosSimple != null)
                 {
                     foreach (var item in Model.ListaValorAtributosSimple)
-                     {
-                         <tr class="atributo-line">
-                             <td>@item.Atributo.Nombre
-                             </td>
-                             <td>
-                                 <input type="text" class="valorSimple" id="valorSimple_ @item.ValorAtributoID" value="@item.Valor"/>
-                             </td>
-                             <td>
-                                 <input type="button" onclick="modificarValorSimple(@Model.ProductoID, @item.Atributo.AtributoID, @item.ValorAtributoID) " value='>'/>
-                             </td>
-                             <td>
-                                 <input type="button" onclick=" removerValorAtributo($(this), @Model.ProductoID, @item.ValorAtributoID) " value="Sacar"/>
-                             </td>
-                         </tr>
-                     }
+                    {
+                    <tr class="atributo-line">
+                        <td>@item.Atributo.Nombre
+                        </td>
+                        <td>
+                            <input type="text" class="valorSimple" id="valorSimple_@item.ValorAtributoID" value="@item.Valor"/>
+                        </td>
+                        <td>
+                            <input type="button" onclick="modificarValorSimple(@Model.ProductoID, @item.ValorAtributoID) " value='>'/>
+                        </td>
+                        <td>
+                            <input type="button" onclick=" removerValorAtributo($(this), @Model.ProductoID, @item.ValorAtributoID) " value="Sacar"/>
+                        </td>
+                    </tr>
+                    }
                 }
-                
-                 @if (Model.ListaValorAtributosCombo != null)
+                @if (Model.ListaValorAtributosCombo != null)
                 {
                     foreach (var item in Model.ListaValorAtributosCombo)
                     {
@@ -187,8 +181,8 @@
                         var javascriptModificar = "modificarValorCombo";
                         var baseType = "valorCombo";
                         var multiple = multi ? "multiple" : "";
-                        var atributo = (AtributoCombo) Model.ListaDeAtributos.Single(a => a.AtributoID == item.Atributo.AtributoID);
-                        
+                        var atributo = (AtributoCombo)Model.ListaDeAtributos.Single(a => a.AtributoID == item.Atributo.AtributoID);
+
 
                         if (multi)
                         {
@@ -196,51 +190,43 @@
                             javascriptModificar += "Multi";
                         }
                        
-                         <tr class="atributo-line">
-                             <td>@item.Atributo.Nombre
-                             </td>
-                             <td>
-                                 @if (multi)
-                                 {
-                                     @Html.ListBox("comboMulti",
+                    <tr class="atributo-line">
+                        <td>@item.Atributo.Nombre
+                        </td>
+                        <td>
+                            @if (multi)
+                            {
+                                @Html.ListBox("comboMulti",
                                          atributo.Valores.Select(option => new SelectListItem
                                          {
                                              Value = option.ValorPredefinidoID.ToString(),
-                                             Text = option.Valor.ToString() + "("+ (option.Activo? "A" : "I") + ")",
+                                             Text = option.Valor.ToString() + "(" + (option.Activo ? "A" : "I") + ")",
                                              Selected = item.Valores.Select(v => v.ValorPredefinidoID).ToList().Contains(option.ValorPredefinidoID) ? true : false
-                                         }), new {@class = baseType, @id = (baseType + "_" + item.ValorAtributoID)})
-                                 }
-                                 else
-                                 {
-                                      @Html.DropDownList("combo",
+                                         }), new { @class = baseType, @id = (baseType + "_" + item.ValorAtributoID) })
+                            }
+                            else
+                            {
+                                @Html.DropDownList("combo",
                                          atributo.Valores.Select(option => new SelectListItem
                                          {
                                              Value = option.ValorPredefinidoID.ToString(),
                                              Text = option.Valor.ToString(),
                                              Selected = item.Valores.Select(v => v.ValorPredefinidoID).ToList().Contains(option.ValorPredefinidoID) ? true : false
-                                         }), new { @class = baseType, @id = (baseType + "_" + item.ValorAtributoID),  })
-                                 }
-                             </td>
-                             <td>
-                                 <input type="button" onclick="@javascriptModificar (@Model.ProductoID, @item.Atributo.AtributoID, @item.ValorAtributoID) " value='>'/>
-                             </td>
-                             <td>
-                                 <input type="button" onclick="removerValorAtributo($(this), @Model.ProductoID, @item.ValorAtributoID) " value="Sacar"/>
-                             </td>
-                         </tr>
+                                         }), new { @class = baseType, @id = (baseType + "_" + item.ValorAtributoID), })
+                            }
+                        </td>
+                        <td>
+                            <input type="button" onclick="@javascriptModificar (@Model.ProductoID, @item.Atributo.AtributoID, @item.ValorAtributoID) " value='>'/>
+                        </td>
+                        <td>
+                            <input type="button" onclick="removerValorAtributo($(this), @Model.ProductoID, @item.ValorAtributoID) " value="Sacar"/>
+                        </td>
+                    </tr>
                     }
                 }
             </table>
         </div>
-        
-        
-        
-        
-        
-        
-
         <p>
-           
             @Html.HiddenFor(model => model.ProductoID)
             @Html.ValidationMessageFor(model => model.ProductoID)
             <input type="submit" value="Modificar" />
@@ -300,6 +286,8 @@
             }, "json");
         }
 
+
+
         function agregarValorAtributoSimple($elem, idProducto, nuevoValor) {
             var data = {
                 idProducto: idProducto,
@@ -314,6 +302,95 @@
                 }
             }, "json");
         }
+
+
+
+       
+        function renderAtributo() {
+            var idAtributo = $("#atributoSelect").val();
+
+            var data = {
+                valorIdAtributo: idAtributo,
+            };
+
+            $.post("../Atributo/ObtenerValoresAtributos", data, function(response) {
+                if (response.Ok) {
+                    if (response.esCombo == false) {
+                            printHTMLAtributoSimple(response);
+                    } else {
+                        if (response.esMultiselec == true) {
+                            printHTMLAtributoMultiselecion(response);
+                        } else {
+                            printHTMLAtributoCombo(response);
+                        }
+                    }
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
+        }
+
+      function printHTMLAtributoSimple(response) {
+             
+            var html =  '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
+                        '<input placeholder="Valor" idatrib="'+response.idAtributo+'" type="text" value="" />' +
+                        '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>'+
+                        '</div>';
+            $("#agregarContainer").html(html);
+        }
+
+
+
+    function agregarValorAtributoSimple( idProducto,  idAtributoSimple, nuevoValor) {
+            var response = {
+                Ok:true,
+                Message:"",
+                ProductoId: 42,
+                AtributoId: 4,
+                ValorAtributoId: 333,
+                NombreAtributo: "reputo",
+                NuevoValor: "valor dado de alta"
+            };
+            renderSimple($("#atributosTable"), response);
+        }
+
+    function renderSimple($container, response) {
+        var html = '<tr class="atributo-line">'
+            + '<td>'+response.NombreAtributo+'</td>'
+            + '<td>'
+            +'<input type="text" value="'+response.NuevoValor+'" id="valorSimple_'+response.ValorAtributoId+'" class="valorSimple">'
+            + '</td>'
+            + '<td>'
+            + '<input type="button" value="&gt;" onclick="modificarValorSimple('+response.ProductoId+','+response.ValorAtributoId+')">'
+            + '</td>'
+            + '<td>'
+            + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),'+response.ProductoId+','+response.ValorAtributoId+') ">'
+            + '</td>'
+            + '</tr>';
+        $container.append(html);
+    }
+
+     function renderComoMulti($container, response) {
+        var html = '<tr class="atributo-line">'
+            + '<td>combo multi</td>'
+            + '<td>'
+            + '<select name="comboMulti" multiple="multiple" id="valorComboMulti_7" class="valorComboMulti">'
+            + '<option value="3" selected="selected">valor1(A)</option>'
+            + '<option value="4">valor2(I)</option>'
+            + '<option value="5" selected="selected">valor3(A)</option>'
+            + '</select>'
+            + '</td>'
+            + '<td>'
+            + '<input type="button" value="&gt;" onclick="modificarValorComboMulti (5, 3, 7) ">'
+            + '</td>'
+            + '<td>'
+            + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this), 5, 7) ">'
+            + '</td>'
+            + '</tr>';
+        $container.append(html);
+    }
+
+
 
     </script>
     @Scripts.Render("~/bundles/jqueryval")
