@@ -475,6 +475,31 @@ namespace TallerAplicaciones.Controllers
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult ModificarValorCombo(int idProducto, int idValorAtributo)
+        {
+            var errorString = "Ocurrio un error al editar el valor";
+            var resJson = new EditarValorAtributoComboJson()
+            {
+                Message = "",
+                Ok = false,
+                ProductoId = idProducto,
+                ValorAtributoId = idValorAtributo
+            };
+            try
+            {
+                var resultadoOK = ManejadorProducto.GetInstance().EditarValorAtributoCombo(idProducto, idValorAtributo);
+                resJson.Ok = resultadoOK;
+                resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
+            }
+            catch (Exception ex)
+            {
+                resJson.Ok = false;
+                resJson.Message = errorString;
+            }
+            return Json(resJson, JsonRequestBehavior.AllowGet);
+        }
+
     }
 
 

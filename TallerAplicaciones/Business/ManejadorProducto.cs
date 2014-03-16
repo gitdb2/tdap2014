@@ -701,5 +701,29 @@ private Dictionary<Atributo, List<ValorPredefinido>> ObtenerMapaValoresCombo(Pro
             return resultadoOk;          
         }
 
+        public bool EditarValorAtributoCombo(int idProducto, int idValorAtributo)
+        {
+            var resultadoOk = false;
+            using (var db = new Persistencia())
+            {
+                var producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados)
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                var valorAtributo =
+                    db.ValoresAtributos
+                    .SingleOrDefault(v => v.ValorAtributoID == idValorAtributo);
+
+                if (producto != null && valorAtributo != null)
+                {
+                    producto.ValoresSeleccionados.Clear();
+                    producto.ValoresSeleccionados.Add(valorAtributo);
+                    db.SaveChanges();
+                    resultadoOk = true;
+                }
+            }
+            return resultadoOk;
+        }
+
     }
 }

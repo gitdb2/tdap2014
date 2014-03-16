@@ -189,14 +189,21 @@
             }, "json");
         }
 
-        function modificarValorCombo(idProducto, idAtributo, idValorAtributo) {
+        function modificarValorCombo(idProducto, idValorAtributo) {
             var data = {
                 idProducto: idProducto,
-                idAtributo: idAtributo,
                 idValorAtributo: idValorAtributo
             };
-        }
 
+            $.post("ModificarValorCombo", data, function (response) {
+                if (response.Ok) {
+                    //TODO ver
+                    //$elem.parent().parent().remove();
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
+        }
 
     </script>
     @Scripts.Render("~/bundles/jqueryval")

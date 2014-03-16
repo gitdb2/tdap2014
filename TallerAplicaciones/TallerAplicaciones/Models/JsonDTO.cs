@@ -46,4 +46,10 @@ namespace TallerAplicaciones.Models
         public string NuevoValor { get; set; }
     }
 
+    public class EditarValorAtributoComboJson : BaseJson
+    {
+        public int ProductoId { get; set; }
+        public int ValorAtributoId { get; set; }
+    }
+
 }
