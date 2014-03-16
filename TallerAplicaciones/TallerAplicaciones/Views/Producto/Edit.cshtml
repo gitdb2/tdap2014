@@ -483,6 +483,27 @@
             $container.append(html);
         }
 
+
+        function actualizarValoresCombo(response){
+//			var response ={
+//				ProductoId :5
+//				,AtributoId:1
+//				,ValorAtributoId:9
+//				,ListaValorPredefinidoId:[2]
+//			};
+			
+			var $select = $("#atributosTable").find("[atributoid=" + response.AtributoId + "]");
+
+			$select.find("option").each(function(){
+				if($.inArray(parseInt($(this).val()), response.ListaValorPredefinidoId) >= 0){
+				    $(this).attr('selected', true);
+				}else{
+					$(this).removeAttr("selected");
+				}
+				
+			});
+		}
+
         $(document).ready(function () {
             //para que la lista de int llegue bien al controller
             jQuery.ajaxSettings.traditional = true;
