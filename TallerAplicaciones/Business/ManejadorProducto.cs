@@ -474,20 +474,51 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 if (valAtrib.Atributo.DataCombo == false)
                 {
-                    aRetornar.Add(valAtrib);
+                    ValorAtributo val = new ValorAtributoSimple()
+                    {
+                        ValorAtributoID = valAtrib.ValorAtributoID, 
+                        Valor = ((ValorAtributoSimple)valAtrib).Valor
+                    };
+                    aRetornar.Add(val);
                 }
             }
-            throw new NotImplementedException();
+            return aRetornar;
         }
 
         public List<ValorAtributo> GetListaValorAtributosCombo(List<ValorAtributo> list)
         {
-            throw new NotImplementedException();
+            List<ValorAtributo> aRetornar = new List<ValorAtributo>();
+            foreach (var valAtrib in list)
+            {
+                if (valAtrib.Atributo.DataCombo == true)
+                {
+                    ValorAtributo val = new ValorAtributoCombo()
+                    {
+                        ValorAtributoID = valAtrib.ValorAtributoID, 
+                        Valores = ((ValorAtributoCombo)valAtrib).Valores
+                    };
+                    aRetornar.Add(val);
+                }
+            }
+            return aRetornar;
         }
 
         public List<ValorAtributo> GetListaValorAtributosMultiseleccion(List<ValorAtributo> list)
         {
-            throw new NotImplementedException();
+            List<ValorAtributo> aRetornar = new List<ValorAtributo>();
+            foreach (var valAtrib in list)
+            {
+                if ((valAtrib.Atributo.DataCombo == true) && (valAtrib.Atributo.EsMultiseleccion()))
+                {
+                    ValorAtributo val = new ValorAtributoCombo()
+                    {
+                        ValorAtributoID = valAtrib.ValorAtributoID, 
+                        Valores = ((ValorAtributoCombo)valAtrib).Valores
+                    };
+                    aRetornar.Add(val);
+                }
+            }
+            return aRetornar;
         }
     }
 }
