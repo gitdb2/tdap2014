@@ -108,6 +108,136 @@
                  @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
+        
+        <hr/>
+        <div class="editor-label">
+            <label>
+                Atributos Variables (Las modificaciones se almacenan en el momento de realizarlas)</label>
+            <br/>
+
+            <label>Agregar Atributos al producto</label>
+        </div>
+        <div class="editor-field">
+            @if (Model.ListaDeAtributos != null && Model.ListaDeAtributos.Any(a => a.Activo))
+            {
+                <div>
+                    @Html.DropDownList("atribDisponibles",
+                         Model.ListaDeAtributos.Where(p => p.Activo == true).Select(item => new SelectListItem
+                        {
+                            Value = item.AtributoID.ToString(),
+                            Text = item.Nombre.ToString()
+                        }))
+                    <input type="button" value="Agregar" onclick="renderAtributo()" />
+                </div>
+                <div id="agregarContainer">
+                </div>
+            }
+            else
+            {
+                @("No hay Atributos en el sistema.")
+            }
+        </div>
+     
+        <div class="display-label">
+            <label>Atributos actual:</label>
+        </div>
+        <div class="display-field">
+          
+            <table id="atributos">
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Valores
+                    </th>
+                    <th>
+                        Modificar?
+                    </th>
+                    <th>
+                        Eliminar?
+                    </th>
+                </tr>
+                @if (Model.ListaValorAtributosSimple != null)
+                {
+                    foreach (var item in Model.ListaValorAtributosSimple)
+                     {
+                         <tr class="atributo-line">
+                             <td>@item.Atributo.Nombre
+                             </td>
+                             <td>
+                                 <input type="text" class="valorSimple" id="valorSimple_ @item.ValorAtributoID" value="@item.Valor"/>
+                             </td>
+                             <td>
+                                 <input type="button" onclick="modificarValorSimple(@Model.ProductoID, @item.Atributo.AtributoID, @item.ValorAtributoID) " value='>'/>
+                             </td>
+                             <td>
+                                 <input type="button" onclick=" removerValorAtributo($(this), @Model.ProductoID, @item.ValorAtributoID) " value="Sacar"/>
+                             </td>
+                         </tr>
+                     }
+                }
+                
+                 @if (Model.ListaValorAtributosCombo != null)
+                {
+                    foreach (var item in Model.ListaValorAtributosCombo)
+                    {
+
+                        var multi = item.Atributo.EsMultiseleccion();
+                        var javascriptModificar = "modificarValorCombo";
+                        var baseType = "valorCombo";
+                        var multiple = multi ? "multiple" : "";
+                        var atributo = (AtributoCombo) Model.ListaDeAtributos.Single(a => a.AtributoID == item.Atributo.AtributoID);
+                        
+
+                        if (multi)
+                        {
+                            baseType += "Multi";
+                            javascriptModificar += "Multi";
+                        }
+                       
+                         <tr class="atributo-line">
+                             <td>@item.Atributo.Nombre
+                             </td>
+                             <td>
+                                 @if (multi)
+                                 {
+                                     @Html.ListBox("comboMulti",
+                                         atributo.Valores.Select(option => new SelectListItem
+                                         {
+                                             Value = option.ValorPredefinidoID.ToString(),
+                                             Text = option.Valor.ToString() + "("+ (option.Activo? "A" : "I") + ")",
+                                             Selected = item.Valores.Select(v => v.ValorPredefinidoID).ToList().Contains(option.ValorPredefinidoID) ? true : false
+                                         }), new {@class = baseType, @id = (baseType + "_" + item.ValorAtributoID)})
+                                 }
+                                 else
+                                 {
+                                      @Html.DropDownList("combo",
+                                         atributo.Valores.Select(option => new SelectListItem
+                                         {
+                                             Value = option.ValorPredefinidoID.ToString(),
+                                             Text = option.Valor.ToString(),
+                                             Selected = item.Valores.Select(v => v.ValorPredefinidoID).ToList().Contains(option.ValorPredefinidoID) ? true : false
+                                         }), new { @class = baseType, @id = (baseType + "_" + item.ValorAtributoID),  })
+                                 }
+                             </td>
+                             <td>
+                                 <input type="button" onclick="@javascriptModificar (@Model.ProductoID, @item.Atributo.AtributoID, @item.ValorAtributoID) " value='>'/>
+                             </td>
+                             <td>
+                                 <input type="button" onclick="removerValorAtributo($(this), @Model.ProductoID, @item.ValorAtributoID) " value="Sacar"/>
+                             </td>
+                         </tr>
+                    }
+                }
+            </table>
+        </div>
+        
+        
+        
+        
+        
+        
 
         <p>
            
@@ -134,9 +264,6 @@
         }
 
         function addNew(name) {
-
-            var accept = (name == "Fotos") ? ".jpg" : ".wmv";
-
             $("." + name).append($('<div><input type="file" value="" name="' + name + '" />' +
                 '<a href="javascript:void(0)" onclick="$(this).parent().remove()">[x]</a>' +
                 '</div>'));

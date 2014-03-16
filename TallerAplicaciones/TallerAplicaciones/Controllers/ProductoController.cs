@@ -118,8 +118,10 @@ namespace TallerAplicaciones.Controllers
             catch (Exception e)
             {
                 ModelState.AddModelError("", e.Message);
+               
             }
             // If we got this far, something failed, redisplay form
+            model.ListaDeAtributos = ManejadorAtributo.GetInstance().GetAtributosActivos();
             return View(model);
         }
 
@@ -288,7 +290,7 @@ namespace TallerAplicaciones.Controllers
 
             var simples = ManejadorProducto.GetInstance().ObtenerValoresSimples(producto);
             var combos = ManejadorProducto.GetInstance().ObtenerValoresCombo(producto);
-            var atributosDisponibles = ManejadorAtributo.GetInstance().GetAtributosActivos();
+            var atributosDisponibles = ManejadorAtributo.GetInstance().GetAtributos();
 
             var model = new ProductoConArchivosSubmitModel
             {
