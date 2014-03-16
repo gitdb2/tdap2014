@@ -757,9 +757,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultadoOk;
         }
 
-        public bool AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
+        public int AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
         {
-            var resultadoOk = false;
+            var resultado = -1;
             using (var db = new Persistencia())
             {
                 var producto = db.Productos
@@ -773,13 +773,20 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                     var atributo = db.Atributos.FirstOrDefault(a0 => a0.AtributoID == idAtributoSimple);
 
-                    producto.ValoresSeleccionados.Add(new ValorAtributoSimple() { Atributo = atributo, Valor = nuevoValor });
+                    ValorAtributoSimple nuevoValorAtributoSimple = new ValorAtributoSimple()
+                    {
+                        Atributo = atributo,
+                        Valor = nuevoValor
+                    };
+
+                    producto.ValoresSeleccionados.Add(nuevoValorAtributoSimple);
                     
                     db.SaveChanges();
-                    resultadoOk = true;
+
+                    resultado = nuevoValorAtributoSimple.ValorAtributoID;
                 }
             }
-            return resultadoOk;
+            return resultado;
         }
 
         public bool AgregarValorAtributoCombo(int idProducto, List<int> listaIdValorAtributo)

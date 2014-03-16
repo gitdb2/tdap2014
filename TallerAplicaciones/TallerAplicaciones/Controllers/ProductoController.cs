@@ -504,9 +504,9 @@ namespace TallerAplicaciones.Controllers
             };
             try
             {
-                var resultadoOK = ManejadorProducto.GetInstance().AgregarValorAtributoSimple(idProducto, idAtributoSimple, nuevoValor);
-                resJson.Ok = resultadoOK;
-                resJson.Message = resultadoOK ? "Se agrego el atributo" : errorString;
+                int idNuevoAtributo = ManejadorProducto.GetInstance().AgregarValorAtributoSimple(idProducto, idAtributoSimple, nuevoValor);
+                resJson.Ok = idNuevoAtributo >= 0;
+                resJson.Message = resJson.Ok ? "Se agrego el atributo" : errorString;
             }
             catch (Exception ex)
             {
@@ -521,7 +521,7 @@ namespace TallerAplicaciones.Controllers
         {
             List<int> listaIdValorAtributo = new List<int>();
             listaIdValorAtributo.Add(idValorAtributo);
-            AgregarValorAtributoComboMulti(idProducto, listaIdValorAtributo);
+            return AgregarValorAtributoComboMulti(idProducto, listaIdValorAtributo);
         }
 
         [HttpPost]
