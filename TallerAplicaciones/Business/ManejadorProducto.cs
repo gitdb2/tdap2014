@@ -740,7 +740,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultadoOk;
         }
 
-        public bool ModificarValorAtributoCombo(int idProducto, List<int> listaIdValorAtributo)
+        public bool ModificarValorAtributoCombo(int idProducto, int idValordAtributo, List<int> listaIdValorPredefinido)
         {
             var resultadoOk = false;
             using (var db = new Persistencia())
@@ -751,16 +751,30 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                 if (producto != null)
                 {
-                    producto.ValoresSeleccionados.Clear();
-                    foreach (var idValorAtributo in listaIdValorAtributo)
-                    {
-                        var valorAtributo =
-                            db.ValoresAtributos
-                            .SingleOrDefault(v => v.ValorAtributoID == idValorAtributo);
+                    var valorAtriutoSeleccionado = db.ValoresAtributos
+                                                    .OfType<ValorAtributoCombo>()
+                                                    .Include(v=> v.Valores)
+                                                    .SingleOrDefault(v => v.ValorAtributoID == idValordAtributo);
 
-                        if (valorAtributo != null)
+                    if (valorAtriutoSeleccionado == null)
+                    {
+                        throw new CustomException("El valoratributo no existe") { Key = "ValorAtributoId" };
+                    }
+                    valorAtriutoSeleccionado.Valores.Clear();
+
+                    foreach (var idValorPredefinido in listaIdValorPredefinido)
+                    {
+                        var valorPredefinido =
+                            db.ValoresPredefinidos
+                            .SingleOrDefault(v => v.ValorPredefinidoID == idValorPredefinido);
+
+                        if (valorPredefinido != null)
                         {
-                            producto.ValoresSeleccionados.Add(valorAtributo);
+                           valorAtriutoSeleccionado.Valores.Add(valorPredefinido);
+                        }
+                        else
+                        {
+                            throw  new CustomException("El valor de combo no existe"){Key="ValorPredefinidoId"};
                         }
                     }
                     db.SaveChanges();

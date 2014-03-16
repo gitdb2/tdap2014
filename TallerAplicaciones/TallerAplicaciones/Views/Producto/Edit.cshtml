@@ -295,12 +295,12 @@
         }
 
         function modificarValorComboMulti(idProducto, idAtributo, idValorAtributo) {
-            var seleccionados = $("#valorComboMulti_" + idAtributo).val();
+            var seleccionados = $("#valorComboMulti_" + idValorAtributo).val();
             modificarValorCombo(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
         }
 
         function modificarValorComboSimple(idProducto, idAtributo, idValorAtributo) {
-            var seleccionados = new Array($("#valorCombo_" + idAtributo).val());
+            var seleccionados = new Array($("#valorCombo_" + idValorAtributo).val());
             modificarValorCombo(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
         }
 
@@ -455,7 +455,7 @@
             var multiple = metadata.esMultiselec;
             var multiText = multiple ? "Multi" : "";
             var className = "valorCombo" + multiText;
-            var idCombo = className + "_" + response.AtributoId;
+            var idCombo = className + "_" + response.ValorAtributoId;
             var nombre = "combo" + multiText;
 
             var nombreFuncionModificar = "modificarValorCombo" + multiText;
@@ -474,10 +474,11 @@
             }
             html += '</td>'
                 + '<td>'
-                + '<input type="button" value="&gt;" onclick="'+nombreFuncionModificar+'('+response.idProducto+', '+response.idAtributo +', '+response.idValorAtributo+') ">'
+                + '<input type="button" value="&gt;" onclick="'
+                        +nombreFuncionModificar+'('+response.ProductoId+', '+response.AtributoId +', '+response.ValorAtributoId+') ">'
                 + '</td>'
                 + '<td>'
-                + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this), 5, 7) ">'
+                + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),' + response.ProductoId + ',' + response.ValorAtributoId + ')">'
                 + '</td>'
                 + '</tr>';
             $container.append(html);

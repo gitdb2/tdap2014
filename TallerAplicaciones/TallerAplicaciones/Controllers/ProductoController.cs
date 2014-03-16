@@ -473,7 +473,7 @@ namespace TallerAplicaciones.Controllers
             };
             try
             {
-                var resultadoOK = ManejadorProducto.GetInstance().ModificarValorAtributoCombo(idProducto, listaIdValorAtributo);
+                var resultadoOK = ManejadorProducto.GetInstance().ModificarValorAtributoCombo(idProducto, idValorAtributo, listaIdValorAtributo);
                 resJson.Ok = resultadoOK;
                 resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
             }
@@ -544,6 +544,8 @@ namespace TallerAplicaciones.Controllers
                     resJson.AtributoId = nuevoAtributo.Atributo.AtributoID;
                     resJson.NombreAtributo = nuevoAtributo.Atributo.Nombre;
                     resJson.ListaValorPredefinidoId = new List<int>();
+                    resJson.ValorAtributoId = nuevoAtributo.ValorAtributoID;
+
                     foreach (var valorPredefinido in nuevoAtributo.Valores)
                     {
                         resJson.ListaValorPredefinidoId.Add(valorPredefinido.ValorPredefinidoID);
