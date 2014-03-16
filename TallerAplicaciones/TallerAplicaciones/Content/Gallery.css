@@ -23,3 +23,15 @@ input[type="checkbox"].gallerySelection {
     border: 1px solid #CCCCCC;
     padding: 5px;
 }
+
+
+.addItem select , .atributo-line select{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E2E2E2;
+    color: #333333;
+    font-size: 1.2em;
+    margin: 5px 0 6px;
+    padding: 5px;
+    width: 300px;
+}
+

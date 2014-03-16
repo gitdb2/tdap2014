@@ -765,7 +765,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             {
                 
                 if (AtributoYaEstaAsociado(idProducto, idAtributoSimple))
-                    throw new AtributoYaEstaAsociadoException("El Producto ya esta tiene un Atributo de ese tipo");
+                    throw new AtributoYaEstaAsociadoException("El Producto ya tiene un Atributo de ese tipo");
                 
                 var producto = db.Productos
                     .Include(p0 => p0.ValoresSeleccionados)
