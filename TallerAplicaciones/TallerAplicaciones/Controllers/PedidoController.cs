@@ -22,12 +22,13 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Pedido/
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult List()
         {
             var model = new PedidoListModel
@@ -41,7 +42,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Pedido/Create
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Create()
         {
             var eject = (EjecutivoDeCuenta)Session[Constants.SESSION_PERFIL];
@@ -64,7 +65,7 @@ namespace TallerAplicaciones.Controllers
 
         // POST: /Pedido/Create
         [HttpPost]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Create(PedidoCreatePOSTModel model)
         {
 
@@ -169,6 +170,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public JsonResult AgregarItemPedidoCantidadProducto(int idPedido, int idProducto, int cantidad)
         {
             var ret = new AddCantidadPedidoJson()
@@ -200,6 +202,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public JsonResult ModificarPedidoCantidadProducto(int idPedido, int idCantidadProductoPedido,
             bool borrar, int cantidad)
         {
@@ -251,6 +254,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Pedido/Edit/5
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Edit(int idPedido)
         {
             return View(GetPedidoModelFromDB(idPedido));
@@ -259,6 +263,7 @@ namespace TallerAplicaciones.Controllers
         //
         // POST: /Pedido/Edit
         [HttpPost]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Edit(PedidoEditModel model)
         {
 
@@ -294,20 +299,14 @@ namespace TallerAplicaciones.Controllers
                 ModelState.AddModelError("", e.Message);
             }
 
-            // If we got this far, something failed, redisplay form
             ///Este es el modelo que se devuelve en caso que la operacion de modificacion de error
             var errorModel = GetPedidoModelFromDB(model.PedidoID);
-            //errorModel.Activo = model.Activo;
-            //errorModel.Descripcion = model.Descripcion;
-            //errorModel.Codigo = model.Codigo;
-            //errorModel.Nombre = model.Nombre;
-            //errorModel.ProductoID = model.ProductoID;
             return View(errorModel);
         }
 
         //
         // GET: /Pedido/Delete/5
-
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Delete(int idPedido)
         {
             return View(new DeletePedidoModel { PedidoID = idPedido });
@@ -317,8 +316,8 @@ namespace TallerAplicaciones.Controllers
         // POST: /Pedido/Delete/5
 
         [HttpPost]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Delete(int idPedido, DeletePedidoModel model)
-        //int id, FormCollection collection)
         {
             if (!ModelState.IsValid) return View(model);
             try

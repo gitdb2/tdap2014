@@ -25,7 +25,7 @@ namespace TallerAplicaciones.Controllers
             return View();
         }
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult List()
         {
             var model = new ProductoListModel
@@ -37,7 +37,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Producto/Create
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             ProductoConArchivosSubmitModel model = null;
@@ -58,7 +58,7 @@ namespace TallerAplicaciones.Controllers
 
         // POST: /Producto/Create
         [HttpPost]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Create(ProductoConArchivosSubmitModel model)
         {
 
@@ -166,7 +166,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Producto/Edit/5
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Edit(int idProducto)
         {
             var model = GetProductoConArchivosSubmitModelFromDB(idProducto);
@@ -178,6 +178,7 @@ namespace TallerAplicaciones.Controllers
         //
         // POST: /Producto/Edit
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Edit(ProductoConArchivosSubmitModel model)
         {
 
@@ -309,7 +310,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Producto/Delete/5
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Delete(int idProducto)
         {
             return View(new DeleteProductModel { IdProducto = idProducto });
@@ -319,11 +320,9 @@ namespace TallerAplicaciones.Controllers
         // POST: /Producto/Delete/5
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Delete(int idProducto, DeleteProductModel model)
         {
-
-            //var model = new DeleteProductModel {id = id};
-
             try
             {
                 if (ManejadorProducto.GetInstance().BajaProducto(model.IdProducto))
@@ -408,6 +407,7 @@ namespace TallerAplicaciones.Controllers
         /// <param name="idValorAtributo"></param>
         /// <returns></returns>
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public JsonResult RemoverValorAtributo(int idProducto, int idValorAtributo)
         {
             var errorString = "Ocurrio un error al borrar el valor";
@@ -433,6 +433,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public JsonResult ModificarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
         {
             var errorString = "Ocurrio un error al editar el valor";
@@ -459,6 +460,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public JsonResult ModificarValorCombo(int idProducto, int idAtributo, int idValorAtributo, List<int> listaIdValorAtributo)
         {
             var errorString = "Ocurrio un error al editar el atributo";
@@ -490,6 +492,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public JsonResult AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
         {
             var resJson = new AgregarValorAtributoSimpleJson()
@@ -520,6 +523,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public JsonResult AgregarValorAtributoCombo(int idProducto, int idAtributo, int idValorPredefinido)
         {
             List<int> listaIdValorAtributo = new List<int>();
@@ -528,6 +532,7 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public JsonResult AgregarValorAtributoComboMulti(int idProducto, int idAtributo, List<int> listaIdValorPredefinido, FormCollection collection)
         {
             var resJson = new AgregarValorAtributoComboJson()

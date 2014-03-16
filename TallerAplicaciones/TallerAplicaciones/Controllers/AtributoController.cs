@@ -17,23 +17,15 @@ namespace TallerAplicaciones.Controllers
     {
         //
         // GET: /Atributo/
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             return View("Create");
         }
 
         //
-        // GET: /Atributo/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
         // GET: /Atributo/Create
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             return View();
@@ -43,6 +35,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Atributo/Create
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Create(AtributoModel model)
         {
             try
@@ -95,7 +88,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Atributo/Edit/5
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult List()
         {
             ListAtributoModel model = null;
@@ -114,7 +107,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Atributo/Edit/5
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Edit(int idAtributo)
         {
             EditAtributoModel model = null;
@@ -140,6 +133,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Atributo/Edit/5
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Edit(EditPostAtributoModel model)
         {
             try
@@ -166,34 +160,8 @@ namespace TallerAplicaciones.Controllers
             }
         }
 
-        //
-        // GET: /Atributo/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Atributo/Delete/5
-
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public JsonResult ObtenerValoresAtributos(int valorIdAtributo)
         {
 
@@ -221,18 +189,5 @@ namespace TallerAplicaciones.Controllers
             }
             return Json(ret);
         }
-
-
-        public class ValoresAtributoJson
-        {
-            public int idAtributo { get; set; }
-            public String nombreAtributo { get; set; }
-            public bool esCombo { get; set; }
-            public bool esMultiselec { get; set; }
-            public List<ValoresJson> litaValores { get; set; }
-            public bool Ok { get; set; }
-            public string Message { get; set; }
-        }
-
     }
 }

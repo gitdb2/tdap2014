@@ -11,10 +11,11 @@ using uy.edu.ort.taller.aplicaciones.negocio;
 
 namespace TallerAplicaciones.Controllers
 {
+    [CustomAuthorize]
     public class ReportesController : Controller
     {
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult Productos()
         {
             var model = new ReporteProductosModel
@@ -24,7 +25,7 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "EjecutivoDeCuenta")]
         public ActionResult TopProductos()
         {
             var model = new ReporteTopProductosModel
@@ -35,7 +36,7 @@ namespace TallerAplicaciones.Controllers
         }
 
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Logs()
         {
             var now = DateTime.Now;
@@ -53,8 +54,8 @@ namespace TallerAplicaciones.Controllers
 
 
 
-        [AllowAnonymous]
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Logs(ReporteLogsModel model)
         {
 
@@ -84,7 +85,9 @@ namespace TallerAplicaciones.Controllers
 
             return View(model);
         }
-        //-------------------------------------------------------------------
+
+
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Pedidos()
         {
 
@@ -155,17 +158,12 @@ namespace TallerAplicaciones.Controllers
                 }
             }
             ViewBag.Ejecutivos = listaEjec;
-
-
-
-
-
-
             return View(model);
         }
 
-        [AllowAnonymous]
+        
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Pedidos(ReportePedidoModel model)
         {
             //si los ids de distribuidor o ejecutivo son -1 entonces se asume que son filtros

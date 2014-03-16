@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using uy.edu.ort.taller.aplicaciones.dominio;
 
 namespace TallerAplicaciones.Models
 {
@@ -65,4 +66,14 @@ namespace TallerAplicaciones.Models
         public string NombreAtributo { get; set; }
     }
 
+    public class ValoresAtributoJson
+    {
+        public int idAtributo { get; set; }
+        public String nombreAtributo { get; set; }
+        public bool esCombo { get; set; }
+        public bool esMultiselec { get; set; }
+        public List<ValoresJson> litaValores { get; set; }
+        public bool Ok { get; set; }
+        public string Message { get; set; }
+    }
 }

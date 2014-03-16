@@ -16,7 +16,6 @@ using uy.edu.ort.taller.aplicaciones.negocio;
 namespace TallerAplicaciones.Controllers
 {
     [CustomAuthorize]
-    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
         
@@ -260,7 +259,7 @@ namespace TallerAplicaciones.Controllers
         // GET: /Account/ChangePassword
 
         [HttpPost]
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult ChangePassword(LocalPasswordModel model)
         {
             if (ModelState.IsValid)
@@ -290,7 +289,7 @@ namespace TallerAplicaciones.Controllers
         //
         // POST: /Account/ChangePassword
 
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult ChangePassword(string login)
         {
             LocalPasswordModel model = null;

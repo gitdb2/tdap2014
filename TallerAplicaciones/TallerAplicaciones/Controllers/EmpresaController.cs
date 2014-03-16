@@ -17,7 +17,7 @@ namespace TallerAplicaciones.Controllers
     {
         //
         // GET: /Empresa/
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             return View();
@@ -25,6 +25,7 @@ namespace TallerAplicaciones.Controllers
 
 
         // GET: /Empresa/List
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult List(EmpresaListModel model)
         {
 
@@ -48,17 +49,9 @@ namespace TallerAplicaciones.Controllers
 
         }
 
-        ////
-        //// GET: /Empresa/Details/5
 
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        //
         // GET: /Empresa/Create
-        [AllowAnonymous]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             return View();
@@ -68,6 +61,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Empresa/Create
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Create(AltaEmpresaModel model)
         {
             if (ModelState.IsValid)
@@ -98,6 +92,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Empresa/Edit/
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Edit(int idEmpresa)
         {
             var model = GetEditEmpresaModel(idEmpresa);
@@ -128,6 +123,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Empresa/Edit/5
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Edit(int idEmpresa, EmpresaEditModel model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -167,7 +163,7 @@ namespace TallerAplicaciones.Controllers
 
         //
         // GET: /Empresa/Delete/5
-
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Delete(int idEmpresa)
         {
             return View(new DeleteEmpresaModel { IdEmpresa = idEmpresa });
@@ -176,6 +172,7 @@ namespace TallerAplicaciones.Controllers
         // POST: /Empresa/Delete/5
 
         [HttpPost]
+        [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Delete(int idProducto, DeleteEmpresaModel model)
         {
             try
