@@ -260,7 +260,7 @@
                 idProducto: idProducto,
                 idValorAtributo: idValorAtributo
             };
-            $.post("RemoverValorAtributo", data, function (response) {
+            $.post("RemoverValorAtributo", data, function(response) {
                 if (response.Ok) {
                     $elem.parent().parent().remove();
                 } else {
@@ -270,12 +270,18 @@
         }
 
         function modificarValorSimple(idProducto, idValorAtributoSimple) {
+            if ($("#valorSimple_" + idValorAtributoSimple).val().length == 0) {
+                $("#valorSimple_" + idValorAtributoSimple).focus();
+                $("#valorSimple_" + idValorAtributoSimple).notify("Debe ingresar un valor", "error");
+                return false;
+            }
+
             var data = {
                 idValorAtributoSimple: idValorAtributoSimple,
-                nuevoValor : $("#valorSimple_" + idValorAtributoSimple).val()
+                nuevoValor: $("#valorSimple_" + idValorAtributoSimple).val()
             };
 
-            $.post("ModificarValorAtributoSimple", data, function (response) {
+            $.post("ModificarValorAtributoSimple", data, function(response) {
                 if (response.Ok) {
                     $("#valorSimple_" + idValorAtributoSimple).val(response.NuevoValor);
                     $("#valorSimple_" + idValorAtributoSimple).notify(response.Message, "ok");
@@ -291,7 +297,7 @@
                 idValorAtributo: idValorAtributo
             };
 
-            $.post("ModificarValorCombo", data, function (response) {
+            $.post("ModificarValorCombo", data, function(response) {
                 if (response.Ok) {
                     //TODO ver
                     //$elem.parent().parent().remove();
@@ -306,11 +312,11 @@
                 idProducto: idProducto,
                 listaIdValorAtributo: idValorAtributo
             };
-           
+
             //TODO
             //$("#comboValueMulti_" + idValorAtributo)
 
-            $.post("ModificarValorCombo", data, function (response) {
+            $.post("ModificarValorCombo", data, function(response) {
                 if (response.Ok) {
                     //TODO ver
                     //$elem.parent().parent().remove();
@@ -325,11 +331,11 @@
                 idProducto: idProducto,
                 listaIdValorAtributo: idValorAtributo
             };
-           
+
             //TODO
             //$("#comboValueMulti_" + idValorAtributo)
 
-            $.post("AgregarValorComboMulti", data, function (response) {
+            $.post("AgregarValorComboMulti", data, function(response) {
                 if (response.Ok) {
                     //TODO ver
                     //$elem.parent().parent().remove();
@@ -338,7 +344,7 @@
                 }
             }, "json");
         }
-       
+
         function renderAtributo() {
             var idAtributo = $("#atributoSelect").val();
 
@@ -364,27 +370,27 @@
         }
 
         function printHTMLAtributoSimple(response) {
-            var html =  '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
-                '<input placeholder="Valor" id="tempItemToAdd" idatrib="'+response.idAtributo+'" type="text" value="" />' +
-                '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>'+
+            var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
+                '<input placeholder="Valor" id="tempItemToAdd" idatrib="' + response.idAtributo + '" type="text" value="" />' +
+                '<input type="button" value="Agregar" onclick="agregarValorAtributoSimple()"/>' +
                 '</div>';
             $("#agregarContainer").html(html);
         }
 
         function agregarValorAtributoSimple() {
-            var nuevoValor = $("#tempItemToAdd").val();
-            var idAtributoSimple = $("#tempItemToAdd").attr("idatrib");
-            var idProducto = $("#ProductoID").val();
-
+            if ($("#tempItemToAdd").val().length == 0) {
+                $("#tempItemToAdd").focus();
+                $("#tempItemToAdd").notify("Debe ingresar un valor", "error");
+                return false;
+            }
             var data = {
-                idProducto : idProducto,
-                idAtributoSimple : idAtributoSimple,
-                nuevoValor : nuevoValor
+                idProducto: $("#ProductoID").val(),
+                idAtributoSimple: $("#tempItemToAdd").attr("idatrib"),
+                nuevoValor: $("#tempItemToAdd").val()
             };
-
-            $.post("AgregarValorAtributoSimple", data, function (response) {
+            $.post("AgregarValorAtributoSimple", data, function(response) {
                 if (response.Ok) {
-                    renderSimple($("#atributosTable"), response );
+                    renderSimple($("#atributosTable"), response);
                 } else {
                     $("#atributosTable").notify(response.Message, "error");
                 }
@@ -393,15 +399,15 @@
 
         function renderSimple($container, response) {
             var html = '<tr class="atributo-line">'
-                + '<td>'+response.NombreAtributo+'</td>'
+                + '<td>' + response.NombreAtributo + '</td>'
                 + '<td>'
-                +'<input type="text" value="'+response.NuevoValor+'" id="valorSimple_'+response.ValorAtributoId+'" class="valorSimple">'
+                + '<input type="text" value="' + response.NuevoValor + '" id="valorSimple_' + response.ValorAtributoId + '" class="valorSimple">'
                 + '</td>'
                 + '<td>'
-                + '<input type="button" value="&gt;" onclick="modificarValorSimple('+response.ProductoId+','+response.ValorAtributoId+')">'
+                + '<input type="button" value="&gt;" onclick="modificarValorSimple(' + response.ProductoId + ',' + response.ValorAtributoId + ')">'
                 + '</td>'
                 + '<td>'
-                + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),'+response.ProductoId+','+response.ValorAtributoId  +') ">'
+                + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this),' + response.ProductoId + ',' + response.ValorAtributoId + ') ">'
                 + '</td>'
                 + '</tr>';
             $container.append(html);

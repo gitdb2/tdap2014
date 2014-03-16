@@ -20,6 +20,7 @@ namespace uy.edu.ort.taller.aplicaciones.dominio
         [Column(TypeName = "VARCHAR")]
         [StringLength(5)]
         public string Codigo { get; set; }
+
         public string Descripcion { get; set; }
 
         public List<ValorAtributo> ValoresSeleccionados { get; set; }
