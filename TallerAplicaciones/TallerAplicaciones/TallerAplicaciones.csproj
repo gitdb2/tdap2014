@@ -170,6 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Models\JsonDTO.cs" />
     <Compile Include="Models\ReportePedidoEjecutivoModel.cs" />
     <Compile Include="Models\ReportesModel.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -394,7 +395,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="settings.properties">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\Upload\Upload.cshtml" />

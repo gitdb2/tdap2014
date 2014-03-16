@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Metadata.Edm;
 using System.Linq;
 using System.Text;
 using uy.edu.ort.taller.aplicaciones.dominio.DTO;
@@ -675,28 +676,73 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
-
-        public List<ValorAtributo> GetListaValorAtributosSimple(List<ValorAtributo> list)
+        public bool RemoverValorAtributo(int idProducto, int idValorAtributo)
         {
-            List<ValorAtributo> aRetornar = new List<ValorAtributo>();
-            foreach (var valAtrib in list)
+            var resultadoOk = false;
+            using (var db = new Persistencia())
             {
-                if (valAtrib.Atributo.DataCombo == false)
+                var producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados)
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                if (producto != null && producto.ValoresSeleccionados != null)
                 {
-                    aRetornar.Add(valAtrib);
+                    var valorAtributo =
+                        db.ValoresAtributos
+                        .SingleOrDefault(v0 => v0.ValorAtributoID == idValorAtributo);
+                    if (valorAtributo != null)
+                    {
+                        producto.ValoresSeleccionados.Remove(valorAtributo);
+                        db.ValoresAtributos.Remove(valorAtributo);
+                        db.SaveChanges();
+                        resultadoOk = true;
+                    }
                 }
             }
-            throw new NotImplementedException();
+            return resultadoOk;
         }
 
-        public List<ValorAtributo> GetListaValorAtributosCombo(List<ValorAtributo> list)
+        public bool EditarValorAtributoSimple(int idValorAtributoSimple, string nuevoValor)
         {
-            throw new NotImplementedException();
+            var resultadoOk = false;
+            using (var db = new Persistencia())
+            {
+                ValorAtributoSimple valor =
+                    db.ValoresAtributos
+                    .OfType<ValorAtributoSimple>()
+                    .SingleOrDefault(v0 => v0.ValorAtributoID == idValorAtributoSimple);
+                if (valor != null)
+                {
+                    valor.Valor = nuevoValor;
+                    db.SaveChanges();
+                    resultadoOk = true;    
+                }
+            }
+            return resultadoOk;
         }
 
-        public List<ValorAtributo> GetListaValorAtributosMultiseleccion(List<ValorAtributo> list)
+        public bool AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
         {
-            throw new NotImplementedException();
+            var resultadoOk = false;
+            using (var db = new Persistencia())
+            {
+                var producto = db.Productos
+                    .Include(p0 => p0.ValoresSeleccionados)
+                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+
+                if (producto != null)
+                {
+                    if (producto.ValoresSeleccionados == null)
+                        producto.ValoresSeleccionados = new List<ValorAtributo>();
+
+                    var atributo = db.Atributos.FirstOrDefault(a0 => a0.AtributoID == idAtributoSimple);
+                    producto.ValoresSeleccionados.Add(new ValorAtributoSimple() {Atributo = atributo, Valor = nuevoValor});
+                    db.SaveChanges();
+                    resultadoOk = true;
+                }
+            }
+            return resultadoOk;          
         }
+
     }
 }

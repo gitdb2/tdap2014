@@ -269,20 +269,50 @@
                 '</div>'));
         }
 
-      
         function removerValorAtributo($elem, idProducto, idValorAtributo) {
-            alert("removerValor");
+            var data = {
+                idProducto: idProducto,
+                idValorAtributo: idValorAtributo
+            };
+
+            $.post("RemoverValorAtributo", data, function (response) {
+                if (response.Ok) {
+                    $elem.parent().parent().remove();
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
         }
-        function modificarValorSimple(idProducto, idAtributo, idValorAtributo) {
-            alert("modificarValorSimple");
+
+        function editarValorAtributoSimple($elem, idValorAtributoSimple, nuevoValor) {
+            var data = {
+                idValorAtributoSimple: idValorAtributoSimple,
+                nuevoValor : nuevoValor
+            };
+
+            $.post("EditarValorAtributoSimple", data, function (response) {
+                if (response.Ok) {
+                    //TODO ver que hace
+                    //mandar al listado con el nuevo valor
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
         }
-     
-        function modificarValorCombo(idProducto, idAtributo, idValorAtributo) {
-            alert("modificarValorCombo");              
-        }
-      
-        function modificarValorComboMulti(idProducto, idAtributo, idValorAtributo){
-            alert("modificarValorComboMulti");
+
+        function agregarValorAtributoSimple($elem, idProducto, nuevoValor) {
+            var data = {
+                idProducto: idProducto,
+                nuevoValor: nuevoValor
+            };
+
+            $.post("AgregarValorAtributoSimple", data, function (response) {
+                if (response.Ok) {
+                    $elem.parent().parent().remove();
+                } else {
+                    alert(response.Message);
+                }
+            }, "json");
         }
 
     </script>

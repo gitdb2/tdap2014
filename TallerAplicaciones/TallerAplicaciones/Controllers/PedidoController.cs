@@ -168,27 +168,6 @@ namespace TallerAplicaciones.Controllers
             model.ProductosDisponibles = ManejadorProducto.GetInstance().ListarProductos();
         }
 
-        public class BaseJson
-        {
-            public bool Ok { get; set; }
-            public string Message { get; set; }
-        }
-        public class ModificarCantidadPedidoJson : BaseJson
-        {
-            public int IdPedido { get; set; }
-            public int IdCantidadProductoPedido { get; set; }
-            public int Cantidad { get; set; }
-            public bool Borrado { get; set; }
-        }
-
-        public class AddCantidadPedidoJson : ModificarCantidadPedidoJson
-        {
-
-            public int IdProducto { get; set; }
-            public string NombreProducto { get; set; }
-            public string CodigoProducto { get; set; }
-        }
-
         [HttpPost]
         public JsonResult AgregarItemPedidoCantidadProducto(int idPedido, int idProducto, int cantidad)
         {
