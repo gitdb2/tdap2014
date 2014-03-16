@@ -24,15 +24,15 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         }
         #endregion
 
-        public void AltaProducto(Producto producto, 
+        public void AltaProducto(Producto producto,
             List<int> idAtributoSimple,
-            List<string> valorAtributoSimple, 
+            List<string> valorAtributoSimple,
             List<string> valorAtributoCombo,
             List<string> valorAtributoMulti)
         {
             try
             {
-              
+
                 using (var db = new Persistencia())
                 {
                     ///////////////////////////////////////////////////////////
@@ -87,12 +87,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                         foreach (var idYValor in valorAtributoMulti)
                         {
-                            string[] idAtributo = idYValor.Split(new char[] {'|'});
+                            string[] idAtributo = idYValor.Split(new char[] { '|' });
                             int idAtrib = Convert.ToInt16(idAtributo[0]);
                             int idValor = Convert.ToInt16(idAtributo[1]);
-                            
-                            if (!armadoDictionary.ContainsKey(idAtrib)){
-                              armadoDictionary.Add(idAtrib, new List<int>());
+
+                            if (!armadoDictionary.ContainsKey(idAtrib))
+                            {
+                                armadoDictionary.Add(idAtrib, new List<int>());
                             }
 
                             armadoDictionary[idAtrib].Add(idValor);
@@ -111,7 +112,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                                 Atributo = atributo,
                                 Valores = new List<ValorPredefinido>()
                             };
-                          
+
 
                             foreach (var idValor in keyValue.Value)
                             {
@@ -120,7 +121,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                                 valorAtributo.Valores.Add(valorPredefinido);
                             }
-                            
+
                             aRetornar.Add(valorAtributo);
                         }
                     }
@@ -258,7 +259,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
-     
+
         public List<ValorAtributoCombo> ObtenerValoresCombo(Producto producto)
         {
             List<ValorAtributoCombo> listaCombo = new List<ValorAtributoCombo>();
@@ -506,7 +507,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
                 var productoDb = db.Productos
-                                    .Include(p=>p.Archivos)
+                                    .Include(p => p.Archivos)
                                     .Include(p1 => p1.ValoresSeleccionados.Select(v => v.Atributo))
                                     .SingleOrDefault(p2 => p2.ProductoID == idProducto);
                 if (productoDb != null)
@@ -533,7 +534,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public void Modificar(Producto productoUpdate, 
+        public void Modificar(Producto productoUpdate,
                                 List<int> filesToDelete,
                                 List<int> idAtributoSimpleToAdd,
                                 List<string> valorAtributoSimpleToAdd,
@@ -550,7 +551,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     string key = "";
 
                     var productoDb = db.Productos
-                                        .Include(p=>p.Archivos)
+                                        .Include(p => p.Archivos)
                                         .SingleOrDefault(p => p.ProductoID == productoUpdate.ProductoID);
                     if (productoDb != null)
                     {
@@ -721,7 +722,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 {
                     valor.Valor = nuevoValor;
                     db.SaveChanges();
-                    resultadoOk = true;    
+                    resultadoOk = true;
                 }
             }
             return resultadoOk;
@@ -757,9 +758,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultadoOk;
         }
 
-        public int AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
+        public ValorAtributoSimple AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
         {
-            var resultado = -1;
+            ValorAtributoSimple resultado = null;
             using (var db = new Persistencia())
             {
                 var producto = db.Productos
@@ -780,42 +781,56 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     };
 
                     producto.ValoresSeleccionados.Add(nuevoValorAtributoSimple);
-                    
+
                     db.SaveChanges();
 
-                    resultado = nuevoValorAtributoSimple.ValorAtributoID;
+                    resultado = nuevoValorAtributoSimple;
                 }
             }
             return resultado;
         }
 
-        public bool AgregarValorAtributoCombo(int idProducto, List<int> listaIdValorAtributo)
+        public ValorAtributoCombo AgregarValorAtributoCombo(int idProducto, int idAtributo, List<int> listaIdValorPredefinido)
         {
-            var resultadoOk = false;
+            ValorAtributoCombo resultado = null;
             using (var db = new Persistencia())
             {
                 var producto = db.Productos
                     .Include(p0 => p0.ValoresSeleccionados)
                     .SingleOrDefault(p1 => p1.ProductoID == idProducto);
 
-                if (producto != null)
-                {
-                    foreach (var idValorAtributo in listaIdValorAtributo)
-                    {
-                        var valorAtributo =
-                            db.ValoresAtributos
-                            .SingleOrDefault(v => v.ValorAtributoID == idValorAtributo);
+                var atributo = db.Atributos
+                    .SingleOrDefault(p1 => p1.AtributoID == idAtributo);
 
-                        if (valorAtributo != null)
+                if (producto != null && atributo != null)
+                {
+                    if (producto.ValoresSeleccionados == null)
+                        producto.ValoresSeleccionados = new List<ValorAtributo>();
+
+                    ValorAtributoCombo nuevo = new ValorAtributoCombo()
+                    {
+                        Atributo = atributo,
+                        Valores = new List<ValorPredefinido>()
+                    };
+
+                    foreach (var idValorPredefinido in listaIdValorPredefinido)
+                    {
+                        var valorPredefinido =
+                            db.ValoresPredefinidos
+                            .SingleOrDefault(v => v.ValorPredefinidoID == idValorPredefinido);
+
+                        if (valorPredefinido != null)
                         {
-                            producto.ValoresSeleccionados.Add(valorAtributo);
+                            nuevo.Valores.Add(valorPredefinido);
+
                         }
                     }
+                    producto.ValoresSeleccionados.Add(nuevo);
                     db.SaveChanges();
-                    resultadoOk = true;
+                    resultado = nuevo;
                 }
             }
-            return resultadoOk;
+            return resultado;
         }
 
     }

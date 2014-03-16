@@ -427,7 +427,7 @@ namespace TallerAplicaciones.Controllers
             catch (Exception ex)
             {
                 resJson.Ok = false;
-                resJson.Message = errorString;
+                resJson.Message = ex.Message;
             }
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
@@ -452,7 +452,7 @@ namespace TallerAplicaciones.Controllers
             catch (Exception ex)
             {
                 resJson.Ok = false;
-                resJson.Message = errorString;
+                resJson.Message = ex.Message;
             }
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
@@ -485,7 +485,7 @@ namespace TallerAplicaciones.Controllers
             catch (Exception ex)
             {
                 resJson.Ok = false;
-                resJson.Message = errorString;
+                resJson.Message = ex.Message;
             }
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
@@ -493,10 +493,9 @@ namespace TallerAplicaciones.Controllers
         [HttpPost]
         public JsonResult AgregarValorAtributoSimple(int idProducto, int idAtributoSimple, string nuevoValor)
         {
-            var errorString = "Ocurrio un error al agregar el valor";
             var resJson = new AgregarValorAtributoSimpleJson()
             {
-                Message = "",
+                Message = "Ocurrio un error al agregar el valor",
                 Ok = false,
                 ProductoId = idProducto,
                 AtributoId = idAtributoSimple,
@@ -504,14 +503,19 @@ namespace TallerAplicaciones.Controllers
             };
             try
             {
-                int idNuevoAtributo = ManejadorProducto.GetInstance().AgregarValorAtributoSimple(idProducto, idAtributoSimple, nuevoValor);
-                resJson.Ok = idNuevoAtributo >= 0;
-                resJson.Message = resJson.Ok ? "Se agrego el atributo" : errorString;
+                ValorAtributoSimple nuevoAtributo = ManejadorProducto.GetInstance().AgregarValorAtributoSimple(idProducto, idAtributoSimple, nuevoValor);
+                if (nuevoAtributo != null)
+                {
+                    resJson.Ok = true;
+                    resJson.AtributoId = nuevoAtributo.ValorAtributoID;
+                    resJson.NombreAtributo = nuevoAtributo.Atributo.Nombre;
+                    resJson.Message = "Se agrego el atributo";
+                }
             }
             catch (Exception ex)
             {
                 resJson.Ok = false;
-                resJson.Message = errorString;
+                resJson.Message = ex.Message;
             }
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
@@ -525,31 +529,40 @@ namespace TallerAplicaciones.Controllers
         }
 
         [HttpPost]
-        public JsonResult AgregarValorAtributoComboMulti(int idProducto, List<int> listaIdValorAtributo)
+        public JsonResult AgregarValorAtributoComboMulti(int idProducto, int idAtributo, List<int> listaIdValorPredefinido)
         {
-            var errorString = "Ocurrio un error al editar el atributo";
             var resJson = new AgregarValorAtributoComboJson()
             {
-                Message = "",
+                Message = "Ocurrio un error al crear el atributo",
                 Ok = false,
                 ProductoId = idProducto,
-                ListaValorAtributoId = listaIdValorAtributo
+                AtributoId = idAtributo,
+                ListaValorPredefinidoId = listaIdValorPredefinido
             };
             try
             {
-                var resultadoOK = ManejadorProducto.GetInstance().AgregarValorAtributoCombo(idProducto, listaIdValorAtributo);
-                resJson.Ok = resultadoOK;
-                resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
+                var nuevoAtributo = ManejadorProducto.GetInstance().AgregarValorAtributoCombo(idProducto, idAtributo, listaIdValorPredefinido);
+                if (nuevoAtributo != null)
+                {
+                    resJson.Ok = true;
+                    resJson.Message = "Se creo el atributo";
+                    resJson.AtributoId = nuevoAtributo.Atributo.AtributoID;
+                    resJson.NombreAtributo = nuevoAtributo.Atributo.Nombre;
+                    resJson.ListaValorPredefinidoId = new List<int>();
+                    foreach (var valorPredefinido in nuevoAtributo.Valores)
+                    {
+                        resJson.ListaValorPredefinidoId.Add(valorPredefinido.ValorPredefinidoID);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 resJson.Ok = false;
-                resJson.Message = errorString;
+                resJson.Message = ex.Message;
             }
             return Json(resJson, JsonRequestBehavior.AllowGet);
         }
 
     }
-
 
 }
