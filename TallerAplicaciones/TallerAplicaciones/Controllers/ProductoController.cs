@@ -526,11 +526,11 @@ namespace TallerAplicaciones.Controllers
         {
             List<int> listaIdValorAtributo = new List<int>();
             listaIdValorAtributo.Add(idValorPredefinido);
-            return AgregarValorAtributoComboMulti(idProducto, idAtributo, listaIdValorAtributo);
+            return AgregarValorAtributoComboMulti(idProducto, idAtributo, listaIdValorAtributo, null);
         }
 
         [HttpPost]
-        public JsonResult AgregarValorAtributoComboMulti(int idProducto, int idAtributo, List<int> listaIdValorPredefinido)
+        public JsonResult AgregarValorAtributoComboMulti(int idProducto, int idAtributo, List<int> listaIdValorPredefinido, FormCollection collection)
         {
             var resJson = new AgregarValorAtributoComboJson()
             {

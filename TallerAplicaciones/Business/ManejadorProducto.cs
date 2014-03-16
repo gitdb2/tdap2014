@@ -764,7 +764,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             using (var db = new Persistencia())
             {
                 
-                if (AtributoYaEstaAsociado(idProducto, idAtributoSimple))
+                if (ProductoYaTieneEsteAtributo(idProducto, idAtributoSimple))
                     throw new AtributoYaEstaAsociadoException("El Producto ya tiene un Atributo de ese tipo");
                 
                 var producto = db.Productos
@@ -794,13 +794,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return resultado;
         }
 
-        private bool AtributoYaEstaAsociado(int idProducto, int idAtributo)
+        private bool ProductoYaTieneEsteAtributo(int idProducto, int idAtributo)
         {
             using (var db = new Persistencia())
             {
                 var producto = db.Productos
-                    .Include(p0 => p0.ValoresSeleccionados.Select(p2 => p2.Atributo))
-                    .SingleOrDefault(p1 => p1.ProductoID == idProducto);
+                    .Include(p0 => p0.ValoresSeleccionados.Select(p1 => p1.Atributo))
+                    .SingleOrDefault(p2 => p2.ProductoID == idProducto);
 
                 if (producto != null)
                 {

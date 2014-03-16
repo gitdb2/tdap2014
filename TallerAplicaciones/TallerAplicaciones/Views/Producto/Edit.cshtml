@@ -411,83 +411,88 @@
 		
 
 		function printHTMLAtributoCombo(response, multi) {
-        var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
-                '<select  id="tempItemToAdd" idatrib="' + response.idAtributo + '" '+(multi? ' multiple="multiple "': '' )+'>';
+            var html = '<div class="addItem"><label>' + response.nombreAtributo + '</label>' +
+                    '<select  id="tempItemToAdd" idatrib="' + response.idAtributo + '" '+(multi? ' multiple="multiple "': '' )+'>';
 
-        for (var i = 0; i < response.litaValores.length; i++) {
-            html += "<option value=\""+ response.litaValores[i].id + "\" "+(i==0? " selected ":"")+"> " 
-                    + response.litaValores[i].valor + " </option> ";
-        }
+            for (var i = 0; i < response.litaValores.length; i++) {
+                html += "<option value=\""+ response.litaValores[i].id + "\" "+(i==0? " selected ":"")+"> " 
+                        + response.litaValores[i].valor + " </option> ";
+            }
             
-        html+= '</select>' +
-                '<input type="button" value="Agregar" onclick="agregarValorCombo('+multi+')"/>'+
-                '</div>';
-        $("#agregarContainer").html(html);
-        $("#tempItemToAdd").data("metadata", response);
-    }
-    
-    function agregarValorCombo(multi) {
-        var $select = $("#tempItemToAdd");
-        var metadata = $select.data("metadata");
-
-        var selectedValues = "";
-
-        if (multi) {
-            selectedValues = $select.val();
-        } else {
-            selectedValues = new Array($select.val()); 
+            html+= '</select>' +
+                    '<input type="button" value="Agregar" onclick="agregarValorCombo('+multi+')"/>'+
+                    '</div>';
+            $("#agregarContainer").html(html);
+            $("#tempItemToAdd").data("metadata", response); 
         }
-        selectedValues = selectedValues.map(Number);//trasforma a array de int
+    
+        function agregarValorCombo (multi) {
 
-        var idAtributo = $("#tempItemToAdd").attr("idatrib");
-        var idProducto = $("#ProductoID").val();
+            var $select = $("#tempItemToAdd");
+            var metadata = $select.data("metadata");
 
-         //llama ajax
- 
-        var response = {
-            Ok:true,
-            Message:"",
-            ProductoId: idProducto,
-            AtributoId: idAtributo,
-            ListaValorPredefinidoId: selectedValues,
-            NombreAtributo: "atributo "+ idAtributo
-        };
-        
-         renderCombo($("#atributosTable"), metadata, response);
+            var selectedValues = "";
 
-    }
+            if (multi) {
+                selectedValues = $select.val();
+            } else {
+                selectedValues = new Array($select.val()); 
+            }
+
+            //trasforma a array de int
+            selectedValues = selectedValues.map(Number);
+
+            var data = {
+                idProducto : $("#ProductoID").val(),
+                idAtributo : $("#tempItemToAdd").attr("idatrib"),
+                listaIdValorPredefinido : selectedValues
+            };
+
+            $.post("AgregarValorAtributoComboMulti", data, function(response) {
+                if (response.Ok) {
+                    renderCombo($("#atributosTable"), metadata, response);
+                } else {
+                    $("#atributosTable").notify(response.Message, "error");
+                }
+            }, "json");
+        }
 
 	     function renderCombo($container, metadata, response) {
     
-         var multiple = metadata.esMultiselec;
-         var multiText = multiple ? "Multi" : "";
-         var className = "valorCombo" + multiText;
-         var idCombo = className + "_" + response.AtributoId;
-         var nombre = "combo" + multiText;
+             var multiple = metadata.esMultiselec;
+             var multiText = multiple ? "Multi" : "";
+             var className = "valorCombo" + multiText;
+             var idCombo = className + "_" + response.AtributoId;
+             var nombre = "combo" + multiText;
 
-         var html = '<tr class="atributo-line">'
-             + '<td>combo multi</td>'
-             + '<td>'
-             + '<select name="' + nombre + '" ' + (multiple ? "multiple" : "") + ' id="' + idCombo + '" class="' + className + '">';
+             var html = '<tr class="atributo-line">'
+                 + '<td>combo multi</td>'
+                 + '<td>'
+                 + '<select name="' + nombre + '" ' + (multiple ? "multiple" : "") + ' id="' + idCombo + '" class="' + className + '">';
 
 
-         for (var i = 0; i < metadata.litaValores.length; i++) {
-             var idVal = metadata.litaValores[i].id;
-             var selected = $.inArray(idVal, response.ListaValorPredefinidoId) >=0  ? " selected='selected' ": "" ;
+             for (var i = 0; i < metadata.litaValores.length; i++) {
+                 var idVal = metadata.litaValores[i].id;
+                 var selected = $.inArray(idVal, response.ListaValorPredefinidoId) >=0  ? " selected='selected' ": "" ;
 
-            html += "<option value=\""+ idVal + "\" "+ selected +"> " 
-                            + metadata.litaValores[i].valor + " (A)</option> ";
-         }
-        html+= '</td>'
-                + '<td>'
-                + '<input type="button" value="&gt;" onclick="modificarValorComboMulti (5, 3, 7) ">'
-                + '</td>'
-                + '<td>'
-                + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this), 5, 7) ">'
-                + '</td>'
-                + '</tr>';
-         $container.append(html);
-    }
+                html += "<option value=\""+ idVal + "\" "+ selected +"> " 
+                                + metadata.litaValores[i].valor + " (A)</option> ";
+             }
+             html+= '</td>'
+                    + '<td>'
+                    + '<input type="button" value="&gt;" onclick="modificarValorComboMulti (5, 3, 7) ">'
+                    + '</td>'
+                    + '<td>'
+                    + '<input type="button" value="Sacar" onclick="removerValorAtributo($(this), 5, 7) ">'
+                    + '</td>'
+                    + '</tr>';
+             $container.append(html);
+        }
+
+        $(document).ready(function () {
+            //para que la lista de int llegue bien al controller
+            jQuery.ajaxSettings.traditional = true;
+        });
 
     </script>
     <script src="/Scripts/notify.min.js" type="text/javascript"></script>
