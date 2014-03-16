@@ -188,10 +188,7 @@
                             baseType += "Multi";
                             javascriptModificar += "Multi";
                         }
-                        else
-                        {
-                            javascriptModificar += "Simple";
-                        }
+                     
                        
                     <tr class="atributo-line">
                         <td>@item.Atributo.Nombre
@@ -296,15 +293,15 @@
 
         function modificarValorComboMulti(idProducto, idAtributo, idValorAtributo) {
             var seleccionados = $("#valorComboMulti_" + idValorAtributo).val();
-            modificarValorCombo(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
+            modificarValorComboGenerico(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
         }
 
-        function modificarValorComboSimple(idProducto, idAtributo, idValorAtributo) {
+        function modificarValorCombo(idProducto, idAtributo, idValorAtributo) {
             var seleccionados = new Array($("#valorCombo_" + idValorAtributo).val());
-            modificarValorCombo(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
+            modificarValorComboGenerico(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
         }
 
-        function modificarValorCombo(idProducto, idAtributo, idValorAtributo, listaElementos) {
+        function modificarValorComboGenerico(idProducto, idAtributo, idValorAtributo, listaElementos) {
             var data = {
                 idProducto: idProducto,
                 idAtributo: idAtributo,

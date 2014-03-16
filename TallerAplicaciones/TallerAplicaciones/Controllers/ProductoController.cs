@@ -473,6 +473,10 @@ namespace TallerAplicaciones.Controllers
             };
             try
             {
+                if (listaIdValorAtributo == null || !listaIdValorAtributo.Any())
+                {
+                    throw new CustomException("La lista a cambiar es null o vacia") { Key = "listaIdValorAtributo" };
+                }
                 var resultadoOK = ManejadorProducto.GetInstance().ModificarValorAtributoCombo(idProducto, idValorAtributo, listaIdValorAtributo);
                 resJson.Ok = resultadoOK;
                 resJson.Message = resultadoOK ? "Se modifico el atributo" : errorString;
