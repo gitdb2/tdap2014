@@ -103,6 +103,11 @@
                 @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
+        <p>
+            @Html.HiddenFor(model => model.ProductoID)
+            @Html.ValidationMessageFor(model => model.ProductoID)
+            <input type="submit" value="Modificar" />
+        </p>
         <hr />
         <div class="editor-label">
             <label>
@@ -120,8 +125,8 @@
                         {
                             Value = item.AtributoID.ToString(),
                             Text = item.Nombre.ToString()
-                        }), new { @id = "atributoSelect" })
-                    <input type="button" value="Crear" onclick="renderAtributo()" />
+                        }), new { @id = "atributoSelect", @onchange = "renderAtributo()" })
+                    <!-- <input type="button" value="Crear" onclick="renderAtributo()" /> -->
                 </div>
                 <div>
                     Item a agregar:</div>
@@ -226,11 +231,7 @@
                 }
             </table>
         </div>
-        <p>
-            @Html.HiddenFor(model => model.ProductoID)
-            @Html.ValidationMessageFor(model => model.ProductoID)
-            <input type="submit" value="Modificar" />
-        </p>
+      
     </fieldset>
 }
 <div>
@@ -484,13 +485,6 @@
 
 
         function actualizarValoresCombo(response){
-//			var response ={
-//				ProductoId :5
-//				,AtributoId:1
-//				,ValorAtributoId:9
-//				,ListaValorPredefinidoId:[2]
-//			};
-			
 			var $select = $("#atributosTable").find("[atributoid=" + response.AtributoId + "]");
 
 			$select.find("option").each(function(){
