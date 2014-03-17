@@ -65,9 +65,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     var prodId = productos[i];
                     var cant = cantidades[i];
 
-                    var producto = ManejadorProducto.GetInstance().GetProducto(prodId);
-                    db.Productos.Attach(producto);
-
+                    var producto = db.Productos.SingleOrDefault(p => p.ProductoID == prodId);
+        
                     var cantidadProducto = new CantidadProductoPedido()
                     {
                         Cantidad = cant,
