@@ -14,7 +14,7 @@ namespace Utiles
 
        public void Visit(AtributoCombo elem)
        {
-           Html = "<SELECT NAME=\"selCombo\" SIZE=1 style=\"width: 120px;\">";
+           Html = "<SELECT "+(elem.EsMultiseleccion()? "multiple='multiple'" : "")+" NAME=\"selCombo\" class='atributoCombo'\">";
 
            foreach (var item in elem.Valores)
            {

@@ -887,3 +887,13 @@ tr.pager td
     width: auto !important;
     
 }
+
+.atributoCombo {
+      background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E2E2E2;
+    color: #333333;
+    font-size: 1.2em;
+    margin: 5px 0 6px;
+    padding: 5px;
+    width: 200px;
+}
