@@ -879,8 +879,8 @@ tr.pager td
 }
 
 .contenedor td div {
-    position: absolute;
-    top: 0;
+  position: relative;
+    top: -100px;
 }
 
 .radio input {

@@ -182,22 +182,30 @@ namespace TallerAplicaciones.Controllers
         public ActionResult Edit(ProductoConArchivosSubmitModel model)
         {
 
+            ///Este es el modelo que se devuelve en caso que la operacion de modificacion de error
+            var errorModel = GetProductoConArchivosSubmitModelFromDB(model.ProductoID);
+            errorModel.Activo = model.Activo;
+            errorModel.Descripcion = model.Descripcion;
+            errorModel.Codigo = model.Codigo;
+            errorModel.Nombre = model.Nombre;
+            errorModel.ProductoID = model.ProductoID;
+
             if (!ModelState.IsValid)
             {
 
-                return View(model);
+                return View(errorModel);
             }
 
             //chequeo de archivos
             if (!CheckFileExtension(model.Fotos, new List<String> { "png", "jpg" }))
             {
                 ModelState.AddModelError("Fotos", "Solo se permiten Fotos .jpg o .png");
-                return View(model);
+                return View(errorModel);
             }
             if (!CheckFileExtension(model.Videos, new List<String> { "wmv" }))
             {
                 ModelState.AddModelError("Videos", "Solo se permiten Videos .wmv");
-                return View(model);
+                return View(errorModel);
             }
 
 
@@ -241,9 +249,6 @@ namespace TallerAplicaciones.Controllers
             }
             catch (ValorDuplicadoException ex)
             {
-
-
-
                 ModelState.AddModelError("Codigo", ex.Message);
 
                 foreach (var file in videoList)
@@ -265,13 +270,7 @@ namespace TallerAplicaciones.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ///Este es el modelo que se devuelve en caso que la operacion de modificacion de error
-            var errorModel = GetProductoConArchivosSubmitModelFromDB(model.ProductoID);
-            errorModel.Activo = model.Activo;
-            errorModel.Descripcion = model.Descripcion;
-            errorModel.Codigo = model.Codigo;
-            errorModel.Nombre = model.Nombre;
-            errorModel.ProductoID = model.ProductoID;
+          
 
             return View(errorModel);
 

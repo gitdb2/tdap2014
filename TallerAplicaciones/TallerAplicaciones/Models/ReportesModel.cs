@@ -67,7 +67,6 @@ namespace TallerAplicaciones.Models
 
         [Display(Name = "Resultados")]
         public List<LogInfo> Logs { get; set; }
-
     }
 
     public class ReportePedidoModel
@@ -80,21 +79,20 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Fecha hasta")]
         public DateTime FechaHasta { get; set; }
 
-
         public int EjecutivoId { get; set; }
+
         public int DistribuidorId { get; set; }
 
         public List<Pedido> Pedidos { get; set; }
 
         public List<PerfilUsuario> Perfiles { get; set; }
-
-
     }
 
     public class ReporteEjecutivoPedidoModel : ReportePedidoModel
     {
         [Display(Name = "Direccion del Orden")]
         public int OrdenDir { get; set; }
+
         [Display(Name = "Ordenar por")]
         public int OrdenBy { get; set; }
     }

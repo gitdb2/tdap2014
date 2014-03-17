@@ -78,6 +78,13 @@ namespace TallerAplicaciones.Controllers
             else
             {
 
+                var now = DateTime.Now;
+                var from = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
+                var to = now + new TimeSpan(12, 59, 59);
+
+                model.FechaDesde = from;
+                model.FechaHasta = to;
+
                 model.Logs = new List<LogInfo>();
 
             }
@@ -161,7 +168,7 @@ namespace TallerAplicaciones.Controllers
             return View(model);
         }
 
-        
+
         [HttpPost]
         [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Pedidos(ReportePedidoModel model)
@@ -181,6 +188,12 @@ namespace TallerAplicaciones.Controllers
             }
             else
             {
+                var now = DateTime.Now;
+                var from = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
+                var to = now + new TimeSpan(12, 59, 59);
+
+                model.FechaDesde = from;
+                model.FechaHasta = to;
                 model.Pedidos = new List<Pedido>();
             }
 
@@ -333,6 +346,12 @@ namespace TallerAplicaciones.Controllers
             }
             else
             {
+                var now = DateTime.Now;
+                var from = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
+                var to = now + new TimeSpan(12, 59, 59);
+
+                model.FechaDesde = from;
+                model.FechaHasta = to;
                 model.Pedidos = new List<Pedido>();
             }
 

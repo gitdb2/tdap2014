@@ -1,12 +1,12 @@
 ﻿@model TallerAplicaciones.Models.EmpresaListModel
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Listar Empresas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>
-    Lista Empresas</h2>
+    Listar Empresas</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear Nueva", "Create")
 </p>
 <table>
     <tr>
@@ -33,15 +33,12 @@
                 |
                 @Html.ActionLink("Eliminar", "Delete", "Empresa", new { idEmpresa = @item.EmpresaDistribuidoraID }, null)
             </td>
-           
-            
-            
         </tr>
     }
 </table>
 
 <div>
-    @Html.ActionLink("Back to Index", "Index")
+    @Html.ActionLink("Volver al índice", "Index")
 </div>
 
 @section Scripts {

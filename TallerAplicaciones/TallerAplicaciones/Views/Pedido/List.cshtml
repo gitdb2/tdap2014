@@ -3,11 +3,11 @@
 @using uy.edu.ort.taller.aplicaciones.utiles.Formatters
 @model TallerAplicaciones.Models.PedidoListModel
 @{
-    ViewBag.Title = "Lista de Pedidos";
+    ViewBag.Title = "Listar Pedidos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    Lista de Pedidos</h2>
+
+<h2>Listar Pedidos</h2>
 <p>
     @Html.ActionLink("Crear Nuevo", "Create")
 </p>
@@ -68,14 +68,8 @@
     }
 </table>
 
-
-
-
 @section Scripts {
     <script>
-
-
-
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

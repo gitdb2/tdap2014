@@ -56,9 +56,6 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Lista de Atributos Combo")]
         public List<ValorAtributoCombo> ListaValorAtributosCombo { get; set; }
         
-        //[Display(Name = "Lista de Atributos Multiseleccion")]
-        //public List<ValorAtributo> ListaValorAtributosMoltiseleccion { get; set; }
-        
         //==> Para obtener atributos a mostrar <==
         [Display(Name = "Atributos")]
         public List<Atributo> ListaDeAtributos { get; set; }
@@ -75,8 +72,6 @@ namespace TallerAplicaciones.Models
 
         [Display(Name = "Valores Atributo Multi")]
         public List<string> ValorAtributoMulti { get; set; }
-
-        
 
     }
 

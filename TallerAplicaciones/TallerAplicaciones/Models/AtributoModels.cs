@@ -33,7 +33,6 @@ namespace TallerAplicaciones.Models
 
     public class EditAtributoModel
     {
-
         [Required]
         [Display(Name = "Identificador de Atributo")]
         public int IdAtributo { get; set; }

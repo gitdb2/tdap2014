@@ -1,11 +1,11 @@
 ﻿@model TallerAplicaciones.Models.AltaEmpresaModel
 
 @{
-    ViewBag.Title = "AltaEmpresa";
+    ViewBag.Title = "Crear Empresa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AltaEmpresa</h2>
+<h2>Crear Empresa</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -28,7 +28,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
 
 @section Scripts {
