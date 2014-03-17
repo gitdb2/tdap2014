@@ -39,26 +39,27 @@
         {
             foreach (var item in Model.Logs)
             {
-        <tr>
-            <td>@item.Date.ToString("yyyy MMMM dd")
-            </td>
-            <td>@item.Date.ToString("hh:mm:ss")
-            </td>
-            <td>@item.Login
-            </td>
-        </tr>
+                <tr>
+                    <td>@item.Date.ToString("yyyy MMMM dd")
+                    </td>
+                    <td>@item.Date.ToString("hh:mm:ss")
+                    </td>
+                    <td>@item.Login
+                    </td>
+                </tr>
             }
         }
         else
         {
-        <tr>
-            <td colspan="2">
-                No se encontraron resultados.
-            </td>
-        </tr>
+            <tr>
+                <td colspan="2">
+                    No se encontraron resultados.
+                </td>
+            </tr>
         }
     }
 </table>
+<a href="javascript:history.go(-1)">Atrás</a>
 @section scripts
 {
     <script type="text/javascript">

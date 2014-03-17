@@ -8,51 +8,52 @@
     Top 5 de Productos</h2>
 <table class="contenedor">
     <tr>
-    <td >
-        <table>
-            <tr>
-                <th>
-                    Nombre
-                </th>
-                <th>
-                    Codigo
-                </th>
-                <th>
-                    Descripcion
-                </th>
-                <th>
-                    Activo
-                </th>
-                <th>
-                    Productos Pedidos
-                </th>
-            </tr>
-            @foreach (var item in Model.TopProductos)
-            {
+        <td >
+            <table>
                 <tr>
-                    <td>@item.TopProducto.Nombre
-                    </td>
-                    <td>@item.TopProducto.Codigo
-                    </td>
-                    <td>@item.TopProducto.Descripcion
-                    </td>
-                    <td>@(item.TopProducto.Activo ? "Si" : "No")
-                    </td>
-                    <td>@item.SumCantidad
-                    </td>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Codigo
+                    </th>
+                    <th>
+                        Descripcion
+                    </th>
+                    <th>
+                        Activo
+                    </th>
+                    <th>
+                        Productos Pedidos
+                    </th>
                 </tr>
-            }
-        </table>
-    </td>
+                @foreach (var item in Model.TopProductos)
+                {
+                    <tr>
+                        <td>@item.TopProducto.Nombre
+                        </td>
+                        <td>@item.TopProducto.Codigo
+                        </td>
+                        <td>@item.TopProducto.Descripcion
+                        </td>
+                        <td>@(item.TopProducto.Activo ? "Si" : "No")
+                        </td>
+                        <td>@item.SumCantidad
+                        </td>
+                    </tr>
+                }
+            </table>
+        </td>
     </tr>
     <tr> 
-       <td >
+    <td >
         
         <div id="pieChartHolder">
         </div>
     </td>
   
 </table>
+<a href="javascript:history.go(-1)">Atrás</a>
 @{
     var valores = "[";
     var etiquetas = "[";

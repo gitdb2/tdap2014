@@ -293,7 +293,12 @@
 
         function modificarValorComboMulti(idProducto, idAtributo, idValorAtributo) {
             var seleccionados = $("#valorComboMulti_" + idValorAtributo).val();
-            modificarValorComboGenerico(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
+            if (seleccionados == null) {
+                $("#valorComboMulti_" + idValorAtributo).notify("Debe seleccionar al menos un valor", "error");
+            } else {
+                  modificarValorComboGenerico(idProducto, idAtributo, idValorAtributo, seleccionados.map(Number));
+            }
+          
         }
 
         function modificarValorCombo(idProducto, idAtributo, idValorAtributo) {

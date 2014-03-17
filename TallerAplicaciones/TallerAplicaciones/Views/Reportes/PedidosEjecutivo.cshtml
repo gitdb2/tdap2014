@@ -94,37 +94,38 @@
         {
             foreach (var item in Model.Pedidos)
             {
-        <tr>
-            <td>@item.PedidoID &nbsp;<a href="javascript:void(0);" onclick="openDetalle(@item.PedidoID)">ver
-                detalle</a>
-            </td>
-            <td>@item.Fecha.ToString("yyyy MMMM dd")
-            </td>
-            <td>@item.Distribuidor.Usuario.Login
-            </td>
-            <td>@item.Distribuidor.Empresa.Nombre
-            </td>
-            <td>@item.Descripcion
-            </td>
-            <td>@item.CantidadProductoPedidoList.Count
-            </td>
-            <td>@(item.Activo ? "Si" : "No")
-            </td>
-            <td>@(item.Aprobado ? "Si" : "No")
-            </td>
-        </tr>
+                <tr>
+                    <td>@item.PedidoID &nbsp;<a href="javascript:void(0);" onclick="openDetalle(@item.PedidoID)">ver
+                                                 detalle</a>
+                    </td>
+                    <td>@item.Fecha.ToString("yyyy MMMM dd")
+                    </td>
+                    <td>@item.Distribuidor.Usuario.Login
+                    </td>
+                    <td>@item.Distribuidor.Empresa.Nombre
+                    </td>
+                    <td>@item.Descripcion
+                    </td>
+                    <td>@item.CantidadProductoPedidoList.Count
+                    </td>
+                    <td>@(item.Activo ? "Si" : "No")
+                    </td>
+                    <td>@(item.Aprobado ? "Si" : "No")
+                    </td>
+                </tr>
             }
         }
         else
         {
-        <tr>
-            <td colspan="12">
-                No se encontraron resultados.
-            </td>
-        </tr>
+            <tr>
+                <td colspan="12">
+                    No se encontraron resultados.
+                </td>
+            </tr>
         }
     }
 </table>
+<a href="javascript:history.go(-1)">Atrás</a>
 <div id="dialog" title="Detalle Pedido" style="display: none;">
 </div>
 @section scripts
