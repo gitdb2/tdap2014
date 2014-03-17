@@ -56,7 +56,7 @@
             @Html.Label("Atributos")
         </div>
         <div class="editor-field">
-            <select id="tipoAtributo" style="height: 34px; width: 163px;">
+            <select id="tipoAtributo" >
                 @foreach (var atributo in Model.ListaDeAtributos)
                 {
                     <option value = "@atributo.AtributoID" >@(atributo.Nombre)</option>

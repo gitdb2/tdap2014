@@ -61,6 +61,7 @@ namespace TallerAplicaciones.Controllers
         [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Create(ProductoConArchivosSubmitModel model)
         {
+            model.ListaDeAtributos = ManejadorAtributo.GetInstance().GetAtributosActivos();
 
             if (!ModelState.IsValid) return View(model);
 
@@ -121,7 +122,7 @@ namespace TallerAplicaciones.Controllers
                
             }
             // If we got this far, something failed, redisplay form
-            model.ListaDeAtributos = ManejadorAtributo.GetInstance().GetAtributosActivos();
+            
             return View(model);
         }
 

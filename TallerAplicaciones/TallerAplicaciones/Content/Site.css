@@ -888,7 +888,7 @@ tr.pager td
     
 }
 
-.atributoCombo {
+.atributoCombo, #tipoAtributo {
       background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #E2E2E2;
     color: #333333;
