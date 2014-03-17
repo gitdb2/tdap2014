@@ -115,7 +115,13 @@ namespace TallerAplicaciones.Controllers
             {
                 IAtributo iAtributo = ManejadorAtributo.GetInstance();
                 Atributo atributos = iAtributo.GetAtributo(idAtributo);
-                model = new EditAtributoModel() { IdAtributo = atributos.AtributoID, Activo = atributos.Activo, Nombre = atributos.Nombre, DataCombo = atributos.DataCombo};
+                model = new EditAtributoModel()
+                {
+                    IdAtributo = atributos.AtributoID, 
+                    Activo = atributos.Activo, 
+                    Nombre = atributos.Nombre, 
+                    DataCombo = atributos.DataCombo
+                };
                 if (atributos.DataCombo)
                 {
                     AtributoCombo atributoCombo = iAtributo.GetAtributoCombo(idAtributo);
@@ -136,28 +142,47 @@ namespace TallerAplicaciones.Controllers
         [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Edit(EditPostAtributoModel model)
         {
-            try
+            IAtributo iAtributo = ManejadorAtributo.GetInstance();
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                IAtributo iAtributo = ManejadorAtributo.GetInstance();
-
-                if (model.DataCombo)
+                try
                 {
-                    iAtributo.EditarAtributoCombo(model.IdAtributo, model.Activo, model.Nombre, model.DataCombo, model.ListaBorrar, model.ValoresNuevos);
+
+                   
+
+                    if (model.DataCombo)
+                    {
+                        iAtributo.EditarAtributoCombo(model.IdAtributo, model.Activo, model.Nombre, model.DataCombo,
+                            model.ListaBorrar, model.ValoresNuevos);
+                    }
+                    else
+                    {
+                        iAtributo.EditarAtributoSimple(model.IdAtributo, model.Activo, model.Nombre);
+                    }
+
+                    return RedirectToAction("List");
+
                 }
-                else
+                catch (Exception e)
                 {
-                    iAtributo.EditarAtributoSimple(model.IdAtributo, model.Activo, model.Nombre);
+                    ModelState.AddModelError("", e.Message);
                 }
-
-                return RedirectToAction("List");
-
             }
-            catch (Exception e)
+
+            var errModel = new EditAtributoModel()
             {
-                return RedirectToAction("List");
+                Activo = model.Activo,
+                DataCombo = model.DataCombo,
+                IdAtributo = model.IdAtributo,
+                Nombre = model.Nombre
+            };
+            if (model.DataCombo)
+            {
+                AtributoCombo atributoCombo = iAtributo.GetAtributoCombo(model.IdAtributo);
+                errModel.Valores = atributoCombo.Valores;
             }
+            
+            return View(errModel);
         }
 
         [HttpPost]

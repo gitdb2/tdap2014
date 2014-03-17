@@ -67,6 +67,7 @@ namespace TallerAplicaciones.Models
         public bool Activo { get; set; }
 
         [Required]
+        [RegularExpression(@"^([a-zA-Z0-9 ]+)$", ErrorMessage = "Ingrese {0} sin simbolos")]
         [Display(Name = "Nombre de Atributo")]
         public string Nombre { get; set; }
 
@@ -78,7 +79,7 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Lista a Borrar")]
         public List<int> ListaBorrar { get; set; }
 
-        [Required]
+        
         [Display(Name = "Valores Nuevos")]
         public List<String> ValoresNuevos { get; set; }
     }
