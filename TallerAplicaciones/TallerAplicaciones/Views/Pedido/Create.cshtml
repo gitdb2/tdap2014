@@ -1,12 +1,11 @@
 ﻿@model TallerAplicaciones.Models.PedidoCreateModel
 @{
-    ViewBag.Title = "Create Pedido";
+    ViewBag.Title = "Crear Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<h2>
-    Create Pedido</h2>
+<h2>Crear Pedido</h2>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(false)
@@ -55,8 +54,6 @@
                                            Value = item.PerfilUsuarioID.ToString(),
                                            Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ")"
                                        }))
-              
-               
             }
             else
             {
@@ -101,7 +98,7 @@
     </fieldset>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
 @section Scripts {
     <script>

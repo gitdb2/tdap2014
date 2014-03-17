@@ -5,8 +5,7 @@
     ViewBag.Title = "Editar Producto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    Edit</h2>
+<h2>Editar Producto</h2>
 @using (Html.BeginForm("Edit", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
@@ -103,6 +102,11 @@
                 @Html.ValidationMessageFor(model => model.Videos)
             </div>
         </div>
+        <p>
+            @Html.HiddenFor(model => model.ProductoID)
+            @Html.ValidationMessageFor(model => model.ProductoID)
+            <input type="submit" value="Modificar" />
+        </p>
         <hr />
         <div class="editor-label">
             <label>
@@ -120,8 +124,8 @@
                         {
                             Value = item.AtributoID.ToString(),
                             Text = item.Nombre.ToString()
-                        }), new { @id = "atributoSelect" })
-                    <input type="button" value="Crear" onclick="renderAtributo()" />
+                        }), new { @id = "atributoSelect", @onchange = "renderAtributo()" })
+                    <!-- <input type="button" value="Crear" onclick="renderAtributo()" /> -->
                 </div>
                 <div>
                     Item a agregar:</div>
@@ -226,15 +230,11 @@
                 }
             </table>
         </div>
-        <p>
-            @Html.HiddenFor(model => model.ProductoID)
-            @Html.ValidationMessageFor(model => model.ProductoID)
-            <input type="submit" value="Modificar" />
-        </p>
+      
     </fieldset>
 }
 <div>
-    @Html.ActionLink("Back to list", "List")
+    @Html.ActionLink("Volver", "List")
 </div>
 @section Styles {
     @Styles.Render("~/Content/gallery")
@@ -482,15 +482,7 @@
             $container.append(html);
         }
 
-
         function actualizarValoresCombo(response){
-//			var response ={
-//				ProductoId :5
-//				,AtributoId:1
-//				,ValorAtributoId:9
-//				,ListaValorPredefinidoId:[2]
-//			};
-			
 			var $select = $("#atributosTable").find("[atributoid=" + response.AtributoId + "]");
 
 			$select.find("option").each(function(){

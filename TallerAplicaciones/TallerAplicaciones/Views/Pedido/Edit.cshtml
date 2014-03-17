@@ -5,8 +5,7 @@
     ViewBag.Title = "Editar Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    Edit</h2>
+<h2>Editar Pedido</h2>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
@@ -134,7 +133,7 @@
     </fieldset>
 }
 <div>
-    @Html.ActionLink("Back to list", "List")
+    @Html.ActionLink("Volver", "List")
 </div>
 <style>
     #order td, #order th
@@ -201,13 +200,10 @@
                         $cantidadToAdd.val("1");
                     } else {
                         $cantidadToAdd.notify(response.Message, "error");
-                        //alert(response.Message);
                     }
                 }, "json");
             } else {
                 $existe.siblings().filter(".Cantidades").focus().notify("Ya esta agragado", "error");
-             
-                //alert("ya esta agragado, buscalo");
                 return false;
             }
             return true;
@@ -217,7 +213,6 @@
 
             var $valueInput = $("#cantidad_" + idCantidadPedido);
             if (!$.isNumeric($valueInput.val())) {
-              //  alert("El valor ingresado no es numerico");
                 $valueInput.notify("El valor ingresado no es numerico", "error");
                 return;
             }

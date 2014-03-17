@@ -173,7 +173,7 @@ namespace TallerAplicaciones.Controllers
 
         [HttpPost]
         [CustomAuthorize(Roles = "Administrador")]
-        public ActionResult Delete(int idProducto, DeleteEmpresaModel model)
+        public ActionResult Delete(DeleteEmpresaModel model)
         {
             try
             {
@@ -191,7 +191,7 @@ namespace TallerAplicaciones.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("idEmpresa", ex.Message);
+                ModelState.AddModelError("IdEmpresa", ex.Message);
             }
 
             return View(model);

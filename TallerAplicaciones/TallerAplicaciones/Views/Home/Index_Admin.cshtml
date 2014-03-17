@@ -1,0 +1,56 @@
+﻿@using uy.edu.ort.taller.aplicaciones.dominio
+@using uy.edu.ort.taller.aplicaciones.dominio.Constants
+@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+                To learn more about ASP.NET MVC visit
+                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
+                If you have any questions about ASP.NET MVC visit
+                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.
+            </p>
+        </div>
+    </section>
+}
+<h3>
+    @ViewBag.HomeDe</h3>
+<ol class="round">
+    <li class="one">
+        <h5>
+            Empresas</h5>
+        @Html.ActionLink("Crear", "Create", "Empresa", routeValues: null, htmlAttributes: new { id = "createEmpresaLink" })
+        @Html.ActionLink("Listar", "List", "Empresa", routeValues: null, htmlAttributes: new { id = "empresasLink" })
+    </li>
+    <li class="two">
+        <h5>
+            Atributos</h5>
+        @Html.ActionLink("Crear", "Create", "Atributo", routeValues: null, htmlAttributes: new { id = "crearatibutoLink" })
+        @Html.ActionLink("Listar", "List", "Atributo", routeValues: null, htmlAttributes: new { id = "listartatributoLink" })
+    </li>
+    <li class="three">
+        <h5>
+            Usuarios</h5>
+        @Html.ActionLink("Crear", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerusuarioLink" })
+        @Html.ActionLink("Listar", "List", "Account", routeValues: null, htmlAttributes: new { id = "listartusuarioLink" })
+    </li>
+    <li class="four">
+        <h5>
+            Productos</h5>
+        @Html.ActionLink("Crear", "Create", "Producto", routeValues: null, htmlAttributes: new { id = "crearproductoLink" })
+        @Html.ActionLink("Listar", "List", "Producto", routeValues: null, htmlAttributes: new { id = "listarproductoLink" })
+    </li>
+    <li class="five">
+        <h5>
+            Reportes</h5>
+        @Html.ActionLink("Logins", "Logs", "Reportes", routeValues: null, htmlAttributes: new { id = "reporteLogsLink" })
+        @Html.ActionLink("Pedidos", "Pedidos", "Reportes", routeValues: null, htmlAttributes: new { id = "reportePedidosLink" })
+    </li>
+</ol>
