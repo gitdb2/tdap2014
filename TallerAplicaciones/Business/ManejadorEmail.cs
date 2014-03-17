@@ -51,7 +51,16 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             string cuerpoEmail = GenerarCuerpoEmail(pedido);
             foreach (var distribuidor in destinatarios)
             {
-                EnviarMail(distribuidor, cuerpoEmail);
+                try
+                {
+                    EnviarMail(distribuidor, cuerpoEmail);
+                }
+                catch (Exception oculta)
+                {
+                    //TODO
+                    //si no se puede enviar un mail se sigue con el siguiente
+                    //se deberia loguear la excepcion pero no tenemos log a este nivel
+                }
             }
         }
 
