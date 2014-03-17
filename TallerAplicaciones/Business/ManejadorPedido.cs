@@ -69,6 +69,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                     if (producto == null)
                         throw new CustomException("El Producto de id " + prodId + " no existe") { Key = "Productos" };
+
+                    if (cant <= 0)
+                        throw new CustomException("La cantidad del Producto " + producto.Nombre + " debe ser positiva") { Key = "Productos" };
         
                     var cantidadProducto = new CantidadProductoPedido()
                     {

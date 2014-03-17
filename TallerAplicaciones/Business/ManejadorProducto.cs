@@ -54,6 +54,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                             AtributoSimple atributo = db.Atributos.OfType<AtributoSimple>().SingleOrDefault(a => a.AtributoID == idAtrib);
 
+                            if (listaValorAtributoSimple[i] == null || listaValorAtributoSimple[i].Trim().Equals(""))
+                                throw new CustomException("Debe ingresar un valor para " + atributo.Nombre) { Key = "ValorAtributoSimple" };
+
                             var valorAtributo = new ValorAtributoSimple()
                             {
                                 Valor = listaValorAtributoSimple[i],
@@ -65,7 +68,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     }
 
                     if (ListaTieneRepetidos(controlRepetidos))
-                        throw new CustomException("Los atributos deben ser unicos") { Key = "ListaValorAtributosSimple" };
+                        throw new CustomException("Los atributos deben ser unicos") { Key = "ValorAtributoSimple" };
                     controlRepetidos.Clear();
 
                     ///////////////////////////////////////////////////////////
