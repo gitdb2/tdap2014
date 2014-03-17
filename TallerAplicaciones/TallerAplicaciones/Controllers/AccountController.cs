@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.Web.WebPages.OAuth;
 using uy.edu.ort.taller.aplicaciones.dominio.Constants;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using WebMatrix.WebData;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
@@ -107,13 +108,16 @@ namespace TallerAplicaciones.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
                     AltaUsuario(model);
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                }
+                catch (CustomException customEx)
+                {
+                    ModelState.AddModelError(customEx.Key, customEx.Message);
                 }
             }
             // If we got this far, something failed, redisplay form
@@ -122,7 +126,7 @@ namespace TallerAplicaciones.Controllers
 
         private void AltaUsuario(RegisterModel model)
         {
-           var iPerfil = ManejadorPerfilUsuario.GetInstance();
+            var iPerfil = ManejadorPerfilUsuario.GetInstance();
            
             PerfilUsuario perfil = null;
             switch (model.Rol)
@@ -135,6 +139,7 @@ namespace TallerAplicaciones.Controllers
                         Activo = true,
                         Email = model.Email
                     };
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
                     iPerfil.AltaPerfilUsuario(perfil, model.UserName);
                     break;
 
@@ -146,6 +151,8 @@ namespace TallerAplicaciones.Controllers
                         Activo = true,
                         Email = model.Email,
                      };
+
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
                     iPerfil.AltaPerfilUsuario((EjecutivoDeCuenta) perfil, model.UserName, model.EmpresasSeleccionadas);
                     break;
 
@@ -157,7 +164,16 @@ namespace TallerAplicaciones.Controllers
                         Activo = true,
                         Email = model.Email
                     };
-                    iPerfil.AltaPerfilUsuario((Distribuidor) perfil, model.EmpresaDelDistribuidor, model.UserName);
+
+                    if (ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(model.EmpresaDelDistribuidor) != null)
+                    {
+                        WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Activo = model.Activo });
+                        iPerfil.AltaPerfilUsuario((Distribuidor)perfil, model.EmpresaDelDistribuidor, model.UserName);    
+                    }
+                    else
+                    {
+                        throw new CustomException("No se puede crear un Distribuidor sin Empresa") { Key = "EmpresaDelDistribuidor" };
+                    }
                     break;
 
                 default:

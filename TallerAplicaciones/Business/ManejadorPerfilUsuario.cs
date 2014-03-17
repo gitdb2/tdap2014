@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
 using System.Transactions;
@@ -158,6 +159,10 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     db.PerfilesUsuario.Add(perfil);
 
                     var empresa = ManejadorEmpresaDistribuidora.GetInstance().GetEmpresaDistribuidora(idEmpresa);
+                    
+                    if (empresa == null)
+                        throw new CustomException("No se puede crear un Distribuidor sin Empresa") { Key = "EmpresaDelDistribuidor" };
+
                     db.Empresas.Attach(empresa);
 
                     perfil.Empresa = empresa;
