@@ -27,15 +27,15 @@
     @foreach (var item in Model.Productos)
     {
         <tr>
-            <td>@item.Producto.Nombre
+            <td>@item.TopProducto.Nombre
             </td>
-            <td>@item.Producto.Codigo
+            <td>@item.TopProducto.Codigo
             </td>
-            <td>@item.Producto.Descripcion
+            <td>@item.TopProducto.Descripcion
             </td>
-            <td>@(item.Producto.Activo ? "Si" : "No")
+            <td>@(item.TopProducto.Activo ? "Si" : "No")
             </td>
-            <td>@item.Cantidad
+            <td>@item.SumCantidad
             </td>
         </tr>
     }

@@ -19,7 +19,7 @@ namespace uy.edu.ort.taller.aplicaciones.utiles.Formatters
 
         public void Visit(Video elem)
         {
-            Html = "<a href='#' data=\"" + elem.Url + "\" onclick=\"openVideo($(this))\"><img width=\"32px\" src=\"/Images/play_icon.png\" alt=\"" + elem.Nombre + "\" /></a>";
+            Html = "<a href='#' data=\"" + elem.Url + "\" onclick=\"openVideo($(this))\"><img width=\"32px\" src=\"/Images/play_icon.png\" alt=\"" + elem.Nombre + "\" title='" + elem.Nombre + "'/></a>";
 
         }
     }
@@ -37,9 +37,6 @@ namespace uy.edu.ort.taller.aplicaciones.utiles.Formatters
 
         public string Html { get; set; }
 
-     
-
-        //public string CheckboxName { get; set; }
 
         public void Visit(Foto elem)
         {
@@ -48,14 +45,11 @@ namespace uy.edu.ort.taller.aplicaciones.utiles.Formatters
                    "</a>" + GetCheckbox(elem);
         }
 
-
         public void Visit(Video elem)
         {
             Html = "<a href='#' data=\"" + elem.Url + "\" onclick=\"openVideo($(this))\">" +
-                   "<img width=\"80px\" src=\"/Images/play_icon.png\" alt=\"" + elem.Nombre + "\" />" +
-
+                   "<img width=\"80px\" src=\"/Images/play_icon.png\" alt=\"" + elem.Nombre + "\" title='" + elem.Nombre +"' />" +
                    "</a>" + GetCheckbox(elem);
-
         }
 
         private string GetCheckbox(Archivo elem)

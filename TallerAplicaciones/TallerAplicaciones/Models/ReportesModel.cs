@@ -44,7 +44,7 @@ namespace TallerAplicaciones.Models
     {
 
         [Display(Name = "Productos")]
-        public List<CantidadProductoPedido> Productos { get; set; }
+        public List<TopProductos> Productos { get; set; }
 
     }
 
@@ -52,7 +52,7 @@ namespace TallerAplicaciones.Models
     {
 
         [Display(Name = "Top 5 de Productos")]
-        public List<CantidadProductoPedido> TopProductos { get; set; }
+        public List<TopProductos> TopProductos { get; set; }
 
     }
     public class ReporteLogsModel
