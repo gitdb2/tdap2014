@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.dominio;
 
@@ -126,11 +127,31 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public void EditarAtributoCombo(int idAtributo, bool activo, string nuevoNombre, bool dataCombo, List<int> listaAActivar, List<String> valoresNuevos)
+        public void EditarAtributoCombo(int idAtributo, bool activo, string nuevoNombre, 
+                    bool dataCombo, List<int> listaAActivar, List<String> valoresNuevos)
         {
+
+           
             using (var db = new Persistencia())
             {
                 var atributo = db.Atributos.OfType<AtributoCombo>().Include("Valores").SingleOrDefault(a => a.AtributoID == idAtributo);
+
+                if (atributo == null)
+                {
+                    throw new CustomException("No se pudo encontrar el atributo id="+idAtributo)
+                    {
+                        Key = "IdAtributo"
+                    };
+                }
+
+                if (listaAActivar == null || !listaAActivar.Any())
+                {
+                    throw new CustomException("Por lo menos un valor del atributo: "+atributo.Nombre+" debe estar activo")
+                    {
+                        Key = "ListaBorrar"
+                    };
+                }
+
                 atributo.Activo = activo;
                 atributo.Nombre = nuevoNombre;
                 List<ValorPredefinido> listaValores = atributo.Valores;

@@ -75,8 +75,8 @@ namespace TallerAplicaciones.Models
         [Display(Name = "Atributo tipo combo")]
         public bool DataCombo { get; set; }
 
-        [Required]
-        [Display(Name = "Lista a Borrar")]
+        [Required (ErrorMessage = "Debe haber al menos un valor existente")]
+        [Display(Name = "Valores del combo")]
         public List<int> ListaBorrar { get; set; }
 
         

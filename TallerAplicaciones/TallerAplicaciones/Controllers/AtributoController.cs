@@ -7,6 +7,7 @@ using System.Web.Services.Description;
 using TallerAplicaciones.Filters;
 using TallerAplicaciones.Models;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Exceptions;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.negocio;
 
@@ -147,9 +148,6 @@ namespace TallerAplicaciones.Controllers
             {
                 try
                 {
-
-                   
-
                     if (model.DataCombo)
                     {
                         iAtributo.EditarAtributoCombo(model.IdAtributo, model.Activo, model.Nombre, model.DataCombo,
@@ -162,6 +160,10 @@ namespace TallerAplicaciones.Controllers
 
                     return RedirectToAction("List");
 
+                }
+                catch (CustomException e)
+                {
+                    ModelState.AddModelError(e.Key, e.Message);
                 }
                 catch (Exception e)
                 {
