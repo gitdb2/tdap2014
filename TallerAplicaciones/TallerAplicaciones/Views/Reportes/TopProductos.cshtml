@@ -30,15 +30,15 @@
             @foreach (var item in Model.TopProductos)
             {
                 <tr>
-                    <td>@item.Producto.Nombre
+                    <td>@item.TopProducto.Nombre
                     </td>
-                    <td>@item.Producto.Codigo
+                    <td>@item.TopProducto.Codigo
                     </td>
-                    <td>@item.Producto.Descripcion
+                    <td>@item.TopProducto.Descripcion
                     </td>
-                    <td>@(item.Producto.Activo ? "Si" : "No")
+                    <td>@(item.TopProducto.Activo ? "Si" : "No")
                     </td>
-                    <td>@item.Cantidad
+                    <td>@item.SumCantidad
                     </td>
                 </tr>
             }
@@ -61,8 +61,8 @@
             valores += ",";
             etiquetas += ",";
         }
-        valores += p.Cantidad;
-        etiquetas += "'%% - " + p.Producto.Nombre + "'";
+        valores += p.SumCantidad;
+        etiquetas += "'%% - " + p.TopProducto.Nombre + "'";
         i++;
     }
     valores += "]";

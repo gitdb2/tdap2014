@@ -20,7 +20,7 @@ namespace TallerAplicaciones.Controllers
         {
             var model = new ReporteProductosModel
             {
-                Productos = ManejadorProducto.GetInstance().ReporteProductos(0)
+                Productos = ManejadorReporte.GetInstance().ReporteProductos(0)
             };
             return View(model);
         }
@@ -30,11 +30,10 @@ namespace TallerAplicaciones.Controllers
         {
             var model = new ReporteTopProductosModel
             {
-                TopProductos = ManejadorProducto.GetInstance().ReporteProductos(5)
+                TopProductos = ManejadorReporte.GetInstance().ReporteProductos(5)
             };
             return View(model);
         }
-
 
         [CustomAuthorize(Roles = "Administrador")]
         public ActionResult Logs()
