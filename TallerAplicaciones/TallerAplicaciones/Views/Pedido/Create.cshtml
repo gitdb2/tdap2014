@@ -121,13 +121,12 @@
                 $container.append($lineaNueve);
             } else {
                 existe.siblings().filter("input[name='Cantidades']").focus();
-                alert("ya esta agragado, buscalo");
+                $("#ProductosDisponibles").notify("El Pedido ya tiene ese Producto", "error");
             }
         }
 
         function eliminar($elem) {
             $elem.parent().remove();
-
         }
 
         $(document).ready(function () {
@@ -139,5 +138,6 @@
             });
         });
     </script>
+    <script src="/Scripts/notify.min.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/jqueryval")
 }
