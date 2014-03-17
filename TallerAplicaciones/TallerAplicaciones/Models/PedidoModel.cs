@@ -46,6 +46,7 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Productos seleccionados")]
         public List<int> Productos { get; set; }
+
         /// <summary>
         /// lista de cantidades de productos seleccionados
         /// la posicion en la lista se corresponde con la de Productos
@@ -53,32 +54,27 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Cantidades para los productos seleccionados")]
         public List<int> Cantidades { get; set; }
-        
 
         /// <summary>
         /// Lista de distribuidores disponibles para asociar al pedido
         /// </summary>
-      //  [Display(Name = "Distribuidor")]
+        [Display(Name = "Distribuidor")]
         public List<Distribuidor> DistribuidoresDisponibles { get; set; }
 
         /// <summary>
         /// Lista de productos disponibles para las seleccion
         /// </summary>
-      //    [Display(Name = "Productos")]
+        [Display(Name = "Productos")]
         public List<Producto> ProductosDisponibles { get; set; }
 
         // para modificacion
-     ///   [Display(Name = "Ejecutivo")]
+        [Display(Name = "Ejecutivo")]
         public EjecutivoDeCuenta EjecutivoDeCuenta { get; set; }
-      
 
     }
 
-
-
     public class PedidoCreatePOSTModel
     {
-
         //para alta
         [Display(Name = "Id del Pedido")]
         public int PedidoID { get; set; }
@@ -86,12 +82,15 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Aprobado")]
         public bool Aprobado { get; set; }
+
         [Required]
         [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
+
         [Required]
         [Display(Name = "Fecha")]
         public DateTime Fecha { get; set; }
+
         [Required]
         [Display(Name = "Activo")]
         public bool Activo { get; set; }
@@ -111,6 +110,7 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Productos seleccionados")]
         public List<int> Productos { get; set; }
+
         /// <summary>
         /// lista de cantidades de productos seleccionados
         /// la posicion en la lista se corresponde con la de Productos
@@ -118,11 +118,6 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Cantidades para los productos seleccionados")]
         public List<int> Cantidades { get; set; }
-        
-
-
-      
-
     }
 
 
@@ -135,12 +130,15 @@ namespace TallerAplicaciones.Models
         [Required]
         [Display(Name = "Aprobado")]
         public bool Aprobado { get; set; }
+
         [Required]
         [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
+
         [Required]
         [Display(Name = "Fecha")]
         public DateTime Fecha { get; set; }
+
         [Required]
         [Display(Name = "Activo")]
         public bool Activo { get; set; }
@@ -161,7 +159,6 @@ namespace TallerAplicaciones.Models
         {
             DistribuidoresDisponibles = new List<Distribuidor>();
             ProductosDisponibles = new List<Producto>();
-          
         }
 
         public List<Distribuidor> DistribuidoresDisponibles { get; set; }

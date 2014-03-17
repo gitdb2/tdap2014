@@ -5,8 +5,7 @@
     ViewBag.Title = "Editar Producto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>
-    Edit</h2>
+<h2>Editar Producto</h2>
 @using (Html.BeginForm("Edit", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
@@ -235,7 +234,7 @@
     </fieldset>
 }
 <div>
-    @Html.ActionLink("Back to list", "List")
+    @Html.ActionLink("Volver", "List")
 </div>
 @section Styles {
     @Styles.Render("~/Content/gallery")
@@ -482,7 +481,6 @@
                 + '</tr>';
             $container.append(html);
         }
-
 
         function actualizarValoresCombo(response){
 			var $select = $("#atributosTable").find("[atributoid=" + response.AtributoId + "]");

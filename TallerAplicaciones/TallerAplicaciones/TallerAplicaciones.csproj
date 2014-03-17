@@ -395,8 +395,6 @@
     <Content Include="settings.properties">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Upload\Index.cshtml" />
-    <Content Include="Views\Upload\Upload.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />
     <Content Include="Views\Producto\Edit.cshtml" />
     <Content Include="Views\Producto\Delete.cshtml" />
