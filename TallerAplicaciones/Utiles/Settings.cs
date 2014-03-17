@@ -6,7 +6,7 @@ namespace uy.edu.ort.taller.aplicaciones.utiles
     public class Settings
     {
         static private Settings instance = new Settings();
-        private Properties config = new Properties("settings.properties");
+        private Properties config;// = new Properties("settings.properties");
         public static Settings GetInstance()
         {
             return instance;
