@@ -25,43 +25,62 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
         #endregion
 
         public void AltaProducto(Producto producto,
-            List<int> idAtributoSimple,
-            List<string> valorAtributoSimple,
-            List<string> valorAtributoCombo,
-            List<string> valorAtributoMulti)
+            List<int> listaIdAtributoSimple,
+            List<string> listaValorAtributoSimple,
+            List<string> listaValorAtributoCombo,
+            List<string> listaValorAtributoMulti)
         {
             try
             {
 
+                //para controlar si se mandaron ids repetidos en alguna de las
+                //listas que se pasaron por parametro
+                List<int> controlRepetidos = new List<int>();
+
                 using (var db = new Persistencia())
                 {
                     ///////////////////////////////////////////////////////////
-                    List<ValorAtributo> aRetornar = new List<ValorAtributo>();
+                    // valores simples
+                    ///////////////////////////////////////////////////////////
+                    List<ValorAtributo> listaAtributosProducto = new List<ValorAtributo>();
 
                     int i = 0;
-                    if ((idAtributoSimple != null) && (idAtributoSimple.Any()))
+                    if ((listaIdAtributoSimple != null) && (listaIdAtributoSimple.Any()))
                     {
-                        foreach (var idAtrib in idAtributoSimple)
+                        foreach (var idAtrib in listaIdAtributoSimple)
                         {
-                            //AtributoSimple atributo = (AtributoSimple)iAtributo.GetAtributo(idAtrib);
+                            //control de repetidos
+                            controlRepetidos.Add(idAtrib);
+
                             AtributoSimple atributo = db.Atributos.OfType<AtributoSimple>().SingleOrDefault(a => a.AtributoID == idAtrib);
 
                             var valorAtributo = new ValorAtributoSimple()
                             {
-                                Valor = valorAtributoSimple[i],
+                                Valor = listaValorAtributoSimple[i],
                                 Atributo = atributo
                             };
-                            aRetornar.Add(valorAtributo);
+                            listaAtributosProducto.Add(valorAtributo);
                             i++;
                         }
                     }
-                    if ((valorAtributoCombo != null) && (valorAtributoCombo.Any()))
+
+                    if (ListaTieneRepetidos(controlRepetidos))
+                        throw new CustomException("Los atributos deben ser unicos") { Key = "ListaValorAtributosSimple" };
+                    controlRepetidos.Clear();
+
+                    ///////////////////////////////////////////////////////////
+                    // valores combo
+                    ///////////////////////////////////////////////////////////
+                    if ((listaValorAtributoCombo != null) && (listaValorAtributoCombo.Any()))
                     {
-                        foreach (var idYValor in valorAtributoCombo)
+                        foreach (var idYValor in listaValorAtributoCombo)
                         {
                             string[] idAtributo = idYValor.Split(new char[] { '|' });
                             int idAtrib = Convert.ToInt16(idAtributo[0]);
                             int idValor = Convert.ToInt16(idAtributo[1]);
+
+                            //control de repetidos
+                            controlRepetidos.Add(idAtrib);
 
                             AtributoCombo atributo =
                                 db.Atributos.OfType<AtributoCombo>().SingleOrDefault(a => a.AtributoID == idAtrib);
@@ -76,16 +95,29 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                                 Atributo = atributo,
                                 Valores = listaValorPredefinido
                             };
-                            aRetornar.Add(valorAtributo);
+                            listaAtributosProducto.Add(valorAtributo);
                         }
                     }
 
+                    if (ListaTieneRepetidos(controlRepetidos))
+                        throw new CustomException("Los atributos deben ser unicos") { Key = "ValorAtributoCombo" };
+                    controlRepetidos.Clear();
 
-                    if ((valorAtributoMulti != null) && (valorAtributoMulti.Any()))
+                    ///////////////////////////////////////////////////////////
+                    // valores combo multi
+                    ///////////////////////////////////////////////////////////
+
+                    if ((listaValorAtributoMulti != null) && (listaValorAtributoMulti.Any()))
                     {
                         var armadoDictionary = new Dictionary<int, List<int>>();
 
-                        foreach (var idYValor in valorAtributoMulti)
+                        HashSet<string> tmpParseoComboMulti = new HashSet<string>();
+                        foreach (var v in listaValorAtributoMulti)
+                        {
+                            tmpParseoComboMulti.Add(v);
+                        }
+
+                        foreach (var idYValor in tmpParseoComboMulti)
                         {
                             string[] idAtributo = idYValor.Split(new char[] { '|' });
                             int idAtrib = Convert.ToInt16(idAtributo[0]);
@@ -99,10 +131,8 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                             armadoDictionary[idAtrib].Add(idValor);
                         }
 
-
                         foreach (var keyValue in armadoDictionary)
                         {
-
                             AtributoCombo atributo = db.Atributos
                                                        .OfType<AtributoCombo>()
                                                        .SingleOrDefault(a => a.AtributoID == keyValue.Key);
@@ -113,7 +143,6 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                                 Valores = new List<ValorPredefinido>()
                             };
 
-
                             foreach (var idValor in keyValue.Value)
                             {
                                 ValorPredefinido valorPredefinido = db.ValoresPredefinidos
@@ -122,13 +151,12 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                                 valorAtributo.Valores.Add(valorPredefinido);
                             }
 
-                            aRetornar.Add(valorAtributo);
+                            listaAtributosProducto.Add(valorAtributo);
                         }
                     }
 
-                    producto.ValoresSeleccionados = aRetornar;
+                    producto.ValoresSeleccionados = listaAtributosProducto;
                     ///////////////////////////////////////////////////////////
-
 
                     db.Productos.Add(producto);
                     db.SaveChanges();
@@ -144,9 +172,26 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
 
                 throw;
             }
-
         }
 
+        /// <summary>
+        /// devuelve true si la lista del parametro tiene elementos repetidos
+        /// </summary>
+        /// <param name="elementos"></param>
+        /// <returns></returns>
+        public bool ListaTieneRepetidos(List<int> elementos)
+        {
+            var listaSinRepetidos = new HashSet<int>();
+            foreach (var item in elementos)
+            {
+                listaSinRepetidos.Add(item);
+            }
+            if (elementos.Any())
+            {
+                return listaSinRepetidos.Count() != elementos.Count();
+            }
+            return false;
+        }
 
         public bool BajaProducto(int idProducto)
         {
