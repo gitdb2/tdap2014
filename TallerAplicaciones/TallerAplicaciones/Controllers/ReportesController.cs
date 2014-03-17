@@ -182,6 +182,10 @@ namespace TallerAplicaciones.Controllers
                     model.FechaHasta = tmp;
                 }
 
+                model.FechaDesde = model.FechaDesde + new TimeSpan(0, 0, 0, 0);
+                model.FechaHasta = model.FechaHasta + new TimeSpan(23, 59, 59);
+
+
                 model.Pedidos = ManejadorReporte.GetInstance()
                     .GetPedidos(model.FechaDesde, model.FechaHasta, model.DistribuidorId, model.EjecutivoId);
             }
