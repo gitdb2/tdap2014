@@ -66,6 +66,9 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                     var cant = cantidades[i];
 
                     var producto = db.Productos.SingleOrDefault(p => p.ProductoID == prodId);
+
+                    if (producto == null)
+                        throw new CustomException("El Producto de id " + prodId + " no existe") { Key = "Productos" };
         
                     var cantidadProducto = new CantidadProductoPedido()
                     {
