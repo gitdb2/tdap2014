@@ -40,7 +40,7 @@ namespace TallerAplicaciones.Controllers
         {
             var now = DateTime.Now;
             var from = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
-            var to = now + new TimeSpan(12, 59, 59);
+            var to = now + new TimeSpan(23, 59, 59);
 
             var model = new ReporteLogsModel
             {
@@ -69,7 +69,7 @@ namespace TallerAplicaciones.Controllers
 
 
                 model.FechaDesde = model.FechaDesde + new TimeSpan(0, 0, 0, 0);
-                model.FechaHasta = model.FechaHasta + new TimeSpan(12, 59, 59);
+                model.FechaHasta = model.FechaHasta + new TimeSpan(23, 59, 59);
 
 
                 model.Logs = ManejadorReporte.GetInstance().GetLogs(model.FechaDesde, model.FechaHasta);
@@ -79,7 +79,7 @@ namespace TallerAplicaciones.Controllers
 
                 var now = DateTime.Now;
                 var from = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
-                var to = now + new TimeSpan(12, 59, 59);
+                var to = now + new TimeSpan(23, 59, 59);
 
                 model.FechaDesde = from;
                 model.FechaHasta = to;
@@ -99,7 +99,7 @@ namespace TallerAplicaciones.Controllers
 
             var now = DateTime.Now;
             var fromDate = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
-            var toDate = now + new TimeSpan(12, 59, 59);
+            var toDate = now + new TimeSpan(23, 59, 59);
 
             var model = new ReportePedidoModel
             {
@@ -189,7 +189,7 @@ namespace TallerAplicaciones.Controllers
             {
                 var now = DateTime.Now;
                 var from = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
-                var to = now + new TimeSpan(12, 59, 59);
+                var to = now + new TimeSpan(23, 59, 59);
 
                 model.FechaDesde = from;
                 model.FechaHasta = to;
@@ -262,7 +262,7 @@ namespace TallerAplicaciones.Controllers
 
             var now = DateTime.Now;
             var fromDate = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
-            var toDate = now + new TimeSpan(12, 59, 59);
+            var toDate = now + new TimeSpan(23, 59, 59);
 
             var ejecutivo = (PerfilUsuario)Session[Constants.SESSION_PERFIL];
 
@@ -335,6 +335,9 @@ namespace TallerAplicaciones.Controllers
                     model.FechaHasta = tmp;
                 }
 
+                model.FechaDesde = model.FechaDesde + new TimeSpan(0, 0, 0, 0);
+                model.FechaHasta = model.FechaHasta + new TimeSpan(23, 59, 59);
+
                 var orderBy = (ManejadorReporte.Orderby)model.OrdenBy;
                 var orderDir = (ManejadorReporte.OrdenDir)model.OrdenDir;
 
@@ -347,7 +350,7 @@ namespace TallerAplicaciones.Controllers
             {
                 var now = DateTime.Now;
                 var from = now.AddMonths(-1) + new TimeSpan(0, 0, 0, 0);
-                var to = now + new TimeSpan(12, 59, 59);
+                var to = now + new TimeSpan(23, 59, 59);
 
                 model.FechaDesde = from;
                 model.FechaHasta = to;
