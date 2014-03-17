@@ -8,6 +8,7 @@ namespace TallerAplicaciones.Models
     public class AtributoModel
     {
         [Required]
+        [RegularExpression(@"^([a-zA-Z0-9 ]+)$", ErrorMessage = "Ingrese {0} sin simbolos")]
         [Display(Name = "Nombre de Atributo")]
         public string Nombre { get; set; }
 
@@ -42,6 +43,7 @@ namespace TallerAplicaciones.Models
         public bool Activo { get; set; }
 
         [Required]
+        [RegularExpression(@"^([a-zA-Z0-9 ]+)$", ErrorMessage = "Ingrese {0} sin simbolos")]
         [Display(Name = "Nombre de Atributo")]
         public string Nombre { get; set; }
 

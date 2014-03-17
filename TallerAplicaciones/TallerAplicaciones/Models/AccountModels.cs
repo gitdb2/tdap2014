@@ -59,8 +59,8 @@ namespace TallerAplicaciones.Models
 
         [Required]
         [Display(Name = "Login")]
-        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)$", ErrorMessage = "Ingrese Login sin simbolos ni espacions")]
-        [MaxLength(12, ErrorMessage = "El Login debe tener como máximo {2} caracteres")] 
+        [RegularExpression(@"^([a-zA-Z0-9]+)$", ErrorMessage = "Ingrese {0} sin simbolos ni espacios")]
+        [MaxLength(12, ErrorMessage = "El {0} debe tener como máximo {1} caracteres")] 
         public string UserName { get; set; }
 
         [Required]

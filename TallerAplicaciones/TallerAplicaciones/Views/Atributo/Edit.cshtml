@@ -51,7 +51,7 @@
                             <input type="text" value="@valor.Valor"  size="20" readonly="readonly"/>
                             &nbsp;&nbsp;
                             @{
-                        if (!valor.Activo)
+                        if (valor.Activo)
                         {
                                 <input type="checkbox" value="@valor.ValorPredefinidoID" name="ListaBorrar" checked="checked"/>
                         }
@@ -60,7 +60,7 @@
                                 <input type="checkbox" value="@valor.ValorPredefinidoID" name="ListaBorrar"/>
                         }
                             }
-                            &nbsp;&nbsp;Eliminar Valor </li> 
+                            &nbsp;&nbsp;Activo </li> 
                     }
                 </ul>
             </div>

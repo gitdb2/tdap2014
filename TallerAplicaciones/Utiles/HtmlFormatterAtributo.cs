@@ -18,7 +18,7 @@ namespace Utiles
 
            foreach (var item in elem.Valores)
            {
-               Html += "<OPTION VALUE=\"" + item.Valor + "\">" + item.Valor + "</OPTION>\" ";
+               Html += "<OPTION VALUE=\"" + item.Valor + "\">" + item.Valor + (item.Activo ? " (A)" : " (I)") + "</OPTION>\" ";
            }
            Html += "</SELECT> ";
        }

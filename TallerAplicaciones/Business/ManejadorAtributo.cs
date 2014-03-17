@@ -126,7 +126,7 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             }
         }
 
-        public void EditarAtributoCombo(int idAtributo, bool activo, string nuevoNombre, bool dataCombo, List<int> listaABorrar, List<String> valoresNuevos)
+        public void EditarAtributoCombo(int idAtributo, bool activo, string nuevoNombre, bool dataCombo, List<int> listaAActivar, List<String> valoresNuevos)
         {
             using (var db = new Persistencia())
             {
@@ -138,13 +138,13 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
                 {
                     foreach (var valor in listaValores)
                     {
-                        if ((listaABorrar != null) && (listaABorrar.Contains(valor.ValorPredefinidoID)))
+                        if ((listaAActivar != null) && (listaAActivar.Contains(valor.ValorPredefinidoID)))
                         {
-                            valor.Activo = false;
+                            valor.Activo = true;
                         }
                         else
                         {
-                            valor.Activo = true;
+                            valor.Activo = false;
                         }
                     }
                 }
