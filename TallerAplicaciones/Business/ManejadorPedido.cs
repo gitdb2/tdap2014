@@ -334,22 +334,62 @@ namespace uy.edu.ort.taller.aplicaciones.negocio
             return ret;
         }
 
-        public void Modificar(Pedido newPedido)
+        public void Modificar(Pedido pedidoModificado, int nuevoIdDist)
         {
             using (var db = new Persistencia())
             {
 
                 try
                 {
-                    Pedido pedido = db.Pedidos.SingleOrDefault(p => p.PedidoID == newPedido.PedidoID);
+                    Pedido pedido = db.Pedidos
+                                    .Include(p=>p.Distribuidor)
+                                    .Include(p => p.Distribuidor.Pedidos)
+                                    .SingleOrDefault(p => p.PedidoID == pedidoModificado.PedidoID);
                     //si el pedido no existe o no esta activoerror
                     if (pedido == null)
-                        throw new CustomException("El pedido id=" + newPedido.PedidoID +
-                                                  " no existe en la base de datos") {Key = "PedidoID"};
-                    pedido.Activo = newPedido.Activo;
-                    pedido.Aprobado = newPedido.Aprobado;
-                    pedido.Descripcion = newPedido.Descripcion;
-                    pedido.Fecha = newPedido.Fecha;
+                    {
+                        throw new CustomException("El pedido id=" + pedidoModificado.PedidoID +
+                                                " no existe en la base de datos") { Key = "PedidoID" };
+                    }
+
+                    if (pedido.Distribuidor!= null && pedido.Distribuidor.PerfilUsuarioID != nuevoIdDist)
+                    {
+                        var newDist = db.PerfilesUsuario
+                            .OfType<Distribuidor>()
+                            .Include(p => p.Pedidos)
+                            .SingleOrDefault(d => d.PerfilUsuarioID == nuevoIdDist);
+                        if (newDist == null || !newDist.Activo)
+                        {
+                            throw new CustomException("El Nuevo distribuidor id=" + nuevoIdDist +
+                                                      " no existe en la base de datos o esta inactivo")
+                            {
+                                Key = "DistribuidorID"
+                            };
+                        }
+                        //si llega hasta aca y el hubo cambio de distribuidor
+                        //se va a eliminar del pedido el distribuidor origina, y setear el nuevo.
+                        //en la coleccion de pedidos del nuevo se agreaga el pedido y en la coleccion del anterior se remueve.
+
+                        var oldDist = pedido.Distribuidor;
+                        pedido.Distribuidor = newDist;
+
+                        oldDist.Pedidos.Remove(pedido);
+                        if (newDist.Pedidos == null)
+                        {
+                            newDist.Pedidos = new List<Pedido>();
+                        }
+                        newDist.Pedidos.Add(pedido);
+                    }
+
+                   
+
+
+                    pedido.Activo = pedidoModificado.Activo;
+                    pedido.Aprobado = pedidoModificado.Aprobado;
+                    pedido.Descripcion = pedidoModificado.Descripcion;
+                    pedido.Fecha = pedidoModificado.Fecha;
+
+
                     db.SaveChanges();
 
                 }

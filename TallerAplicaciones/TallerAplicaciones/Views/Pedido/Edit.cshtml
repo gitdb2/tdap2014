@@ -12,6 +12,32 @@
 
     <fieldset>
         <legend>Editar Pedido</legend>
+        
+        
+         <div class="editor-label">
+            @Html.LabelFor(model => model.DistribuidorID)
+        </div>
+        <div class="editor-field">
+            @if (Model.DistribuidoresDisponibles != null && Model.DistribuidoresDisponibles.Any())
+            {
+                @Html.DropDownListFor(m => m.DistribuidorID,
+                                          Model.DistribuidoresDisponibles.Where(d => d.Activo || d.PerfilUsuarioID == Model.DistribuidorID).Select(item => new SelectListItem
+                                       {
+                                           Value = item.PerfilUsuarioID.ToString(),
+                                           Text = item.Usuario.Login.ToString() + "(" + item.Nombre + " " + item.Apellido + " - " + item.Empresa.Nombre + ") "+ (item.Activo? "": " (I)"),
+                                           Selected = item.PerfilUsuarioID == Model.DistribuidorID
+                                       }))
+            }
+            else
+            {
+                @("No hay Distribuidores en el sistema.")
+            }
+            @Html.ValidationMessageFor(model => model.DistribuidorID)
+            @Html.ValidationMessageFor(model => model.DistribuidoresDisponibles)
+        </div>
+        
+        
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Descripcion)
         </div>

@@ -267,8 +267,12 @@ namespace TallerAplicaciones.Controllers
         public ActionResult Edit(PedidoEditModel model)
         {
 
+            var pedidoOrig = ManejadorPedido.GetInstance().GetPedido(model.PedidoID);
+
             if (!ModelState.IsValid)
             {
+                //esto es para poder volver a seleccionar el ditribuidor original (en caso que estuviera inactivo)
+                model.DistribuidorID = pedidoOrig.Distribuidor.PerfilUsuarioID;
                 LoadDistribuidoresYProductos(model);
                 return View(model);
             }
@@ -286,7 +290,7 @@ namespace TallerAplicaciones.Controllers
                     PedidoID = model.PedidoID,
                 };
                
-                ManejadorPedido.GetInstance().Modificar(pedido);
+                ManejadorPedido.GetInstance().Modificar(pedido, model.DistribuidorID);
 
                 return RedirectToAction("List");
             }
@@ -301,6 +305,8 @@ namespace TallerAplicaciones.Controllers
 
             ///Este es el modelo que se devuelve en caso que la operacion de modificacion de error
             var errorModel = GetPedidoModelFromDB(model.PedidoID);
+            //esto es para poder volver a seleccionar el ditribuidor original
+            errorModel.DistribuidorID = pedidoOrig.Distribuidor.PerfilUsuarioID;
             return View(errorModel);
         }
 
