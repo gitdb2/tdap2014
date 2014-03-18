@@ -262,6 +262,7 @@
     <Content Include="ClienteDistribuidores.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\play_icon.png" />
     <Content Include="Scripts\g.pie.js" />
     <Content Include="Scripts\g.raphael.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
