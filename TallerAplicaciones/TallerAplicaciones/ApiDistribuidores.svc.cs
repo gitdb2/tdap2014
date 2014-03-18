@@ -4,8 +4,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using System.Web;
 using TallerAplicaciones.Filters;
 using uy.edu.ort.taller.aplicaciones.dominio;
+using uy.edu.ort.taller.aplicaciones.dominio.Constants;
 using uy.edu.ort.taller.aplicaciones.dominio.DTO;
 using uy.edu.ort.taller.aplicaciones.interfaces;
 using uy.edu.ort.taller.aplicaciones.negocio;
@@ -18,6 +20,7 @@ namespace TallerAplicaciones
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ApiDistribuidores
     {
+        private static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         [OperationContract]
         public ResultadoLoginDTO Login(string login, string password)
@@ -27,10 +30,12 @@ namespace TallerAplicaciones
             var usuarioDistribuidor = iPerfilUsuario.ObtenerUsuarioDistribuidor(login);
             if (usuarioDistribuidor != null && usuarioDistribuidor.Activo)
             {
+                HttpContext.Current.Session[Constants.SESSION_LOGIN] = login;
                 if (WebSecurity.Login(login, password))
                 {
                     resultadoLogin.Mensaje = "Login OK";
                     resultadoLogin.LoginOk = true;
+                    log.InfoFormat("Logueo correcto");
                 }
                 else
                 {

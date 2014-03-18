@@ -258,8 +258,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="ClienteDistribuidoresTestPage.aspx" />
-    <Content Include="ClienteDistribuidoresTestPage.html" />
+    <Content Include="ClienteDistribuidores.aspx" />
+    <Content Include="ClienteDistribuidores.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\g.pie.js" />
